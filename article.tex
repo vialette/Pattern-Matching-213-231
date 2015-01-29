@@ -8,8 +8,12 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 
-% le set avoid 231,213
-\newcommand{\C}[1]{A_{#1}(231,213)}
+% 231,213
+\newcommand{\myPattern}{231,231}
+
+% avoid set
+\DeclareMathOperator{\Avd}{Av}
+\newcommand\Av[2]{\Avd_{{#1}}({#2})}
 
 % le set de toutes les permitaton
 \newcommand{\Perm}[1]{\mathcal{S}_{#1}}
@@ -37,7 +41,7 @@
 %upstep
 \newcommand{\ustep}{u}
 
-\title{Pattern matching for (231,231) avoiding permutations}
+\title{Pattern matching for (231,213) avoiding permutations}
 \author{Both Emerite NEOU, Romeo RIZZI}
 \date{}
 
@@ -56,7 +60,6 @@
 	  	which equals $\pmotif$.
 	  	We study this problem for the permutation 
 	  	avoiding (231,231).
-	  	 
 	} 
 
 	\section{Introduction}
@@ -98,9 +101,9 @@
 
 		This section presents the decomposition used and some notation.\\	
 		
-		We denote by $A_{n}(m_1,m_2)$ the class
+		We denote by $\Av{n}{213,231}$ the class
 		of permutation of size $n$ which avoid 
-		the motif $m_1$ and $m_2$. 
+		the motif $213$ and $231$. 
 		$\Perm{n}$ the permutation of size $n$.
 		$[n]$ the set $\{1,2,...,n\}.$
 		For a permutation p, let $p[i:j]$, 
@@ -109,14 +112,14 @@
 		and $p[i:]$ be the suffix starting at index $i$.\\
 		
 		Given two permutations
-		$\pmotif$ and $\ptext$
+		$\pmotif$ and $\ptext$,
 		we say that $\pmotif$
 		is a motif/match of
 		$\ptext$,
 		if and only if
 		there exists 
 		and increasing function 
-		$\sigma:[|\pmotif|]->[|\pmotif|]$
+		$\sigma:[|\pmotif|] \rightarrow [|\pmotif|]$
 		such that : $\forall i$ and 
 		$\forall j$ $i,j \in |\pmotif| $
 		if $\pmotif(i)<\pmotif(j)$
@@ -130,7 +133,7 @@
 		An element $i$ of a permutation $p$ is an up step if and only if $i$ is not the last element and $p(i)<p(i+1)$.
 		An element $i$ of a permutation $p$ is a down step if and only if $i$ is not the last element and $p(i)>p(i+1)$.	
 		By convention the last element is mapped as the second to last element.\\ 	
-		Formally a Stripe is a function $\mathcal{S} : \Perm{n},[n] \to \{\dstep,\ustep\}$ define as :\\
+		Formally a Stripe is a function $\mathcal{S} : [n] \to \{\dstep,\ustep\}$ define as :\\
 		$ \mathcal{S}(p,i) = \left\{ 
 		  \begin{array}{l l}
 		    \ustep & \quad \text{if $1 \leq i<n$ and $p(i+1)-p(i)>0$ }\\
@@ -169,8 +172,7 @@
 		For example, the stripe $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1,\ustep_2)$ is a motif of  the stripe \\
 		$(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6,\ustep_7)$ ,
 		because we can match \\
-		$(\dstep_1,\dstep_2,\dstep_3,\dstep_4)$ to $(\dstep_1,\dstep_2,\dstep_3,\dstep_4)$ and $(\ustep_1,\ustep_2)$ to 
-		$(\ustep_5,\ustep_6)$.
+		$(\dstep_1,\dstep_2,\dstep_3,\dstep_4,(\ustep_1,\ustep_2)$ to $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_5,\ustep_6)$.
 		\begin{figure}[h!]
 			\begin{displaymath}
 				\xymatrix@=0.3cm{
@@ -190,8 +192,8 @@
 		A bivincular motif
 		is a motif with two set $\bmotif$,
 		the first set contains the first index 
-		of two consecutive index
-		and the second set contains the first index
+		of two consecutive indexes
+		and the second set contains the first indexes
 		of the two consecutive elements.
 		Formally, Let $\bmotif$ 
 		be a bivincular motif 
@@ -200,18 +202,18 @@
 		and $i$ is matched with $j$ in $\ptext$
 		then $i+1$ must be matched with $j+1$,
 		with the special case of $0$ and $|\pmotif|$ :
-		$0 \in \x$ then the first element of $\pmotif$
+		if $0 \in \x$ then the first element of $\pmotif$
 		must be matched with the first element of $\ptext$,
-		and $|\pmotif| \in \x$ then the last element of $\pmotif$
+		and if $|\pmotif| \in \x$ then the last element of $\pmotif$
 		must be matched with the last element of $\ptext$.
 		if $i \in \y$,
 		and $i$ is matched with $j$ in $\ptext$
 		then $i+1$ must be matched with $l$
 		such as $\ptext(l)=\ptext(j)+1$,
 		with the special case of $0$ and $|\pmotif|$ :
-		$0 \in \y$ then the minimal element of $\pmotif$
+		if $0 \in \y$ then the minimal element of $\pmotif$
 		must be matched with the minimal element of $\ptext$,
-		and $|\pmotif| \in \y$ then the maximal element of $\pmotif$
+		and if $|\pmotif| \in \y$ then the maximal element of $\pmotif$
 		must be matched with the maximal element of $\ptext$.		
 			
 	\section{Pattern Matching Problem With Text and Motif Avoiding (231,213)}
@@ -223,7 +225,7 @@
 		We first exhibit some properties of a stripe 
 		of a permutation avoiding (231,213).\\
 
-		\textbf{Lemma  \numl{firstelement} \thenum} If a permutation is in $\C{n}$ 
+		\textbf{Lemma  \numl{firstelement} \thenum} If a permutation is in $\Av{n}{}$ 
 		then the first element is either
 		the minimal or the maximal element.\\
 		
@@ -232,11 +234,11 @@
 		$p(1) \neq 1 $ and $p(1) \neq n$ then we have either
 		$p(1) ... n ... 1$ or $p(1) ... 1 ... n $, either the motif 231 or 213, which is not possible by hypothesis. $\Box$\\
 		
-		\textbf{Corollary  \num \thenum} A permutation $p \in \Perm{n}$ is in $\C{n}$ if and only if for $1 \leq i \leq n$ 
+		\textbf{Corollary  \num \thenum} A permutation $p \in \Perm{n}$ is in $\Av{n}{213,231}$ if and only if for $1 \leq i \leq n$, 
 		$p[i:]$ start either with the maximal element
 		or the minimal element of $p[i:]$.\\
 	
-		\textbf{Corollary \numl{stripe} \thenum}  If $p \in \C{n}$ its stripe can be define such as, \\
+		\textbf{Corollary \numl{stripe} \thenum}  If $p \in \Av{n}{213,231}$ its stripe can be define such as, \\
 		$\mathcal{S}(p,i) = \left\{ 
   		\begin{array}{l l}
    			\ustep & \quad \text{if $p(i)$ is the minimal element of $p[i:]$}\\    
@@ -245,10 +247,10 @@
 	 	\end{array} \right. 
 	 	$\\
 	 
-		\textbf{Lemma \numl{updown}  \thenum} Let $p \in \C{n}$,
+		\textbf{Lemma \numl{updown}  \thenum} Let $p \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$, 
 		$i<j$, 
-		$\mathcal{S}(p,i)=\ustep$
+		if $\mathcal{S}(p,i)=\ustep$
 		and $\mathcal{S}(p,j)=\dstep$
 		then $p(i)<p(j)$.\\ 
 		
@@ -259,14 +261,14 @@
 		
 		\textbf{Proof} By induction on the size of the permutation :
 		the proposition is true for the permutations $(1,2)$ and $(2,1)$.
-		Suppose the proposition true for $\C{n}$.
-		Let $p \in \C{n+1}$, 
+		Suppose the proposition true for $\Av{n}{213,231}$.
+		Let $p \in \Av{n}{213,231}$, 
 		we show that the proposition holds for $p$.
 		Let $p'$ be the permutation $p[2:]$.
-		$p' \in \C{n}$, so
+		$p' \in \Av{n}{213,231}$, so
 		every element of $p'$ verify our lemma (by induction).
 		We still need to compare the first element with the rest.
-		Except that the first element
+		But the first element
 		is the maximal (minimal) element of all the permutation 
 		(by Lemma \ref{firstelement}).
 		Moreover if the first element is the maximal (minimal)
@@ -275,10 +277,10 @@
 		for the first element.
 		$\Box$\\
 		
-		\textbf{Lemma \numl{upup} \thenum} Let $p \in \C{n}$,
+		\textbf{Lemma \numl{upup} \thenum} Let $p \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$, 
 		$i<j$, 
-		$\mathcal{S}(p,i)=\ustep$
+		if $\mathcal{S}(p,i)=\ustep$
 		and $\mathcal{S}(p,j)=\ustep$
 		then $p(i)<p(j)$.\\ 
 		
@@ -309,10 +311,10 @@
 %		$\Box$\\
 
 		
-		\textbf{Lemma \numl{downdown} \thenum}  Let $p \in \C{n}$,
+		\textbf{Lemma \numl{downdown} \thenum}  Let $p \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$,
 		$i<j$,
-		$\mathcal{S}(p,i)=\dstep$
+		if $\mathcal{S}(p,i)=\dstep$
 		and $\mathcal{S}(p,j)=\dstep$
 		then $p(i)>p(j)$.\\ 
 
@@ -342,7 +344,7 @@
 %		for the first element.
 %		$\Box$\\
 
-		\textbf{Proposition \numl{patternMatchingStripe} \thenum} Let $\ptext, \pmotif \in \C{n}$.
+		\textbf{Proposition \numl{patternMatchingStripe} \thenum} Let $\ptext, \pmotif \in \Av{n}{213,231}$.
 		$\pmotif$ is a motif of $\ptext$ if and only if the stripe of $\pmotif$ is a motif of the stripe of $\ptext$.\\
 		
 		\textbf{Proof} \\
@@ -352,18 +354,20 @@
 		$\pmotif$ so they have the same stripe.\\ 
 		$\Leftarrow$ 
 		Let $\ptext \in \Perm{n}$, 
-		$R_1$ be is stripe, 
+		$R_1$ be its stripe, 
 		$\pmotif \in \Perm{m}$
-		and $R_2$ is stripe.
+		and $R_2$ its stripe.
 		Let $\phi$ be the function
 		that match $R_2$ to $R_1$.
 		We define $\varphi$ as, 
 		$\forall x \in [m]$,
 		$\varphi(x) = \phi(x)$.
-		Suppose\\ $\exists x,y \in [|\pmotif|], \text{ $\pmotif(x)<\pmotif(y)$ 
-		and $\ptext(\varphi(x))>\ptext(\varphi(y))$ }$,
-		without lost of generality we can suppose that $x<y$
-		But :
+		Suppose that $\exists x,y \in [|\pmotif|]$, 
+		$\pmotif(x)<\pmotif(y)$ 
+		and $\ptext(\varphi(x))>\ptext(\varphi(y))$,
+		without lost of generality we can suppose that $x<y$,
+		Let see all the case possible that can make this 
+		hypothesis possible :
 		\begin{itemize}
 		
 			\item if $\pmotif(x)<\pmotif(y)$, 
@@ -373,10 +377,10 @@
 			then $\mathcal{S}(\ptext,\varphi(x))=\ustep$ and $\mathcal{S}(\ptext,\varphi(y))=\ustep$,
 			(the match are also increasing).
 			As $x<y$ and as $\varphi$ is an increasing function, 
-			so $\varphi(x) < \varphi(y)$.
+			$\varphi(x) < \varphi(y)$.
 			And thus, by \textbf{Lemma \ref{upup}},
 			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
-			which contradict our hypothesis,
+			Which contradict our hypothesis,
 			so this case is not possible.
 		
 			\item if $\pmotif(x)<\pmotif(y)$, 
@@ -384,10 +388,10 @@
 			and $\mathcal{S}(\pmotif,y)=\dstep$
 			then $\mathcal{S}(\ptext,\varphi(x))=\ustep$ and $\mathcal{S}(\ptext,\varphi(y))=\dstep$,
 			As $x<y$ and as $\varphi$ is an increasing function, 
-			so $\varphi(x) < \varphi(y)$.
+			$\varphi(x) < \varphi(y)$.
 			And thus, by \textbf{Lemma \ref{updown}},
 			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
-			which contradict our hypothesis,
+			Which contradict our hypothesis,
 			so this case is not possible.			
 
 			\item if $\pmotif(x)>\pmotif(y)$, 
@@ -395,10 +399,10 @@
 			and $\mathcal{S}(\pmotif,y)=\dstep$
 			then $\mathcal{S}(\ptext,\varphi(x))=\dstep$ and $\mathcal{S}(\ptext,\varphi(y))=\dstep$,
 			As $x<y$ and as $\varphi$ is an increasing function, 
-			so $\varphi(y) < \varphi(x)$.
+			$\varphi(y) < \varphi(x)$.
 			And thus, by \textbf{Lemma \ref{downdown}},
 			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
-			which contradict our hypothesis,
+			Which contradict our hypothesis,
 			so this case is not possible.
 			
 			\item if $\pmotif(x)>\pmotif(y)$, 
@@ -406,15 +410,15 @@
 			and $\mathcal{S}(\pmotif,y)=\ustep$
 			then $\mathcal{S}(\ptext,\varphi(x))=\dstep$ and $\mathcal{S}(\ptext,\varphi(y))=\ustep$,
 			As $x<y$ and as $\varphi$ is an increasing function, 
-			so $\varphi(y) < \varphi(x)$.
+			$\varphi(y) < \varphi(x)$.
 			And thus, by \textbf{Lemma \ref{updown}},
 			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
-			which contradict our hypothesis,
+			Which contradict our hypothesis,
 			so this case is not possible.$\Box$
 			
 			
 		\end{itemize}
-		So this is not possible. $\Box$\\
+		So our hypothesis is not realisable.So our assertion is true. $\Box$\\
 		
 		\textbf{Proposition  \num \thenum} Let $\pmotif$ and $\ptext$
 		be two permutations avoiding (231,213), 
@@ -422,13 +426,13 @@
 		appear in $\ptext$.\\	
 		
 		\textbf{Proof}	
-		To solve the permutation pattern for a permutation in $\C{n}$, 
-		we find a match in the stripe of the permutation and the pattern.
+		To solve the permutation pattern for a permutation in $\Av{n}{213,231}$, 
+		we find a find a match of the stripe of the pattern in the stripe of the text.
 		This can be done linearly by a greedy algorithm, 
 		by matching a step whenever it is possible.
 		And thank to the definition of the definition of a stripe in \textbf{Corollary \ref{stripe}},
 		we do not have to compute the stripe advance.
-		Therefore we have an (online) algorithm.$\Box$\\
+		Therefore we have an linear (online) algorithm.$\Box$\\
 				
 
 		
@@ -522,7 +526,7 @@
 			we decompose the motif into
 			adjacent element of same step in the stripe 
 			(called such sequence segment),
-			and label them form left to right
+			and label them form right to left
 			with increasing number.
 			Let's call this decomposition $S$.
 			For each segment, we call important 
@@ -534,24 +538,7 @@
 			$S(4)=(12,11,10)$ and $IMP(4)=12$.\\
 			
 			Given a up step (down step) segment $S(s)$,
-			if we want to match 
-			$\pmotif[IMP(s):]$
-			with $\ptext[i:]$
-			and match $IMP(s)$
-			with $i$.
-			The optimal way
-			of matching
-			$\pmotif[IMP(s-1):]$
-			is to choose the
-			minimal (maximal) element $\ptext(e)$
-			such that :
-			(1) $\pmotif[IMP(s-1):]$ is matched with $\ptext[e:]$
-			and $IMP(s-1)$ is matched with $e$.
-			(2) The segment $S(s)$ is matched with $\ptext[i:e-1]$
-			and $IMP(s)$ is matched with $i$.
-			(3) Every elements of the match of (2),
-			is inferior to the minimal (maximal) element of the match of (1).
-			In other word if we want to
+			if we want to
 			match the suffix $s_ns_{s-1}...s_1$
 			starting with an up step (down step),
 			and given that we know every
@@ -563,7 +550,24 @@
 			the maximal (minimal)
 			element of the match
 			and that allow a match
-			of $s_n$.
+			of $s_n$.			
+			In other word if we want to match 
+			$\pmotif[IMP(s):]$
+			with $\ptext[i:]$
+			and match $IMP(s)$
+			with $i$.
+			The optimal way
+			of matching
+			$\pmotif[IMP(s-1):]$
+			is to choose the
+			minimal (maximal) element $\ptext(i')$
+			such that :
+			(1) $\pmotif[IMP(s-1):]$ is matched with $\ptext[i':]$
+			and $IMP(s-1)$ is matched with $e$.
+			(2) The segment $S(s)$ is matched with $\ptext[i:i'-1]$
+			and $IMP(s)$ is matched with $i$.
+			(3) Every elements of the match of (2),
+			is inferior (superior) to the minimal (maximal) element of the match of (1).
 			Indeed when we will 
 			match $s_{n+1}s_ns_{s-1}...s_1$
 			more element will be available,
