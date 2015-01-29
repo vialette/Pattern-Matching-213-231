@@ -1,0 +1,1038 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+\usepackage[all]{xy}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+% le set avoid 231,213
+\newcommand{\C}[1]{A_{#1}(231,213)}
+
+% le set de toutes les permitaton
+\newcommand{\Perm}[1]{\mathcal{S}_{#1}}
+
+% permutation text
+\newcommand{\ptext}{\pi}
+
+% permutation motif
+\newcommand{\pmotif}{\sigma}
+
+
+\newcommand{\x}{X}
+\newcommand{\y}{Y}
+\newcommand{\bmotif}{(\sigma,\x,\y)}
+
+% compteur pour les proposition, definition etc...
+\newcounter{num}
+\setcounter{num}{0}
+\newcommand{\num}{\stepcounter{num} }
+\newcommand{\numl}[1]{\refstepcounter{num}\label{#1}}
+
+%downstep
+\newcommand{\dstep}{d}
+
+%upstep
+\newcommand{\ustep}{u}
+
+\title{Pattern matching for (231,231) avoiding permutations}
+\author{Both Emerite NEOU, Romeo RIZZI}
+\date{}
+
+
+
+\begin{document}
+	\maketitle 
+	\tableofcontents
+	
+	\abstract{
+	  	Given two permutations, 
+	  	a text $\ptext$ 
+	  	and a motif $\pmotif$,
+	  	the \textbf{permutation pattern problem}
+	  	asks if there exists a normalized subsequence of $\ptext$
+	  	which equals $\pmotif$.
+	  	We study this problem for the permutation 
+	  	avoiding (231,231).
+	  	 
+	} 
+
+	\section{Introduction}
+
+	
+%	The permutation pattern problem asks if there exists a normalized subsequence of a text $\ptext$ which equals to a motif $\pmotif$.
+%	If so we write $\pmotif \preceq \ptext$.
+%	If not we say that $\ptext$ \textbf{avoid} $\pmotif$.
+%	This was first introduced by Knuth \cite{Knuth:1997:ACP:260999}
+%	who proves that permutation sortable by stacks
+%	avoid the motif $231$. 
+%	The problem is NP-hard in general,
+%	but for some classes of permutation,
+%	polynomial time solution exists.
+%	For instance the separable permutation \cite{Bose93patternmatching}.
+%	We contribute studying this problem 
+%	and related one for the class of permutation avoiding (231,213). 
+%	This is interesting because this class is in linear bijection between the classes of (123,132),(132,213) and (132,213)
+%	avoiding permutation, and all the classes obtainable by reversal or/and
+%	complementation (see \cite{Simion1985383}).\\
+%	 
+%
+%	
+%	This paper is organized as follows.
+%	Section 2 presents the needed definition.
+%	Section 3 solves the permutation pattern problem with
+%	(213,231) avoiding permutations.
+%	Section 4 focus on the problem the
+%	related problem of computing a longest permutation avoiding (213,231).
+%	Finally, section 5 summarizes 
+%	results for related problems. 
+	
+
+	
+	
+
+	
+	\section{Definition}
+
+		This section presents the decomposition used and some notation.\\	
+		
+		We denote by $A_{n}(m_1,m_2)$ the class
+		of permutation of size $n$ which avoid 
+		the motif $m_1$ and $m_2$. 
+		$\Perm{n}$ the permutation of size $n$.
+		$[n]$ the set $\{1,2,...,n\}.$
+		For a permutation p, let $p[i:j]$, 
+		be the permutation from element $i$ to $j$,
+		$p[:j]$ be the prefix ending at index $j$
+		and $p[i:]$ be the suffix starting at index $i$.\\
+		
+		Given two permutations
+		$\pmotif$ and $\ptext$
+		we say that $\pmotif$
+		is a motif/match of
+		$\ptext$,
+		if and only if
+		there exists 
+		and increasing function 
+		$\sigma:[|\pmotif|]->[|\pmotif|]$
+		such that : $\forall i$ and 
+		$\forall j$ $i,j \in |\pmotif| $
+		if $\pmotif(i)<\pmotif(j)$
+		then $\ptext(\sigma(i))<\ptext(\sigma(j))$.\\
+		
+		%\subsection{Stripe}
+		
+		A \textbf{Stripe} of a permutation
+		 is a mapping into \textbf{up step} (noted $\ustep$) 
+		or a \textbf{down step} (noted $\dstep$).
+		An element $i$ of a permutation $p$ is an up step if and only if $i$ is not the last element and $p(i)<p(i+1)$.
+		An element $i$ of a permutation $p$ is a down step if and only if $i$ is not the last element and $p(i)>p(i+1)$.	
+		By convention the last element is mapped as the second to last element.\\ 	
+		Formally a Stripe is a function $\mathcal{S} : \Perm{n},[n] \to \{\dstep,\ustep\}$ define as :\\
+		$ \mathcal{S}(p,i) = \left\{ 
+		  \begin{array}{l l}
+		    \ustep & \quad \text{if $1 \leq i<n$ and $p(i+1)-p(i)>0$ }\\
+		    \dstep & \quad \text{if $1 \leq i<n$ and $p(i+1)-p(i)<0$ }\\
+		     \mathcal{S}(p,n-1) & \quad \text{if $i=n$}\\
+		  \end{array} \right. $\\
+		  
+		By extension we define  $\mathcal{S} : \Perm{n} \to \{\dstep,\ustep\}^{n}$ such as :
+		$\mathcal{S}(p)=\mathcal{S}(p,1)\mathcal{S}(p,2)...\mathcal{S}(p,n)$.
+		We call $\mathcal{S}(p)$ the stripe of $p$.
+		For example the stripe of the permutation $(12,11,10,1,2,3,4,9,8,5,6,7)$, 
+		is $\dstep,\dstep,\dstep,\ustep,\ustep,\ustep,\ustep,\dstep,\dstep,\ustep,\ustep,\ustep$.\\
+		  
+%		\textbf{Corollary \num} The stripe function
+%		for $\C{n}$ are in bijection with with $\{\ustep,\dstep\}^{n-1}$.\\
+	  			 		  	
+%		\textbf{Proposition \numl{updown}} Let $p \in \C{n}$,
+%		$\forall x,y \in [n]$, 
+%		$\mathcal{S}(p,x)=\ustep$
+%		and $\\mathcal{S}(p,y)=\dstep$
+%		then $p(x)<p(y)$.\\
+		
+
+		
+		Formally we say that the stripe of $\pmotif \in \Perm{m}$ is a motif
+		of a stripe of $\ptext \in \Perm{n}$ if and only if there exist an increasing function $\phi : [|\pmotif|] \rightarrow [|\pmotif|]$
+		such that : \\
+		$\forall i \in [|\pmotif|]$, $\mathcal{S}(\pmotif,i) = \mathcal{S}(\ptext,\phi(i))$\\
+		If a stripe $R_2$ is a motif of a stripe $R_1$,
+		it means that there exists
+		a subsequence of $R_1$ such as
+		this sequence is equal to $R_2$.
+%		We say that a set is a match 
+%		if and only if there exists a function such as define above
+%		and the set is the set of image of this function.\\
+		For example, the stripe $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1,\ustep_2)$ is a motif of  the stripe \\
+		$(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6,\ustep_7)$ ,
+		because we can match \\
+		$(\dstep_1,\dstep_2,\dstep_3,\dstep_4)$ to $(\dstep_1,\dstep_2,\dstep_3,\dstep_4)$ and $(\ustep_1,\ustep_2)$ to 
+		$(\ustep_5,\ustep_6)$.
+		\begin{figure}[h!]
+			\begin{displaymath}
+				\xymatrix@=0.3cm{
+					\dstep_1 \ar[dd] & \dstep_2 \ar[dd] & \dstep_3 \ar[dd] & \dstep_4\ar[ddrrrr]  & \ustep_1 \ar[ddrrrrr]& \ustep_2 \ar[ddrrrrr]  \\
+					\\
+					\dstep_1 & \dstep_2 & \dstep_3 & \ustep_1 & \ustep_2 & \ustep_3 & \ustep_4 & \dstep_4 & \dstep_5 & \ustep_5 & \ustep_6 & \ustep_7 & \\
+				}
+			\end{displaymath}     
+		\end{figure}		
+		But the stripe $(\dstep,\ustep,\dstep,\dstep,\dstep)$ is not a motif of the stripe\\ $(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6,\ustep_7)$.\\
+		
+		A \textbf{bivincular motif} generalize
+		a motif. 
+		A bivincular motif allows 
+		to force element to be adjacent in position
+		or/and in value.
+		A bivincular motif
+		is a motif with two set $\bmotif$,
+		the first set contains the first index 
+		of two consecutive index
+		and the second set contains the first index
+		of the two consecutive elements.
+		Formally, Let $\bmotif$ 
+		be a bivincular motif 
+		and $\ptext$ a permutation.
+		if $i \in \x$,
+		and $i$ is matched with $j$ in $\ptext$
+		then $i+1$ must be matched with $j+1$,
+		with the special case of $0$ and $|\pmotif|$ :
+		$0 \in \x$ then the first element of $\pmotif$
+		must be matched with the first element of $\ptext$,
+		and $|\pmotif| \in \x$ then the last element of $\pmotif$
+		must be matched with the last element of $\ptext$.
+		if $i \in \y$,
+		and $i$ is matched with $j$ in $\ptext$
+		then $i+1$ must be matched with $l$
+		such as $\ptext(l)=\ptext(j)+1$,
+		with the special case of $0$ and $|\pmotif|$ :
+		$0 \in \y$ then the minimal element of $\pmotif$
+		must be matched with the minimal element of $\ptext$,
+		and $|\pmotif| \in \y$ then the maximal element of $\pmotif$
+		must be matched with the maximal element of $\ptext$.		
+			
+	\section{Pattern Matching Problem With Text and Motif Avoiding (231,213)}
+
+		In this section we focus 
+		on the problem of pattern matching if
+		both the motif and the text
+		avoid (231,213).
+		We first exhibit some properties of a stripe 
+		of a permutation avoiding (231,213).\\
+
+		\textbf{Lemma  \numl{firstelement} \thenum} If a permutation is in $\C{n}$ 
+		then the first element is either
+		the minimal or the maximal element.\\
+		
+		\textbf{Proof} Suppose that we have
+		$p \in \mathcal{S}_{n}$, and
+		$p(1) \neq 1 $ and $p(1) \neq n$ then we have either
+		$p(1) ... n ... 1$ or $p(1) ... 1 ... n $, either the motif 231 or 213, which is not possible by hypothesis. $\Box$\\
+		
+		\textbf{Corollary  \num \thenum} A permutation $p \in \Perm{n}$ is in $\C{n}$ if and only if for $1 \leq i \leq n$ 
+		$p[i:]$ start either with the maximal element
+		or the minimal element of $p[i:]$.\\
+	
+		\textbf{Corollary \numl{stripe} \thenum}  If $p \in \C{n}$ its stripe can be define such as, \\
+		$\mathcal{S}(p,i) = \left\{ 
+  		\begin{array}{l l}
+   			\ustep & \quad \text{if $p(i)$ is the minimal element of $p[i:]$}\\    
+   			\dstep & \quad \text{if $p(i)$ is the maximal element of $p[i:]$}\\
+  		 	\mathcal{S}(p,n-1) & \quad \text{if $i=n$}\\
+	 	\end{array} \right. 
+	 	$\\
+	 
+		\textbf{Lemma \numl{updown}  \thenum} Let $p \in \C{n}$,
+		$\forall i,j \in [n]$, 
+		$i<j$, 
+		$\mathcal{S}(p,i)=\ustep$
+		and $\mathcal{S}(p,j)=\dstep$
+		then $p(i)<p(j)$.\\ 
+		
+		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation p,
+		if $i$ is a up step and
+		if $j$ is a down step
+		then $p(i)<p(j)$.\\
+		
+		\textbf{Proof} By induction on the size of the permutation :
+		the proposition is true for the permutations $(1,2)$ and $(2,1)$.
+		Suppose the proposition true for $\C{n}$.
+		Let $p \in \C{n+1}$, 
+		we show that the proposition holds for $p$.
+		Let $p'$ be the permutation $p[2:]$.
+		$p' \in \C{n}$, so
+		every element of $p'$ verify our lemma (by induction).
+		We still need to compare the first element with the rest.
+		Except that the first element
+		is the maximal (minimal) element of all the permutation 
+		(by Lemma \ref{firstelement}).
+		Moreover if the first element is the maximal (minimal)
+		it will mapped to an down step (up step).
+		So the proposition is also true
+		for the first element.
+		$\Box$\\
+		
+		\textbf{Lemma \numl{upup} \thenum} Let $p \in \C{n}$,
+		$\forall i,j \in [n]$, 
+		$i<j$, 
+		$\mathcal{S}(p,i)=\ustep$
+		and $\mathcal{S}(p,j)=\ustep$
+		then $p(i)<p(j)$.\\ 
+		
+		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation p,
+		if $i$ is a up step 
+		and $j$ is a up step
+		and $ i<j$
+		then $p(i)<p(j)$.\\
+		
+		%\textbf{Proof} Same as before.\\
+
+%		\textbf{Proof} By induction on the size of the permutation :
+%		the proposition is true for the permutations $(1,2)$ and $(2,1)$.
+%		Suppose the proposition true for $\C{n}$.
+%		Let $p \in \C{n+1}$, 
+%		we show that the proposition holds for $p$.
+%		Let $p'$ be the permutation $p[2:]$.
+%		$p' \in \C{n}$, so
+%		every element of $p'$ verify our lemma (by induction).
+%		We still need to compare the first element with the rest.
+%		Except that the first element
+%		is the maximal (minimal) element of all the permutation 
+%		(by Corollary \ref{stripe}).
+%		Moreover if the first element is the maximal (minimal)
+%		it will mapped to an down step (up step).
+%		So the proposition is also true
+%		for the first element.
+%		$\Box$\\
+
+		
+		\textbf{Lemma \numl{downdown} \thenum}  Let $p \in \C{n}$,
+		$\forall i,j \in [n]$,
+		$i<j$,
+		$\mathcal{S}(p,i)=\dstep$
+		and $\mathcal{S}(p,j)=\dstep$
+		then $p(i)>p(j)$.\\ 
+
+		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation p,
+		if $i$ is a down step
+		and $j$ is a down step
+		and $ i<j$
+		then $p(i)>p(j)$.\\
+
+		%\textbf{Proof} Same as before.\\
+		
+%		\textbf{Proof} By induction on the size of the permutation :
+%		the proposition is true for the permutations $(1,2)$ and $(2,1)$.
+%		Suppose the proposition true for $\C{n}$.
+%		Let $p \in \C{n+1}$, 
+%		we show that the proposition holds for $p$.
+%		Let $p'$ be the permutation $p[2:]$.
+%		$p' \in \C{n}$, so
+%		every element of $p'$ verify our lemma (by induction).
+%		We still need to compare the first element with the rest.
+%		Except that the first element
+%		is the maximal (minimal) element of all the permutation 
+%		(by Corollary \ref{stripe}).
+%		Moreover if the first element is the maximal (minimal)
+%		it will mapped to an down step (up step).
+%		So the proposition is also true
+%		for the first element.
+%		$\Box$\\
+
+		\textbf{Proposition \numl{patternMatchingStripe} \thenum} Let $\ptext, \pmotif \in \C{n}$.
+		$\pmotif$ is a motif of $\ptext$ if and only if the stripe of $\pmotif$ is a motif of the stripe of $\ptext$.\\
+		
+		\textbf{Proof} \\
+		$\Rightarrow$ Suppose that $\pmotif$ is a motif of $\ptext$
+		by subsequence $s$.
+		By definition $s$ normalized is equal to
+		$\pmotif$ so they have the same stripe.\\ 
+		$\Leftarrow$ 
+		Let $\ptext \in \Perm{n}$, 
+		$R_1$ be is stripe, 
+		$\pmotif \in \Perm{m}$
+		and $R_2$ is stripe.
+		Let $\phi$ be the function
+		that match $R_2$ to $R_1$.
+		We define $\varphi$ as, 
+		$\forall x \in [m]$,
+		$\varphi(x) = \phi(x)$.
+		Suppose\\ $\exists x,y \in [|\pmotif|], \text{ $\pmotif(x)<\pmotif(y)$ 
+		and $\ptext(\varphi(x))>\ptext(\varphi(y))$ }$,
+		without lost of generality we can suppose that $x<y$
+		But :
+		\begin{itemize}
+		
+			\item if $\pmotif(x)<\pmotif(y)$, 
+			$\mathcal{S}(\pmotif,x)=\ustep$ 
+			and $\mathcal{S}(\pmotif,y)=\ustep$
+			(if x and y are increasing in $\pmotif$),
+			then $\mathcal{S}(\ptext,\varphi(x))=\ustep$ and $\mathcal{S}(\ptext,\varphi(y))=\ustep$,
+			(the match are also increasing).
+			As $x<y$ and as $\varphi$ is an increasing function, 
+			so $\varphi(x) < \varphi(y)$.
+			And thus, by \textbf{Lemma \ref{upup}},
+			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
+			which contradict our hypothesis,
+			so this case is not possible.
+		
+			\item if $\pmotif(x)<\pmotif(y)$, 
+			$\mathcal{S}(\pmotif,x)=\ustep$ 
+			and $\mathcal{S}(\pmotif,y)=\dstep$
+			then $\mathcal{S}(\ptext,\varphi(x))=\ustep$ and $\mathcal{S}(\ptext,\varphi(y))=\dstep$,
+			As $x<y$ and as $\varphi$ is an increasing function, 
+			so $\varphi(x) < \varphi(y)$.
+			And thus, by \textbf{Lemma \ref{updown}},
+			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
+			which contradict our hypothesis,
+			so this case is not possible.			
+
+			\item if $\pmotif(x)>\pmotif(y)$, 
+			$\mathcal{S}(\pmotif,x)=\dstep$ 
+			and $\mathcal{S}(\pmotif,y)=\dstep$
+			then $\mathcal{S}(\ptext,\varphi(x))=\dstep$ and $\mathcal{S}(\ptext,\varphi(y))=\dstep$,
+			As $x<y$ and as $\varphi$ is an increasing function, 
+			so $\varphi(y) < \varphi(x)$.
+			And thus, by \textbf{Lemma \ref{downdown}},
+			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
+			which contradict our hypothesis,
+			so this case is not possible.
+			
+			\item if $\pmotif(x)>\pmotif(y)$, 
+			$\mathcal{S}(\pmotif,x)=\dstep$ 
+			and $\mathcal{S}(\pmotif,y)=\ustep$
+			then $\mathcal{S}(\ptext,\varphi(x))=\dstep$ and $\mathcal{S}(\ptext,\varphi(y))=\ustep$,
+			As $x<y$ and as $\varphi$ is an increasing function, 
+			so $\varphi(y) < \varphi(x)$.
+			And thus, by \textbf{Lemma \ref{updown}},
+			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
+			which contradict our hypothesis,
+			so this case is not possible.$\Box$
+			
+			
+		\end{itemize}
+		So this is not possible. $\Box$\\
+		
+		\textbf{Proposition  \num \thenum} Let $\pmotif$ and $\ptext$
+		be two permutations avoiding (231,213), 
+		we can decide in linear time if $\pmotif$ 
+		appear in $\ptext$.\\	
+		
+		\textbf{Proof}	
+		To solve the permutation pattern for a permutation in $\C{n}$, 
+		we find a match in the stripe of the permutation and the pattern.
+		This can be done linearly by a greedy algorithm, 
+		by matching a step whenever it is possible.
+		And thank to the definition of the definition of a stripe in \textbf{Corollary \ref{stripe}},
+		we do not have to compute the stripe advance.
+		Therefore we have an (online) algorithm.$\Box$\\
+				
+
+		
+
+			
+%		\subsection{With Motif Avoiding (231,213)}	
+%		
+%			\textbf{Proposition \num} Let $\pmotif$, $\ptext$ 
+%			be two permutation,
+%			with  $\pmotif$ a permutation avoiding (231,213), 
+%			we can decide in $O(|\pmotif|*|\ptext|^3)$ time
+%			and $O(|\ptext|^3) space$
+%			if $\pmotif$ 
+%			appear in $\ptext$.\\	
+%
+%			\textbf{Proof}
+%			We consider the following problem :\\
+%			
+%			Given a motif $\pmotif$ avoiding $(231,213)$,
+%			a text $\ptext$, $i$,$j$ , $i<j$.\\
+%			
+%			$\mathbb{P}_{\pmotif,\ptext,min,max}(i,j)= \left\{ 
+%				\begin{array}{l l}
+%					true & \text{If the sufixe of $\pmotif$ starting at $i$}\\
+%						& \text{is a pattern of the suffix of $\ptext$} \\
+%						& \text{with every element in $[min,max]$}\\
+%		
+%					false & otherwise\\
+%				\end{array} \right.$\\
+%		
+%			$\mathbb{P}_{\pmotif,\ptext,min,max}$ is closed under induction. 
+%			it can be
+%			solved by means of the following relations:\\
+%			
+%			
+%			\textbf{BASE :} \\
+%			$\mathbb{P}_{\pmotif,\ptext,min,max}(|\pmotif|,j)= \left\{ 
+%					\begin{array}{l l}
+%						true & \text{if $min < \ptext(j) < max$
+%						}\\
+%						false & otherwise\\
+%					\end{array} \right. $\\	
+%		
+%			\textbf{STEP :} \\
+%			$\mathbb{P}_{\pmotif,\ptext,min,max}(i,j)= \left\{ 
+%					\begin{array}{l l}
+%						False & \text{if $\ptext(j)<min$ or $max<\ptext(j)$}\\
+%						\bigcup_{j<k}\mathbb{P}_{\pmotif,\ptext,t(j),max}(i+1,k) 
+%							& \text{if $\\mathcal{S}(\pmotif,i)=\ustep$
+%							}\\
+%						\bigcup_{j<k}\mathbb{P}_{\pmotif,\ptext,min,t(j)}(i+1,k) 
+%							& \text{if $\\mathcal{S}(\pmotif,i)=\dstep$
+%							}\\
+%					\end{array} \right. $\\
+%			At each step, 
+%			we are match the current element of $\pmotif$ ($\pmotif(i)$)
+%			with the current element of $\ptext$ ($\ptext(j)$), if possible.
+%			then we are match the rest of $\pmotif$ with 
+%			every suffixes $\ptext$ starting after $j$.
+%			Clearly there is a match if and only if 	$\bigcup_{0<k<|\ptext|,0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,t(j)}(0,k)$
+%			is true.   
+%			This implies a $O(|\pmotif|*|\ptext|^3)$ time
+%			and $O(|\ptext|^3) space$ algorithm.\\ 
+
+		
+		\section{Pattern Matching With Motif Avoiding (231,213)}	
+
+			\textbf{Proposition  \num \thenum} Let $\pmotif$, $\ptext$ 
+			be two permutation,
+			with  $\pmotif$ a permutation avoiding (231,213), 
+			we can decide in $O(|\pmotif|*|\ptext|^2)$ time
+			and $O(|\pmotif|*|\ptext|^2)$ space
+			if $\pmotif$ 
+			is a motif of $\ptext$.\\
+			
+%			\textbf{Proof}
+%			The main point is that
+%			if we match a up step (down step) element $i_{\pmotif}$ of the motif
+%			with an element $i_{\ptext}$ of the text,
+%			the optimal way of matching
+%			the first previous up step (down step)
+%			that appear before an down step (up step)
+%			is to choose the
+%			maximal (minimal) element possible.
+%			Indeed if we do not take
+%			the maximal (minimal) element,
+%			we may prevent some element
+%			in the future matching.\\
+			
+			For the algorithm we introduce a decomposition,
+			we decompose the motif into
+			adjacent element of same step in the stripe 
+			(called such sequence segment),
+			and label them form left to right
+			with increasing number.
+			Let's call this decomposition $S$.
+			For each segment, we call important 
+			the leftmost element denoted by $IMP$.
+			For example, given the motif $(12,11,10,1,2,3,4,9,8,5,6,7)$,
+			$S(1)=(5,6,7)$, $IMP(1)=5$, 
+			$S(2)=(9,8)$, $IMP(2)=9$, 
+			$S(3)=(1,2,3,4)$, $IMP(3)=1$, 
+			$S(4)=(12,11,10)$ and $IMP(4)=12$.\\
+			
+			Given a up step (down step) segment $S(s)$,
+			if we want to match 
+			$\pmotif[IMP(s):]$
+			with $\ptext[i:]$
+			and match $IMP(s)$
+			with $i$.
+			The optimal way
+			of matching
+			$\pmotif[IMP(s-1):]$
+			is to choose the
+			minimal (maximal) element $\ptext(e)$
+			such that :
+			(1) $\pmotif[IMP(s-1):]$ is matched with $\ptext[e:]$
+			and $IMP(s-1)$ is matched with $e$.
+			(2) The segment $S(s)$ is matched with $\ptext[i:e-1]$
+			and $IMP(s)$ is matched with $i$.
+			(3) Every elements of the match of (2),
+			is inferior to the minimal (maximal) element of the match of (1).
+			In other word if we want to
+			match the suffix $s_ns_{s-1}...s_1$
+			starting with an up step (down step),
+			and given that we know every
+			match of $s_{s-1}...s_1$,
+			the optimal way of matching
+			$s_{s-1}...s_1$
+			is to choose the match
+			that minimize (maximize)
+			the maximal (minimal)
+			element of the match
+			and that allow a match
+			of $s_n$.
+			Indeed when we will 
+			match $s_{n+1}s_ns_{s-1}...s_1$
+			more element will be available,
+			because every matched 
+			element of $s_{n+1}$
+			must be superior (inferior)
+			to every matched element
+			of $s_{s-1}...s_1$.\\
+			  
+			
+			Consider the following problem :\\
+			$LM(s,i)$ = the optimal match of 	
+				$IMP(s-1)$ 
+				if there exists a match of $\pmotif[IMP(s):]$ 
+				with $\ptext[i:]$
+				and $IMP(s)$ 
+				is matched with element $i$.\\
+				
+			This problem can be solve by induction.\\
+			
+			\textbf{BASE :} \\
+			$LM(1,i)= \left\{ 
+					\begin{array}{l l}
+					
+						MIN_{i<i'}\{0\} \cup \{i' |\text{ $i'$ such that } & 
+						\text{if $\mathcal{S}(\pmotif,IMP(1))=\ustep$}
+						\\
+						\text{ $LIS(i,i',\ptext(i')) \leq S(1)$}\}&\\			
+
+
+						&\\
+						
+						MAX_{i<i'}\{0\} \cup \{i' |\text{ $i'$ such that } &
+						\text{if $\mathcal{S}(\pmotif,IMP(1))=\dstep$} \\
+						\text{ $LDS(i,i',\ptext(i')) \leq S(1)$}\}&\\			
+
+					\end{array} \right. $\\	
+		
+			\textbf{STEP :} \\
+			$LM(s,i)= \left\{ 
+					\begin{array}{l l}
+					
+						MIN \{0\} \cup  I(s,i) & 
+						\text{if $\mathcal{S}(\pmotif,IMP(s))=\ustep$}\\
+
+						
+						MAX \{0\} \cup  D(s,i) & 
+						\text{if $\mathcal{S}(\pmotif,IMP(s))=\ustep$}\\
+	
+						
+											
+					\end{array} \right. $\\
+					
+			With $I(s,i)$ ($D(s,i)$) the set of element such that
+			if  $e \in I(s,i)$ then there exists 
+			a match of $\pmotif[IMP(s-1):]$ in $\ptext[e:]$ and
+			there is a match of $s$ in $\ptext[i:e-1]$
+			with every element inferior (superior) to the match of  
+			$\pmotif[IMP(s-1):]$ in $\ptext[e:]$.
+			Formally we define $I(s,i)$ and $D(s,i)$ such as:\\
+			
+			$I(s,i)=\{e|\text{$i<e$ and $LM(s-1,e)\neq 0$}$ \\
+			\indent \indent \indent and  $LIS(i,e-1,IMP(s-1)) \leq S(s) \}$ \\
+			
+			$D(s,i)=\{e|\text{$i<e$ and $LM(s-1,e)\neq 0$}$ \\
+			\indent \indent \indent and  $LDS(i,e-1,IMP(s-1)) \leq S(s) \}$ \\
+					                       
+			With LIS(i,j,k) (LDS(i,j,k)) is the longest increasing (decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
+			with every element of this sequence
+			inferior (superior) to $k$. 
+			LIS and LDS can be computed in $O(|\ptext|^2*log(log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).\\
+			
+			In the base case, 
+			we are looking for a match for the first segment.
+			Each segment is either up step or down step.
+			If the segment is an up step (down step)
+			we have to find an increasing (decreasing) sequence
+			in the text of same size of longest that 
+			the size of the segment,
+			and to find the optimal solution 
+			we must assure that the last element
+			of the sequence is minimal (maximal).\\
+			For the induction, it is the same idea
+			except that we must assure that 
+			every element of the sequence is superior 
+			to the maximum element of the rest of the match
+			or inferior to the minimal element of the rest of the match
+			which is given by $LM$ of
+			the previous segment.\\
+			
+			There exists a match of $\pmotif$ in $\ptext$ if and only if
+			there exists a $LM(n,i)$ for $1 \leq i \leq |\ptext|$,
+			with $n$ the number of segment in $\pmotif$.
+			Moreover the basic case can be computed in $O(|\ptext|^2)$
+			and the induction on $O(|\pmotif|*|\ptext|^2)$ $\Box$.
+			
+					
+		\section{Pattern Matching With Bivincular Motif Avoiding (231,213)}	
+		
+			\textbf{Proposition \num \thenum } Let $\bmotif$ be a bivincular motif 
+			avoiding (231,213), 
+			$\ptext$ a permutation,
+			we can decide in $O(|\pmotif|*|\ptext|^3)$ time
+			and $O(|\ptext|^3)$ space
+			if $\pmotif$ 
+			appear in $\ptext$.\\	
+			
+			\textbf{Proof }
+			We consider the following problem :\\
+			
+			Given a bivincular motif $\bmotif$ avoiding $(231,213)$,
+			a text $\ptext$, $i$,$j$ , $i<j$.\\
+			
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(i,j)= \left\{ 
+				\begin{array}{l l}
+					true & \text{If $\pmotif[i:]$ is a motif of $\ptext[j:]$}\\
+						& \text{with every element in}\\ 
+						&[min,max]\\
+		
+					false & otherwise\\
+				\end{array} \right.$\\
+		
+		
+		
+		
+			$\mathbb{P}_{\pmotif,\ptext,min,max}$ is closed under induction. 
+			it can be
+			solved by means of the following relations:\\
+			
+			
+			\textbf{BASE :} \\
+			
+			if $|\pmotif| \notin  \x : $\\		
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|,j)= \left\{ 
+					\begin{array}{l l}
+						true & \text{if $min<\ptext(j)<max$
+						}\\
+						false & otherwise\\
+					\end{array} \right. $\\	
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|+1,j)= true $\\
+			
+			if $|\pmotif| \in  \x : $\\		
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|,|\ptext|)= \left\{ 
+					\begin{array}{l l}
+						true & \text{if $min<\ptext(|\ptext|)<max$
+						}\\
+						false & otherwise\\
+					\end{array} \right. $\\	
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|+1,|\ptext|)= true $\\
+			
+			if $|\pmotif| \notin  \x$  
+			and $|\pmotif| \in  \y$ 
+			and $\pmotif(|\pmotif|)$ is the maximal element: \\		
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|,j)= \left\{ 
+					\begin{array}{l l}
+						true & \text{if $min<\ptext(j)<max$
+						}\\
+						&\text{$\ptext(j)$ is the maximal element}\\
+						false & otherwise\\
+					\end{array} \right. $\\	
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|+1,j)= true $\\
+			
+			if $|\pmotif| \in  \x$  
+			and $|\pmotif| \in  \y$ 
+			and $\pmotif(|\pmotif|)$ is the maximal element: \\		
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|,|\ptext|)= \left\{ 
+					\begin{array}{l l}
+						true & \text{if $min<\ptext(|\ptext|)<max$
+						}\\
+						&\text{$\ptext(|\ptext|)$ is the maximal element}\\
+						false & otherwise\\
+					\end{array} \right. $\\	
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|+1,|\ptext|)= true $\\		
+								
+			\textbf{STEP :} \\		
+			$\mathbb{P}_{\bmotif,\ptext,min,max}(i,j)= \\ \left\{ 
+					\begin{array}{l l}
+					
+						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,k) 
+							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$
+							and $i \notin \x$}\\
+							& \text{and $i \notin \y$ }\\
+							& \text{and $min<\ptext(j)<max$} \\
+						&\\
+							
+						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,k) 
+							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+							& \text{and $i \notin \x$ and $i \notin \y$  }\\
+							& \text{and $min<\ptext(j)<max$} \\		
+						&\\
+							
+						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,j+1) 
+							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
+							& \text{and $i \in \x$ and $i \notin \y$}\\
+							& \text{and $min<\ptext(j)<max$} \\
+						&\\
+							
+						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,j+1) 
+							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+							& \text{and $i \in \x$ and $i \notin \y$ }\\
+							& \text{and $min<\ptext(j)<max$} \\
+														
+						&\\
+													
+						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,\ptext^{-1}(\ptext(j)+1)) 
+							&\text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
+							&\text{and $i \notin \x$ and $i \in \y$}\\
+							& \text{and $min<\ptext(j)<max$} \\
+							&\text{and $\ptext^{-1}(\ptext(j)+1)>j$}\\
+						&\\
+							
+						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,\ptext^{-1}(\ptext(j)-1)) 
+							&\text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+							&\text{and $i \notin \x$ and $i \in \y$ }\\	
+							& \text{and $min<\ptext(j)<max$} \\
+							&\text{and $\ptext^{-1}(\ptext(j)-1)>j$}\\
+						&\\
+						
+						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,j+1) 
+							&\text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
+							&\text{and $i \in \x$ and $i \in \y$}\\ 
+							&\text{and $\ptext(j)+1=\ptext(j+1)$ }\\
+							& \text{and $min<\ptext(j)<max$} \\
+						&\\
+							
+						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,j+1)
+							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+							&\text{and $i \in \x$ and $i \in \y$}\\ 
+							&\text{and $\ptext(j)-1=\ptext(j+1)$ }\\
+							& \text{and $min<\ptext(j)<max$} \\
+						&\\	
+						False & Otherwise\\																		
+					\end{array} \right. $\\				
+				
+%			$\mathbb{P}_{\bmotif,\ptext,min,max}(i,j)= \\ \left\{ 
+%					\begin{array}{l l}
+%						False & \text{if $\ptext(j)<min$ or $max<\ptext(j)$}\\
+%						&\\
+%					
+%						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,k) 
+%							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$
+%							and $i \notin \x$}\\
+%							& \text{and $i \notin \y$ }\\
+%						&\\
+%							
+%						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,k) 
+%							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+%							& \text{and $i \notin \x$ and $i \notin \y$  
+%							}\\
+%						&\\
+%							
+%						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,j+1) 
+%							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
+%							& \text{and $i \in \x$ and $i \notin \y$  
+%							}\\
+%						&\\
+%							
+%						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,j+1) 
+%							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+%							& \text{and $i \in \x$ and $i \notin \y$  
+%							}\\							
+%						&\\
+%							
+%						False 
+%						& \text{if $\ptext^{-1}(\ptext(j)+1)<j$}\\
+%						&\text{and $\mathcal{S}(\pmotif,i)=\ustep$}\\
+%						&\text{and $i \in \y$}\\
+%						&\\
+%							
+%						False 
+%						& \text{if $\ptext^{-1}(\ptext(j)-1)<j$}\\
+%						& \text{and $\mathcal{S}(\pmotif,i)=\dstep$}\\
+%						& \text{and $i \in \y$}\\	
+%						&\\
+%						
+%						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,\ptext^{-1}(\ptext(j)+1)) 
+%							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
+%							&\text{and $i \notin \x$ and $i \in \y$ 
+%							}\\
+%						&\\
+%							
+%						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,\ptext^{-1}(\ptext(j)-1)) 
+%							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+%							&\text{and $i \notin \x$ and $i \in \y$  
+%							}\\	
+%						&\\
+%						
+%						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,j+1) 
+%							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
+%							&\text{and $i \in \x$ and $i \in \y$}\\ 
+%							&\text{and $\ptext(j)+1=\ptext(j+1)$ 
+%							}\\
+%						&\\
+%							
+%						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,j+1)
+%							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+%							&\text{and $i \in \x$ and $i \in \y$}\\ 
+%							&\text{and $\ptext(j)-1=\ptext(j+1)$ 
+%							}\\		
+%						&\\	
+%						False & Otherwise\\																		
+%					\end{array} \right. $\\	
+						
+			At each step (i,j),
+			If $i \notin \x$ and $i \notin \y$,
+			we match the current element of $\pmotif$ ($\pmotif(i)$)
+			with the current element of $\ptext$ ($\ptext(j)$), if possible.
+			Then we match $\pmotif[i+1:]$ with 
+			every suffixes $\ptext$ starting after $j$.\\
+			
+			If $i \in \x$ and $i \notin \y$,
+			we match $\pmotif(i)$ to $\ptext(j)$, 
+			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
+			with the condition that
+			$\pmotif(i+1)$ is matched to $\ptext(j+1)$.\\
+			
+			If $i \notin \x$, $i \in \y$ and i is a down step,
+			we match $\pmotif(i)$ to $\ptext(j)$, 
+			then we match $\pmotif[i+1:]$ 
+			with $\ptext[\ptext^{-1}(\ptext(j)-1):]$
+			with the condition that
+			$\pmotif(i+1)$ is matched to the element $\ptext(j)-1$.\\						
+			
+			If $i \notin \x$, $i \in \y$ and i is an up step,
+			we match $\pmotif(i)$ to $\ptext(j)$, 
+			then we match $\pmotif[i+1:]$ 
+			with $\ptext[\ptext^{-1}(\ptext(j)+1):]$
+			with the condition that
+			$\pmotif(i+1)$ is matched to the element $\ptext(j)+1$.\\	
+
+			If $i \in \x$, $i \in \y$ and i is a down step,
+			we match $\pmotif(i)$ to $\ptext(j)$, 
+			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
+			with the condition that
+			$\pmotif(i+1)$ is matched to $\ptext(j+1)$,
+			and that $\ptext(j+1)=\pmotif(i)-1$.\\			
+
+			If $i \in \x$, $i \in \y$ and i is an up step,
+			we match $\pmotif(i)$ to $\ptext(j)$, 
+			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
+			with the condition that
+			$\pmotif(i+1)$ is matched to $\ptext(j+1)$,
+			and that $\ptext(j+1)=\pmotif(i)+1$.\\		
+					
+			There are two cases to consider searching for a match : \\
+			If $|\pmotif| \in \x$ there exists a match
+			if and only if\\ $\bigcup_{0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,t(j)}(0,0)$ is true.\\
+			
+			If $|\pmotif| \notin \x$ there exists a match if and only if \\	$\bigcup_{0<k<|\ptext|,0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,t(j)}(0,k)$
+			is true. $\Box$  			
+	
+	\section{Longest Subsequence Avoiding \\(231,213) for a Permutation}
+
+	In this section we present an algorithm to solve the problem
+	of the longest subsequence avoiding (231,213).
+	To do so, we need the set of element
+	that are matched to an up step and the
+	set of element that are matched to a down step.
+	For a permutation $p$ of size $n$, we define
+	$P(p) = \{i | \mathcal{S}(p,i) = \ustep \} \cup \{n\}$ and  
+	$M(p) = \{i | \mathcal{S}(p,i) = \dstep \} \cup \{n\}$.\\
+	
+	\textbf{Proposition  \numl{longestIncreasingSubsequence} \thenum}
+	If $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $p$ then
+	$P(p)$ is a longest increasing subsequence with last element at index $f$ and
+	$M(p)$ is a longest decreasing subsequence with last element at index $f$.\\
+
+	
+	\textbf{Proof} Let's $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $p$, 
+	suppose that $P(p)$ is not a longest increasing subsequence with last element at index $f$. Let's $s_m$ be a longest increasing subsequence with last element $f$.
+	Thus $|s_m|>P(p)$, clearly the sequence $s_m \cup M(p)$
+	is avoiding (213,231) and is longer than $s$ witch is not possible. 
+	The case for $M(p)$ follows the same idea.$\Box$\\
+
+	\textbf{Proposition  \num \thenum}
+	Given a permutation $p$, 
+	finding the longest subsequence avoiding (231,213)
+	can be done in $O(|\ptext|*log(log(|\ptext|)))$ time and in $O(n)$ space.\\
+	
+	\textbf{Proof} The proposition \ref{longestIncreasingSubsequence} lead to algorithm 
+	where we have to compute longest increasing and decreasing subsequence ending at every index. Then finding the maximum sum of longest increasing and decreasing subsequence ending at the same index.
+	Computing the longest increasing and decreasing can be done in $O(|\ptext|*log(log(|\ptext|)))$ time and $O(n)$ space (see \cite{Bespamyatnikh00enumeratinglongest}), then finding the maximum can be done in linear time.$\Box$\\
+
+
+
+	\section{Longest Subsequence Avoiding \\(231,213) Common for Two Permutation}
+	
+	In this section we present an algorithm to find 
+	the longest common subsequence avoiding (231,213) 
+	between two permutations.\\
+	
+	\textbf{Proposition \num \thenum } Given two permutation $p_1$ and $p_2$
+	The longest common subsequence
+	avoiding (231,213) can be solve in $O(|p_1|^3*|p_2|^3)$.\\
+	
+	\textbf{Proof } Consider the following problem, 
+	that compute the longest stripe common to $p_1$ and $p_2$.
+	Given two permutation $p_1$ and $p_2$.\\
+	
+	$S_{p_1,p_2}(min_1,max_1,min_2,min_2,i_1,i_2)$
+	= max$\{$ $|m|$ $|$ 
+	s is a pattern occurring 
+	in  $p_1[i_1:]$
+	by the subsequence $s_1$ and $min(s_1)=min_1$ and $max(s_1)=max_1$
+	and s is occurring
+	in  $p_2[i_2:]$
+	by the subsequence $s_2$ and $min(s_2)=min_2$ and $max(s_2)=max_2$	
+	$\}$\\
+	
+	We show that this family of problems are closed under induction.\\
+
+
+	\textbf{BASE :} \\
+	$S_{p_1,p_2,min_1,max_1,min_2,max_2}(|p_1|,|p_2|) = \left\{ 
+			\begin{array}{l l}
+				1 & \text{if $min_1<p_1(j)<max_1$  
+				}\\
+				& \text{ and $min_2<p_2(j)<max_2$}\\
+				0 & otherwise\\
+			\end{array} \right. $\\	
+
+	\textbf{STEP :} \\	
+	
+	$S_{p_1,p_2,min_1,max_1,min_2,max_2}(i_1,i_2) =$\\
+	\indent $ max \left\{ 
+			\begin{array}{l l}
+				S_{p_1,p_2,min_1,max_1,min_2,max_2}(i_1,i_2+1) \\
+				S_{p_1,p_2,min_1,max_1,min_2,max_22}(i_1+1,i_2) \\
+				S'_{p_1,p_2,min_1,max_1,min_2,max_2}(i_1,i_2)
+			\end{array} \right. $\vspace{20pt}\\	
+	
+	with 
+	$S'_{p_1,p_2,min_1,max_1,min_2,max_2}(i_1,i_2)=\\ \left\{ 
+				\begin{array}{l l}
+					1+S_{p_1,p_2,p_1(i_1),max_1,p_2(i_2)}(max_2,i_1+1,i_2+1)  & \text{$p_1(i_1)<min_1$ } \\
+					& \text{and $p_2(i_2)<min_2$} \\
+					&\\
+					1+S_{p_1,p_2,min_1,p_1(i_1),min_2,p_2(i_2)}(i_1+1,i_2+1)  & \text{$p_1(i_1)>max_1$ } \\	
+					&\text{and $p_2(i_2)>max_2$}\\	
+					&\\	
+					0 & \text{otherwise}\\							
+				\end{array} \right.$\\
+				
+	For every pair $i,j$ we either ignore the element of $p_1$,
+	either ignore the element of $p_2$, 
+	either we match as the same step (if possible).
+	Those relation lead to a $O(|p_1|^3*|p_2|^3)$ time and $O(|p_1|^3*|p_2|^3)$ space algorithm.$\Box$ 		
+
+
+
+			
+%	\section{Related problems}
+%		
+%		\textbf{Proposition 3.1} Longest Minimal Common Supersequence, Shortest Maximal Common Subsequence, and Shortest Maximal Common Non-Supersequence are MAX SNP-hard.\\
+%		
+%		Clearly every problem over (231,213)-Avoiding permutation
+%		are equivalent to problem over binary word.
+%		The proposition follow what we know about those problem over binary alphabet
+%		\cite{Middendorf1995317}.\\
+	
+	
+		
+	\section{Conclusion}
+		
+
+
+		  					
+\bibliography{bibli}{}
+\bibliographystyle{plain}	
+			
+				      
+\end{document}
