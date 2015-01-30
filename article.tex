@@ -84,9 +84,6 @@
 
 \maketitle
 
-
-\tableofcontents
-
 \begin{abstract}
 bla bla\ldots
 \end{abstract}
@@ -111,11 +108,11 @@ bla bla\ldots
 	become a very active area of research.
 
 	We consider here the so-called \emph{pattern containment} problem
-	(also sometimes referred to as the pattern involvement problem):
+	(also sometimes referred to as the \emph{pattern involvement problem}):
 	Given two permutations $\sigma$ and $\pi$, this problem is to decide whether
 	$\sigma \preceq \pi$ (the problem is ascribed to Wilf in \cite{Bose:Buss:Lubiw:1998}).
 	The permutation containment problem is \NPhard~\cite{Bose:Buss:Lubiw:1998}.
-	It is, however, polynomial time solvable by brute-force enumeration
+	It is, however, polynomial-time solvable by brute-force enumeration
 	if $\sigma$ has bounded size.
 	Improvements to this algorithm were presented in
 	\cite{Albert:Aldred:Atkinson:Holton:ISAAC:2001} and
@@ -127,6 +124,10 @@ bla bla\ldots
 	where $\RUN(\pi)$ denotes the number of alternating runs of $\pi$.
 	(This is an improvement upon the $O(2^{|\pi|})$ runtime required by
 	brute-force search without imposing restrictions on $\sigma$ and $\pi$.)
+	Of particular importance, it was recently proved that
+	the permutation containment problem is fiexed-parameter tractable for
+	parameter $|\sigma|$
+	\cite{Guillemot:Marx:SODA:2014}.
 
 	A few particular cases of the pattern containment problem have been attacked successfully.
 	The case of increasing patterns is solvable in
@@ -162,7 +163,7 @@ bla bla\ldots
 	from the trivial permutation $1$ by \emph{direct sums} and \emph{skew sums}.
 	To the best of our knowledge,
 	separable permutations first arose in the work of
-	Avis and Newborn~\cite{Avis:Monroe:1981},
+	Avis and Newborn~\cite{Avis:Newborn:1981},
 	who showed that they are precisely the permutations which can be sorted by an
 	arbitrary number of pop-stacks in series,
 	where a pop-stack is a restricted form of stack in which any pop operation
