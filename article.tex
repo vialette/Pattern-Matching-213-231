@@ -1,12 +1,24 @@
-\documentclass[12pt, a4paper]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper]{llncs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{amsfonts}
 \usepackage{amsmath}
-
 \usepackage[all]{xy}
-
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{complexity}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareMathOperator{\RUN}{run}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 231,213
 \newcommand{\myPattern}{231,231}
@@ -24,7 +36,6 @@
 % permutation motif
 \newcommand{\pmotif}{\sigma}
 
-
 \newcommand{\x}{X}
 \newcommand{\y}{Y}
 \newcommand{\bmotif}{(\sigma,\x,\y)}
@@ -41,28 +52,145 @@
 %upstep
 \newcommand{\ustep}{u}
 
-\title{Pattern matching for (231,213) avoiding permutations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Pattern matching for $(231,213)$-avoiding permutations}
 \author{Both Emerite NEOU, Romeo RIZZI}
 \date{}
 
+\author{%
+	Both Emerite Neou\inst{1,3}
+  Romeo Rizzi\inst{2} \and
+  St\'ephane Vialette\inst{3}
+}% end author
+\institute{%
+  Department of Computer Science,
+  Università degli Studi di Trento, Italy \\	
+	\and
+  Department of Computer Science,
+  Università degli Studi di Verona, Italy \\
+  \email{romeo.rizzi@univr.it}
+  \and
+	Universit\'e' Paris-Est, LIGM (UMR 8049), CNRS, UPEM, ESIEE Paris, ENPC, 
+	F-77454, Marne-la-Vallée, France\\
+  \email{vialette@univ-mY.fr}
+}% end institute
+
+\date{\today}
+
+\maketitle
 
 
-\begin{document}
-	\maketitle 
-	\tableofcontents
-	
-	\abstract{
-	  	Given two permutations, 
-	  	a text $\ptext$ 
-	  	and a motif $\pmotif$,
-	  	the \textbf{permutation pattern problem}
-	  	asks if there exists a normalized subsequence of $\ptext$
-	  	which equals $\pmotif$.
-	  	We study this problem for the permutation 
-	  	avoiding (231,231).
-	} 
+\tableofcontents
 
-	\section{Introduction}
+\begin{abstract}
+bla bla\ldots
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+\label{section:Introduction}
+
+	A permutation $\pi$ is said to contain another permutation $\sigma$,
+	in symbols $\sigma \preceq \pi$,
+	if there exists a subsequence of entries of $\pi$ that has the same relative
+	order as $\sigma$, and in this case $\sigma$ is said to be a 
+	\emph{pattern} of $\pi$.
+	Otherwise, $\pi$ is said to avoid the permutation $\sigma$.
+	For example a permutation contains the pattern $123$ (resp. $321$) if it has
+	an increasing (resp. decreasing) subsequence of length $3$.
+	Here, note that members need not actually to be consecutive, 
+	merely increasing (resp. descreasing).
+	During the last decade, the study of the pattern containment on permutations has
+	become a very active area of research.
+
+	We consider here the so-called \emph{pattern containment} problem
+	(also sometimes referred to as the pattern involvement problem):
+	Given two permutations $\sigma$ and $\pi$, this problem is to decide whether
+	$\sigma \preceq \pi$ (the problem is ascribed to Wilf in \cite{Bose:Buss:Lubiw:1998}).
+	The permutation containment problem is \NPhard~\cite{Bose:Buss:Lubiw:1998}.
+	It is, however, polynomial time solvable by brute-force enumeration
+	if $\sigma$ has bounded size.
+	Improvements to this algorithm were presented in
+	\cite{Albert:Aldred:Atkinson:Holton:ISAAC:2001} and
+	\cite{Ahal:Rabinovich:2008},
+	the latter describing a $O(|\pi|^{0.47k+o(|\sigma| )})$ time algorithm.
+	Bruner and Lackner \cite{Bruner:Lackner:SWAT:2012}
+	gave a fixed-parameter algorithm solving the pattern containment problem with
+	an exponential worst-case runtime of $O(1.79^{\RUN(\pi)})$,
+	where $\RUN(\pi)$ denotes the number of alternating runs of $\pi$.
+	(This is an improvement upon the $O(2^{|\pi|})$ runtime required by
+	brute-force search without imposing restrictions on $\sigma$ and $\pi$.)
+
+	A few particular cases of the pattern containment problem have been attacked successfully.
+	The case of increasing patterns is solvable in
+	$O(|\pi| \log \log |\sigma|)$ time in the RAM model \cite{Crochemore:Porat:2010},
+	improving the previous 30-year bound of $O(|\pi| \log |\sigma|)$.
+	(The algorithm also improves on the previous
+	$O(|\pi| \log \log |\pi|)$ bound.)
+	Furthermore, the patterns $132$, $213$, $231$, $312$ can all be handled in linear time
+	by stack sorting algorithms.
+	Any pattern of length $4$ can be detected in $O(|\pi| \log |\pi|)$ time
+	\cite{Albert:Aldred:Atkinson:Holton:ISAAC:2001}.
+	Algorithmic issues for $321$-avoiding patterns containment has been investigated in
+	\cite{Guillemot:Vialette:ISAAC:2009}.
+
+	Of particular interest in our context,
+	the pattern containment problem is also solvable in
+	polynomial time for separable patterns.
+	Separable permutations are those permutations that contain neither
+	$2413$ nor $3142$, and they are enumerated by the Schröder numbers
+	(sequence A006318 in OEIS).
+	Separable permutations has gained a lot of interest in the pattern containment
+	context during the last years.
+	Indeed, the pattern containment problem is solvable $O(kn^4)$ time and
+	$O(kn^3)$ space for separable patterns \cite{Ibarra:1997}
+	(see also \cite{Bose:Buss:Lubiw:1998}),
+	where $k$ is the length of the pattern and $n$ is the length of the
+	target permutation.
+	Notice that there are numerous characterizations of separable permutations.
+	To mention just a few examples,
+	they are the permutations whose permutation graphs are cographs
+	(\emph{i.e.} $P_4$-free graphs);
+	equivalently, a separable permutation is a permutation that can be obtained
+	from the trivial permutation $1$ by \emph{direct sums} and \emph{skew sums}.
+	To the best of our knowledge,
+	separable permutations first arose in the work of
+	Avis and Newborn~\cite{Avis:Monroe:1981},
+	who showed that they are precisely the permutations which can be sorted by an
+	arbitrary number of pop-stacks in series,
+	where a pop-stack is a restricted form of stack in which any pop operation
+	pops all items at once.
+	(Notice that the separable permutations include as a special case the
+	stack-sortable permutations, which avoid the pattern $231$.)
+	Separable permutations
+	have been widely studied in the last decade, both from a combinatorial
+	\cite{West:1995} and an algorithmic
+	\cite{Ibarra:1997,Bose:Buss:Lubiw:1998,Rossin:Bouvel:06,Bouvel:Rossin:Vialette:CPM:2007} point
+	of view.
+
+	There exist many generalisation of patterns that are worth considering
+	in the context of algorithmic issues in pattern involvement
+	(see \cite{Kitaev:book:2011} for an up-to-date survey).
+	Vincular patterns, also called generalized patterns,
+	resemble (classical) patterns, with the constraint that some of the letters in
+	an occurrence must be consecutive.
+	Of particular importance in our context,
+	Bruner and Lackner \cite{Bruner:Lackner:SWAT:2012}
+	proved that deciding whether a vincular pattern
+	$\sigma$ of length $k$ occurs in a permutation
+	$\pi \in \mathfrak{S}_n$ is $W[1]$-complete for
+	parameter $k$.
+	bivincular patterns generalize classical patterns even further than vincular
+	patterns. Indeed, in bivincular patterns, not only positions but also values
+	of elements involved in a matching may be forced to be adjacent
+
 
 	
 %	The permutation pattern problem asks if there exists a normalized subsequence of a text $\ptext$ which equals to a motif $\pmotif$.
