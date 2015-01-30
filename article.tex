@@ -128,24 +128,22 @@
 		%\subsection{Stripe}
 		
 		A \textbf{Stripe} of a permutation
-		 is a mapping into \textbf{up step} (noted $\ustep$) 
+		is a mapping into \textbf{up step} (noted $\ustep$) 
 		or a \textbf{down step} (noted $\dstep$).
 		An element $i$ of a permutation $p$ is an up step if and only if $i$ is not the last element and $p(i)<p(i+1)$.
-		An element $i$ of a permutation $p$ is a down step if and only if $i$ is not the last element and $p(i)>p(i+1)$.	
-		By convention the last element is mapped as the second to last element.\\ 	
-		Formally a Stripe is a function $\mathcal{S} : [n] \to \{\dstep,\ustep\}$ define as :\\
+		An element $i$ of a permutation $p$ is a down step if and only if $i$ is not the last element and $p(i)>p(i+1)$.\\	
+		Formally a Stripe is a function $\mathcal{S} : [n-1] \to \{\dstep,\ustep\}$ define as :\\
 		$ \mathcal{S}(p,i) = \left\{ 
 		  \begin{array}{l l}
 		    \ustep & \quad \text{if $1 \leq i<n$ and $p(i+1)-p(i)>0$ }\\
 		    \dstep & \quad \text{if $1 \leq i<n$ and $p(i+1)-p(i)<0$ }\\
-		     \mathcal{S}(p,n-1) & \quad \text{if $i=n$}\\
 		  \end{array} \right. $\\
 		  
 		By extension we define  $\mathcal{S} : \Perm{n} \to \{\dstep,\ustep\}^{n}$ such as :
-		$\mathcal{S}(p)=\mathcal{S}(p,1)\mathcal{S}(p,2)...\mathcal{S}(p,n)$.
+		$\mathcal{S}(p)=\mathcal{S}(p,1)\mathcal{S}(p,2)...\mathcal{S}(p,n-1)$.
 		We call $\mathcal{S}(p)$ the stripe of $p$.
 		For example the stripe of the permutation $(12,11,10,1,2,3,4,9,8,5,6,7)$, 
-		is $\dstep,\dstep,\dstep,\ustep,\ustep,\ustep,\ustep,\dstep,\dstep,\ustep,\ustep,\ustep$.\\
+		is $\dstep,\dstep,\dstep,\ustep,\ustep,\ustep,\ustep,\dstep,\dstep,\ustep,\ustep$.\\
 		  
 %		\textbf{Corollary \num} The stripe function
 %		for $\C{n}$ are in bijection with with $\{\ustep,\dstep\}^{n-1}$.\\
@@ -169,16 +167,16 @@
 %		We say that a set is a match 
 %		if and only if there exists a function such as define above
 %		and the set is the set of image of this function.\\
-		For example, the stripe $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1,\ustep_2)$ is a motif of  the stripe \\
-		$(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6,\ustep_7)$ ,
+		For example, the stripe $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ is a motif of  the stripe \\
+		$(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6)$ ,
 		because we can match \\
-		$(\dstep_1,\dstep_2,\dstep_3,\dstep_4,(\ustep_1,\ustep_2)$ to $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_5,\ustep_6)$.
+		$(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ to $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_5,\ustep_6)$.
 		\begin{figure}[h!]
 			\begin{displaymath}
 				\xymatrix@=0.3cm{
-					\dstep_1 \ar[dd] & \dstep_2 \ar[dd] & \dstep_3 \ar[dd] & \dstep_4\ar[ddrrrr]  & \ustep_1 \ar[ddrrrrr]& \ustep_2 \ar[ddrrrrr]  \\
+					\dstep_1 \ar[dd] & \dstep_2 \ar[dd] & \dstep_3 \ar[dd] & \dstep_4\ar[ddrrrr]  & \ustep_1 \ar[ddrrrrr]\\
 					\\
-					\dstep_1 & \dstep_2 & \dstep_3 & \ustep_1 & \ustep_2 & \ustep_3 & \ustep_4 & \dstep_4 & \dstep_5 & \ustep_5 & \ustep_6 & \ustep_7 & \\
+					\dstep_1 & \dstep_2 & \dstep_3 & \ustep_1 & \ustep_2 & \ustep_3 & \ustep_4 & \dstep_4 & \dstep_5 & \ustep_5 & \ustep_6 \\
 				}
 			\end{displaymath}     
 		\end{figure}		
@@ -243,7 +241,6 @@
   		\begin{array}{l l}
    			\ustep & \quad \text{if $p(i)$ is the minimal element of $p[i:]$}\\    
    			\dstep & \quad \text{if $p(i)$ is the maximal element of $p[i:]$}\\
-  		 	\mathcal{S}(p,n-1) & \quad \text{if $i=n$}\\
 	 	\end{array} \right. 
 	 	$\\
 	 
@@ -353,23 +350,23 @@
 		By definition $s$ normalized is equal to
 		$\pmotif$ so they have the same stripe.\\ 
 		$\Leftarrow$ 
-		Let $\ptext \in \Perm{n}$, 
+		Let $\ptext$ be a permutation avoiding $(213,231)$, 
 		$R_1$ be its stripe, 
-		$\pmotif \in \Perm{m}$
+		$\pmotif$  be a permutation avoiding $(213,231)$, 
 		and $R_2$ its stripe.
 		Let $\phi$ be the function
 		that match $R_2$ to $R_1$.
 		We define $\varphi$ as, 
-		$\forall x \in [m]$,
-		$\varphi(x) = \phi(x)$.
+		$\forall x \in [|\pmotif|-1]$,
+		$\varphi(x) = \phi(x)$,
+		and $\varphi(|\pmotif|) = \phi(|\pmotif|-1)+1$
 		Suppose that $\exists x,y \in [|\pmotif|]$, 
 		$\pmotif(x)<\pmotif(y)$ 
 		and $\ptext(\varphi(x))>\ptext(\varphi(y))$,
 		without lost of generality we can suppose that $x<y$,
 		Let see all the case possible that can make this 
 		hypothesis possible :
-		\begin{itemize}
-		
+		\begin{itemize}		
 			\item if $\pmotif(x)<\pmotif(y)$, 
 			$\mathcal{S}(\pmotif,x)=\ustep$ 
 			and $\mathcal{S}(\pmotif,y)=\ustep$
@@ -416,6 +413,31 @@
 			Which contradict our hypothesis,
 			so this case is not possible.$\Box$
 			
+			\item If $y = |\pmotif|$ and $x=|\pmotif|-1$,
+			Clearly if $\mathcal{S}(\pmotif,x)=\ustep$,
+			then $\pmotif(y)-\pmotif(x)>0$ 
+			and because we have a match in the ribbon
+			$\ptext(\varphi(y))-\ptext(\varphi(x))>0$.
+			Same idea goes if $\mathcal{S}(\pmotif,x)=\dstep$.
+			So this case is not possible.
+			
+			\item if $y = |\pmotif|$ and $x<|\pmotif|-1$,
+			if $\mathcal{S}(\pmotif,x)=\ustep$ ie
+			$\pmotif(x+1)-\pmotif(x)>0$. Then
+			we must have either
+			$\pmotif(x)<\pmotif(x+1)<\pmotif(|\pmotif|)$
+			or $\pmotif(x)<\pmotif(|\pmotif|)<\pmotif(x+1)$ 
+			to avoid $231$ or $213$ in the motif.
+			Because we have a match in the stripe
+			and what we prove above,
+			$\ptext(\varphi(x+1)-\ptext(\varphi(x))>0$.
+			But by hypothesis $\ptext(\varphi(|\ptext|))<\ptext(\varphi(x))$,
+			so we have either 		
+			$\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$
+			or $\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$ 
+			which both lead to a $231$ or a $213$ motif
+			in the text which is not possible.
+			The same idea goes if $\mathcal{S}(\pmotif,x)=\dstep$. 			
 			
 		\end{itemize}
 		So our hypothesis is not realisable.So our assertion is true. $\Box$\\
@@ -526,6 +548,7 @@
 			we decompose the motif into
 			adjacent element of same step in the stripe 
 			(called such sequence segment),
+			add the last element to the right most segment,
 			and label them form right to left
 			with increasing number.
 			Let's call this decomposition $S$.
