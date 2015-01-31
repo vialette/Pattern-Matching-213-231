@@ -259,7 +259,7 @@ $9\,1\,6\,7\,2$) is called a
 \emph{occurrence} of $\sigma$. 
 Since the permutation $\pi = 3\,9\,1\,8\,6\,7\,4\,5\,2$  contains no increasing subsequence of length four, $\pi$ avoids $1\,2\,3\,4$.
 
-Suppoe $P$ is a set of permutations. We let $\AV_n(p)$ denote the
+Suppose $P$ is a set of permutations. We let $\AV_n(p)$ denote the
 set of all $n$-permutations avoiding each permutation in $P$.
 For the sake of convenience, we omit $P$'s braces thus having
 e.g. $\AV_3(132,4312)$ instead of
@@ -270,6 +270,87 @@ has no decreasing subsequence of length $3$, then its reverse,
 $\pi' = \pi_n\,\pi_{n-1}\,\ldots\,\pi_1$ avoids $1\,2\,3$, i.e., 
 has no increasing subsequence of length $3$.
 
+An \emph{ascent} of a permutation $\pi \in S_n$ is any position 
+$1 \leq i < n$ where the following value is bigger than the current one. 
+That is, if $\pi = \pi_1\,\pi_2\,\ldots\,\pi_n$, then
+$i$ is an ascent if $\pi_i < \pi_{i+1}$.
+For example, the permutation 
+$3\,4\,5\,2\,1\,6\,$7 has ascents (at positions) $1,2,5,6$.
+Similarly, a \emph{descent} is a position 
+$1 \leq i < n$ with $\pi_i > \pi_{i+1}$, 
+so every $i$ with $1 \leq i < n$ either is an ascent or is a descent of 
+$\pi$.
+Let $\ustep$ and $\dstep$ denote an ascend and a descend, respectively.
+The \emph{stripe} $s_\pi$ of a permutation $\pi \in S_n$ is the word
+$s_{\pi,1} s_{\pi,2} \ldots s_{\pi,n-1} \in \{\ustep,\dstep\}^{n-1}$ 
+defined by 
+$\mathcal{S}_{\pi,i} = \ustep$ if $i$ an ascent in $\pi$ and
+$\mathcal{S}_\pi(i) = \dstep$ if $i$ a descent in $\pi$.
+For example the stripe of the permutation 
+$\pi = 12\,11\,10\,1\,2\,3,4\,9\,8\,5\,6\,7$ 
+is 
+$s_\pi = \dstep\dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep\ustep\ustep$.
+The stripe $s_\sigma$ is a \emph{pattern} of the strip $s_\pi$
+(or $s_\sigma$ \emph{occurs} of the strip $s_\pi$) if $s_\sigma$ occurs in
+$s_\pi$ as a subsequence.
+
+% For two permutations $\
+% The stripe $s\pi$ of $\pi \in S-n$ is a motif pmotif \in \Perm{m}$ is a motif
+% of a stripe of $\ptext \in \Perm{n}$ if and only if there exist an increasing function $\phi : [|\pmotif|] \rightarrow [|\pmotif|]$
+% such that : \\
+% $\forall i \in [|\pmotif|]$, $\mathcal{S}(\pmotif,i) = \mathcal{S}(\ptext,\phi(i))$\\
+% If a stripe $R_2$ is a motif of a stripe $R_1$,
+% it means that there exists
+% a subsequence of $R_1$ such as
+% this sequence is equal to $R_2$.
+
+% For example, the stripe $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ is a motif of  the stripe \\
+% $(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6)$ ,
+% because we can match \\
+% $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ to $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_5,\ustep_6)$.
+% \begin{figure}[h!]
+% 	\begin{displaymath}
+% 		\xymatrix@=0.3cm{
+% 			\dstep_1 \ar[dd] & \dstep_2 \ar[dd] & \dstep_3 \ar[dd] & \dstep_4\ar[ddrrrr]  & \ustep_1 \ar[ddrrrrr]\\
+% 			\\
+% 			\dstep_1 & \dstep_2 & \dstep_3 & \ustep_1 & \ustep_2 & \ustep_3 & \ustep_4 & \dstep_4 & \dstep_5 & \ustep_5 & \ustep_6 \\
+% 		}
+% 	\end{displaymath}     
+% \end{figure}		
+% But the stripe $(\dstep,\ustep,\dstep,\dstep,\dstep)$ is not a motif of the stripe\\ $(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6,\ustep_7)$.\\
+		
+% A \textbf{bivincular motif} generalize
+% a motif. 
+% A bivincular motif allows 
+% to force element to be adjacent in position
+% or/and in value.
+% A bivincular motif
+% is a motif with two set $\bmotif$,
+% the first set contains the first index 
+% of two consecutive indexes
+% and the second set contains the first indexes
+% of the two consecutive elements.
+% Formally, Let $\bmotif$ 
+% be a bivincular motif 
+% and $\ptext$ a permutation.
+% if $i \in \x$,
+% and $i$ is matched with $j$ in $\ptext$
+% then $i+1$ must be matched with $j+1$,
+% with the special case of $0$ and $|\pmotif|$ :
+% if $0 \in \x$ then the first element of $\pmotif$
+% must be matched with the first element of $\ptext$,
+% and if $|\pmotif| \in \x$ then the last element of $\pmotif$
+% must be matched with the last element of $\ptext$.
+% if $i \in \y$,
+% and $i$ is matched with $j$ in $\ptext$
+% then $i+1$ must be matched with $l$
+% such as $\ptext(l)=\ptext(j)+1$,
+% with the special case of $0$ and $|\pmotif|$ :
+% if $0 \in \y$ then the minimal element of $\pmotif$
+% must be matched with the minimal element of $\ptext$,
+% and if $|\pmotif| \in \y$ then the maximal element of $\pmotif$
+% must be matched with the maximal element of $\ptext$.		
+			
 A \emph{bivincular pattern} (abbreviated BVP) $\sigma$
 of length $k$ is a permutation in $S_k$ written in
 two-line notation 
@@ -311,94 +392,7 @@ of $\sigma$:
 	the largest letter of $\pi$.
 \end{itemize}
 
-		
-		A \textbf{Stripe} of a permutation
-		is a mapping into \textbf{up step} (noted $\ustep$) 
-		or a \textbf{down step} (noted $\dstep$).
-		An element $i$ of a permutation $p$ is an up step if and only if $i$ is not the last element and $p(i)<p(i+1)$.
-		An element $i$ of a permutation $p$ is a down step if and only if $i$ is not the last element and $p(i)>p(i+1)$.\\	
-		Formally a Stripe is a function $\mathcal{S} : [n-1] \to \{\dstep,\ustep\}$ define as :\\
-		$ \mathcal{S}(p,i) = \left\{ 
-		  \begin{array}{l l}
-		    \ustep & \quad \text{if $1 \leq i<n$ and $p(i+1)-p(i)>0$ }\\
-		    \dstep & \quad \text{if $1 \leq i<n$ and $p(i+1)-p(i)<0$ }\\
-		  \end{array} \right. $\\
-		  
-		By extension we define  $\mathcal{S} : \Perm{n} \to \{\dstep,\ustep\}^{n}$ such as :
-		$\mathcal{S}(p)=\mathcal{S}(p,1)\mathcal{S}(p,2)...\mathcal{S}(p,n-1)$.
-		We call $\mathcal{S}(p)$ the stripe of $p$.
-		For example the stripe of the permutation $(12,11,10,1,2,3,4,9,8,5,6,7)$, 
-		is $\dstep,\dstep,\dstep,\ustep,\ustep,\ustep,\ustep,\dstep,\dstep,\ustep,\ustep$.\\
-		  
-%		\textbf{Corollary \num} The stripe function
-%		for $\C{n}$ are in bijection with with $\{\ustep,\dstep\}^{n-1}$.\\
-	  			 		  	
-%		\textbf{Proposition \numl{updown}} Let $p \in \C{n}$,
-%		$\forall x,y \in [n]$, 
-%		$\mathcal{S}(p,x)=\ustep$
-%		and $\\mathcal{S}(p,y)=\dstep$
-%		then $p(x)<p(y)$.\\
-		
 
-		
-		Formally we say that the stripe of $\pmotif \in \Perm{m}$ is a motif
-		of a stripe of $\ptext \in \Perm{n}$ if and only if there exist an increasing function $\phi : [|\pmotif|] \rightarrow [|\pmotif|]$
-		such that : \\
-		$\forall i \in [|\pmotif|]$, $\mathcal{S}(\pmotif,i) = \mathcal{S}(\ptext,\phi(i))$\\
-		If a stripe $R_2$ is a motif of a stripe $R_1$,
-		it means that there exists
-		a subsequence of $R_1$ such as
-		this sequence is equal to $R_2$.
-%		We say that a set is a match 
-%		if and only if there exists a function such as define above
-%		and the set is the set of image of this function.\\
-		For example, the stripe $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ is a motif of  the stripe \\
-		$(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6)$ ,
-		because we can match \\
-		$(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ to $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_5,\ustep_6)$.
-		\begin{figure}[h!]
-			\begin{displaymath}
-				\xymatrix@=0.3cm{
-					\dstep_1 \ar[dd] & \dstep_2 \ar[dd] & \dstep_3 \ar[dd] & \dstep_4\ar[ddrrrr]  & \ustep_1 \ar[ddrrrrr]\\
-					\\
-					\dstep_1 & \dstep_2 & \dstep_3 & \ustep_1 & \ustep_2 & \ustep_3 & \ustep_4 & \dstep_4 & \dstep_5 & \ustep_5 & \ustep_6 \\
-				}
-			\end{displaymath}     
-		\end{figure}		
-		But the stripe $(\dstep,\ustep,\dstep,\dstep,\dstep)$ is not a motif of the stripe\\ $(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6,\ustep_7)$.\\
-		
-		A \textbf{bivincular motif} generalize
-		a motif. 
-		A bivincular motif allows 
-		to force element to be adjacent in position
-		or/and in value.
-		A bivincular motif
-		is a motif with two set $\bmotif$,
-		the first set contains the first index 
-		of two consecutive indexes
-		and the second set contains the first indexes
-		of the two consecutive elements.
-		Formally, Let $\bmotif$ 
-		be a bivincular motif 
-		and $\ptext$ a permutation.
-		if $i \in \x$,
-		and $i$ is matched with $j$ in $\ptext$
-		then $i+1$ must be matched with $j+1$,
-		with the special case of $0$ and $|\pmotif|$ :
-		if $0 \in \x$ then the first element of $\pmotif$
-		must be matched with the first element of $\ptext$,
-		and if $|\pmotif| \in \x$ then the last element of $\pmotif$
-		must be matched with the last element of $\ptext$.
-		if $i \in \y$,
-		and $i$ is matched with $j$ in $\ptext$
-		then $i+1$ must be matched with $l$
-		such as $\ptext(l)=\ptext(j)+1$,
-		with the special case of $0$ and $|\pmotif|$ :
-		if $0 \in \y$ then the minimal element of $\pmotif$
-		must be matched with the minimal element of $\ptext$,
-		and if $|\pmotif| \in \y$ then the maximal element of $\pmotif$
-		must be matched with the maximal element of $\ptext$.		
-			
 	\section{Pattern Matching Problem With Text and Motif Avoiding (231,213)}
 
 		In this section we focus 
