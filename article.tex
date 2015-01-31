@@ -17,6 +17,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \DeclareMathOperator{\RUN}{run}
+\DeclareMathOperator{\RED}{red}
+\DeclareMathOperator{\AV}{Av}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -58,7 +60,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Pattern matching for $(231,213)$-avoiding permutations}
+\title{Pattern matching for\\ $(231,213)$-avoiding permutations}
 \author{Both Emerite NEOU, Romeo RIZZI}
 \date{}
 
@@ -160,7 +162,8 @@ bla bla\ldots
 	There exist many generalisation of patterns that are worth considering
 	in the context of algorithmic issues in pattern involvement
 	(see \cite{Kitaev:book:2011} for an up-to-date survey).
-	Vincular patterns, also called generalized patterns,
+	\emph{Vincular patterns}, also called 
+	\emph{generalized patterns},
 	resemble (classical) patterns, with the constraint that some of the letters in
 	an occurrence must be consecutive.
 	Of particular importance in our context,
@@ -169,11 +172,13 @@ bla bla\ldots
 	$\sigma$ of length $k$ occurs in a permutation
 	$\pi \in \mathfrak{S}_n$ is $W[1]$-complete for
 	parameter $k$.
-	bivincular patterns generalize classical patterns even further than vincular
-	patterns. Indeed, in bivincular patterns, not only positions but also values
+	\emph{Bivincular patterns} generalize classical patterns even further 
+	than vincular
+	patterns. Indeed, in bivincular patterns,
+	not only positions but also values
 	of elements involved in a matching may be forced to be adjacent
 
-
+	This paper is organized as follows.
 	
 %	The permutation pattern problem asks if there exists a normalized subsequence of a text $\ptext$ which equals to a motif $\pmotif$.
 %	If so we write $\pmotif \preceq \ptext$.
@@ -203,39 +208,109 @@ bla bla\ldots
 %	results for related problems. 
 	
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-	
+\section{Definition}
+\label{section:Definitions}
 
-	
-	\section{Definition}
 
-		This section presents the decomposition used and some notation.\\	
-		
-		We denote by $\Av{n}{213,231}$ the class
-		of permutation of size $n$ which avoid 
-		the motif $213$ and $231$. 
-		$\Perm{n}$ the permutation of size $n$.
-		$[n]$ the set $\{1,2,...,n\}.$
-		For a permutation p, let $p[i:j]$, 
-		be the permutation from element $i$ to $j$,
-		$p[:j]$ be the prefix ending at index $j$
-		and $p[i:]$ be the suffix starting at index $i$.\\
-		
-		Given two permutations
-		$\pmotif$ and $\ptext$,
-		we say that $\pmotif$
-		is a motif/match of
-		$\ptext$,
-		if and only if
-		there exists 
-		and increasing function 
-		$\sigma:[|\pmotif|] \rightarrow [|\pmotif|]$
-		such that : $\forall i$ and 
-		$\forall j$ $i,j \in |\pmotif| $
-		if $\pmotif(i)<\pmotif(j)$
-		then $\ptext(\sigma(i))<\ptext(\sigma(j))$.\\
-		
-		%\subsection{Stripe}
+A \emph{permutation} of length $n$ is a one-to-one function from an
+$n$-element set to itself.
+We write permutations as words 
+$\sigma = \sigma_1\,\sigma_2\,\ldots\,\sigma_n$, whose letters are distinct
+and uasually consist of the integers $1\,2\,\ldots\,n$.
+For the sake of convenience, 
+we let 
+$\pi[i:j]$ stand for 
+$\pi_i\,\pi_{i+1}\,\ldots\,\pi_j$,
+$\pi[:j]$ stand for $\pi[1:j]$ and
+$\pi[i:]$ stand for $\pi[i:n]$.
+We let $S_n$ denote the set of all permutations of length $n$.
+
+% The \emph{reduced form} of a permutation $\sigma$ on a set
+% $\{j_1, j_2, \ldots, j_k\}$ where
+% $j_1 < j_2 < \ldots < j_n$ is the permutation $\sigma'$
+% obtained by renaming the letters of $\sigma$ so that 
+% $j_i$ is renamed $i$ for all $1 \leq i \leq k$.
+% We let $\RED(\sigma)$ denote the reduced form of $\sigma$.
+% For example $\RED(453) = 231$
+% while $\RED(3174) = 2143$.
+
+A permutation $\pi$ is said to \emph{contain} the permutation $\sigma$ 
+if there exists a subsequence of (not necessarily consecutive) 
+entries of $\pi$ that has the same relative order as $\sigma$, 
+and in this case $\sigma$ is said to be a \emph{pattern} of 
+$\pi$, written $\sigma \preceq \pi$. 
+Otherwise, $\pi$ is said to \emph{avoid} the permutation $\sigma$. 
+For example, the permutation $\pi = 3\,9\,1\,8\,6\,7\,4\,5\,2$ 
+contains the pattern $\sigma = 51342$, 
+as can be seen in the highlighted subsequence of 
+$\pi = 3\,\mathbf{9}\,\mathbf{1}\,8\,\mathbf{6}\,\mathbf{7}\,\mathbf{4}\,5\,2$
+(or 
+$\pi = 3\,\mathbf{9}\,\mathbf{1}\,8\,\mathbf{6}\,\mathbf{7}\,4\,\mathbf{5}\,2$
+or
+$\pi = 3\,\mathbf{9}\,\mathbf{1}\,8\,\mathbf{6}\,\mathbf{7}\,4\,5\,\mathbf{2}$
+). 
+Each subsequence $(9\,1\,6\,7\,4$, 
+$9\,1\,6\,7\,5$, 
+$9\,1\,6\,7\,2$) is called a 
+\emph{copy}, 
+\emph{instance}, or 
+\emph{occurrence} of $\sigma$. 
+Since the permutation $\pi = 3\,9\,1\,8\,6\,7\,4\,5\,2$  contains no increasing subsequence of length four, $\pi$ avoids $1\,2\,3\,4$.
+
+Suppoe $P$ is a set of permutations. We let $\AV_n(p)$ denote the
+set of all $n$-permutations avoiding each permutation in $P$.
+For the sake of convenience, we omit $P$'s braces thus having
+e.g. $\AV_3(132,4312)$ instead of
+$\AV_3(\{132,4312\})$.
+A basic example is if 
+$\pi = \pi_1\,\pi_2\,\ldots\,\pi_n$ avoids $3\,2\,1$, i.e., 
+has no decreasing subsequence of length $3$, then its reverse, 
+$\pi' = \pi_n\,\pi_{n-1}\,\ldots\,\pi_1$ avoids $1\,2\,3$, i.e., 
+has no increasing subsequence of length $3$.
+
+A \emph{bivincular pattern} (abbreviated BVP) $\sigma$
+of length $k$ is a permutation in $S_k$ written in
+two-line notation 
+(that is the top row is $1\,2\,\ldots\,k$ and the bottom row
+is a permutation $\sigma_1\,\sigma_2\,\ldots\,\sigma_k$).
+We have the following conditions on the top and bottom rows
+of $\sigma$:
+\begin{itemize}
+	\item
+	If the bottom line of $\sigma$ contains
+	$\underline{\sigma_i\,\sigma_{i+1}\,\ldots\,\sigma_j}$
+	then the letters corresponding to 
+	$\sigma_i\,\sigma_{i+1}\,\ldots\,\sigma_j$ in an occurrence of
+	$\sigma$ in a permutaton must be adjacent, whereas there is
+	no adjacency condition for
+	non-underlined consecutive letters.
+	Moreover if the bottom row of $\sigma$ begins with
+	$_\llcorner{\sigma_1}$ then any occurrence of $\sigma$ 
+	in a permutation $\pi$ must begin with the leftmost 
+	letter of $\pi$,
+	and 
+	if the bottom row of $\sigma$ begins with
+	${\sigma_k}_\lrcorner$ then any occurrence of $\sigma$ 
+	in a permutation $\pi$ must end with the rightmost 
+	letter of $\pi$.
+	\item
+	If the top line of $\sigma$ contains
+	$\overline{i\,i+1\,\ldots\,j}$ then the letters corresponding to
+	$\sigma_i, \sigma_{i+1}, \ldots, \sigma_j$ in an
+	occurrence of $\sigma$ in a permutation must be adjacent in values,
+	whereas there is no value adjacency restriction for non-overlined 
+	letters.
+	Moreover, if the top row of $\sigma$ begins with
+	$^ulcorner{1}$ then
+	any occurrence of $\sigma$ is a permutation $\pi$ must begin with
+	the smallest letter of $\pi$, and
+	if top row of $\sigma$ ends with $k^\urcorner$ then
+	any occurrence of $\sigma$ is a permutation $\pi$ must end with
+	the largest letter of $\pi$.
+\end{itemize}
+
 		
 		A \textbf{Stripe} of a permutation
 		is a mapping into \textbf{up step} (noted $\ustep$) 
