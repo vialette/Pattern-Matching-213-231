@@ -42,6 +42,11 @@
 \newcommand{\y}{Y}
 \newcommand{\bmotif}{(\sigma,\x,\y)}
 
+%Stripe
+\DeclareMathOperator{\stripea}{s}
+\newcommand{\stripe}[2]{\stripea_{{#1}}({#2})}
+\newcommand{\stripew}[1]{\stripea_{{#1}}}
+
 % compteur pour les proposition, definition etc...
 \newcounter{num}
 \setcounter{num}{0}
@@ -52,7 +57,7 @@
 \newcommand{\dstep}{d}
 
 %upstep
-\newcommand{\ustep}{u}
+\newcommand{\ustep}{a}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -282,27 +287,27 @@ so every $i$ with $1 \leq i < n$ either is an ascent or is a descent of
 $\pi$.
 Let $\ustep$ and $\dstep$ denote an ascend and a descend, respectively.
 The \emph{stripe} $s_\pi$ of a permutation $\pi \in S_n$ is the word
-$s_{\pi,1} s_{\pi,2} \ldots s_{\pi,n-1} \in \{\ustep,\dstep\}^{n-1}$ 
+$\stripe{\pi}{1} \stripe{\pi}{2} \ldots \stripe{\pi}{n-1} \in \{\ustep,\dstep\}^{n-1}$ 
 defined by 
-$\mathcal{S}_{\pi,i} = \ustep$ if $i$ an ascent in $\pi$ and
-$\mathcal{S}_\pi(i) = \dstep$ if $i$ a descent in $\pi$.
+$ \stripe{\pi}{i}= \ustep$ if $i$ an ascent in $\pi$ and
+$\stripe{\pi}{i} = \dstep$ if $i$ a descent in $\pi$.
 For example the stripe of the permutation 
 $\pi = 12\,11\,10\,1\,2\,3,4\,9\,8\,5\,6\,7$ 
 is 
-$s_\pi = \dstep\dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep\ustep\ustep$.
-The stripe $s_\sigma$ is a \emph{pattern} of the strip $s_\pi$
-(or $s_\sigma$ \emph{occurs} of the strip $s_\pi$) if $s_\sigma$ occurs in
-$s_\pi$ as a subsequence.
+$\stripew{\pi} = \dstep\dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep\ustep\ustep$.
+The stripe $s\stripew{\sigma}$ is a \emph{pattern} of the strip $\stripew{\pi}$
+(or $s\stripew{\sigma}$ \emph{occurs} of the strip $\stripew{\pi}$) if $\stripew{\sigma}$ occurs in
+$\stripew{\pi}$ as a subsequence.
 
 % For two permutations $\
 % The stripe $s\pi$ of $\pi \in S-n$ is a motif pmotif \in \Perm{m}$ is a motif
 % of a stripe of $\ptext \in \Perm{n}$ if and only if there exist an increasing function $\phi : [|\pmotif|] \rightarrow [|\pmotif|]$
 % such that : \\
 % $\forall i \in [|\pmotif|]$, $\mathcal{S}(\pmotif,i) = \mathcal{S}(\ptext,\phi(i))$\\
-% If a stripe $R_2$ is a motif of a stripe $R_1$,
+% If a stripe $S_2$ is a motif of a stripe $S_1$,
 % it means that there exists
-% a subsequence of $R_1$ such as
-% this sequence is equal to $R_2$.
+% a subsequence of $S_1$ such as
+% this sequence is equal to $S_2$.
 
 % For example, the stripe $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ is a motif of  the stripe \\
 % $(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6)$ ,
@@ -402,67 +407,67 @@ of $\sigma$:
 		We first exhibit some properties of a stripe 
 		of a permutation avoiding (231,213).\\
 
-		\textbf{Lemma  \numl{firstelement} \thenum} If a permutation is in $\Av{n}{}$ 
+		\textbf{Lemma  \numl{firstelement} \thenum} If a permutation is in $\Av{n}{213,231}$ 
 		then the first element is either
 		the minimal or the maximal element.\\
 		
 		\textbf{Proof} Suppose that we have
-		$p \in \mathcal{S}_{n}$, and
-		$p(1) \neq 1 $ and $p(1) \neq n$ then we have either
-		$p(1) ... n ... 1$ or $p(1) ... 1 ... n $, either the motif 231 or 213, which is not possible by hypothesis. $\Box$\\
+		$\pi \in \mathcal{S}_{n}$, and
+		$\pi(1) \neq 1 $ and $\pi(1) \neq n$ then we have either
+		$\pi(1) ... n ... 1$ or $\pi(1) ... 1 ... n $, either the motif 231 or 213, which is not possible by hypothesis. $\Box$\\
 		
-		\textbf{Corollary  \num \thenum} A permutation $p \in \Perm{n}$ is in $\Av{n}{213,231}$ if and only if for $1 \leq i \leq n$, 
-		$p[i:]$ start either with the maximal element
-		or the minimal element of $p[i:]$.\\
+		\textbf{Corollary  \num \thenum} A permutation $\pi \in \Perm{n}$ is in $\Av{n}{213,231}$ if and only if for $1 \leq i \leq n$, 
+		$\pi[i:]$ start either with the maximal element
+		or the minimal element of $\pi[i:]$.\\
 	
-		\textbf{Corollary \numl{stripe} \thenum}  If $p \in \Av{n}{213,231}$ its stripe can be define such as, \\
-		$\mathcal{S}(p,i) = \left\{ 
+		\textbf{Corollary \numl{stripe} \thenum}  If $\pi \in \Av{n}{213,231}$ its stripe can be define such as, \\
+		$\stripe{\pi}{i} = \left\{ 
   		\begin{array}{l l}
-   			\ustep & \quad \text{if $p(i)$ is the minimal element of $p[i:]$}\\    
-   			\dstep & \quad \text{if $p(i)$ is the maximal element of $p[i:]$}\\
+   			\ustep & \quad \text{if $\pi(i)$ is the minimal element of $\pi[i:]$}\\    
+   			\dstep & \quad \text{if $\pi(i)$ is the maximal element of $\pi[i:]$}\\
 	 	\end{array} \right. 
 	 	$\\
 	 
-		\textbf{Lemma \numl{updown}  \thenum} Let $p \in \Av{n}{213,231}$,
+		\textbf{Lemma \numl{updown}  \thenum} Let $\pi \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$, 
 		$i<j$, 
-		if $\mathcal{S}(p,i)=\ustep$
-		and $\mathcal{S}(p,j)=\dstep$
-		then $p(i)<p(j)$.\\ 
+		if $\stripe{\pi}{i}=\ustep$
+		and $\stripe{\pi}{j}=\dstep$
+		then $\pi(i)<\pi(j)$.\\ 
 		
-		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation p,
-		if $i$ is a up step and
-		if $j$ is a down step
-		then $p(i)<p(j)$.\\
+		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
+		if $i$ is an ascent and
+		if $j$ is a descent
+		then $\pi(i)<\pi(j)$.\\
 		
 		\textbf{Proof} By induction on the size of the permutation :
 		the proposition is true for the permutations $(1,2)$ and $(2,1)$.
 		Suppose the proposition true for $\Av{n}{213,231}$.
-		Let $p \in \Av{n}{213,231}$, 
-		we show that the proposition holds for $p$.
-		Let $p'$ be the permutation $p[2:]$.
-		$p' \in \Av{n}{213,231}$, so
+		Let $\pi \in \Av{n}{213,231}$, 
+		we show that the proposition holds for $\pi$.
+		Let $\pi'$ be the permutation $\pi[2:]$.
+		$\pi' \in \Av{n}{213,231}$, so
 		every element of $p'$ verify our lemma (by induction).
 		We still need to compare the first element with the rest.
 		But the first element
 		is the maximal (minimal) element of all the permutation 
 		(by Lemma \ref{firstelement}).
 		Moreover if the first element is the maximal (minimal)
-		it will mapped to an down step (up step).
+		it will mapped to an descent (ascent).
 		So the proposition is also true
 		for the first element.
 		$\Box$\\
 		
-		\textbf{Lemma \numl{upup} \thenum} Let $p \in \Av{n}{213,231}$,
+		\textbf{Lemma \numl{upup} \thenum} Let $\pi \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$, 
 		$i<j$, 
-		if $\mathcal{S}(p,i)=\ustep$
-		and $\mathcal{S}(p,j)=\ustep$
-		then $p(i)<p(j)$.\\ 
+		if $\stripe{\pi}{i}=\ustep$
+		and $\stripe{\pi}{j}=\ustep$
+		then $\pi(i)<\pi(j)$.\\ 
 		
-		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation p,
-		if $i$ is a up step 
-		and $j$ is a up step
+		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
+		if $i$ is a ascent
+		and $j$ is a ascent
 		and $ i<j$
 		then $p(i)<p(j)$.\\
 		
@@ -481,24 +486,24 @@ of $\sigma$:
 %		is the maximal (minimal) element of all the permutation 
 %		(by Corollary \ref{stripe}).
 %		Moreover if the first element is the maximal (minimal)
-%		it will mapped to an down step (up step).
+%		it will mapped to an descent (\pi_2).
 %		So the proposition is also true
 %		for the first element.
 %		$\Box$\\
 
 		
-		\textbf{Lemma \numl{downdown} \thenum}  Let $p \in \Av{n}{213,231}$,
+		\textbf{Lemma \numl{downdown} \thenum}  Let $\pi \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$,
 		$i<j$,
-		if $\mathcal{S}(p,i)=\dstep$
-		and $\mathcal{S}(p,j)=\dstep$
-		then $p(i)>p(j)$.\\ 
+		if $\stripe{\pi}{i}=\dstep$
+		and $\stripe{\pi}{j}=\dstep$
+		then $\pi(i)>\pi(j)$.\\ 
 
-		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation p,
-		if $i$ is a down step
-		and $j$ is a down step
+		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
+		if $i$ is a descent
+		and $j$ is a descent
 		and $ i<j$
-		then $p(i)>p(j)$.\\
+		then $\pi(i)>\pi(j)$.\\
 
 		%\textbf{Proof} Same as before.\\
 		
@@ -515,7 +520,7 @@ of $\sigma$:
 %		is the maximal (minimal) element of all the permutation 
 %		(by Corollary \ref{stripe}).
 %		Moreover if the first element is the maximal (minimal)
-%		it will mapped to an down step (up step).
+%		it will mapped to an descent (ascent).
 %		So the proposition is also true
 %		for the first element.
 %		$\Box$\\
@@ -530,11 +535,11 @@ of $\sigma$:
 		$\pmotif$ so they have the same stripe.\\ 
 		$\Leftarrow$ 
 		Let $\ptext$ be a permutation avoiding $(213,231)$, 
-		$R_1$ be its stripe, 
+		$S_1$ be its stripe, 
 		$\pmotif$  be a permutation avoiding $(213,231)$, 
-		and $R_2$ its stripe.
+		and $S_2$ its stripe.
 		Let $\phi$ be the function
-		that match $R_2$ to $R_1$.
+		that match $S_2$ to $S_1$.
 		We define $\varphi$ as, 
 		$\forall x \in [|\pmotif|-1]$,
 		$\varphi(x) = \phi(x)$,
@@ -547,10 +552,10 @@ of $\sigma$:
 		hypothesis possible :
 		\begin{itemize}		
 			\item if $\pmotif(x)<\pmotif(y)$, 
-			$\mathcal{S}(\pmotif,x)=\ustep$ 
-			and $\mathcal{S}(\pmotif,y)=\ustep$
+			$\stripe{\pmotif}{x}=\ustep$ 
+			and $\stripe{\pmotif}{y}=\ustep$
 			(if x and y are increasing in $\pmotif$),
-			then $\mathcal{S}(\ptext,\varphi(x))=\ustep$ and $\mathcal{S}(\ptext,\varphi(y))=\ustep$,
+			then $\stripe{\ptext}{\varphi(x)} =\ustep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
 			(the match are also increasing).
 			As $x<y$ and as $\varphi$ is an increasing function, 
 			$\varphi(x) < \varphi(y)$.
@@ -560,9 +565,9 @@ of $\sigma$:
 			so this case is not possible.
 		
 			\item if $\pmotif(x)<\pmotif(y)$, 
-			$\mathcal{S}(\pmotif,x)=\ustep$ 
-			and $\mathcal{S}(\pmotif,y)=\dstep$
-			then $\mathcal{S}(\ptext,\varphi(x))=\ustep$ and $\mathcal{S}(\ptext,\varphi(y))=\dstep$,
+			$\stripe{\pmotif}{x}=\ustep$ 
+			and $\stripe{\pmotif}{y}=\dstep$
+			then $\stripe{\ptext}{\varphi(x)}=\ustep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
 			As $x<y$ and as $\varphi$ is an increasing function, 
 			$\varphi(x) < \varphi(y)$.
 			And thus, by \textbf{Lemma \ref{updown}},
@@ -571,9 +576,9 @@ of $\sigma$:
 			so this case is not possible.			
 
 			\item if $\pmotif(x)>\pmotif(y)$, 
-			$\mathcal{S}(\pmotif,x)=\dstep$ 
-			and $\mathcal{S}(\pmotif,y)=\dstep$
-			then $\mathcal{S}(\ptext,\varphi(x))=\dstep$ and $\mathcal{S}(\ptext,\varphi(y))=\dstep$,
+			$\stripe{\pmotif}{x}=\dstep$ 
+			and $\stripe{\pmotif}{y}=\dstep$
+			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
 			As $x<y$ and as $\varphi$ is an increasing function, 
 			$\varphi(y) < \varphi(x)$.
 			And thus, by \textbf{Lemma \ref{downdown}},
@@ -582,9 +587,9 @@ of $\sigma$:
 			so this case is not possible.
 			
 			\item if $\pmotif(x)>\pmotif(y)$, 
-			$\mathcal{S}(\pmotif,x)=\dstep$ 
-			and $\mathcal{S}(\pmotif,y)=\ustep$
-			then $\mathcal{S}(\ptext,\varphi(x))=\dstep$ and $\mathcal{S}(\ptext,\varphi(y))=\ustep$,
+			$\stripe{\pmotif}{x}=\dstep$ 
+			and $\stripe{\pmotif}{y}=\ustep$
+			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
 			As $x<y$ and as $\varphi$ is an increasing function, 
 			$\varphi(y) < \varphi(x)$.
 			And thus, by \textbf{Lemma \ref{updown}},
@@ -593,15 +598,15 @@ of $\sigma$:
 			so this case is not possible.$\Box$
 			
 			\item If $y = |\pmotif|$ and $x=|\pmotif|-1$,
-			Clearly if $\mathcal{S}(\pmotif,x)=\ustep$,
+			Clearly if $\stripe{\pmotif}{x}=\ustep$,
 			then $\pmotif(y)-\pmotif(x)>0$ 
 			and because we have a match in the ribbon
 			$\ptext(\varphi(y))-\ptext(\varphi(x))>0$.
-			Same idea goes if $\mathcal{S}(\pmotif,x)=\dstep$.
+			Same idea goes if $\stripe{\pmotif}{x}=\dstep$.
 			So this case is not possible.
 			
 			\item if $y = |\pmotif|$ and $x<|\pmotif|-1$,
-			if $\mathcal{S}(\pmotif,x)=\ustep$ ie
+			if $\stripe{\pmotif}{x}=\ustep$ ie
 			$\pmotif(x+1)-\pmotif(x)>0$. Then
 			we must have either
 			$\pmotif(x)<\pmotif(x+1)<\pmotif(|\pmotif|)$
@@ -616,7 +621,7 @@ of $\sigma$:
 			or $\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$ 
 			which both lead to a $231$ or a $213$ motif
 			in the text which is not possible.
-			The same idea goes if $\mathcal{S}(\pmotif,x)=\dstep$. 			
+			The same idea goes if $\stripe{\pmotif}{x}=\dstep$. 			
 			
 		\end{itemize}
 		So our hypothesis is not realisable.So our assertion is true. $\Box$\\
@@ -711,11 +716,11 @@ of $\sigma$:
 			
 %			\textbf{Proof}
 %			The main point is that
-%			if we match a up step (down step) element $i_{\pmotif}$ of the motif
+%			if we match a ascnt (descent) element $i_{\pmotif}$ of the motif
 %			with an element $i_{\ptext}$ of the text,
 %			the optimal way of matching
-%			the first previous up step (down step)
-%			that appear before an down step (up step)
+%			the first previous ascnt (descent)
+%			that appear before an descent (ascent)
 %			is to choose the
 %			maximal (minimal) element possible.
 %			Indeed if we do not take
@@ -739,10 +744,10 @@ of $\sigma$:
 			$S(3)=(1,2,3,4)$, $IMP(3)=1$, 
 			$S(4)=(12,11,10)$ and $IMP(4)=12$.\\
 			
-			Given a up step (down step) segment $S(s)$,
+			Given a ascent (descent) segment $S(s)$,
 			if we want to
 			match the suffix $s_ns_{s-1}...s_1$
-			starting with an up step (down step),
+			starting with an ascent (descent),
 			and given that we know every
 			match of $s_{s-1}...s_1$,
 			the optimal way of matching
@@ -795,7 +800,7 @@ of $\sigma$:
 					\begin{array}{l l}
 					
 						MIN_{i<i'}\{0\} \cup \{i' |\text{ $i'$ such that } & 
-						\text{if $\mathcal{S}(\pmotif,IMP(1))=\ustep$}
+						\text{if $\stripe{\pmotif}{IMP(1)}=\ustep$}
 						\\
 						\text{ $LIS(i,i',\ptext(i')) \leq S(1)$}\}&\\			
 
@@ -803,7 +808,7 @@ of $\sigma$:
 						&\\
 						
 						MAX_{i<i'}\{0\} \cup \{i' |\text{ $i'$ such that } &
-						\text{if $\mathcal{S}(\pmotif,IMP(1))=\dstep$} \\
+						\text{if $\stripe{\pmotif}{IMP(1)}=\dstep$} \\
 						\text{ $LDS(i,i',\ptext(i')) \leq S(1)$}\}&\\			
 
 					\end{array} \right. $\\	
@@ -813,11 +818,11 @@ of $\sigma$:
 					\begin{array}{l l}
 					
 						MIN \{0\} \cup  I(s,i) & 
-						\text{if $\mathcal{S}(\pmotif,IMP(s))=\ustep$}\\
+						\text{if $\stripe{\pmotif}{IMP(s)}=\ustep$}\\
 
 						
 						MAX \{0\} \cup  D(s,i) & 
-						\text{if $\mathcal{S}(\pmotif,IMP(s))=\ustep$}\\
+						\text{if $\stripe{\pmotif}{IMP(s)}=\ustep$}\\
 	
 						
 											
@@ -831,11 +836,11 @@ of $\sigma$:
 			$\pmotif[IMP(s-1):]$ in $\ptext[e:]$.
 			Formally we define $I(s,i)$ and $D(s,i)$ such as:\\
 			
-			$I(s,i)=\{e|\text{$i<e$ and $LM(s-1,e)\neq 0$}$ \\
-			\indent \indent \indent and  $LIS(i,e-1,IMP(s-1)) \leq S(s) \}$ \\
+			$I(s,i)=\{i'|\text{$i<i'$ and $LM(s-1,i')\neq 0$}$ \\
+			\indent \indent \indent and  $LIS(i,i'-1,IMP(s-1)) \leq S(s) \}$ \\
 			
-			$D(s,i)=\{e|\text{$i<e$ and $LM(s-1,e)\neq 0$}$ \\
-			\indent \indent \indent and  $LDS(i,e-1,IMP(s-1)) \leq S(s) \}$ \\
+			$D(s,i)=\{i'|\text{$i<i'$ and $LM(s-1,i')\neq 0$}$ \\
+			\indent \indent \indent and  $LDS(i,i'-1,IMP(s-1)) \leq S(s) \}$ \\
 					                       
 			With LIS(i,j,k) (LDS(i,j,k)) is the longest increasing (decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
 			with every element of this sequence
@@ -844,8 +849,8 @@ of $\sigma$:
 			
 			In the base case, 
 			we are looking for a match for the first segment.
-			Each segment is either up step or down step.
-			If the segment is an up step (down step)
+			Each segment is either ascent or descent.
+			If the segment is an ascent (descent)
 			we have to find an increasing (decreasing) sequence
 			in the text of same size of longest that 
 			the size of the segment,
@@ -948,55 +953,55 @@ of $\sigma$:
 			$\mathbb{P}_{\bmotif,\ptext,min,max}(i,j)= \\ \left\{ 
 					\begin{array}{l l}
 					
-						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,k) 
-							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$
+						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,\ptext(j),max}(i+1,k) 
+							& \text{if $\stripe{\pmotif}{i}=\ustep$
 							and $i \notin \x$}\\
 							& \text{and $i \notin \y$ }\\
 							& \text{and $min<\ptext(j)<max$} \\
 						&\\
 							
-						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,k) 
-							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,min,\ptext(j)}(i+1,k) 
+							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							& \text{and $i \notin \x$ and $i \notin \y$  }\\
 							& \text{and $min<\ptext(j)<max$} \\		
 						&\\
 							
 						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,j+1) 
-							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
+							& \text{if $\stripe{\pmotif}{i}=\ustep$}\\
 							& \text{and $i \in \x$ and $i \notin \y$}\\
 							& \text{and $min<\ptext(j)<max$} \\
 						&\\
 							
 						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,j+1) 
-							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							& \text{and $i \in \x$ and $i \notin \y$ }\\
 							& \text{and $min<\ptext(j)<max$} \\
 														
 						&\\
 													
-						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,\ptext^{-1}(\ptext(j)+1)) 
-							&\text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
+						\mathbb{P}_{\bmotif,\ptext,\ptext(j),max}(i+1,\ptext^{-1}(\ptext(j)+1)) 
+							&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
 							&\text{and $i \notin \x$ and $i \in \y$}\\
 							& \text{and $min<\ptext(j)<max$} \\
 							&\text{and $\ptext^{-1}(\ptext(j)+1)>j$}\\
 						&\\
 							
-						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,\ptext^{-1}(\ptext(j)-1)) 
-							&\text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+						\mathbb{P}_{\bmotif,\ptext,min,\ptext(j)}(i+1,\ptext^{-1}(\ptext(j)-1)) 
+							&\text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							&\text{and $i \notin \x$ and $i \in \y$ }\\	
 							& \text{and $min<\ptext(j)<max$} \\
 							&\text{and $\ptext^{-1}(\ptext(j)-1)>j$}\\
 						&\\
 						
-						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,j+1) 
-							&\text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
+						\mathbb{P}_{\bmotif,\ptext,\ptext(j)),max}(i+1,j+1) 
+							&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
 							&\text{and $i \in \x$ and $i \in \y$}\\ 
 							&\text{and $\ptext(j)+1=\ptext(j+1)$ }\\
 							& \text{and $min<\ptext(j)<max$} \\
 						&\\
 							
-						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,j+1)
-							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
+						\mathbb{P}_{\bmotif,\ptext,min,\ptext(j)}(i+1,j+1)
+							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							&\text{and $i \in \x$ and $i \in \y$}\\ 
 							&\text{and $\ptext(j)-1=\ptext(j+1)$ }\\
 							& \text{and $min<\ptext(j)<max$} \\
@@ -1086,28 +1091,28 @@ of $\sigma$:
 			with the condition that
 			$\pmotif(i+1)$ is matched to $\ptext(j+1)$.\\
 			
-			If $i \notin \x$, $i \in \y$ and i is a down step,
+			If $i \notin \x$, $i \in \y$ and i is a descent,
 			we match $\pmotif(i)$ to $\ptext(j)$, 
 			then we match $\pmotif[i+1:]$ 
 			with $\ptext[\ptext^{-1}(\ptext(j)-1):]$
 			with the condition that
 			$\pmotif(i+1)$ is matched to the element $\ptext(j)-1$.\\						
 			
-			If $i \notin \x$, $i \in \y$ and i is an up step,
+			If $i \notin \x$, $i \in \y$ and i is an ascent,
 			we match $\pmotif(i)$ to $\ptext(j)$, 
 			then we match $\pmotif[i+1:]$ 
 			with $\ptext[\ptext^{-1}(\ptext(j)+1):]$
 			with the condition that
 			$\pmotif(i+1)$ is matched to the element $\ptext(j)+1$.\\	
 
-			If $i \in \x$, $i \in \y$ and i is a down step,
+			If $i \in \x$, $i \in \y$ and i is a descent,
 			we match $\pmotif(i)$ to $\ptext(j)$, 
 			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
 			with the condition that
 			$\pmotif(i+1)$ is matched to $\ptext(j+1)$,
 			and that $\ptext(j+1)=\pmotif(i)-1$.\\			
 
-			If $i \in \x$, $i \in \y$ and i is an up step,
+			If $i \in \x$, $i \in \y$ and i is an ascent,
 			we match $\pmotif(i)$ to $\ptext(j)$, 
 			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
 			with the condition that
@@ -1116,9 +1121,9 @@ of $\sigma$:
 					
 			There are two cases to consider searching for a match : \\
 			If $|\pmotif| \in \x$ there exists a match
-			if and only if\\ $\bigcup_{0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,t(j)}(0,0)$ is true.\\
+			if and only if\\ $\bigcup_{0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,max}(0,0)$ is true.\\
 			
-			If $|\pmotif| \notin \x$ there exists a match if and only if \\	$\bigcup_{0<k<|\ptext|,0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,t(j)}(0,k)$
+			If $|\pmotif| \notin \x$ there exists a match if and only if \\	$\bigcup_{0<k<|\ptext|,0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,max}(0,k)$
 			is true. $\Box$  			
 	
 	\section{Longest Subsequence Avoiding \\(231,213) for a Permutation}
@@ -1126,26 +1131,26 @@ of $\sigma$:
 	In this section we present an algorithm to solve the problem
 	of the longest subsequence avoiding (231,213).
 	To do so, we need the set of element
-	that are matched to an up step and the
-	set of element that are matched to a down step.
-	For a permutation $p$ of size $n$, we define
-	$P(p) = \{i | \mathcal{S}(p,i) = \ustep \} \cup \{n\}$ and  
-	$M(p) = \{i | \mathcal{S}(p,i) = \dstep \} \cup \{n\}$.\\
+	that are matched to an ascent and the
+	set of element that are matched to a descent.
+	For a permutation $\pi$ of size $n$, we define
+	$P(\pi) = \{i | \stripe{\pi}{i} = \ustep \} \cup \{n\}$ and  
+	$M(\pi) = \{i | \stripe{\pi}{i} = \dstep \} \cup \{n\}$.\\
 	
 	\textbf{Proposition  \numl{longestIncreasingSubsequence} \thenum}
-	If $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $p$ then
-	$P(p)$ is a longest increasing subsequence with last element at index $f$ and
-	$M(p)$ is a longest decreasing subsequence with last element at index $f$.\\
+	If $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$ then
+	$P(\pi)$ is a longest increasing subsequence with last element at index $f$ and
+	$M(\pi)$ is a longest decreasing subsequence with last element at index $f$.\\
 
 	
-	\textbf{Proof} Let's $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $p$, 
-	suppose that $P(p)$ is not a longest increasing subsequence with last element at index $f$. Let's $s_m$ be a longest increasing subsequence with last element $f$.
-	Thus $|s_m|>P(p)$, clearly the sequence $s_m \cup M(p)$
+	\textbf{Proof} Let's $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$, 
+	suppose that $P(\pi)$ is not a longest increasing subsequence with last element at index $f$. Let's $s_m$ be a longest increasing subsequence with last element $f$.
+	Thus $|s_m|>P(\pi)$, clearly the sequence $s_m \cup M(\pi)$
 	is avoiding (213,231) and is longer than $s$ witch is not possible. 
-	The case for $M(p)$ follows the same idea.$\Box$\\
+	The case for $M(\pi)$ follows the same idea.$\Box$\\
 
 	\textbf{Proposition  \num \thenum}
-	Given a permutation $p$, 
+	Given a permutation $\pi$, 
 	finding the longest subsequence avoiding (231,213)
 	can be done in $O(|\ptext|*log(log(|\ptext|)))$ time and in $O(n)$ space.\\
 	
@@ -1161,21 +1166,21 @@ of $\sigma$:
 	the longest common subsequence avoiding (231,213) 
 	between two permutations.\\
 	
-	\textbf{Proposition \num \thenum } Given two permutation $p_1$ and $p_2$
+	\textbf{Proposition \num \thenum } Given two permutation $\pi_1$ and $\pi_2$
 	The longest common subsequence
-	avoiding (231,213) can be solve in $O(|p_1|^3*|p_2|^3)$.\\
+	avoiding (231,213) can be solve in $O(|\pi_1|^3*|\pi_2|^3)$.\\
 	
 	\textbf{Proof } Consider the following problem, 
-	that compute the longest stripe common to $p_1$ and $p_2$.
-	Given two permutation $p_1$ and $p_2$.\\
+	that compute the longest stripe common to $\pi_1$ and $\pi_2$.
+	Given two permutation $\pi_1$ and $\pi_2$.\\
 	
-	$S_{p_1,p_2}(min_1,max_1,min_2,min_2,i_1,i_2)$
+	$S_{\pi_1,\pi_2}(min_1,max_1,min_2,min_2,i_1,i_2)$
 	= max$\{$ $|m|$ $|$ 
 	s is a pattern occurring 
-	in  $p_1[i_1:]$
+	in  $\pi_1[i_1:]$
 	by the subsequence $s_1$ and $min(s_1)=min_1$ and $max(s_1)=max_1$
 	and s is occurring
-	in  $p_2[i_2:]$
+	in  $\pi_2[i_2:]$
 	by the subsequence $s_2$ and $min(s_2)=min_2$ and $max(s_2)=max_2$	
 	$\}$\\
 	
@@ -1183,40 +1188,40 @@ of $\sigma$:
 
 
 	\textbf{BASE :} \\
-	$S_{p_1,p_2,min_1,max_1,min_2,max_2}(|p_1|,|p_2|) = \left\{ 
+	$S_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(|\pi_1|,|\pi_2|) = \left\{ 
 			\begin{array}{l l}
-				1 & \text{if $min_1<p_1(j)<max_1$  
+				1 & \text{if $min_1<\pi_1(j)<max_1$  
 				}\\
-				& \text{ and $min_2<p_2(j)<max_2$}\\
+				& \text{ and $min_2<\pi_2(j)<max_2$}\\
 				0 & otherwise\\
 			\end{array} \right. $\\	
 
 	\textbf{STEP :} \\	
 	
-	$S_{p_1,p_2,min_1,max_1,min_2,max_2}(i_1,i_2) =$\\
+	$S_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(i_1,i_2) =$\\
 	\indent $ max \left\{ 
 			\begin{array}{l l}
-				S_{p_1,p_2,min_1,max_1,min_2,max_2}(i_1,i_2+1) \\
-				S_{p_1,p_2,min_1,max_1,min_2,max_22}(i_1+1,i_2) \\
-				S'_{p_1,p_2,min_1,max_1,min_2,max_2}(i_1,i_2)
+				S_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(i_1,i_2+1) \\
+				S_{\pi_1,\pi_2,min_1,max_1,min_2,max_22}(i_1+1,i_2) \\
+				S'_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(i_1,i_2)
 			\end{array} \right. $\vspace{20pt}\\	
 	
 	with 
-	$S'_{p_1,p_2,min_1,max_1,min_2,max_2}(i_1,i_2)=\\ \left\{ 
+	$S'_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(i_1,i_2)=\\ \left\{ 
 				\begin{array}{l l}
-					1+S_{p_1,p_2,p_1(i_1),max_1,p_2(i_2)}(max_2,i_1+1,i_2+1)  & \text{$p_1(i_1)<min_1$ } \\
-					& \text{and $p_2(i_2)<min_2$} \\
+					1+S_{\pi_1,\pi_2,\pi_1(i_1),max_1,\pi_2(i_2)}(max_2,i_1+1,i_2+1)  & \text{$\pi_1(i_1)<min_1$ } \\
+					& \text{and $\pi_2(i_2)<min_2$} \\
 					&\\
-					1+S_{p_1,p_2,min_1,p_1(i_1),min_2,p_2(i_2)}(i_1+1,i_2+1)  & \text{$p_1(i_1)>max_1$ } \\	
-					&\text{and $p_2(i_2)>max_2$}\\	
+					1+S_{\pi_1,\pi_2,min_1,\pi_1(i_1),min_2,\pi_2(i_2)}(i_1+1,i_2+1)  & \text{$\pi_1(i_1)>max_1$ } \\	
+					&\text{and $\pi_2(i_2)>max_2$}\\	
 					&\\	
 					0 & \text{otherwise}\\							
 				\end{array} \right.$\\
 				
-	For every pair $i,j$ we either ignore the element of $p_1$,
-	either ignore the element of $p_2$, 
+	For every pair $i,j$ we either ignore the element of $\pi_1$,
+	either ignore the element of $\pi_2$, 
 	either we match as the same step (if possible).
-	Those relation lead to a $O(|p_1|^3*|p_2|^3)$ time and $O(|p_1|^3*|p_2|^3)$ space algorithm.$\Box$ 		
+	Those relation lead to a $O(|\pi_1|^3*|\pi_2|^3)$ time and $O(|\pi_1|^3*|\pi_2|^3)$ space algorithm.$\Box$ 		
 
 
 
