@@ -183,6 +183,17 @@ bla bla\ldots
 	not only positions but also values
 	of elements involved in a matching may be forced to be adjacent
 
+	We focus in this paper on $(213,231)$-avoiding permutation. 
+	The number of $n$-permutations that avoid both 
+	$231$ and $213$ is 
+	$t_0 = 1$ for $n = 0$ and 
+	$t_n =2^{n−1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985}.
+	The permutations that do not contain the permutation pattern $231$
+	are exactly the \emph{stack-sortable permutations} and they are counted by 
+	the Catalan numbers \cite{Knuth:1997:ACP:260999}.
+	A stack-sortable permutation is a permutation whose elements may be sorted by 
+	an algorithm whose internal storage is limited to a single stack data structure.
+
 	This paper is organized as follows.
 	
 %	The permutation pattern problem asks if there exists a normalized subsequence of a text $\ptext$ which equals to a motif $\pmotif$.
@@ -222,12 +233,12 @@ bla bla\ldots
 A \emph{permutation} of length $n$ is a one-to-one function from an
 $n$-element set to itself.
 We write permutations as words 
-$\sigma = \sigma_1\,\sigma_2\,\ldots\,\sigma_n$, whose letters are distinct
-and uasually consist of the integers $1\,2\,\ldots\,n$.
+$\sigma = \sigma_1\sigma_2\,\ldots\,\sigma_n$, whose letters are distinct
+and uasually consist of the integers $12\,\ldots\,n$.
 For the sake of convenience, 
 we let 
 $\pi[i:j]$ stand for 
-$\pi_i\,\pi_{i+1}\,\ldots\,\pi_j$,
+$\pi_i\pi_{i+1}\,\ldots\,\pi_j$,
 $\pi[:j]$ stand for $\pi[1:j]$ and
 $\pi[i:]$ stand for $\pi[i:n]$.
 We let $S_n$ denote the set of all permutations of length $n$.
@@ -247,22 +258,22 @@ entries of $\pi$ that has the same relative order as $\sigma$,
 and in this case $\sigma$ is said to be a \emph{pattern} of 
 $\pi$, written $\sigma \preceq \pi$. 
 Otherwise, $\pi$ is said to \emph{avoid} the permutation $\sigma$. 
-For example, the permutation $\pi = 3\,9\,1\,8\,6\,7\,4\,5\,2$ 
+For example, the permutation $\pi = 391867452$ 
 contains the pattern $\sigma = 51342$, 
 as can be seen in the highlighted subsequence of 
-$\pi = 3\,\mathbf{9}\,\mathbf{1}\,8\,\mathbf{6}\,\mathbf{7}\,\mathbf{4}\,5\,2$
+$\pi = 3\mathbf{9}\mathbf{1}8\mathbf{6}\mathbf{7}\mathbf{4}52$
 (or 
-$\pi = 3\,\mathbf{9}\,\mathbf{1}\,8\,\mathbf{6}\,\mathbf{7}\,4\,\mathbf{5}\,2$
+$\pi = 3\mathbf{9}\mathbf{1}8\mathbf{6}\mathbf{7}4\mathbf{5}2$
 or
-$\pi = 3\,\mathbf{9}\,\mathbf{1}\,8\,\mathbf{6}\,\mathbf{7}\,4\,5\,\mathbf{2}$
+$\pi = 3\mathbf{9}\mathbf{1}8\mathbf{6}\mathbf{7}45\mathbf{2}$
 ). 
-Each subsequence $(9\,1\,6\,7\,4$, 
-$9\,1\,6\,7\,5$, 
-$9\,1\,6\,7\,2$) is called a 
+Each subsequence $(91674$, 
+$91675$, 
+$91672$) is called a 
 \emph{copy}, 
 \emph{instance}, or 
 \emph{occurrence} of $\sigma$. 
-Since the permutation $\pi = 3\,9\,1\,8\,6\,7\,4\,5\,2$  contains no increasing subsequence of length four, $\pi$ avoids $1\,2\,3\,4$.
+Since the permutation $\pi = 391867452$  contains no increasing subsequence of length four, $\pi$ avoids $1234$.
 
 Suppose $P$ is a set of permutations. We let $\AV_n(p)$ denote the
 set of all $n$-permutations avoiding each permutation in $P$.
@@ -270,17 +281,17 @@ For the sake of convenience, we omit $P$'s braces thus having
 e.g. $\AV_3(132,4312)$ instead of
 $\AV_3(\{132,4312\})$.
 A basic example is if 
-$\pi = \pi_1\,\pi_2\,\ldots\,\pi_n$ avoids $3\,2\,1$, i.e., 
+$\pi = \pi_1\pi_2\,\ldots\,\pi_n$ avoids $321$, i.e., 
 has no decreasing subsequence of length $3$, then its reverse, 
-$\pi' = \pi_n\,\pi_{n-1}\,\ldots\,\pi_1$ avoids $1\,2\,3$, i.e., 
+$\pi' = \pi_n\pi_{n-1}\,\ldots\,\pi_1$ avoids $123$, i.e., 
 has no increasing subsequence of length $3$.
 
 An \emph{ascent} of a permutation $\pi \in S_n$ is any position 
 $1 \leq i < n$ where the following value is bigger than the current one. 
-That is, if $\pi = \pi_1\,\pi_2\,\ldots\,\pi_n$, then
+That is, if $\pi = \pi_1\pi_2\,\ldots\,\pi_n$, then
 $i$ is an ascent if $\pi_i < \pi_{i+1}$.
 For example, the permutation 
-$3\,4\,5\,2\,1\,6\,$7 has ascents (at positions) $1,2,5,6$.
+$345216$7 has ascents (at positions) $1,2,5,6$.
 Similarly, a \emph{descent} is a position 
 $1 \leq i < n$ with $\pi_i > \pi_{i+1}$, 
 so every $i$ with $1 \leq i < n$ either is an ascent or is a descent of 
@@ -359,16 +370,16 @@ $\stripew{\pi}$ as a subsequence.
 A \emph{bivincular pattern} (abbreviated BVP) $\sigma$
 of length $k$ is a permutation in $S_k$ written in
 two-line notation 
-(that is the top row is $1\,2\,\ldots\,k$ and the bottom row
-is a permutation $\sigma_1\,\sigma_2\,\ldots\,\sigma_k$).
+(that is the top row is $12\,\ldots\,k$ and the bottom row
+is a permutation $\sigma_1\sigma_2\,\ldots\,\sigma_k$).
 We have the following conditions on the top and bottom rows
 of $\sigma$:
 \begin{itemize}
 	\item
 	If the bottom line of $\sigma$ contains
-	$\underline{\sigma_i\,\sigma_{i+1}\,\ldots\,\sigma_j}$
+	$\underline{\sigma_i\sigma_{i+1}\,\ldots\,\sigma_j}$
 	then the letters corresponding to 
-	$\sigma_i\,\sigma_{i+1}\,\ldots\,\sigma_j$ in an occurrence of
+	$\sigma_i\sigma_{i+1}\,\ldots\,\sigma_j$ in an occurrence of
 	$\sigma$ in a permutaton must be adjacent, whereas there is
 	no adjacency condition for
 	non-underlined consecutive letters.
@@ -407,26 +418,35 @@ of $\sigma$:
 		We first exhibit some properties of a stripe 
 		of a permutation avoiding (231,213).\\
 
-		\textbf{Lemma  \numl{firstelement} \thenum} If a permutation is in $\Av{n}{213,231}$ 
-		then the first element is either
-		the minimal or the maximal element.\\
-		
-		\textbf{Proof} Suppose that we have
-		$\pi \in \mathcal{S}_{n}$, and
-		$\pi(1) \neq 1 $ and $\pi(1) \neq n$ then we have either
-		$\pi(1) ... n ... 1$ or $\pi(1) ... 1 ... n $, either the motif 231 or 213, which is not possible by hypothesis. $\Box$\\
-		
-		\textbf{Corollary  \num \thenum} A permutation $\pi \in \Perm{n}$ is in $\Av{n}{213,231}$ if and only if for $1 \leq i \leq n$, 
+		\begin{lemma}[Folklore]
+		\label{lemma:first element is 1 or n}
+		The 􏰅first element of any $(213,231)$-avoiding permutation
+		must be either $1$ or $n$.
+		\end{lemma}
+
+		\begin{proof} 
+		Any other initial element would serve as a `$2$' in either a 
+		$231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
+		\end{proof}
+			
+		The above lemma gains in interest in the form of the following corollaries.
+
+		\begin{corollary}
+		$\pi \in \AV_n(213,231)$ if and only if for $1 \leq i \leq n$, 
 		$\pi[i:]$ start either with the maximal element
-		or the minimal element of $\pi[i:]$.\\
+		or the minimal element of $\pi[i:]$.
+		\end{corollary}
 	
-		\textbf{Corollary \numl{stripe} \thenum}  If $\pi \in \Av{n}{213,231}$ its stripe can be define such as, \\
-		$\stripe{\pi}{i} = \left\{ 
-  		\begin{array}{l l}
-   			\ustep & \quad \text{if $\pi(i)$ is the minimal element of $\pi[i:]$}\\    
-   			\dstep & \quad \text{if $\pi(i)$ is the maximal element of $\pi[i:]$}\\
-	 	\end{array} \right. 
-	 	$\\
+		\begin{corollary}
+		Let $\pi \in \AV_n(213,231)$. We have
+		$$
+		\stripe{\pi}{i} =
+		\begin{cases}
+   			\ustep & \text{if $\pi(i)$ is the minimal element of $\pi[i:]$}\\    
+   			\dstep & \text{if $\pi(i)$ is the maximal element of $\pi[i:]$}\\
+	 	\end{cases}
+	 	$$
+	 	\end{corollary}
 	 
 		\textbf{Lemma \numl{updown}  \thenum} Let $\pi \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$, 
@@ -451,7 +471,7 @@ of $\sigma$:
 		We still need to compare the first element with the rest.
 		But the first element
 		is the maximal (minimal) element of all the permutation 
-		(by Lemma \ref{firstelement}).
+		(by Lemma \ref{lemma:first element is 1 or n}).
 		Moreover if the first element is the maximal (minimal)
 		it will mapped to an descent (ascent).
 		So the proposition is also true
