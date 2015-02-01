@@ -407,34 +407,48 @@ of $\sigma$:
 		We first exhibit some properties of a stripe 
 		of a permutation avoiding (231,213).\\
 
-		\textbf{Lemma  \numl{firstelement} \thenum} If a permutation is in $\Av{n}{213,231}$ 
+		\begin{lemma}
+		\label{lemma:firstelement}
+		If a permutation is in $\Av{n}{213,231}$ 
 		then the first element is either
-		the minimal or the maximal element.\\
+		the minimal or the maximal element.
+		\end{lemma}
+
+		%\textbf{Lemma  \numl{firstelement} \thenum} 
 		
 		\textbf{Proof} Suppose that we have
 		$\pi \in \mathcal{S}_{n}$, and
 		$\pi(1) \neq 1 $ and $\pi(1) \neq n$ then we have either
 		$\pi(1) ... n ... 1$ or $\pi(1) ... 1 ... n $, either the motif 231 or 213, which is not possible by hypothesis. $\Box$\\
-		
-		\textbf{Corollary  \num \thenum} A permutation $\pi \in \Perm{n}$ is in $\Av{n}{213,231}$ if and only if for $1 \leq i \leq n$, 
+
+		\begin{corollary}
+		\label{corollary:stripe}
+		A permutation $\pi \in \Perm{n}$ is in $\Av{n}{213,231}$ if and only if for $1 \leq i \leq n$, 
 		$\pi[i:]$ start either with the maximal element
-		or the minimal element of $\pi[i:]$.\\
-	
-		\textbf{Corollary \numl{stripe} \thenum}  If $\pi \in \Av{n}{213,231}$ its stripe can be define such as, \\
+		or the minimal element of $\pi[i:]$.
+		\end{corollary}
+		
+
+		\begin{corollary}
+		If $\pi \in \Av{n}{213,231}$ its stripe can be define such as, \\
 		$\stripe{\pi}{i} = \left\{ 
   		\begin{array}{l l}
    			\ustep & \quad \text{if $\pi(i)$ is the minimal element of $\pi[i:]$}\\    
    			\dstep & \quad \text{if $\pi(i)$ is the maximal element of $\pi[i:]$}\\
 	 	\end{array} \right. 
-	 	$\\
-	 
-		\textbf{Lemma \numl{updown}  \thenum} Let $\pi \in \Av{n}{213,231}$,
+	 	$
+		\end{corollary}
+
+		\begin{lemma}
+		\label{lemma:updown}
+		Let $\pi \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$, 
 		$i<j$, 
 		if $\stripe{\pi}{i}=\ustep$
 		and $\stripe{\pi}{j}=\dstep$
-		then $\pi(i)<\pi(j)$.\\ 
-		
+		then $\pi(i)<\pi(j)$.
+		\end{lemma}
+	 	
 		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
 		if $i$ is an ascent and
 		if $j$ is a descent
@@ -451,19 +465,22 @@ of $\sigma$:
 		We still need to compare the first element with the rest.
 		But the first element
 		is the maximal (minimal) element of all the permutation 
-		(by Lemma \ref{firstelement}).
+		(by Lemma \ref{lemma:firstelement}).
 		Moreover if the first element is the maximal (minimal)
 		it will mapped to an descent (ascent).
 		So the proposition is also true
 		for the first element.
 		$\Box$\\
-		
-		\textbf{Lemma \numl{upup} \thenum} Let $\pi \in \Av{n}{213,231}$,
+
+		\begin{lemma}
+		\label{lemma:upup}
+		Let $\pi \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$, 
 		$i<j$, 
 		if $\stripe{\pi}{i}=\ustep$
 		and $\stripe{\pi}{j}=\ustep$
-		then $\pi(i)<\pi(j)$.\\ 
+		then $\pi(i)<\pi(j)$.
+		\end{lemma}
 		
 		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
 		if $i$ is a ascent
@@ -491,13 +508,15 @@ of $\sigma$:
 %		for the first element.
 %		$\Box$\\
 
-		
-		\textbf{Lemma \numl{downdown} \thenum}  Let $\pi \in \Av{n}{213,231}$,
+		\begin{lemma}
+		\label{lemma:downdown}
+ 		Let $\pi \in \Av{n}{213,231}$,
 		$\forall i,j \in [n]$,
 		$i<j$,
 		if $\stripe{\pi}{i}=\dstep$
 		and $\stripe{\pi}{j}=\dstep$
-		then $\pi(i)>\pi(j)$.\\ 
+		then $\pi(i)>\pi(j)$.
+		\end{lemma}
 
 		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
 		if $i$ is a descent
@@ -525,8 +544,12 @@ of $\sigma$:
 %		for the first element.
 %		$\Box$\\
 
-		\textbf{Proposition \numl{patternMatchingStripe} \thenum} Let $\ptext, \pmotif \in \Av{n}{213,231}$.
-		$\pmotif$ is a motif of $\ptext$ if and only if the stripe of $\pmotif$ is a motif of the stripe of $\ptext$.\\
+		\begin{proposition}
+		\label{proposition:patternMatchingStripe}
+		Let $\ptext, \pmotif \in \Av{n}{213,231}$.
+		$\pmotif$ is a motif of $\ptext$ if and only if the stripe of $\pmotif$ is a motif of the stripe of $\ptext$.
+		\end{proposition}
+
 		
 		\textbf{Proof} \\
 		$\Rightarrow$ Suppose that $\pmotif$ is a motif of $\ptext$
@@ -559,7 +582,7 @@ of $\sigma$:
 			(the match are also increasing).
 			As $x<y$ and as $\varphi$ is an increasing function, 
 			$\varphi(x) < \varphi(y)$.
-			And thus, by \textbf{Lemma \ref{upup}},
+			And thus, by \textbf{Lemma \ref{lemma:upup}},
 			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
 			Which contradict our hypothesis,
 			so this case is not possible.
@@ -570,7 +593,7 @@ of $\sigma$:
 			then $\stripe{\ptext}{\varphi(x)}=\ustep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
 			As $x<y$ and as $\varphi$ is an increasing function, 
 			$\varphi(x) < \varphi(y)$.
-			And thus, by \textbf{Lemma \ref{updown}},
+			And thus, by \textbf{Lemma \ref{lemma:updown}},
 			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
 			Which contradict our hypothesis,
 			so this case is not possible.			
@@ -581,7 +604,7 @@ of $\sigma$:
 			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
 			As $x<y$ and as $\varphi$ is an increasing function, 
 			$\varphi(y) < \varphi(x)$.
-			And thus, by \textbf{Lemma \ref{downdown}},
+			And thus, by \textbf{Lemma \ref{lemma:downdown}},
 			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
 			Which contradict our hypothesis,
 			so this case is not possible.
@@ -592,7 +615,7 @@ of $\sigma$:
 			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
 			As $x<y$ and as $\varphi$ is an increasing function, 
 			$\varphi(y) < \varphi(x)$.
-			And thus, by \textbf{Lemma \ref{updown}},
+			And thus, by \textbf{Lemma \ref{lemma:updown}},
 			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
 			Which contradict our hypothesis,
 			so this case is not possible.$\Box$
@@ -636,7 +659,7 @@ of $\sigma$:
 		we find a find a match of the stripe of the pattern in the stripe of the text.
 		This can be done linearly by a greedy algorithm, 
 		by matching a step whenever it is possible.
-		And thank to the definition of the definition of a stripe in \textbf{Corollary \ref{stripe}},
+		And thank to the definition of the definition of a stripe in \textbf{Corollary \ref{corollary:stripe}},
 		we do not have to compute the stripe advance.
 		Therefore we have an linear (online) algorithm.$\Box$\\
 				
@@ -706,13 +729,16 @@ of $\sigma$:
 		
 		\section{Pattern Matching With Motif Avoiding (231,213)}	
 
-			\textbf{Proposition  \num \thenum} Let $\pmotif$, $\ptext$ 
+			\begin{proposition}
+			Let $\pmotif$, $\ptext$ 
 			be two permutation,
 			with  $\pmotif$ a permutation avoiding (231,213), 
 			we can decide in $O(|\pmotif|*|\ptext|^2)$ time
 			and $O(|\pmotif|*|\ptext|^2)$ space
 			if $\pmotif$ 
-			is a motif of $\ptext$.\\
+			is a motif of $\ptext$.
+			\end{proposition}
+
 			
 %			\textbf{Proof}
 %			The main point is that
@@ -874,14 +900,16 @@ of $\sigma$:
 					
 		\section{Pattern Matching With Bivincular Motif Avoiding (231,213)}	
 		
-			\textbf{Proposition \num \thenum } Let $\bmotif$ be a bivincular motif 
+			\begin{proposition}
+			Let $\bmotif$ be a bivincular motif 
 			avoiding (231,213), 
 			$\ptext$ a permutation,
 			we can decide in $O(|\pmotif|*|\ptext|^3)$ time
 			and $O(|\ptext|^3)$ space
 			if $\pmotif$ 
-			appear in $\ptext$.\\	
-			
+			appear in $\ptext$.
+			\end{proposition}
+					
 			\textbf{Proof }
 			We consider the following problem :\\
 			
@@ -1137,11 +1165,12 @@ of $\sigma$:
 	$P(\pi) = \{i | \stripe{\pi}{i} = \ustep \} \cup \{n\}$ and  
 	$M(\pi) = \{i | \stripe{\pi}{i} = \dstep \} \cup \{n\}$.\\
 	
-	\textbf{Proposition  \numl{longestIncreasingSubsequence} \thenum}
+	\begin{proposition}
+	\label{proposition:longestIncreasingSubsequence}
 	If $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$ then
 	$P(\pi)$ is a longest increasing subsequence with last element at index $f$ and
-	$M(\pi)$ is a longest decreasing subsequence with last element at index $f$.\\
-
+	$M(\pi)$ is a longest decreasing subsequence with last element at index $f$.	
+	\end{proposition}
 	
 	\textbf{Proof} Let's $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$, 
 	suppose that $P(\pi)$ is not a longest increasing subsequence with last element at index $f$. Let's $s_m$ be a longest increasing subsequence with last element $f$.
@@ -1149,12 +1178,13 @@ of $\sigma$:
 	is avoiding (213,231) and is longer than $s$ witch is not possible. 
 	The case for $M(\pi)$ follows the same idea.$\Box$\\
 
-	\textbf{Proposition  \num \thenum}
+	\begin{proposition}
 	Given a permutation $\pi$, 
 	finding the longest subsequence avoiding (231,213)
-	can be done in $O(|\ptext|*log(log(|\ptext|)))$ time and in $O(n)$ space.\\
+	can be done in $O(|\ptext|*log(log(|\ptext|)))$ time and in $O(n)$ space.	
+	\end{proposition}
 	
-	\textbf{Proof} The proposition \ref{longestIncreasingSubsequence} lead to algorithm 
+	\textbf{Proof} The proposition \ref{proposition:longestIncreasingSubsequence} lead to algorithm 
 	where we have to compute longest increasing and decreasing subsequence ending at every index. Then finding the maximum sum of longest increasing and decreasing subsequence ending at the same index.
 	Computing the longest increasing and decreasing can be done in $O(|\ptext|*log(log(|\ptext|)))$ time and $O(n)$ space (see \cite{Bespamyatnikh00enumeratinglongest}), then finding the maximum can be done in linear time.$\Box$\\
 
@@ -1165,10 +1195,12 @@ of $\sigma$:
 	In this section we present an algorithm to find 
 	the longest common subsequence avoiding (231,213) 
 	between two permutations.\\
-	
-	\textbf{Proposition \num \thenum } Given two permutation $\pi_1$ and $\pi_2$
+
+	\begin{proposition}
+	Given two permutation $\pi_1$ and $\pi_2$
 	The longest common subsequence
-	avoiding (231,213) can be solve in $O(|\pi_1|^3*|\pi_2|^3)$.\\
+	avoiding (231,213) can be solve in $O(|\pi_1|^3*|\pi_2|^3)$.	
+	\end{proposition}
 	
 	\textbf{Proof } Consider the following problem, 
 	that compute the longest stripe common to $\pi_1$ and $\pi_2$.
