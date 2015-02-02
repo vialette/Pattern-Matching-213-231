@@ -64,4 +64,16 @@ S.~Kitaev.
 \newblock {\em Patterns in Permutations and Words}.
 \newblock Springer-Verlag, 2013.
 
+\bibitem{Knuth:1997:ACP:260999}
+Donald~E. Knuth.
+\newblock {\em The Art of Computer Programming, Volume 1 (3rd Ed.): Fundamental
+  Algorithms}.
+\newblock Addison Wesley Longman Publishing Co., Inc., Redwood City, CA, USA,
+  1997.
+
+\bibitem{Simion:Schmidt:EJC:1985}
+R.~Simion and F.W.Schmidt.
+\newblock Restricted permutations.
+\newblock {\em European Journal of Combinatorics}, 6(4):383–406, 1985.
+
 \end{thebibliography}

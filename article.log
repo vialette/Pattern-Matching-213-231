@@ -1,24 +1,17 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.3.18)  2 FEB 2015 00:04
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.3.19)  2 FEB 2015 09:15
 entering extended mode
-**article.tex
-("H:\Users\BEN\Dropbox\213 231\rapport\Pattern-Matching-213-231\article.tex"
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**article
+(./article.tex
 LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
-abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
-croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
-lician, german, german-x-2013-05-26, greek, gujarati, hindi, hungarian, iceland
-ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
- lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
-german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
-ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
-an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
-ishmax, welsh, loaded.
-("H:\Users\BEN\Dropbox\213 231\rapport\Pattern-Matching-213-231\llncs.cls"
+Babel <3.9f> and hyphenation patterns for 78 languages loaded.
+(./llncs.cls
 Document Class: llncs 2001/08/14 v2.10 
 experimental LaTeX document class for Lecture Notes in Computer Science
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size10.clo"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -33,7 +26,7 @@ File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\multicol.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
 \c@tracingmulticols=\count87
 \mult@box=\box26
@@ -133,7 +126,7 @@ LaTeX Font Info:    Redeclaring math symbol \Omega on input line 353.
 \c@remark=\count116
 \headlineindent=\dimen123
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \@emptytoks=\toks18
 \symAMSa=\mathgroup4
@@ -141,24 +134,24 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip45
 
 For additional information on amsmath, use the `?' option.
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amstext.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks19
 \ex@=\dimen124
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen125
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count117
@@ -202,14 +195,14 @@ Package amsmath Warning: Unable to redefine math accent \vec.
 \mathdisplay@stack=\toks23
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
-) ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xy.sty"
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xy.tex" Bootstrap'ing:
+) (/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xy.sty
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xy.tex Bootstrap'ing:
 catcodes, docmode,
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xyrecat.tex")
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xyidioms.tex")
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xyrecat.tex)
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xyidioms.tex)
 
- Xy-pic version 3.8.9 <2013/10/06>
- Copyright (c) 1991-2013 by Kristoffer H. Rose <krisrose@tug.org> and others
+ Xy-pic version 3.8.8 <2012/05/24>
+ Copyright (c) 1991-2011 by Kristoffer H. Rose <krisrose@tug.org>
  Xy-pic is free software: see the User's Guide for details.
 
 Loading kernel: messages; fonts; allocations: state,
@@ -261,15 +254,15 @@ utility macros; pictures: \xy, positions,
  decorations;
 kernel objects: directionals, circles, text; options; algorithms: directions,
 edges, connections;  Xy-pic loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
 )
-Package: xy 2013/10/06 Xy-pic version 3.8.9
+Package: xy 2012/05/24 Xy-pic version 3.8.8
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xyall.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xyall.tex
  Xy-pic option: All features v.3.8
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xycurve.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xycurve.tex
  Xy-pic option: Curve and Spline extension v.3.12 curve,
 \crv@cnt@=\count133
 \crvpts@=\toks28
@@ -281,21 +274,21 @@ Package: xy 2013/10/06 Xy-pic version 3.8.9
  circles,
 \L@=\dimen165
  loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xyframe.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xyframe.tex
  Xy-pic option: Frame and Bracket extension v.3.14 loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xycmtip.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xycmtip.tex
  Xy-pic option: Computer Modern tip extension v.3.7
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xytips.tex"
- Xy-pic option: More Tips extension v.3.11 loaded) loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xyline.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xytips.tex
+ Xy-pic option: More Tips extension v.3.9 loaded) loaded)
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xyline.tex
  Xy-pic option: Line styles extension v.3.10
 \xylinethick@=\dimen166
  loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xyrotate.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xyrotate.tex
  Xy-pic option: Rotate and Scale extension v.3.8 loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xycolor.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xycolor.tex
  Xy-pic option: Colour extension v.3.11 loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xymatrix.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xymatrix.tex
  Xy-pic option: Matrix feature v.3.14
 \Row=\count134
 \Col=\count135
@@ -305,27 +298,25 @@ Package: xy 2013/10/06 Xy-pic version 3.8.9
 \qcount@@=\count137
 \matrixsize@=\count138
  loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xyarrow.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xyarrow.tex
  Xy-pic option: Arrow and Path feature v.3.9 path, \ar, loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xygraph.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xygraph.tex
  Xy-pic option: Graph feature v.3.11 loaded) loaded)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xypdf.tex"
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xypdf.tex
  Xy-pic option: PDF driver v.1.7 Xy-pic pdf driver: `color' extension support
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xypdf-co.tex" loaded)
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xypdf-co.tex loaded)
 Xy-pic pdf driver: `curve' extension support
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xypdf-cu.tex" loaded)
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xypdf-cu.tex loaded)
 Xy-pic pdf driver: `frame' extension support
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xypdf-fr.tex" loaded)
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xypdf-fr.tex loaded)
 Xy-pic pdf driver: `line' extension support
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xypdf-li.tex" loaded)
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xypdf-li.tex loaded)
 Xy-pic pdf driver: `rotate' extension support
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xypic\xypdf-ro.tex" loaded)
-loaded))
-(C:\Users\user\AppData\Roaming\MiKTeX\2.9\tex\latex\algorithms\algorithm.sty
+(/usr/local/texlive/2013/texmf-dist/tex/generic/xypic/xypdf-ro.tex loaded)
+loaded)) (/usr/local/texlive/2013/texmf-dist/tex/latex/algorithms/algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\float\float.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count139
 \float@exts=\toks31
@@ -333,18 +324,16 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks32
 \@floatcapt=\box61
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \@float@every@algorithm=\toks33
 \c@algorithm=\count140
 )
-(C:\Users\user\AppData\Roaming\MiKTeX\2.9\tex\latex\algorithmicx\algpseudocode.
-sty
+(/usr/local/texlive/2013/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
 
-(C:\Users\user\AppData\Roaming\MiKTeX\2.9\tex\latex\algorithmicx\algorithmicx.s
-ty
+(/usr/local/texlive/2013/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
@@ -360,13 +349,14 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 \ALG@tmplength=\skip50
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-) ("H:\Users\BEN\Dropbox\213 231\rapport\Pattern-Matching-213-231\complexity.te
-x" ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\xspace.sty"
+) (./complexity.tex
+(/usr/local/texlive/2013/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
 ))
 \c@num=\count148
+ (./article.aux)
+\openout1 = `article.aux'.
 
-("H:\Users\BEN\Dropbox\213 231\rapport\Pattern-Matching-213-231\article.aux")
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
 LaTeX Font Info:    ... okay on input line 64.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
@@ -380,13 +370,12 @@ LaTeX Font Info:    ... okay on input line 64.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
 LaTeX Font Info:    ... okay on input line 64.
 LaTeX Font Info:    Try loading font information for U+msa on input line 64.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+ (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 64.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 Package xypdf Info: Line width: 0.39998pt on input line 64.
@@ -406,177 +395,173 @@ Missing character: There is no √ in font cmr10!
 Missing character: There is no ∂ in font cmr10!
  [1
 
-{C:/Users/user/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Try loading font information for U+euf on input line 178.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\ueuf.fd"
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-) [2]
-Underfull \hbox (badness 10000) in paragraph at lines 403--409
+)
+Missing character: There is no ‚ in font cmr7!
+Missing character: There is no à in font cmr7!
+Missing character: There is no í in font cmr7!
+ [2]
+Missing character: There is no Ù in font cmti10!
+Missing character: There is no è in font cmti10!
+Missing character: There is no ∞ in font cmti10!
+Missing character: There is no Ö in font cmti10!
+ [3]
+Underfull \hbox (badness 10000) in paragraph at lines 494--498
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 419--423
-
- []
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 452--456
+Underfull \hbox (badness 10000) in paragraph at lines 499--520
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 457--474
+Underfull \hbox (badness 10000) in paragraph at lines 531--536
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 485--490
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 521--526
+Underfull \hbox (badness 10000) in paragraph at lines 567--572
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 650--651
+Underfull \hbox (badness 10000) in paragraph at lines 696--697
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 652--656
+Underfull \hbox (badness 10000) in paragraph at lines 698--702
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 657--665
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 757--772
+Underfull \hbox (badness 10000) in paragraph at lines 703--711
 
  []
 
 [5]
-Overfull \hbox (9.45564pt too wide) in paragraph at lines 773--812
+Underfull \hbox (badness 10000) in paragraph at lines 803--818
+
+ []
+
+
+Overfull \hbox (9.45564pt too wide) in paragraph at lines 819--858
 []\OT1/cmr/m/n/10 Given a as-cent (de-scent) seg-ment $\OML/cmm/m/it/10 S\OT1/c
 mr/m/n/10 (\OML/cmm/m/it/10 s\OT1/cmr/m/n/10 )$, if we want to match the suf-fi
 x $\OML/cmm/m/it/10 s[]s[]:::s[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 773--812
+Underfull \hbox (badness 10000) in paragraph at lines 819--858
 
  []
 
 
-Overfull \hbox (1.75595pt too wide) in paragraph at lines 814--821
-$\OML/cmm/m/it/10 LM\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s; i\OT1/cmr/m/n/10 )$ = 
-the op-ti-mal match of $\OML/cmm/m/it/10 IMP\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s
- \OMS/cmsy/m/n/10   \OT1/cmr/m/n/10 1)$ if there ex-ists a match of $\OML/cmm/m
-/it/10 \OT1/cmr/m/n/10 [\OML/cmm/m/it/10 IMP\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 
-s\OT1/cmr/m/n/10 ) :$
+Overfull \hbox (1.75595pt too wide) in paragraph at lines 860--867
+\OML/cmm/m/it/10 LM\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s; i\OT1/cmr/m/n/10 )$ = t
+he op-ti-mal match of $\OML/cmm/m/it/10 IMP\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s 
+\OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 1)$ if there ex-ists a match of $\OML/cmm/
+m/it/10 ^^[\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 IMP\OT1/cmr/m/n/10 (\OML/cmm/m/it/
+10 s\OT1/cmr/m/n/10 ) :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 814--821
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 822--823
+Underfull \hbox (badness 10000) in paragraph at lines 860--867
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 824--841
+Underfull \hbox (badness 10000) in paragraph at lines 868--869
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 842--856
+Underfull \hbox (badness 10000) in paragraph at lines 870--887
+
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 888--902
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 857--864
+Underfull \hbox (badness 10000) in paragraph at lines 903--910
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 865--867
+Underfull \hbox (badness 10000) in paragraph at lines 911--913
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6]
-Underfull \hbox (badness 10000) in paragraph at lines 868--870
+Underfull \hbox (badness 10000) in paragraph at lines 914--916
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--875
+Underfull \hbox (badness 10000) in paragraph at lines 917--921
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 876--893
+Underfull \hbox (badness 10000) in paragraph at lines 922--939
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 913--915
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 916--918
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 919--927
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 931--934
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 936--937
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 938--946
+Underfull \hbox (badness 10000) in paragraph at lines 959--961
 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 947--955
+Underfull \hbox (badness 10000) in paragraph at lines 962--964
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 956--967
+Underfull \hbox (badness 10000) in paragraph at lines 965--973
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 968--979
+Underfull \hbox (badness 10000) in paragraph at lines 977--980
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 980--1039
+Underfull \hbox (badness 10000) in paragraph at lines 982--983
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 984--992
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 993--1001
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1002--1013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1014--1025
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1026--1085
 
  []
 
@@ -584,17 +569,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 980--1039
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [8]
-Underfull \hbox (badness 10000) in paragraph at lines 1109--1115
+Underfull \hbox (badness 10000) in paragraph at lines 1155--1161
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1116--1121
+Underfull \hbox (badness 10000) in paragraph at lines 1162--1167
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1122--1128
+Underfull \hbox (badness 10000) in paragraph at lines 1168--1174
 
  []
 
@@ -602,124 +587,129 @@ Underfull \hbox (badness 10000) in paragraph at lines 1122--1128
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [9]
-Underfull \hbox (badness 10000) in paragraph at lines 1129--1135
+Underfull \hbox (badness 10000) in paragraph at lines 1175--1181
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1136--1142
+Underfull \hbox (badness 10000) in paragraph at lines 1182--1188
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1143--1149
+Underfull \hbox (badness 10000) in paragraph at lines 1189--1195
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1150--1153
+Underfull \hbox (badness 10000) in paragraph at lines 1196--1199
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1159--1167
+Underfull \hbox (badness 10000) in paragraph at lines 1205--1213
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1175--1180
+Underfull \hbox (badness 10000) in paragraph at lines 1221--1226
 
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 1187--1190
+Underfull \hbox (badness 10000) in paragraph at lines 1233--1236
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1195--1198
+Underfull \hbox (badness 10000) in paragraph at lines 1241--1244
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1205--1208
+Underfull \hbox (badness 10000) in paragraph at lines 1251--1254
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1209--1218
+Underfull \hbox (badness 10000) in paragraph at lines 1255--1264
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1220
+Underfull \hbox (badness 10000) in paragraph at lines 1265--1266
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1222--1230
+Underfull \hbox (badness 10000) in paragraph at lines 1268--1276
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1231--1232
+Underfull \hbox (badness 10000) in paragraph at lines 1277--1278
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1233--1240
+Underfull \hbox (badness 10000) in paragraph at lines 1279--1286
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1252
+Underfull \hbox (badness 10000) in paragraph at lines 1287--1298
 
  []
 
-[11] ("H:\Users\BEN\Dropbox\213 231\rapport\Pattern-Matching-213-231\article.bb
-l"
+[11] (./article.bbl
 Missing character: There is no ‚ in font cmr9!
 Missing character: There is no Ä in font cmr9!
 Missing character: There is no ì in font cmr9!
 Missing character: There is no ‚ in font cmr9!
 Missing character: There is no Ä in font cmr9!
 Missing character: There is no ì in font cmr9!
-) [12]
-("H:\Users\BEN\Dropbox\213 231\rapport\Pattern-Matching-213-231\article.aux") )
- 
+Missing character: There is no ‚ in font cmr9!
+Missing character: There is no Ä in font cmr9!
+Missing character: There is no ì in font cmr9!
+ [12]) [13] (./article.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 4859 strings out of 493921
- 60575 string characters out of 3144879
- 176102 words of memory out of 3000000
- 8067 multiletter control sequences out of 15000+200000
- 18156 words of font info for 72 fonts, out of 3000000 for 9000
- 841 hyphenation exceptions out of 8191
- 29i,18n,24p,3240b,199s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C
-:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/
-Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Progr
-am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program
- Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Fi
-les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program Fil
-es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files 
-(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files (x86
-)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files (x86)/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files (x86)/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files (x86)/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmti9.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmtt9.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/euler/eufm10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/symbols/msam10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1
-/public/amsfonts/symbols/msam7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/symbols/msbm10.pfb>
-Output written on article.pdf (12 pages, 287449 bytes).
+ 4880 strings out of 493315
+ 60179 string characters out of 6137904
+ 181214 words of memory out of 5000000
+ 8241 multiletter control sequences out of 15000+600000
+ 21545 words of font info for 85 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 29i,18n,24p,3236b,254s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
+usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></u
+sr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
+local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/
+local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
+cal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local
+/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/te
+xlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texli
+ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/
+2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2
+013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/201
+3/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2013/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2013/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2013/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2013/texmf
+-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/local/texlive/2013/tex
+mf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2013
+/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2
+013/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on article.pdf (13 pages, 274053 bytes).
 PDF statistics:
- 129 PDF objects out of 1000 (max. 8388607)
+ 135 PDF objects out of 1000 (max. 8388607)
+ 97 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

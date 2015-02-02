@@ -183,7 +183,8 @@ bla bla\ldots
 	not only positions but also values
 	of elements involved in a matching may be forced to be adjacent
 
-	We focus in this paper on $(213,231)$-avoiding permutation. 
+	We focus in this paper on pattern matching issues for
+	$(213,231)$-avoiding permutations.
 	The number of $n$-permutations that avoid both 
 	$231$ and $213$ is 
 	$t_0 = 1$ for $n = 0$ and 
@@ -222,13 +223,11 @@ bla bla\ldots
 %	related problem of computing a longest permutation avoiding (213,231).
 %	Finally, section 5 summarizes 
 %	results for related problems. 
-	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 \section{Definition}
 \label{section:Definitions}
-
 
 A \emph{permutation} of length $n$ is a one-to-one function from an
 $n$-element set to itself.
@@ -407,119 +406,116 @@ of $\sigma$:
 	any occurrence of $\sigma$ is a permutation $\pi$ must end with
 	the largest letter of $\pi$.
 \end{itemize}
+A bivincular pattern avoids a set of permutations $P$ if its bottom
+row $\sigma_1\sigma_2\,\ldots\,\sigma$ avoids every permutation in $P$.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	\section{Pattern Matching Problem With Text and Motif Avoiding (231,213)}
+\section{Both $\pi$ and $\sigma$ are $(231,213)$-avoiding}
+\label{section:both are (231,213)-avoiding}
 
-		In this section we focus 
-		on the problem of pattern matching if
-		both the motif and the text
-		avoid (231,213).
-		We first exhibit some properties of a stripe 
-		of a permutation avoiding (231,213).\\
+This section is devoted to presenting a fast algorithm for deciding
+$\sigma \leq \pi$ 
+in case both $\pi$ and $\sigma$ are $(231,213)$-avoiding.
 
-<<<<<<< HEAD
-		\begin{lemma}[Folklore]
-		\label{lemma:first element is 1 or n}
-		The 􏰅first element of any $(213,231)$-avoiding permutation
-		must be either $1$ or $n$.
-		\end{lemma}
+\begin{lemma}[Folklore]
+\label{lemma:first element is 1 or n}
+The 􏰅first element of any $(213,231)$-avoiding permutation
+must be either $1$ or $n$.
+\end{lemma}
 
-		\begin{proof} 
-		Any other initial element would serve as a `$2$' in either a 
-		$231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
-		\end{proof}
-			
-		The above lemma gains in interest in the form of the following corollaries.
-
-		\begin{corollary}
-		$\pi \in \AV_n(213,231)$ if and only if for $1 \leq i \leq n$, 
-		$\pi[i:]$ start either with the maximal element
-		or the minimal element of $\pi[i:]$.
-		\end{corollary}
+\begin{proof} 
+Any other initial element would serve as a `$2$' in either a 
+$231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
+\end{proof}
 	
-		\begin{corollary}
-		Let $\pi \in \AV_n(213,231)$. We have
-		$$
-		\stripe{\pi}{i} =
-		\begin{cases}
-   			\ustep & \text{if $\pi(i)$ is the minimal element of $\pi[i:]$}\\    
-   			\dstep & \text{if $\pi(i)$ is the maximal element of $\pi[i:]$}\\
-	 	\end{cases}
-	 	$$
-	 	\end{corollary}
+The above lemma gains in interest in the form of the following corollaries.
+
+\begin{corollary}
+$\pi \in \AV_n(213,231)$ if and only if for $1 \leq i \leq n$, 
+$\pi[i:]$ start either with the maximal element
+or the minimal element of $\pi[i:]$.
+\end{corollary}
+	
+\begin{corollary}
+Let $\pi \in \AV_n(213,231)$. We have
+$$
+\stripe{\pi}{i} =
+\begin{cases}
+			\ustep & \text{if $\pi(i)$ is the minimal element of $\pi[i:]$}\\    
+			\dstep & \text{if $\pi(i)$ is the maximal element of $\pi[i:]$}\\
+	\end{cases}
+	$$
+\end{corollary}
 	 
-		\textbf{Lemma \numl{updown}  \thenum} Let $\pi \in \Av{n}{213,231}$,
-=======
-		\begin{lemma}
-		\label{lemma:firstelement}
-		If a permutation is in $\Av{n}{213,231}$ 
-		then the first element is either
-		the minimal or the maximal element.
-		\end{lemma}
+		% \textbf{Lemma \numl{updown}  \thenum} Let $\pi \in \Av{n}{213,231}$,
+		% \begin{lemma}
+		% \label{lemma:firstelement}
+		% If a permutation is in $\Av{n}{213,231}$ 
+		% then the first element is either
+		% the minimal or the maximal element.
+		% \end{lemma}
 
 		%\textbf{Lemma  \numl{firstelement} \thenum} 
 		
-		\textbf{Proof} Suppose that we have
-		$\pi \in \mathcal{S}_{n}$, and
-		$\pi(1) \neq 1 $ and $\pi(1) \neq n$ then we have either
-		$\pi(1) ... n ... 1$ or $\pi(1) ... 1 ... n $, either the motif 231 or 213, which is not possible by hypothesis. $\Box$\\
+		% \textbf{Proof} Suppose that we have
+		% $\pi \in \mathcal{S}_{n}$, and
+		% $\pi(1) \neq 1 $ and $\pi(1) \neq n$ then we have either
+		% $\pi(1) ... n ... 1$ or $\pi(1) ... 1 ... n $, either the motif 231 or 213, which is not possible by hypothesis. $\Box$\\
 
-		\begin{corollary}
-		\label{corollary:stripe}
-		A permutation $\pi \in \Perm{n}$ is in $\Av{n}{213,231}$ if and only if for $1 \leq i \leq n$, 
-		$\pi[i:]$ start either with the maximal element
-		or the minimal element of $\pi[i:]$.
-		\end{corollary}
+		% \begin{corollary}
+		% \label{corollary:stripe}
+		% A permutation $\pi \in \Perm{n}$ is in $\Av{n}{213,231}$ if and only if for $1 \leq i \leq n$, 
+		% $\pi[i:]$ start either with the maximal element
+		% or the minimal element of $\pi[i:]$.
+		% \end{corollary}
 		
 
-		\begin{corollary}
-		If $\pi \in \Av{n}{213,231}$ its stripe can be define such as, \\
-		$\stripe{\pi}{i} = \left\{ 
-  		\begin{array}{l l}
-   			\ustep & \quad \text{if $\pi(i)$ is the minimal element of $\pi[i:]$}\\    
-   			\dstep & \quad \text{if $\pi(i)$ is the maximal element of $\pi[i:]$}\\
-	 	\end{array} \right. 
-	 	$
-		\end{corollary}
+		% \begin{corollary}
+		% If $\pi \in \Av{n}{213,231}$ its stripe can be define such as, \\
+		% $\stripe{\pi}{i} = \left\{ 
+  % 		\begin{array}{l l}
+  %  			\ustep & \quad \text{if $\pi(i)$ is the minimal element of $\pi[i:]$}\\    
+  %  			\dstep & \quad \text{if $\pi(i)$ is the maximal element of $\pi[i:]$}\\
+	 % 	\end{array} \right. 
+	 % 	$
+		% \end{corollary}
 
-		\begin{lemma}
-		\label{lemma:updown}
-		Let $\pi \in \Av{n}{213,231}$,
->>>>>>> 70df48234b46f3d7582d3ff02bd3ee4665a22df8
-		$\forall i,j \in [n]$, 
-		$i<j$, 
-		if $\stripe{\pi}{i}=\ustep$
-		and $\stripe{\pi}{j}=\dstep$
-		then $\pi(i)<\pi(j)$.
-		\end{lemma}
+\begin{lemma}
+\label{lemma:updown}
+Let $\pi \in \AV_n(213,231)$.
+For all $1 \leq i < j \leq n$, 
+if $\stripe{\pi}{i}=\ustep$
+and $\stripe{\pi}{j}=\dstep$
+then $\pi(i)<\pi(j)$.
+\end{lemma}
 	 	
 		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
 		if $i$ is an ascent and
 		if $j$ is a descent
 		then $\pi(i)<\pi(j)$.\\
 		
-		\textbf{Proof} By induction on the size of the permutation :
-		the proposition is true for the permutations $(1,2)$ and $(2,1)$.
-		Suppose the proposition true for $\Av{n}{213,231}$.
-		Let $\pi \in \Av{n}{213,231}$, 
-		we show that the proposition holds for $\pi$.
-		Let $\pi'$ be the permutation $\pi[2:]$.
-		$\pi' \in \Av{n}{213,231}$, so
-		every element of $p'$ verify our lemma (by induction).
-		We still need to compare the first element with the rest.
-		But the first element
-		is the maximal (minimal) element of all the permutation 
+\begin{proof} By induction on the size of the permutation :
+the proposition is true for the permutations $(1,2)$ and $(2,1)$.
+Suppose the proposition true for $\Av{n}{213,231}$.
+Let $\pi \in \Av{n}{213,231}$, 
+we show that the proposition holds for $\pi$.
+Let $\pi'$ be the permutation $\pi[2:]$.
+$\pi' \in \Av{n}{213,231}$, so
+every element of $p'$ verify our lemma (by induction).
+We still need to compare the first element with the rest.
+But the first element
+is the maximal (minimal) element of all the permutation 
 <<<<<<< HEAD
-		(by Lemma \ref{lemma:first element is 1 or n}).
+(by Lemma \ref{lemma:first element is 1 or n}).
 =======
-		(by Lemma \ref{lemma:firstelement}).
+(by Lemma \ref{lemma:firstelement}).
 >>>>>>> 70df48234b46f3d7582d3ff02bd3ee4665a22df8
-		Moreover if the first element is the maximal (minimal)
-		it will mapped to an descent (ascent).
-		So the proposition is also true
-		for the first element.
-		$\Box$\\
+Moreover if the first element is the maximal (minimal)
+it will mapped to an descent (ascent).
+So the proposition is also true
+for the first element.	
+\end{proof}
 
 		\begin{lemma}
 		\label{lemma:upup}
