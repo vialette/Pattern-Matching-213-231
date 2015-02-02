@@ -305,8 +305,8 @@ For example the stripe of the permutation
 $\pi = 12\,11\,10\,1\,2\,3,4\,9\,8\,5\,6\,7$ 
 is 
 $\stripew{\pi} = \dstep\dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep\ustep\ustep$.
-The stripe $s\stripew{\sigma}$ is a \emph{pattern} of the strip $\stripew{\pi}$
-(or $s\stripew{\sigma}$ \emph{occurs} of the strip $\stripew{\pi}$) if $\stripew{\sigma}$ occurs in
+The stripe $\stripew{\sigma}$ is a \emph{pattern} of the strip $\stripew{\pi}$
+(or $\stripew{\sigma}$ \emph{occurs} of the strip $\stripew{\pi}$) if $\stripew{\sigma}$ occurs in
 $\stripew{\pi}$ as a subsequence.
 			
 A \emph{bivincular pattern} (abbreviated BVP) $\sigma$
@@ -497,109 +497,181 @@ Most of the interest of the above lemmata stems from the following proposition.
 
 \begin{proposition}
 	\label{proposition:patternMatchingStripe}
-	Let $\ptext$ and $\pmotif$ be two permutations avoiding (213,231).
-	$\pmotif$ is a motif of $\ptext$ if and only if the 
-	stripe of $\pmotif$ is a motif of the stripe of $\ptext$.
+	Let $\sigma \in \AV_k(213,231)$ and $\pi \in \AV_k(213,231)$.
+	$\sigma$ is a motif of $\pi$ if and only if 
+	$s_\sigma$ is a subsequence of $s_\pi$.
 \end{proposition}
 
-		
-		\textbf{Proof} \\
-		$\Rightarrow$ Suppose that $\pmotif$ is a motif of $\ptext$
-		by subsequence $s$.
-		By definition $s$ normalized is equal to
-		$\pmotif$ so they have the same stripe.\\ 
-		$\Leftarrow$ 
-		Let $\ptext$ be a permutation avoiding $(213,231)$, 
-		$S_1$ be its stripe, 
-		$\pmotif$  be a permutation avoiding $(213,231)$, 
-		and $S_2$ its stripe.
-		Let $\phi$ be the function
-		that match $S_2$ to $S_1$.
-		We define $\varphi$ as, 
-		$\forall x \in [|\pmotif|-1]$,
-		$\varphi(x) = \phi(x)$,
-		and $\varphi(|\pmotif|) = \phi(|\pmotif|-1)+1$
-		Suppose that $\exists x,y \in [|\pmotif|]$, 
-		$\pmotif(x)<\pmotif(y)$ 
-		and $\ptext(\varphi(x))>\ptext(\varphi(y))$,
-		without lost of generality we can suppose that $x<y$,
-		Let see all the case possible that can make this 
-		hypothesis possible :
-		\begin{itemize}		
-			\item if $\pmotif(x)<\pmotif(y)$, 
-			$\stripe{\pmotif}{x}=\ustep$ 
-			and $\stripe{\pmotif}{y}=\ustep$
-			(if x and y are increasing in $\pmotif$),
-			then $\stripe{\ptext}{\varphi(x)} =\ustep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
-			(the match are also increasing).
-			As $x<y$ and as $\varphi$ is an increasing function, 
-			$\varphi(x) < \varphi(y)$.
-			And thus, by \textbf{Lemma \ref{lemma:upup}},
-			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
-			Which contradict our hypothesis,
-			so this case is not possible.
-		
-			\item if $\pmotif(x)<\pmotif(y)$, 
-			$\stripe{\pmotif}{x}=\ustep$ 
-			and $\stripe{\pmotif}{y}=\dstep$
-			then $\stripe{\ptext}{\varphi(x)}=\ustep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
-			As $x<y$ and as $\varphi$ is an increasing function, 
-			$\varphi(x) < \varphi(y)$.
-			And thus, by \textbf{Lemma \ref{lemma:updown}},
-			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
-			Which contradict our hypothesis,
-			so this case is not possible.			
+\begin{proof}
+	The forward direction is essentially obvious.
+	For the reverse direction, assume that $s_\sigma$ is a subsequence 
+	of $s_\pi$ and
+	let $\phi : [k] \to [n]$ be the function describing an occurrence
+	of $s_\sigma$ in $s_\pi$ as a subsequence, \emph{i.e.}
+	$s_\sigma[i] = s_\pi[\phi(i)]$ for $1 \leq i \leq k$.
+	Define $\varphi : [k] \to [n]$ as follows:
+	$\varphi(i) = \phi(i)$ for 1 $\leq i \leq k-1$ and
+	$\varphi(k) = \phi(k-1) + 1$.
+	We show that $\varphi$ describes an occurrence of $\sigma$ in 
+	$\pi$.
+	Suppose, aiming at a contradiction, that there exist
+	$1 \leq i < j \leq k$ such that
+	$\sigma[i] < \sigma[j]$ and
+	$\pi[\varphi(i)] > \pi[\varphi(j)]$.
+	Consider the following cases:
 
-			\item if $\pmotif(x)>\pmotif(y)$, 
-			$\stripe{\pmotif}{x}=\dstep$ 
-			and $\stripe{\pmotif}{y}=\dstep$
-			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
-			As $x<y$ and as $\varphi$ is an increasing function, 
-			$\varphi(y) < \varphi(x)$.
-			And thus, by \textbf{Lemma \ref{lemma:downdown}},
-			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
-			Which contradict our hypothesis,
-			so this case is not possible.
+	\begin{enumerate}		
+	\item if $\sigma[i] < \sigma [j]$, 
+	$s_\sigma[i] = \ustep$ and $s_\pi[j] = \ustep$,
+	then $s_\pi[\varphi(i)] = \ustep$ and $s_\pi[\varphi(j)] = \ustep$
+	(by construction of $\varphi$).
+	Since $i < j$ and $\varphi$ is an increasing function, we have
+	$\varphi(i) < \varphi(j)$.
+	Therefore, according to Lemma~\ref{lemma:upup},
+	$\pi[\varphi(i)] < \pi[\varphi(j)]$.
+	This is a contradiction.
+
+	\item if $\pmotif(x)<\pmotif(y)$, 
+	$\stripe{\pmotif}{x}=\ustep$ 
+	and $\stripe{\pmotif}{y}=\dstep$
+	then $\stripe{\ptext}{\varphi(x)}=\ustep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
+	As $x<y$ and as $\varphi$ is an increasing function, 
+	$\varphi(x) < \varphi(y)$.
+	And thus, by \textbf{Lemma \ref{lemma:updown}},
+	$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
+	Which contradict our hypothesis,
+	so this case is not possible.			
+
+	\item if $\pmotif(x)>\pmotif(y)$, 
+	$\stripe{\pmotif}{x}=\dstep$ 
+	and $\stripe{\pmotif}{y}=\dstep$
+	then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
+	As $x<y$ and as $\varphi$ is an increasing function, 
+	$\varphi(y) < \varphi(x)$.
+	And thus, by \textbf{Lemma \ref{lemma:downdown}},
+	$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
+	Which contradict our hypothesis,
+	so this case is not possible.
+	
+	\item if $\pmotif(x)>\pmotif(y)$, 
+	$\stripe{\pmotif}{x}=\dstep$ 
+	and $\stripe{\pmotif}{y}=\ustep$
+	then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
+	As $x<y$ and as $\varphi$ is an increasing function, 
+	$\varphi(y) < \varphi(x)$.
+	And thus, by \textbf{Lemma \ref{lemma:updown}},
+	$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
+	Which contradict our hypothesis,
+	so this case is not possible.$\Box$
+	
+	\item If $y = |\pmotif|$ and $x=|\pmotif|-1$,
+	Clearly if $\stripe{\pmotif}{x}=\ustep$,
+	then $\pmotif(y)-\pmotif(x)>0$ 
+	and because we have a match in the ribbon
+	$\ptext(\varphi(y))-\ptext(\varphi(x))>0$.
+	Same idea goes if $\stripe{\pmotif}{x}=\dstep$.
+	So this case is not possible.
+	
+	\item if $y = |\pmotif|$ and $x<|\pmotif|-1$,
+	if $\stripe{\pmotif}{x}=\ustep$ ie
+	$\pmotif(x+1)-\pmotif(x)>0$. Then
+	we must have either
+	$\pmotif(x)<\pmotif(x+1)<\pmotif(|\pmotif|)$
+	or $\pmotif(x)<\pmotif(|\pmotif|)<\pmotif(x+1)$ 
+	to avoid $231$ or $213$ in the motif.
+	Because we have a match in the stripe
+	and what we prove above,
+	$\ptext(\varphi(x+1)-\ptext(\varphi(x))>0$.
+	But by hypothesis $\ptext(\varphi(|\ptext|))<\ptext(\varphi(x))$,
+	so we have either 		
+	$\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$
+	or $\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$ 
+	which both lead to a $231$ or a $213$ motif
+	in the text which is not possible.
+	The same idea goes if $\stripe{\pmotif}{x}=\dstep$. 	
+	\end{enumerate}
+		So our hypothesis is not realisable.So our assertion is true. $\Box$\\		
+\end{proof}
+
+		% without lost of generality we can suppose that $x<y$,
+% 		Let see all the case possible that can make this 
+% 		hypothesis possible :
+% 		\begin{itemize}		
+% 			\item if $\pmotif(x)<\pmotif(y)$, 
+% 			$\stripe{\pmotif}{x}=\ustep$ 
+% 			and $\stripe{\pmotif}{y}=\ustep$
+% 			(if x and y are increasing in $\pmotif$),
+% 			then $\stripe{\ptext}{\varphi(x)} =\ustep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
+% 			(the match are also increasing).
+% 			As $x<y$ and as $\varphi$ is an increasing function, 
+% 			$\varphi(x) < \varphi(y)$.
+% 			And thus, by \textbf{Lemma \ref{lemma:upup}},
+% 			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
+% 			Which contradict our hypothesis,
+% 			so this case is not possible.
+		
+% 			\item if $\pmotif(x)<\pmotif(y)$, 
+% 			$\stripe{\pmotif}{x}=\ustep$ 
+% 			and $\stripe{\pmotif}{y}=\dstep$
+% 			then $\stripe{\ptext}{\varphi(x)}=\ustep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
+% 			As $x<y$ and as $\varphi$ is an increasing function, 
+% 			$\varphi(x) < \varphi(y)$.
+% 			And thus, by \textbf{Lemma \ref{lemma:updown}},
+% 			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
+% 			Which contradict our hypothesis,
+% 			so this case is not possible.			
+
+% 			\item if $\pmotif(x)>\pmotif(y)$, 
+% 			$\stripe{\pmotif}{x}=\dstep$ 
+% 			and $\stripe{\pmotif}{y}=\dstep$
+% 			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
+% 			As $x<y$ and as $\varphi$ is an increasing function, 
+% 			$\varphi(y) < \varphi(x)$.
+% 			And thus, by \textbf{Lemma \ref{lemma:downdown}},
+% 			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
+% 			Which contradict our hypothesis,
+% 			so this case is not possible.
 			
-			\item if $\pmotif(x)>\pmotif(y)$, 
-			$\stripe{\pmotif}{x}=\dstep$ 
-			and $\stripe{\pmotif}{y}=\ustep$
-			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
-			As $x<y$ and as $\varphi$ is an increasing function, 
-			$\varphi(y) < \varphi(x)$.
-			And thus, by \textbf{Lemma \ref{lemma:updown}},
-			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
-			Which contradict our hypothesis,
-			so this case is not possible.$\Box$
+% 			\item if $\pmotif(x)>\pmotif(y)$, 
+% 			$\stripe{\pmotif}{x}=\dstep$ 
+% 			and $\stripe{\pmotif}{y}=\ustep$
+% 			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
+% 			As $x<y$ and as $\varphi$ is an increasing function, 
+% 			$\varphi(y) < \varphi(x)$.
+% 			And thus, by \textbf{Lemma \ref{lemma:updown}},
+% 			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
+% 			Which contradict our hypothesis,
+% 			so this case is not possible.$\Box$
 			
-			\item If $y = |\pmotif|$ and $x=|\pmotif|-1$,
-			Clearly if $\stripe{\pmotif}{x}=\ustep$,
-			then $\pmotif(y)-\pmotif(x)>0$ 
-			and because we have a match in the ribbon
-			$\ptext(\varphi(y))-\ptext(\varphi(x))>0$.
-			Same idea goes if $\stripe{\pmotif}{x}=\dstep$.
-			So this case is not possible.
+% 			\item If $y = |\pmotif|$ and $x=|\pmotif|-1$,
+% 			Clearly if $\stripe{\pmotif}{x}=\ustep$,
+% 			then $\pmotif(y)-\pmotif(x)>0$ 
+% 			and because we have a match in the ribbon
+% 			$\ptext(\varphi(y))-\ptext(\varphi(x))>0$.
+% 			Same idea goes if $\stripe{\pmotif}{x}=\dstep$.
+% 			So this case is not possible.
 			
-			\item if $y = |\pmotif|$ and $x<|\pmotif|-1$,
-			if $\stripe{\pmotif}{x}=\ustep$ ie
-			$\pmotif(x+1)-\pmotif(x)>0$. Then
-			we must have either
-			$\pmotif(x)<\pmotif(x+1)<\pmotif(|\pmotif|)$
-			or $\pmotif(x)<\pmotif(|\pmotif|)<\pmotif(x+1)$ 
-			to avoid $231$ or $213$ in the motif.
-			Because we have a match in the stripe
-			and what we prove above,
-			$\ptext(\varphi(x+1)-\ptext(\varphi(x))>0$.
-			But by hypothesis $\ptext(\varphi(|\ptext|))<\ptext(\varphi(x))$,
-			so we have either 		
-			$\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$
-			or $\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$ 
-			which both lead to a $231$ or a $213$ motif
-			in the text which is not possible.
-			The same idea goes if $\stripe{\pmotif}{x}=\dstep$. 			
-			
-		\end{itemize}
-		So our hypothesis is not realisable.So our assertion is true. $\Box$\\
+% 			\item if $y = |\pmotif|$ and $x<|\pmotif|-1$,
+% 			if $\stripe{\pmotif}{x}=\ustep$ ie
+% 			$\pmotif(x+1)-\pmotif(x)>0$. Then
+% 			we must have either
+% 			$\pmotif(x)<\pmotif(x+1)<\pmotif(|\pmotif|)$
+% 			or $\pmotif(x)<\pmotif(|\pmotif|)<\pmotif(x+1)$ 
+% 			to avoid $231$ or $213$ in the motif.
+% 			Because we have a match in the stripe
+% 			and what we prove above,
+% 			$\ptext(\varphi(x+1)-\ptext(\varphi(x))>0$.
+% 			But by hypothesis $\ptext(\varphi(|\ptext|))<\ptext(\varphi(x))$,
+% 			so we have either 		
+% 			$\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$
+% 			or $\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$ 
+% 			which both lead to a $231$ or a $213$ motif
+% 			in the text which is not possible.
+% 			The same idea goes if $\stripe{\pmotif}{x}=\dstep$. 	
+% 					\end{itemize}
+% 		So our hypothesis is not realisable.So our assertion is true. $\Box$\\		
+% \end{proof}
+
 		
 		\textbf{Proposition  \num \thenum} Let $\pmotif$ and $\ptext$
 		be two permutations avoiding (231,213), 
