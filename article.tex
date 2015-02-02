@@ -305,66 +305,9 @@ For example the stripe of the permutation
 $\pi = 12\,11\,10\,1\,2\,3,4\,9\,8\,5\,6\,7$ 
 is 
 $\stripew{\pi} = \dstep\dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep\ustep\ustep$.
-The stripe $s\stripew{\sigma}$ is a \emph{pattern} of the strip $\stripew{\pi}$
-(or $s\stripew{\sigma}$ \emph{occurs} of the strip $\stripew{\pi}$) if $\stripew{\sigma}$ occurs in
+The stripe $\stripew{\sigma}$ is a \emph{pattern} of the strip $\stripew{\pi}$
+(or $\stripew{\sigma}$ \emph{occurs} of the strip $\stripew{\pi}$) if $\stripew{\sigma}$ occurs in
 $\stripew{\pi}$ as a subsequence.
-
-% For two permutations $\
-% The stripe $s\pi$ of $\pi \in S-n$ is a motif pmotif \in \Perm{m}$ is a motif
-% of a stripe of $\ptext \in \Perm{n}$ if and only if there exist an increasing function $\phi : [|\pmotif|] \rightarrow [|\pmotif|]$
-% such that : \\
-% $\forall i \in [|\pmotif|]$, $\mathcal{S}(\pmotif,i) = \mathcal{S}(\ptext,\phi(i))$\\
-% If a stripe $S_2$ is a motif of a stripe $S_1$,
-% it means that there exists
-% a subsequence of $S_1$ such as
-% this sequence is equal to $S_2$.
-
-% For example, the stripe $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ is a motif of  the stripe \\
-% $(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6)$ ,
-% because we can match \\
-% $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ to $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_5,\ustep_6)$.
-% \begin{figure}[h!]
-% 	\begin{displaymath}
-% 		\xymatrix@=0.3cm{
-% 			\dstep_1 \ar[dd] & \dstep_2 \ar[dd] & \dstep_3 \ar[dd] & \dstep_4\ar[ddrrrr]  & \ustep_1 \ar[ddrrrrr]\\
-% 			\\
-% 			\dstep_1 & \dstep_2 & \dstep_3 & \ustep_1 & \ustep_2 & \ustep_3 & \ustep_4 & \dstep_4 & \dstep_5 & \ustep_5 & \ustep_6 \\
-% 		}
-% 	\end{displaymath}     
-% \end{figure}		
-% But the stripe $(\dstep,\ustep,\dstep,\dstep,\dstep)$ is not a motif of the stripe\\ $(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6,\ustep_7)$.\\
-		
-% A \textbf{bivincular motif} generalize
-% a motif. 
-% A bivincular motif allows 
-% to force element to be adjacent in position
-% or/and in value.
-% A bivincular motif
-% is a motif with two set $\bmotif$,
-% the first set contains the first index 
-% of two consecutive indexes
-% and the second set contains the first indexes
-% of the two consecutive elements.
-% Formally, Let $\bmotif$ 
-% be a bivincular motif 
-% and $\ptext$ a permutation.
-% if $i \in \x$,
-% and $i$ is matched with $j$ in $\ptext$
-% then $i+1$ must be matched with $j+1$,
-% with the special case of $0$ and $|\pmotif|$ :
-% if $0 \in \x$ then the first element of $\pmotif$
-% must be matched with the first element of $\ptext$,
-% and if $|\pmotif| \in \x$ then the last element of $\pmotif$
-% must be matched with the last element of $\ptext$.
-% if $i \in \y$,
-% and $i$ is matched with $j$ in $\ptext$
-% then $i+1$ must be matched with $l$
-% such as $\ptext(l)=\ptext(j)+1$,
-% with the special case of $0$ and $|\pmotif|$ :
-% if $0 \in \y$ then the minimal element of $\pmotif$
-% must be matched with the minimal element of $\ptext$,
-% and if $|\pmotif| \in \y$ then the maximal element of $\pmotif$
-% must be matched with the maximal element of $\ptext$.		
 			
 A \emph{bivincular pattern} (abbreviated BVP) $\sigma$
 of length $k$ is a permutation in $S_k$ written in
@@ -420,14 +363,13 @@ in case both $\pi$ and $\sigma$ are $(231,213)$-avoiding.
 
 \begin{lemma}[Folklore]
 \label{lemma:first element is 1 or n}
-The 􏰅first element of any $(213,231)$-avoiding permutation
+The first element of any $(213,231)$-avoiding permutation
 must be either $1$ or $n$.
 \end{lemma}
 
 \begin{proof} 
 Any other initial element would serve as a `$2$' in either a 
 $231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
-\qed
 \end{proof}
 	
 The above lemma gains in interest in the form of the following corollaries.
@@ -460,192 +402,49 @@ We prove the lemma by induction on the size of the motif. Suppose that we have t
 \end{proof}	 
 
 \begin{proposition}
-\label{proposition:patternMatchingStripe}
-Let $\ptext$ and $\pmotif$ be two permutations avoiding (213,231).
-$\pmotif$ is a motif of $\ptext$ if and only if the 
-stripe of $\pmotif$ is a motif of the stripe of $\ptext$.
+Let $\sigma \in \AV_k(213,231)$ and $\pi \in \AV_k(213,231)$.
+$\sigma$ is a motif of $\pi$ if and only if 
+$s_\sigma$ is a subsequence of $s_\pi$.
 \end{proposition}
 
+		% without lost of generality we can suppose that $x<y$,
+% 		Let see all the case possible that can make this 
+% 		hypothesis possible :
+% 		\begin{itemize}		
+% 			\item if $\pmotif(x)<\pmotif(y)$, 
+% 			$\stripe{\pmotif}{x}=\ustep$ 
+% 			and $\stripe{\pmotif}{y}=\ustep$
+% 			(if x and y are increasing in $\pmotif$),
+% 			then $\stripe{\ptext}{\varphi(x)} =\ustep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
+% 			(the match are also increasing).
+% 			As $x<y$ and as $\varphi$ is an increasing function, 
+% 			$\varphi(x) < \varphi(y)$.
+% 			And thus, by \textbf{Lemma \ref{lemma:upup}},
+% 			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
+% 			Which contradict our hypothesis,
+% 			so this case is not possible.
 		
+
 \begin{proof}
 $\Rightarrow$ Suppose that $\pmotif$ is a motif of $\ptext$ by subsequence $s$. By definition $s$ normalized is equal to
 $\pmotif$ so they have the same stripe.\\ 
 $\Leftarrow$ This is proved by lemma \ref{lemma:MatchStripeToPermutation}.
 \end{proof}
-	 
-%We need the following lemmata
-%(the proofs of Lemma~\ref{lemma:upup} and Lemma~\ref{lemma:downdown} 
-%are analogous and we omit them).
-%
-%\begin{lemma}
-%	\label{lemma:updown}
-%	Let $\pi \in \AV_n(213,231)$.
-%	For all $1 \leq i < j \leq n$, 
-%	if $\stripe{\pi}{i}=\ustep$
-%	and $\stripe{\pi}{j}=\dstep$
-%	then $\pi[i] < \pi[j]$.
-%\end{lemma}
-%		
-%\begin{proof} 
-%By induction on the size of the permutation.
-%The proposition is certainly true for the $12$ and $21$.
-%Suppose the proposition holds true for $\AV_n(213,231)$.
-%Let $\pi \in \AV_{n+1}(213,231)$ and
-%$\pi'$ be the permutation $\pi[2:]$.
-%$\pi' \in \AV_n(213,231)$.
-%By induction hypothesis, we only need to compare the first
-%element of $\pi'$ to every element in $\pi'$.
-%According to lemma~\ref{lemma:first element is 1 or n},
-%the first element of $\pi$ is either $1$ or $n$.
-%If the first element of $\pi$ is $1$ then $s_\pi(1) = a$
-%and $\pi(i) < \pi(j)$ for every $2 \leq j \leq n$.
-%If the first element of $\pi$ is $n$ then
-% $s_\pi(1) = d$.
-%\qed
-%\end{proof}
-%
-%\begin{lemma}
-%	\label{lemma:upup}
-%	Let $\pi \in \AV_n(213,231)$.
-%	For all $1 \leq i < j \leq n$,
-%	if $\stripe{\pi}{i}=\ustep$
-%	and $\stripe{\pi}{j}=\ustep$
-%	then $\pi[i] < \pi[j]$.
-%\end{lemma}
-%		
-%
-%\begin{lemma}
-%	\label{lemma:downdown}
-%	Let $\pi \in \AV_n(213,231)$.
-%	For all $1 \leq i < j \leq n$,
-%	if $\stripe{\pi}{i} = \dstep$
-%	and $\stripe{\pi}{j} = \dstep$
-%	then $\pi[i] > \pi[j]$.
-%\end{lemma}
-%
-%
-%Most of the interest of the above lemmata stems from the following proposition.
-%
-%\begin{proposition}
-%	\label{proposition:patternMatchingStripe}
-%	Let $\ptext$ and $\pmotif$ be two permutations avoiding (213,231).
-%	$\pmotif$ is a motif of $\ptext$ if and only if the 
-%	stripe of $\pmotif$ is a motif of the stripe of $\ptext$.
-%\end{proposition}
-%
-%		
-%		\textbf{Proof} \\
-%		$\Rightarrow$ Suppose that $\pmotif$ is a motif of $\ptext$
-%		by subsequence $s$.
-%		By definition $s$ normalized is equal to
-%		$\pmotif$ so they have the same stripe.\\ 
-%		$\Leftarrow$ 
-%		Let $\ptext$ be a permutation avoiding $(213,231)$, 
-%		$S_1$ be its stripe, 
-%		$\pmotif$  be a permutation avoiding $(213,231)$, 
-%		and $S_2$ its stripe.
-%		Let $\phi$ be the function
-%		that match $S_2$ to $S_1$.
-%		We define $\varphi$ as, 
-%		$\forall x \in [|\pmotif|-1]$,
-%		$\varphi(x) = \phi(x)$,
-%		and $\varphi(|\pmotif|) = \phi(|\pmotif|-1)+1$
-%		Suppose that $\exists x,y \in [|\pmotif|]$, 
-%		$\pmotif(x)<\pmotif(y)$ 
-%		and $\ptext(\varphi(x))>\ptext(\varphi(y))$,
-%		without lost of generality we can suppose that $x<y$,
-%		Let see all the case possible that can make this 
-%		hypothesis possible :
-%		\begin{itemize}		
-%			\item if $\pmotif(x)<\pmotif(y)$, 
-%			$\stripe{\pmotif}{x}=\ustep$ 
-%			and $\stripe{\pmotif}{y}=\ustep$
-%			(if x and y are increasing in $\pmotif$),
-%			then $\stripe{\ptext}{\varphi(x)} =\ustep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
-%			(the match are also increasing).
-%			As $x<y$ and as $\varphi$ is an increasing function, 
-%			$\varphi(x) < \varphi(y)$.
-%			And thus, by \textbf{Lemma \ref{lemma:upup}},
-%			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
-%			Which contradict our hypothesis,
-%			so this case is not possible.
-%		
-%			\item if $\pmotif(x)<\pmotif(y)$, 
-%			$\stripe{\pmotif}{x}=\ustep$ 
-%			and $\stripe{\pmotif}{y}=\dstep$
-%			then $\stripe{\ptext}{\varphi(x)}=\ustep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
-%			As $x<y$ and as $\varphi$ is an increasing function, 
-%			$\varphi(x) < \varphi(y)$.
-%			And thus, by \textbf{Lemma \ref{lemma:updown}},
-%			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
-%			Which contradict our hypothesis,
-%			so this case is not possible.			
-%
-%			\item if $\pmotif(x)>\pmotif(y)$, 
-%			$\stripe{\pmotif}{x}=\dstep$ 
-%			and $\stripe{\pmotif}{y}=\dstep$
-%			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\dstep$,
-%			As $x<y$ and as $\varphi$ is an increasing function, 
-%			$\varphi(y) < \varphi(x)$.
-%			And thus, by \textbf{Lemma \ref{lemma:downdown}},
-%			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
-%			Which contradict our hypothesis,
-%			so this case is not possible.
-%			
-%			\item if $\pmotif(x)>\pmotif(y)$, 
-%			$\stripe{\pmotif}{x}=\dstep$ 
-%			and $\stripe{\pmotif}{y}=\ustep$
-%			then $\stripe{\ptext}{\varphi(x)}=\dstep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
-%			As $x<y$ and as $\varphi$ is an increasing function, 
-%			$\varphi(y) < \varphi(x)$.
-%			And thus, by \textbf{Lemma \ref{lemma:updown}},
-%			$\ptext(\varphi(y)) > \ptext(\varphi(x))$ .
-%			Which contradict our hypothesis,
-%			so this case is not possible.$\Box$
-%			
-%			\item If $y = |\pmotif|$ and $x=|\pmotif|-1$,
-%			Clearly if $\stripe{\pmotif}{x}=\ustep$,
-%			then $\pmotif(y)-\pmotif(x)>0$ 
-%			and because we have a match in the ribbon
-%			$\ptext(\varphi(y))-\ptext(\varphi(x))>0$.
-%			Same idea goes if $\stripe{\pmotif}{x}=\dstep$.
-%			So this case is not possible.
-%			
-%			\item if $y = |\pmotif|$ and $x<|\pmotif|-1$,
-%			if $\stripe{\pmotif}{x}=\ustep$ ie
-%			$\pmotif(x+1)-\pmotif(x)>0$. Then
-%			we must have either
-%			$\pmotif(x)<\pmotif(x+1)<\pmotif(|\pmotif|)$
-%			or $\pmotif(x)<\pmotif(|\pmotif|)<\pmotif(x+1)$ 
-%			to avoid $231$ or $213$ in the motif.
-%			Because we have a match in the stripe
-%			and what we prove above,
-%			$\ptext(\varphi(x+1)-\ptext(\varphi(x))>0$.
-%			But by hypothesis $\ptext(\varphi(|\ptext|))<\ptext(\varphi(x))$,
-%			so we have either 		
-%			$\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$
-%			or $\pmotif(|\pmotif|)<\pmotif(x)<\pmotif(x+1)$ 
-%			which both lead to a $231$ or a $213$ motif
-%			in the text which is not possible.
-%			The same idea goes if $\stripe{\pmotif}{x}=\dstep$. 			
-%			
-%		\end{itemize}
-%		So our hypothesis is not realisable.So our assertion is true. $\Box$\\
-		
-		\textbf{Proposition  \num \thenum} Let $\pmotif$ and $\ptext$
-		be two permutations avoiding (231,213), 
-		we can decide in linear time if $\pmotif$ 
-		appear in $\ptext$.\\	
-		
-		\begin{proof}
-		To solve the permutation pattern for a permutation in $\AV_n(213,231)$, 
-		we find a find a match of the stripe of the pattern in the stripe of the text.
-		This can be done linearly by a greedy algorithm, 
-		by matching a step whenever it is possible.
-		And thank to the definition of the definition of a stripe in \textbf{Corollary \ref{corollary:minmaxelement}},
-		we do not have to compute the stripe advance.
-		Therefore we have an linear (online) algorithm.
-		\end{proof}	
+	 		
+\textbf{Proposition  \num \thenum} Let $\pmotif$ and $\ptext$
+be two permutations avoiding (231,213), 
+we can decide in linear time if $\pmotif$ 
+appear in $\ptext$.\\	
+
+\begin{proof}
+To solve the permutation pattern for a permutation in $\AV_n(213,231)$, 
+we find a find a match of the stripe of the pattern in the stripe of the text.
+This can be done linearly by a greedy algorithm, 
+by matching a step whenever it is possible.
+And thank to the definition of the definition of a stripe in \textbf{Corollary \ref{corollary:minmaxelement}},
+we do not have to compute the stripe advance.
+Therefore we have an linear (online) algorithm.
+\end{proof}	
 
 		
 
@@ -709,8 +508,11 @@ $\Leftarrow$ This is proved by lemma \ref{lemma:MatchStripeToPermutation}.
 %			This implies a $O(|\pmotif|*|\ptext|^3)$ time
 %			and $O(|\ptext|^3) space$ algorithm.\\ 
 
-		
-		\section{Pattern Matching With Motif Avoiding (231,213)}	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Pattern Matching With Motif Avoiding (231,213)}	
+\label{section:sigma only avoid 231 and 213}
 
 			\begin{proposition}
 			Let $\pmotif$, $\ptext$ 
@@ -883,8 +685,11 @@ $\Leftarrow$ This is proved by lemma \ref{lemma:MatchStripeToPermutation}.
 			and the induction on $O(|\pmotif|*|\ptext|^2)$.
 			\end{proof}
 					
-		\section{Pattern Matching With Bivincular Motif Avoiding (231,213)}	
-		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Pattern Matching With Bivincular Motif Avoiding (231,213)}	
+\label{section:bivincular}
+
 			\begin{proposition}
 			Let $\bmotif$ be a bivincular motif 
 			avoiding (231,213), 
@@ -1139,9 +944,12 @@ $\Leftarrow$ This is proved by lemma \ref{lemma:MatchStripeToPermutation}.
 			If $|\pmotif| \notin \x$ there exists a match if and only if \\	$\bigcup_{0<k<|\ptext|,0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,max}(0,k)$
 			is true.			
 			\end{proof}
-	
-	
-	\section{Longest Subsequence Avoiding \\(231,213) for a Permutation}
+			
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Longest Subsequence Avoiding \\(231,213) for a Permutation}
+\label{section:LCS}
 
 	In this section we present an algorithm to solve the problem
 	of the longest subsequence avoiding (231,213).
