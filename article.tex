@@ -449,15 +449,17 @@ $$
 	$$
 \end{corollary}
 	 
-We need the following lemmata.
+We need the following lemmata
+(the proofs of Lemma~\ref{lemma:upup} and Lemma~\ref{lemma:downdown} 
+are analogous and we omit them).
 
 \begin{lemma}
-\label{lemma:updown}
-Let $\pi \in \AV_n(213,231)$.
-For all $1 \leq i < j \leq n$, 
-if $\stripe{\pi}{i}=\ustep$
-and $\stripe{\pi}{j}=\dstep$
-then $\pi(i)<\pi(j)$.
+	\label{lemma:updown}
+	Let $\pi \in \AV_n(213,231)$.
+	For all $1 \leq i < j \leq n$, 
+	if $\stripe{\pi}{i}=\ustep$
+	and $\stripe{\pi}{j}=\dstep$
+	then $\pi[i] < \pi[j]$.
 \end{lemma}
 		
 \begin{proof} 
@@ -478,21 +480,20 @@ If the first element of $\pi$ is $n$ then
 \qed
 \end{proof}
 
-		\begin{lemma}
-		\label{lemma:upup}
-		Let $\pi \in \AV_n(213,231)$,
-		$\forall i,j \in [n]$, 
-		$i<j$, 
-		if $\stripe{\pi}{i}=\ustep$
-		and $\stripe{\pi}{j}=\ustep$
-		then $\pi(i)<\pi(j)$.
-		\end{lemma}
+\begin{lemma}
+	\label{lemma:upup}
+	Let $\pi \in \AV_n(213,231)$.
+	For all $1 \leq i < j \leq n$,
+	if $\stripe{\pi}{i}=\ustep$
+	and $\stripe{\pi}{j}=\ustep$
+	then $\pi[i] < \pi[j]$.
+\end{lemma}
 		
-		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
-		if $i$ is a ascent
-		and $j$ is a ascent
-		and $ i<j$
-		then $p(i)<p(j)$.\\
+		% In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
+		% if $i$ is a ascent
+		% and $j$ is a ascent
+		% and $ i<j$
+		% then $p(i)<p(j)$.\\
 		
 		%\textbf{Proof} Same as before.\\
 
@@ -514,21 +515,20 @@ If the first element of $\pi$ is $n$ then
 %		for the first element.
 %		$\Box$\\
 
-		\begin{lemma}
-		\label{lemma:downdown}
- 		Let $\pi \in \AV_n(213,231)$,
-		$\forall i,j \in [n]$,
-		$i<j$,
-		if $\stripe{\pi}{i}=\dstep$
-		and $\stripe{\pi}{j}=\dstep$
-		then $\pi(i)>\pi(j)$.
-		\end{lemma}
+\begin{lemma}
+	\label{lemma:downdown}
+	Let $\pi \in \AV_n(213,231)$.
+	For all $1 \leq i < j \leq n$,
+	if $\stripe{\pi}{i} = \dstep$
+	and $\stripe{\pi}{j} = \dstep$
+	then $\pi[i] > \pi[j]$.
+\end{lemma}
 
-		In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
-		if $i$ is a descent
-		and $j$ is a descent
-		and $ i<j$
-		then $\pi(i)>\pi(j)$.\\
+		% In other word, for every index $i$ and $j$ of an (231,213) avoiding permutation $\pi$,
+		% if $i$ is a descent
+		% and $j$ is a descent
+		% and $ i<j$
+		% then $\pi(i)>\pi(j)$.\\
 
 		%\textbf{Proof} Same as before.\\
 		
@@ -550,11 +550,14 @@ If the first element of $\pi$ is $n$ then
 %		for the first element.
 %		$\Box$\\
 
-		\begin{proposition}
-		\label{proposition:patternMatchingStripe}
-		Let $\ptext, \pmotif \in \AV_n(213,231)$.
-		$\pmotif$ is a motif of $\ptext$ if and only if the stripe of $\pmotif$ is a motif of the stripe of $\ptext$.
-		\end{proposition}
+Most of the interest of the above lemmata stems from the following proposition.
+
+\begin{proposition}
+	\label{proposition:patternMatchingStripe}
+	Let $\ptext, \pmotif \in \AV_n(213,231)$.
+	$\pmotif$ is a motif of $\ptext$ if and only if the 
+	stripe of $\pmotif$ is a motif of the stripe of $\ptext$.
+\end{proposition}
 
 		
 		\textbf{Proof} \\
