@@ -308,63 +308,6 @@ $\stripew{\pi} = \dstep\dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep\ustep\us
 The stripe $s\stripew{\sigma}$ is a \emph{pattern} of the strip $\stripew{\pi}$
 (or $s\stripew{\sigma}$ \emph{occurs} of the strip $\stripew{\pi}$) if $\stripew{\sigma}$ occurs in
 $\stripew{\pi}$ as a subsequence.
-
-% For two permutations $\
-% The stripe $s\pi$ of $\pi \in S-n$ is a motif pmotif \in \Perm{m}$ is a motif
-% of a stripe of $\ptext \in \Perm{n}$ if and only if there exist an increasing function $\phi : [|\pmotif|] \rightarrow [|\pmotif|]$
-% such that : \\
-% $\forall i \in [|\pmotif|]$, $\mathcal{S}(\pmotif,i) = \mathcal{S}(\ptext,\phi(i))$\\
-% If a stripe $S_2$ is a motif of a stripe $S_1$,
-% it means that there exists
-% a subsequence of $S_1$ such as
-% this sequence is equal to $S_2$.
-
-% For example, the stripe $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ is a motif of  the stripe \\
-% $(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6)$ ,
-% because we can match \\
-% $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_1)$ to $(\dstep_1,\dstep_2,\dstep_3,\dstep_4,\ustep_5,\ustep_6)$.
-% \begin{figure}[h!]
-% 	\begin{displaymath}
-% 		\xymatrix@=0.3cm{
-% 			\dstep_1 \ar[dd] & \dstep_2 \ar[dd] & \dstep_3 \ar[dd] & \dstep_4\ar[ddrrrr]  & \ustep_1 \ar[ddrrrrr]\\
-% 			\\
-% 			\dstep_1 & \dstep_2 & \dstep_3 & \ustep_1 & \ustep_2 & \ustep_3 & \ustep_4 & \dstep_4 & \dstep_5 & \ustep_5 & \ustep_6 \\
-% 		}
-% 	\end{displaymath}     
-% \end{figure}		
-% But the stripe $(\dstep,\ustep,\dstep,\dstep,\dstep)$ is not a motif of the stripe\\ $(\dstep_1,\dstep_2,\dstep_3,\ustep_1,\ustep_2,\ustep_3,\ustep_4,\dstep_4,\dstep_5,\ustep_5,\ustep_6,\ustep_7)$.\\
-		
-% A \textbf{bivincular motif} generalize
-% a motif. 
-% A bivincular motif allows 
-% to force element to be adjacent in position
-% or/and in value.
-% A bivincular motif
-% is a motif with two set $\bmotif$,
-% the first set contains the first index 
-% of two consecutive indexes
-% and the second set contains the first indexes
-% of the two consecutive elements.
-% Formally, Let $\bmotif$ 
-% be a bivincular motif 
-% and $\ptext$ a permutation.
-% if $i \in \x$,
-% and $i$ is matched with $j$ in $\ptext$
-% then $i+1$ must be matched with $j+1$,
-% with the special case of $0$ and $|\pmotif|$ :
-% if $0 \in \x$ then the first element of $\pmotif$
-% must be matched with the first element of $\ptext$,
-% and if $|\pmotif| \in \x$ then the last element of $\pmotif$
-% must be matched with the last element of $\ptext$.
-% if $i \in \y$,
-% and $i$ is matched with $j$ in $\ptext$
-% then $i+1$ must be matched with $l$
-% such as $\ptext(l)=\ptext(j)+1$,
-% with the special case of $0$ and $|\pmotif|$ :
-% if $0 \in \y$ then the minimal element of $\pmotif$
-% must be matched with the minimal element of $\ptext$,
-% and if $|\pmotif| \in \y$ then the maximal element of $\pmotif$
-% must be matched with the maximal element of $\ptext$.		
 			
 A \emph{bivincular pattern} (abbreviated BVP) $\sigma$
 of length $k$ is a permutation in $S_k$ written in
@@ -735,8 +678,11 @@ Most of the interest of the above lemmata stems from the following proposition.
 %			This implies a $O(|\pmotif|*|\ptext|^3)$ time
 %			and $O(|\ptext|^3) space$ algorithm.\\ 
 
-		
-		\section{Pattern Matching With Motif Avoiding (231,213)}	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Pattern Matching With Motif Avoiding (231,213)}	
+\label{section:sigma only avoid 231 and 213}
 
 			\begin{proposition}
 			Let $\pmotif$, $\ptext$ 
@@ -907,8 +853,11 @@ Most of the interest of the above lemmata stems from the following proposition.
 			and the induction on $O(|\pmotif|*|\ptext|^2)$ $\Box$.
 			
 					
-		\section{Pattern Matching With Bivincular Motif Avoiding (231,213)}	
-		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Pattern Matching With Bivincular Motif Avoiding (231,213)}	
+\label{section:bivincular}
+
 			\begin{proposition}
 			Let $\bmotif$ be a bivincular motif 
 			avoiding (231,213), 
@@ -1162,8 +1111,11 @@ Most of the interest of the above lemmata stems from the following proposition.
 			
 			If $|\pmotif| \notin \x$ there exists a match if and only if \\	$\bigcup_{0<k<|\ptext|,0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,max}(0,k)$
 			is true. $\Box$  			
-	
-	\section{Longest Subsequence Avoiding \\(231,213) for a Permutation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Longest Subsequence Avoiding \\(231,213) for a Permutation}
+\label{section:LCS}
 
 	In this section we present an algorithm to solve the problem
 	of the longest subsequence avoiding (231,213).
