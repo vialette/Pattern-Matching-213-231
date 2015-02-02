@@ -1,8 +1,0 @@
-\contentsline {section}{\numberline {1}Introduction}{2}
-\contentsline {section}{\numberline {2}Definition}{2}
-\contentsline {section}{\numberline {3}Pattern Matching Problem With Text and Motif Avoiding (231,213)}{3}
-\contentsline {section}{\numberline {4}Pattern Matching With Motif Avoiding (231,213)}{6}
-\contentsline {section}{\numberline {5}Pattern Matching With Bivincular Motif Avoiding (231,213)}{8}
-\contentsline {section}{\numberline {6}Longest Subsequence Avoiding \\(231,213) for a Permutation}{10}
-\contentsline {section}{\numberline {7}Longest Subsequence Avoiding \\(231,213) Common for Two Permutation}{11}
-\contentsline {section}{\numberline {8}Conclusion}{12}
