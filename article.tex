@@ -59,6 +59,14 @@
 %upstep
 \newcommand{\ustep}{a}
 
+%first
+\DeclareMathOperator{\firsta}{L}
+\newcommand{\first}[1]{\firsta({#1})}
+
+\DeclareMathOperator{\factora}{F}
+\newcommand{\factor}[1]{\factora({#1})}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -514,15 +522,15 @@ Therefore we have an linear (online) algorithm.
 \section{Pattern Matching With Motif Avoiding (231,213)}	
 \label{section:sigma only avoid 231 and 213}
 
-			\begin{proposition}
-			Let $\pmotif$, $\ptext$ 
-			be two permutation,
-			with  $\pmotif$ a permutation avoiding (231,213), 
-			we can decide in $O(|\pmotif|*|\ptext|^2)$ time
-			and $O(|\pmotif|*|\ptext|^2)$ space
-			if $\pmotif$ 
-			is a motif of $\ptext$.
-			\end{proposition}
+\begin{proposition}
+Let $\pmotif$, $\ptext$ 
+be two permutation,
+with  $\pmotif$ a permutation avoiding (231,213), 
+we can decide in $O(|\pmotif|*|\ptext|^2)$ time
+and $O(|\pmotif|*|\ptext|^2)$ space
+if $\pmotif$ 
+is a motif of $\ptext$.
+\end{proposition}
 
 			
 %			\textbf{Proof}
@@ -538,152 +546,98 @@ Therefore we have an linear (online) algorithm.
 %			the maximal (minimal) element,
 %			we may prevent some element
 %			in the future matching.\\
-			
-			For the proof and the algorithm we introduce a decomposition,
-			we decompose the motif into
-			adjacent element of same step in the stripe 
-			(called such sequence segment),
-			add the last element to the right most segment,
-			and label them form right to left
-			with increasing number.
-			Let's call this decomposition $S$.
-			For each segment, we call important 
-			the leftmost element denoted by $IMP$.
-			For example, given the motif $(12,11,10,1,2,3,4,9,8,5,6,7)$,
-			$S(1)=(5,6,7)$, $IMP(1)=5$, 
-			$S(2)=(9,8)$, $IMP(2)=9$, 
-			$S(3)=(1,2,3,4)$, $IMP(3)=1$, 
-			$S(4)=(12,11,10)$ and $IMP(4)=12$.\\
-			
-			
-			\begin{proof}
-			Given a ascent (descent) segment $S(s)$,
-			if we want to
-			match the suffix $s_ns_{s-1}...s_1$
-			starting with an ascent (descent),
-			and given that we know every
-			match of $s_{s-1}...s_1$,
-			the optimal way of matching
-			$s_{s-1}...s_1$
-			is to choose the match
-			that minimize (maximize)
-			the maximal (minimal)
-			element of the match
-			and that allow a match
-			of $s_n$.			
-			In other word if we want to match 
-			$\pmotif[IMP(s):]$
-			with $\ptext[i:]$
-			and match $IMP(s)$
-			with $i$.
-			The optimal way
-			of matching
-			$\pmotif[IMP(s-1):]$
-			is to choose the
-			minimal (maximal) element $\ptext[i']$
-			such that :
-			(1) $\pmotif[IMP(s-1):]$ is matched with $\ptext[i':]$
-			and $IMP(s-1)$ is matched with $e$.
-			(2) The segment $S(s)$ is matched with $\ptext[i:i'-1]$
-			and $IMP(s)$ is matched with $i$.
-			(3) Every elements of the match of (2),
-			is inferior (superior) to the minimal (maximal) element of the match of (1).
-			Indeed when we will 
-			match $s_{n+1}s_ns_{s-1}...s_1$
-			more element will be available,
-			because every matched 
-			element of $s_{n+1}$
-			must be superior (inferior)
-			to every matched element
-			of $s_{s-1}...s_1$.\\
-			  
-			
-			Consider the following problem :\\
-			$LM(s,i)$ = the optimal match of 	
-				$IMP(s-1)$ 
-				if there exists a match of $\pmotif[IMP(s):]$ 
-				with $\ptext[i:]$
-				and $IMP(s)$ 
-				is matched with element $i$.\\
-				
-			This problem can be solve by induction.\\
-			
-			\textbf{BASE :} \\
-			$LM(1,i)= \left\{ 
-					\begin{array}{l l}
-					
-						MIN_{i<i'}\{0\} \cup \{i' |\text{ $i'$ such that } & 
-						\text{if $\stripe{\pmotif}{IMP(1)}=\ustep$}
-						\\
-						\text{ $LIS(i,i',\ptext[i']) \leq S(1)$}\}&\\			
 
-
-						&\\
-						
-						MAX_{i<i'}\{0\} \cup \{i' |\text{ $i'$ such that } &
-						\text{if $\stripe{\pmotif}{IMP(1)}=\dstep$} \\
-						\text{ $LDS(i,i',\ptext[i']) \leq S(1)$}\}&\\			
-
-					\end{array} \right. $\\	
-		
-			\textbf{STEP :} \\
-			$LM(s,i)= \left\{ 
-					\begin{array}{l l}
-					
-						MIN \{0\} \cup  I(s,i) & 
-						\text{if $\stripe{\pmotif}{IMP(s)}=\ustep$}\\
-
-						
-						MAX \{0\} \cup  D(s,i) & 
-						\text{if $\stripe{\pmotif}{IMP(s)}=\ustep$}\\
+			
+For the proof and the algorithm we introduce a decomposition : we decompose the stripe of the motif into factor of same letter, and label those factor from right to left. We also need to add the last index into the first factor. For each factor, we denote the left most element by $\firsta$. For example, given the motif $981237654$, $\factor{1} =7654$, $\first{1}=7$, $\factor{2}=123$, $\first{2}=1$, $\factor{3}=98$ and $\first{9}$. \\
+			
+\begin{proof}
+Given an ascent (descent) factor $\factor{i}$ of a motif $\pmotif$, if we want to match the suffix of $\pmotif$ starting by $\factor{i}$, $\factor{i}\factor{i-1}\cdots\factor{1}$ and given that we know every match of $\factor{i-1}\cdots\factor{1}$, is to choose the match of $\factor{i-1}\cdots\factor{1}$ that minimize (maximize) the maximal (minimal) element of the match of $\factor{i-1}\cdots\factor{1}$ and that allow a match of factor $\factor{i}$. In other word if we want to match $\pmotif[\first{i}:]$ with $\ptext[j:]$ such that $\first{i}$ is matched with element at index $j$ in $\ptext$. The optimal way of matching $\pmotif[\first{i-1}:]$ is to choose the minimal (maximal) element $j'$ of $\ptext[j:]$ such that : (1) $\pmotif[\first{i-1}:]$ is matched with $\ptext[j':]$ and element $\first{i-1}$ is matched with element at index $j'$, (2) the factor $\factor{i}$ is matched with $\ptext[j,j'-1]$ and element $\first{i}$ is matched with element at index $j$, (3) Every elements of the match of (2) if inferior (superior) to the minimal (maximal) element of the match of (1). Indeed when we will match $\factor{i+1}\factor{i}$, $\factor{i}\factor{i-1}\cdots\factor{1}$, every elements of $\factor{i+1}$ must be matched to element superior (inferior) to every element matched element of $\factor{i}\factor{i-1}\cdots\factor{1}$, particularly its must be superior (inferior) to the maximal (minimal) element of the match of $\factor{i}\factor{i-1}\cdots\factor{1}$. Remark that the maximal (minimal) element of $\factor{i}\factor{i-1}\cdots\factor{1}$ is $\first{i-1}$.\\			  
+			
+Consider the following problem :\\
+$LM(i,j)$ = the optimal match of $\first{i-1}$	
+	if there exists a match of $\pmotif[\first{i}:]$ 
+	with $\ptext[j:]$
+	and element $\first{i}$ 
+	is matched with element at index $j$.\\
 	
-						
-											
-					\end{array} \right. $\\
+This problem can be solve by induction.\\
+			
+\textbf{BASE :} \\
+$LM(1,j)= \left\{ 
+	\begin{array}{l l}
+	
+		MIN_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } & 
+		\text{if $\stripe{\pmotif}{\first{1}}=\ustep$}\\
+		\text{ $LIS(j,j',\ptext[j']) \leq \factor{1}$}\}&\\			
+	
+	
+		&\\
+		
+		MAX_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } &
+		\text{if $\stripe{\pmotif}{\first{1}}=\dstep$} \\
+		\text{ $LDS(j,j',\ptext[j']) \leq \factor{1}$}\}&\\			
+	
+	\end{array} \right. $\\	
+
+\textbf{STEP :} \\
+$LM(i,j)= \left\{ 
+	\begin{array}{l l}
+	
+		MIN \{0\} \cup  I(i,j) & 
+		\text{if $\stripe{\pmotif}{\first{i}}=\ustep$}\\
+
+		
+		MAX \{0\} \cup  D(i,j) & 
+		\text{if $\stripe{\pmotif}{\first{i}}=\dstep$}\\
+
+		
+							
+	\end{array} \right. $\\
 					
-			With $I(s,i)$ ($D(s,i)$) the set of element such that
-			if  $e \in I(s,i)$ then there exists 
-			a match of $\pmotif[IMP(s-1):]$ in $\ptext[e:]$ and
-			there is a match of $s$ in $\ptext[i:e-1]$
-			with every element inferior (superior) to the match of  
-			$\pmotif[IMP(s-1):]$ in $\ptext[e:]$.
-			Formally we define $I(s,i)$ and $D(s,i)$ such as:\\
+With $I(i,j)$ ($D(i,j)$) the set of element such that
+if  $j' \in I(i,j)$ then there exists 
+a match of $\pmotif[\first{i-1}:]$ in $\ptext[j':]$ and
+the element $\first{i-1}$ is matched with element at index $j'$ and
+there is a match of $\factor{i}$ in $\ptext[j:j'-1]$ and
+the element $\first{i}$ is matched with element at index $j$ and every element is inferior (superior) to the match of  
+$\pmotif[\first{i-1}:]$ in $\ptext[j':]$.
+Formally we define $I(s,i)$ and $D(s,i)$ such as:\\
 			
-			$I(s,i)=\{i'|\text{$i<i'$ and $LM(s-1,i')\neq 0$}$ \\
-			\indent \indent \indent and  $LIS(i,i'-1,IMP(s-1)) \leq S(s) \}$ \\
-			
-			$D(s,i)=\{i'|\text{$i<i'$ and $LM(s-1,i')\neq 0$}$ \\
-			\indent \indent \indent and  $LDS(i,i'-1,IMP(s-1)) \leq S(s) \}$ \\
+$I(i,j)=\{j'|\text{$j<j'$ and $LM(i-1,j')\neq 0$}$ \\
+\indent \indent \indent and  $LIS(j,j'-1,\first{i-1}) \leq |\factor{i}| \}$ \\
+
+$D(i,j)=\{j'|\text{$j<j'$ and $LM(i-1,j')\neq 0$}$ \\
+\indent \indent \indent and  $LDS(j,j'-1,\first{i-1}) \leq |\factor{i}| \}$ \\
 					                       
-			With LIS(i,j,k) (LDS(i,j,k)) is the longest increasing (decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
-			with every element of this sequence
-			inferior (superior) to $k$. 
-			LIS and LDS can be computed in $O(|\ptext|^2*log(log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).\\
+With LIS(i,j,k) (LDS(i,j,k)) is the longest increasing (decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
+with every element of this sequence
+inferior (superior) to $k$. 
+LIS and LDS can be computed in $O(|\ptext|^2*log(log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).\\
 			
-			In the base case, 
-			we are looking for a match for the first segment.
-			Each segment is either ascent or descent.
-			If the segment is an ascent (descent)
-			we have to find an increasing (decreasing) sequence
-			in the text of same size of longest that 
-			the size of the segment,
-			and to find the optimal solution 
-			we must assure that the last element
-			of the sequence is minimal (maximal).\\
-			For the induction, it is the same idea
-			except that we must assure that 
-			every element of the sequence is superior 
-			to the maximum element of the rest of the match
-			or inferior to the minimal element of the rest of the match
-			which is given by $LM$ of
-			the previous segment.\\
-			
-			There exists a match of $\pmotif$ in $\ptext$ if and only if
-			there exists a $LM(n,i)$ for $1 \leq i \leq |\ptext|$,
-			with $n$ the number of segment in $\pmotif$.
-			Moreover the basic case can be computed in $O(|\ptext|^2)$
-			and the induction on $O(|\pmotif|*|\ptext|^2)$.
-			\end{proof}
+In the base case, 
+we are looking for a match for the first factor.
+Each factor is either ascent or descent.
+If the factor is an ascent (descent)
+we have to find an increasing (decreasing) subsequence
+in the text of same size or longest that 
+the size of the factor,
+and to find the optimal solution 
+we must assure that the last element
+of the sequence is minimal (maximal).\\
+For the induction, it is the same idea
+except that we must assure that 
+every element of the subsequence is superior 
+to the maximum element of the rest of the match
+ie inferior to the minimal (maximal) element of the rest of the match
+which is given by $LM$ of
+the previous factor.\\
+
+There exists a match of $\pmotif$ in $\ptext$ if and only if
+there exists a $LM(n,i)\neq 0$ for $1 \leq i \leq |\ptext|$,
+with $n$ the number of factor in $\pmotif$.
+Moreover the basic case can be computed in $O(|\ptext|^2)$
+and the induction on $O(|\pmotif|*|\ptext|^2)$.
+\end{proof}
 					
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
