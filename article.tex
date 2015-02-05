@@ -386,8 +386,8 @@ of $\sigma$:
 	any occurrence of $\sigma$ is a permutation $\pi$ must end with
 	the largest letter of $\pi$.
 \end{itemize}
-A bivincular pattern avoids a set of permutations $P$ if its bottom
-row $\sigma_1\sigma_2\,\ldots\,\sigma$ avoids every permutation in $P$.
+% A bivincular pattern avoids a set of permutations $P$ if its bottom
+% row $\sigma_1\sigma_2\,\ldots\,\sigma$ avoids every permutation in $P$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -445,13 +445,21 @@ both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 \end{proposition}
 
 \begin{proof}
-To solve the permutation pattern for a permutation in $\AV_n(213,231)$, 
-we find a find a match of the stripe of the pattern in the stripe of the text.
-This can be done linearly by a greedy algorithm, 
-by matching a step whenever it is possible.
-And thank to the definition of the definition of a stripe in \textbf{Corollary \ref{corollary:minmaxelement}},
-we do not have to compute the stripe in advance.
-Therefore we have an linear (online) algorithm.
+According to Lemma~\ref{lemma:MatchStripeToPermutation} the problem reduces 
+to deciding whether $s_\sigma$ occurs as a subsequence in $s_\pi$. 
+A straightforward greedy approach solves this issue in linear-time. 
+Furthermore, in the light of Corollary~\ref{corollary:minmaxelement}, 
+the effective construction of the two stripes is not required, 
+so it is an online algorithm.
+\qed
+% To solve the permutation pattern for a permutation in $\AV_n(213,231)$, 
+% we find a find a match of the stripe of the pattern in the stripe of the text.
+% This can be done linearly by a greedy algorithm, 
+% by matching a step whenever it is possible.
+% And thank to the definition of the definition of a stripe in 
+% Corollary~\ref{corollary:minmaxelement},
+% we do not have to compute the stripe in advance.
+% Therefore we have an linear (online) algorithm.
 \end{proof}	
 
 		
