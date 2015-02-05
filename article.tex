@@ -661,8 +661,7 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 			\begin{proof}
 			We consider the following problem :\\
 			
-			Given a bivincular motif $\bmotif$ avoiding $(231,213)$,
-			a text $\ptext$, $i$,$j$ , $i<j$.\\
+			Given a bivincular motif $\bmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$, $i$,$j$ , $i<j$.\\
 			
 			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(i,j)= \left\{ 
 				\begin{array}{l l}
@@ -683,47 +682,47 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 			
 			\textbf{BASE :} \\
 			
-			if $|\pmotif| \notin  \x : $\\		
-			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|,j)= \left\{ 
+			if $n_\pmotif \notin  \x : $\\		
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif,j)= \left\{ 
 					\begin{array}{l l}
 						true & \text{if $\min<\ptext[j]<\max$
 						}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
-			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|+1,j)= true $\\
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif+1,j)= true $\\
 			
-			if $|\pmotif| \in  \x : $\\		
-			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|,|\ptext|)= \left\{ 
+			if $n_\pmotif \in  \x : $\\		
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif,n_\ptext)= \left\{ 
 					\begin{array}{l l}
-						true & \text{if $\min<\ptext[|\ptext|]<\max$
+						true & \text{if $\min<\ptext[n_\ptext]<\max$
 						}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
-			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|+1,|\ptext|)= true $\\
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif+1,n_\ptext)= true $\\
 			
-			if $|\pmotif| \notin  \x$  
-			and $|\pmotif| \in  \y$ 
-			and $\pmotif[|\pmotif|]$ is the maximal element: \\		
-			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|,j)= \left\{ 
+			if $n_\pmotif \notin  \x$  
+			and $n_\pmotif \in  \y$ 
+			and $\pmotif[n_\pmotif]$ is the maximal element: \\		
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif,j)= \left\{ 
 					\begin{array}{l l}
 						true & \text{if $\min<\ptext[j]<\max$
 						}\\
 						&\text{$\ptext[j]$ is the maximal element}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
-			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|+1,j)= true $\\
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif+1,j)= true $\\
 			
-			if $|\pmotif| \in  \x$  
-			and $|\pmotif| \in  \y$ 
-			and $\pmotif[|\pmotif|]$ is the maximal element: \\		
-			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|,|\ptext|)= \left\{ 
+			if $n_\pmotif \in  \x$  
+			and $n_\pmotif \in  \y$ 
+			and $\pmotif[n_\pmotif]$ is the maximal element: \\		
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif,n_\ptext)= \left\{ 
 					\begin{array}{l l}
-						true & \text{if $\min<\ptext[|\ptext|]<\max$
+						true & \text{if $\min<\ptext[n_\ptext]<\max$
 						}\\
-						&\text{$\ptext[|\ptext|]$ is the maximal element}\\
+						&\text{$\ptext[n_\ptext]$ is the maximal element}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
-			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|+1,|\ptext|)= true $\\		
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif+1,n_\ptext)= true $\\		
 								
 			\textbf{STEP :} \\		
 			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(i,j)= \\ \left\{ 
@@ -755,18 +754,18 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 														
 						&\\
 													
-						\mathbb{P}_{\bmotif,\ptext,\ptext[j],\max}(i+1,\ptext^{-1}(\ptext[j]+1)) 
+						\mathbb{P}_{\bmotif,\ptext,\ptext[j],\max}(i+1,\ptext^{-1}[\ptext[j]+1]) 
 							&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
 							&\text{and $i \notin \x$ and $i \in \y$}\\
 							& \text{and $\min<\ptext[j]<\max$} \\
-							&\text{and $\ptext^{-1}(\ptext[j]+1)>j$}\\
+							&\text{and $\ptext^{-1}[\ptext[j]+1]>j$}\\
 						&\\
 							
-						\mathbb{P}_{\bmotif,\ptext,\min,\ptext[j]}(i+1,\ptext^{-1}(\ptext[j]-1)) 
+						\mathbb{P}_{\bmotif,\ptext,\min,\ptext[j]}(i+1,\ptext^{-1}[\ptext[j]-1]) 
 							&\text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							&\text{and $i \notin \x$ and $i \in \y$ }\\	
 							& \text{and $\min<\ptext[j]<\max$} \\
-							&\text{and $\ptext^{-1}(\ptext[j]-1)>j$}\\
+							&\text{and $\ptext^{-1}[\ptext[j]-1]>j$}\\
 						&\\
 						
 						\mathbb{P}_{\bmotif,\ptext,\ptext[j]),\max}(i+1,j+1) 
@@ -801,14 +800,14 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 			If $i \notin \x$, $i \in \y$ and i is a descent,
 			we match $\pmotif[i]$ to $\ptext[j]$, 
 			then we match $\pmotif[i+1:]$ 
-			with $\ptext[\ptext^{-1}(\ptext[j]-1):]$
+			with $\ptext[\ptext^{-1}[\ptext[j]-1]:]$
 			with the condition that
 			$\pmotif[i+1]$ is matched to the element $\ptext[j]-1$.\\						
 			
 			If $i \notin \x$, $i \in \y$ and i is an ascent,
 			we match $\pmotif[i]$ to $\ptext[j]$, 
 			then we match $\pmotif[i+1:]$ 
-			with $\ptext[\ptext^{-1}(\ptext[j]+1):]$
+			with $\ptext[\ptext^{-1}[\ptext[j]+1]:]$
 			with the condition that
 			$\pmotif[i+1]$ is matched to the element $\ptext[j]+1$.\\	
 
@@ -827,10 +826,10 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 			and that $\ptext[j+1]=\pmotif[i]+1$.\\		
 					
 			There are two cases to consider searching for a match : \\
-			If $|\pmotif| \in \x$ there exists a match
-			if and only if\\ $\bigcup_{0<\min<\max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,0)$ is true.\\
+			If $n_\pmotif \in \x$ there exists a match
+			if and only if\\ $\bigcup_{0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,0)$ is true.\\
 			
-			If $|\pmotif| \notin \x$ there exists a match if and only if \\	$\bigcup_{0<k<|\ptext|,0<\min<\max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,k)$
+			If $n_\pmotif \notin \x$ there exists a match if and only if \\	$\bigcup_{0<k<n_\ptext,0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,k)$
 			is true.			
 			\end{proof}
 			
