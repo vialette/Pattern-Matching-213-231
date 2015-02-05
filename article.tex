@@ -406,7 +406,7 @@ Given two permutations $\ptext$,$\pmotif$ avoiding (231,213), If $\stripew{\pmot
 \end{lemma}	 
 	 
 \begin{proof} 
-We prove the lemma by induction on the size of the motif. Suppose that we have the motif $(12)$, thus the stripe is $\ustep$. If there is a match in stripe, then there exists two (contiguous) increasing elements in the text, which is a match in permutation. Same goes for the permutation $(21)$. Now, suppose that the lemma is true for every motif of size $n$. Let $\pmotif$ be a motif of size $n+1$ avoiding $(213,231)$, and $\ptext$ a permutation avoiding $(213,231)$. If there is a match of $\stripew{\pmotif}$ in $\stripew{\ptext}$ by subsequence $s$, then there is a match of $\stripew{\pmotif}[2:]$ in $\stripew{\ptext}[2:]$ by subsequence $s[2:]$, and by induction there is a match of $\pmotif[2:]$ in $\ptext[2:]$ by subsequence $s[2:]$. Moreover suppose that the first element the stripe of the motif is ascend (descent), and by lemma \ref{lemma:first element is 1 or n} the minimal (maximal) element, and remark that a subsequence of a permutation avoiding (231,213) is also avoiding (231,213), thus the first element of the subsequence $s$ is either the minimal (maximal) element which complete our proof.
+We prove the lemma by induction on the size of the motif.The base case is a motif of size 2. Suppose that we have the motif $(12)$, thus the stripe of the motif is $\ustep$. If there is a match in stripe, then there exists two (contiguous) increasing elements in the text, which is a match in permutation. Same goes for the permutation $(21)$. Now, suppose that the lemma is true for every motif in $\Av{n}{(231,213)}$. Let $\pmotif$ be a motif in $\Av{n+1}{(231,213)}$, and $\ptext$ a permutation avoiding $(213,231)$. If there is a match of $\stripew{\pmotif}$ in $\stripew{\ptext}$ by subsequence $s$, then there is a match of $\stripew{\pmotif}[2:]$ in $\stripew{\ptext}[2:]$ by subsequence $s[2:]$, and by induction there is a match of $\pmotif[2:]$ in $\ptext[2:]$ by subsequence $s[2:]$. Moreover if the first element the stripe of the motif is ascend (descent), and by lemma \ref{lemma:first element is 1 or n} the minimal (maximal) element, and remark that a subsequence of a permutation avoiding (231,213) is also avoiding (231,213), thus the first element of the subsequence $s$ is either the minimal (maximal) element which complete our proof.
 \end{proof}	 
 
 \begin{proposition}
@@ -439,10 +439,13 @@ $\pmotif$ so they have the same stripe.\\
 $\Leftarrow$ This is proved by lemma \ref{lemma:MatchStripeToPermutation}.
 \end{proof}
 	 		
-\textbf{Proposition  \num \thenum} Let $\pmotif$ and $\ptext$
+
+\begin{proposition}
+Let $\pmotif$ and $\ptext$
 be two permutations avoiding (231,213), 
 we can decide in linear time if $\pmotif$ 
 appear in $\ptext$.\\	
+\end{proposition}
 
 \begin{proof}
 To solve the permutation pattern for a permutation in $\AV_n(213,231)$, 
@@ -553,7 +556,15 @@ is a motif of $\ptext$.
 For the proof and the algorithm we introduce a decomposition : we decompose the stripe of the motif into factor of same letter, and label those factor from right to left. We also need to add the last index into the first factor. For each factor, we denote the left most element by $\firsta$. For example, given the motif $981237654$, $\factor{1} =7654$, $\first{1}=7$, $\factor{2}=123$, $\first{2}=1$, $\factor{3}=98$ and $\first{9}$. \\
 			
 \begin{proof}
-Given an ascent (descent) factor $\factor{i}$ of a motif $\pmotif$, if we want to match the suffix of $\pmotif$ starting by $\factor{i}$, $\factor{i}\factor{i-1}\cdots\factor{1}$ and given that we know every match of $\factor{i-1}\cdots\factor{1}$, is to choose the match of $\factor{i-1}\cdots\factor{1}$ that minimize (maximize) the maximal (minimal) element of the match of $\factor{i-1}\cdots\factor{1}$ and that allow a match of factor $\factor{i}$. In other word if we want to match $\pmotif[\first{i}:]$ with $\ptext[j:]$ such that $\first{i}$ is matched with element at index $j$ in $\ptext$. The optimal way of matching $\pmotif[\first{i-1}:]$ is to choose the minimal (maximal) element $j'$ of $\ptext[j:]$ such that : (1) $\pmotif[\first{i-1}:]$ is matched with $\ptext[j':]$ and element $\first{i-1}$ is matched with element at index $j'$, (2) the factor $\factor{i}$ is matched with $\ptext[j,j'-1]$ and element $\first{i}$ is matched with element at index $j$, (3) Every elements of the match of (2) if inferior (superior) to the minimal (maximal) element of the match of (1). Indeed when we will match $\factor{i+1}\factor{i}$, $\factor{i}\factor{i-1}\cdots\factor{1}$, every elements of $\factor{i+1}$ must be matched to element superior (inferior) to every element matched element of $\factor{i}\factor{i-1}\cdots\factor{1}$, particularly its must be superior (inferior) to the maximal (minimal) element of the match of $\factor{i}\factor{i-1}\cdots\factor{1}$. Remark that the maximal (minimal) element of $\factor{i}\factor{i-1}\cdots\factor{1}$ is $\first{i-1}$.\\			  
+Given an ascent (descent) factor $\factor{i}$ of a motif $\pmotif$, if we want to match the suffix of $\pmotif$ starting by $\factor{i}$, $\factor{i}\factor{i-1}\cdots\factor{1}$ and given that we know every match of $\factor{i-1}\cdots\factor{1}$, the optimal match is to choose the match of $\factor{i-1}\cdots\factor{1}$ that minimize (maximize) the maximal (minimal) element of the match of $\factor{i-1}\cdots\factor{1}$ and that allow a match of factor $\factor{i}$. In other word if we want to match $\pmotif[\first{i}:]$ with $\ptext[j:]$ such that $\first{i}$ is matched with element at index $j$ in $\ptext$, the optimal way of matching $\pmotif[\first{i-1}:]$ is to choose the minimal (maximal) element at index $j'$ of $\ptext[j:]$ such that : (1) $\pmotif[\first{i-1}:]$ is matched with $\ptext[j':]$ and element $\first{i-1}$ is matched with element at index $j'$, (2) the factor $\factor{i}$ is matched with $\ptext[j,j'-1]$ and element $\first{i}$ is matched with element at index $j$, (3) Every elements of the match of (2) if inferior (superior) to the minimal (maximal) element of the match of (1). Indeed when we will match $\factor{i+1}\factor{i}\factor{i-1}\cdots\factor{1}$, every element of $\factor{i+1}$ must be matched to element superior (inferior) to every element matched element of $\factor{i}\factor{i-1}\cdots\factor{1}$, particularly its must be superior (inferior) to the maximal (minimal) element of the match of $\factor{i}\factor{i-1}\cdots\factor{1}$.
+		
+\begin{remark}
+Given an ascent (descent) factor $\factor{i}$, the maximal (minimal) element of $\factor{i}\factor{i-1}\cdots\factor{1}$ is $\first{i-1}$.			  
+\end{remark}		
+
+\begin{remark}
+An ascent (descent) factor 	$\factor{i}$ is a match in $\ptext[j:j']$  if and only if there exists an increasing (decreasing) subsequence in $\ptext[j:j']$ of size superior or equal to the size of $\factor{i}$.		  
+\end{remark}
 			
 Consider the following problem :\\
 $LM(i,j)$ = the optimal match of $\first{i-1}$	
@@ -570,14 +581,14 @@ $LM(1,j)= \left\{
 	
 		MIN_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } & 
 		\text{if $\stripe{\pmotif}{\first{1}}=\ustep$}\\
-		\text{ $LIS(j,j',\ptext[j']) \leq \factor{1}$}\}&\\			
+		\text{ $|\factor{1}| \leq LIS(j,j',\ptext[j'])  $}\}&\\			
 	
 	
 		&\\
 		
 		MAX_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } &
 		\text{if $\stripe{\pmotif}{\first{1}}=\dstep$} \\
-		\text{ $LDS(j,j',\ptext[j']) \leq \factor{1}$}\}&\\			
+		\text{ $|\factor{1}| \leq LDS(j,j',\ptext[j']) $}\}&\\			
 	
 	\end{array} \right. $\\	
 
@@ -606,10 +617,10 @@ $\pmotif[\first{i-1}:]$ in $\ptext[j':]$.
 Formally we define $I(s,i)$ and $D(s,i)$ such as:\\
 			
 $I(i,j)=\{j'|\text{$j<j'$ and $LM(i-1,j')\neq 0$}$ \\
-\indent \indent \indent and  $LIS(j,j'-1,\first{i-1}) \leq |\factor{i}| \}$ \\
+\indent \indent \indent and  $|\factor{i}| \leq LIS(j,j'-1,\first{i-1})\}$ \\
 
 $D(i,j)=\{j'|\text{$j<j'$ and $LM(i-1,j')\neq 0$}$ \\
-\indent \indent \indent and  $LDS(j,j'-1,\first{i-1}) \leq |\factor{i}| \}$ \\
+\indent \indent \indent and  $|\factor{i}| \leq LDS(j,j'-1,\first{i-1}) \}$ \\
 					                       
 With LIS(i,j,k) (LDS(i,j,k)) is the longest increasing (decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
 with every element of this sequence
@@ -628,9 +639,9 @@ we must assure that the last element
 of the sequence is minimal (maximal).\\
 For the induction, it is the same idea
 except that we must assure that 
-every element of the subsequence is superior 
-to the maximum element of the rest of the match
-ie inferior to the minimal (maximal) element of the rest of the match
+every element of the subsequence is superior (inferior)
+to the maximum (minimal) element of the rest of the match
+ie inferior (superior) to the minimal (maximal) element of the rest of the match
 which is given by $LM$ of
 the previous factor.\\
 
@@ -682,7 +693,8 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 			
 			\textbf{BASE :} \\
 			
-			if $n_\pmotif \notin  \x : $\\		
+			if $n_\pmotif \notin  \x $
+			and $n_\pmotif \notin  \y$ : \\		
 			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif,j)= \left\{ 
 					\begin{array}{l l}
 						true & \text{if $\min<\ptext[j]<\max$
@@ -691,7 +703,8 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 					\end{array} \right. $\\	
 			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif+1,j)= true $\\
 			
-			if $n_\pmotif \in  \x : $\\		
+			if $n_\pmotif \in  \x $
+			and $n_\pmotif \notin  \y$ : \\		
 			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif,n_\ptext)= \left\{ 
 					\begin{array}{l l}
 						true & \text{if $\min<\ptext[n_\ptext]<\max$
@@ -706,7 +719,7 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif,j)= \left\{ 
 					\begin{array}{l l}
 						true & \text{if $\min<\ptext[j]<\max$
-						}\\
+						and }\\
 						&\text{$\ptext[j]$ is the maximal element}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
@@ -718,7 +731,7 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(n_\pmotif,n_\ptext)= \left\{ 
 					\begin{array}{l l}
 						true & \text{if $\min<\ptext[n_\ptext]<\max$
-						}\\
+						and }\\
 						&\text{$\ptext[n_\ptext]$ is the maximal element}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
@@ -741,13 +754,13 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 							& \text{and $\min<\ptext[j]<\max$} \\		
 						&\\
 							
-						\mathbb{P}_{\bmotif,\ptext,t(j),\max}(i+1,j+1) 
+						\mathbb{P}_{\bmotif,\ptext,\ptext[j],\max}(i+1,j+1) 
 							& \text{if $\stripe{\pmotif}{i}=\ustep$}\\
 							& \text{and $i \in \x$ and $i \notin \y$}\\
 							& \text{and $\min<\ptext[j]<\max$} \\
 						&\\
 							
-						\mathbb{P}_{\bmotif,\ptext,\min,t(j)}(i+1,j+1) 
+						\mathbb{P}_{\bmotif,\ptext,\min,\ptext[j]}(i+1,j+1) 
 							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							& \text{and $i \in \x$ and $i \notin \y$ }\\
 							& \text{and $\min<\ptext[j]<\max$} \\
@@ -768,7 +781,7 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 							&\text{and $\ptext^{-1}[\ptext[j]-1]>j$}\\
 						&\\
 						
-						\mathbb{P}_{\bmotif,\ptext,\ptext[j]),\max}(i+1,j+1) 
+						\mathbb{P}_{\bmotif,\ptext,\ptext[j],\max}(i+1,j+1) 
 							&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
 							&\text{and $i \in \x$ and $i \in \y$}\\ 
 							&\text{and $\ptext[j]+1=\ptext[j+1]$ }\\
@@ -816,14 +829,14 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
 			with the condition that
 			$\pmotif[i+1]$ is matched to $\ptext[j+1]$,
-			and that $\ptext[j+1]=\pmotif[i]-1$.\\			
+			and that $\ptext[j+1]=\ptext[j]-1$.\\			
 
 			If $i \in \x$, $i \in \y$ and i is an ascent,
 			we match $\pmotif[i]$ to $\ptext[j]$, 
 			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
 			with the condition that
 			$\pmotif[i+1]$ is matched to $\ptext[j+1]$,
-			and that $\ptext[j+1]=\pmotif[i]+1$.\\		
+			and that $\ptext[j+1]=\ptext[j]+1$.\\		
 					
 			There are two cases to consider searching for a match :
 			\begin{itemize}
@@ -861,9 +874,9 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 	\begin{proof}
 	Let's $s$ be a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$, 
 	suppose that $P(\pi)$ is not a longest increasing subsequence with last element at index $f$. Let's $s_m$ be a longest increasing subsequence with last element $f$.
-	Thus $|s_m|>P(\pi)$, clearly the sequence $s_m \cup M(\pi)$
+	Thus $|s_m|>|P(\pi)|$, clearly the sequence $s_m \cup M(\pi)$
 	is avoiding (213,231) and is longer than $s$ witch is not possible. 
-	The case for $M(\pi)$ follows the same idea.
+	The same idea goes for the demonstration that $M(\pi)$ is the longest decreasing subsequence.
 	\end{proof}
 
 	\begin{proposition}
@@ -886,9 +899,9 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 	between two permutations.\\
 
 	\begin{proposition}
-	Given two permutation $\pi_1$ and $\pi_2$
-	The longest common subsequence
-	avoiding (231,213) can be solve in $O(|\pi_1|^3|\pi_2|^3)$.	
+	Given two permutation $\pi_1$ and $\pi_2$,
+	the longest common subsequence
+	avoiding (231,213) can be compute in $O(|\pi_1|^3|\pi_2|^3)$ time and space.	
 	\end{proposition}
 	
 	\begin{proof}
@@ -897,7 +910,7 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 	Given two permutation $\pi_1$ and $\pi_2$.\\
 	
 	$S_{\pi_1,\pi_2}(\min_1,\max_1,\min_2,\min_2,i_1,i_2)$
-	= max$\{$ $|m|$ $|$ 
+	= max$\{$ $|s|$ $|$ 
 	s is a pattern occurring 
 	in  $\pi_1[i_1:]$
 	by the subsequence $s_1$ and $\min(s_1)=\min_1$ and $\max(s_1)=\max_1$
@@ -912,9 +925,9 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 	\textbf{BASE :} \\
 	$S_{\pi_1,\pi_2,\min_1,\max_1,\min_2,\max_2}(|\pi_1|,|\pi_2|) = \left\{ 
 			\begin{array}{l l}
-				1 & \text{if $\min_1<\pi_1[j]<\max_1$  
+				1 & \text{if $\min_1=\pi_1[j]=\max_1$  
 				}\\
-				& \text{ and $\min_2<\pi_2[j]<\max_2$}\\
+				& \text{ and $\min_2=\pi_2[j]=\max_2$}\\
 				0 & otherwise\\
 			\end{array} \right. $\\	
 
@@ -931,7 +944,7 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 	with 
 	$S'_{\pi_1,\pi_2,\min_1,\max_1,\min_2,\max_2}(i_1,i_2)=\\ \left\{ 
 				\begin{array}{l l}
-					1+S_{\pi_1,\pi_2,\pi_1[i_1],\max_1,\pi_2[i_2]}(\max_2,i_1+1,i_2+1)  & \text{$\pi_1[i_1]<\min_1$ } \\
+					1+S_{\pi_1,\pi_2,\pi_1[i_1],\max_1,\pi_2[i_2]}(i_1+1,i_2+1)  & \text{$\pi_1[i_1]<\min_1$ } \\
 					& \text{and $\pi_2[i_2]<\min_2$} \\
 					&\\
 					1+S_{\pi_1,\pi_2,\min_1,\pi_1[i_1],\min_2,\pi_2[i_2]}(i_1+1,i_2+1)  & \text{$\pi_1[i_1]>\max_1$ } \\	
