@@ -73,7 +73,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Pattern matching for\\ $(231,213)$-avoiding permutations}
+\title{Pattern matching for\\ $(213,231)$-avoiding permutations}
 \author{Both Emerite NEOU, Romeo RIZZI}
 \date{}
 
@@ -150,7 +150,7 @@ bla bla\ldots
 	improving the previous 30-year bound of $O(|\pi| \log |\sigma|)$.
 	(The algorithm also improves on the previous
 	$O(|\pi| \log \log |\pi|)$ bound.)
-	Furthermore, the patterns $132$, $213$, $231$, $312$ can all be handled in linear time
+	Furthermore, the patterns $132$, $213$, $231$, $312$ can all be handled in linear-time
 	by stack sorting algorithms.
 	Any pattern of length $4$ can be detected in $O(|\pi| \log |\pi|)$ time
 	\cite{Albert:Aldred:Atkinson:Holton:ISAAC:2001}.
@@ -182,8 +182,8 @@ bla bla\ldots
 	Of particular importance in our context,
 	Bruner and Lackner \cite{Bruner:Lackner:SWAT:2012}
 	proved that deciding whether a vincular pattern
-	$\sigma$ of length $k$ occurs in a permutation
-	$\pi \in \mathfrak{S}_n$ is $W[1]$-complete for
+	$\sigma$ of length $k$ occurs in a longer permutation
+	$\pi$ is $W[1]$-complete for
 	parameter $k$.
 	\emph{Bivincular patterns} generalize classical patterns even further 
 	than vincular
@@ -242,13 +242,14 @@ $n$-element set to itself.
 We write permutations as words 
 $\sigma = \sigma_1\sigma_2\,\ldots\,\sigma_n$, whose letters are distinct
 and uasually consist of the integers $12\,\ldots\,n$.
-For the sake of convenience, 
-we let 
+We let 
+$\pi[i]$ stands for $\pi_i$.
+For the sake of convenience, we let
 $\pi[i:j]$ stand for 
 $\pi_i\pi_{i+1}\,\ldots\,\pi_j$,
 $\pi[:j]$ stand for $\pi[1:j]$ and
 $\pi[i:]$ stand for $\pi[i:n]$.
-We let $S_n$ denote the set of all permutations of length $n$.
+As usual, we let $S_n$ denote the set of all permutations of length $n$.
 
 % The \emph{reduced form} of a permutation $\sigma$ on a set
 % $\{j_1, j_2, \ldots, j_k\}$ where
@@ -310,9 +311,8 @@ defined by
 $ \stripe{\pi}{i}= \ustep$ if $i$ an ascent in $\pi$ and
 $\stripe{\pi}{i} = \dstep$ if $i$ a descent in $\pi$.
 For example the stripe of the permutation 
-$\pi = 12\,11\,10\,1\,2\,3,4\,9\,8\,5\,6\,7$ 
-is 
-$\stripew{\pi} = \dstep\dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep\ustep\ustep$.
+$\pi = 981234765$
+is $\stripew{\pi} = \dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep$.
 The stripe $\stripew{\sigma}$ is a \emph{pattern} of the strip $\stripew{\pi}$
 (or $\stripew{\sigma}$ \emph{occurs} of the strip $\stripew{\pi}$) if $\stripew{\sigma}$ occurs in
 $\stripew{\pi}$ as a subsequence.
@@ -350,7 +350,7 @@ of $\sigma$:
 	whereas there is no value adjacency restriction for non-overlined 
 	letters.
 	Moreover, if the top row of $\sigma$ begins with
-	$^ulcorner{1}$ then
+	$^\ulcorner{1}$ then
 	any occurrence of $\sigma$ is a permutation $\pi$ must begin with
 	the smallest letter of $\pi$, and
 	if top row of $\sigma$ ends with $k^\urcorner$ then
@@ -362,12 +362,13 @@ row $\sigma_1\sigma_2\,\ldots\,\sigma$ avoids every permutation in $P$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Both $\pi$ and $\sigma$ are $(231,213)$-avoiding}
+\section{Both $\pi$ and $\sigma$ are $(213,231)$-avoiding}
 \label{section:both are (231,213)-avoiding}
 
 This section is devoted to presenting a fast algorithm for deciding
 $\sigma \leq \pi$ 
-in case both $\pi$ and $\sigma$ are $(231,213)$-avoiding.
+in case both $\pi$ and $\sigma$ are $(213,231)$-avoiding.
+We begin with an easy structure lemma.
 
 \begin{lemma}[Folklore]
 \label{lemma:first element is 1 or n}
@@ -441,8 +442,8 @@ $\Leftarrow$ This is proved by lemma \ref{lemma:MatchStripeToPermutation}.
 	 		
 \textbf{Proposition  \num \thenum} Let $\pmotif$ and $\ptext$
 be two permutations avoiding (231,213), 
-we can decide in linear time if $\pmotif$ 
-appear in $\ptext$.\\	
+we can decide in linear-time if $\pmotif$ 
+appear in $\ptext$.
 
 \begin{proof}
 To solve the permutation pattern for a permutation in $\AV_n(213,231)$, 
@@ -470,7 +471,7 @@ Therefore we have an linear (online) algorithm.
 %			\textbf{Proof}
 %			We consider the following problem :\\
 %			
-%			Given a motif $\pmotif$ avoiding $(231,213)$,
+%			Given a motif $\pmotif$ avoiding $(213,231)$,
 %			a text $\ptext$, $i$,$j$ , $i<j$.\\
 %			
 %			$\mathbb{P}_{\pmotif,\ptext,min,max}(i,j)= \left\{ 
@@ -522,7 +523,7 @@ Therefore we have an linear (online) algorithm.
 \section{Pattern Matching With Motif Avoiding (231,213)}	
 \label{section:sigma only avoid 231 and 213}
 
-This section focus on the pattern matching problem when only the motif avoid $(231,213)$.
+This section focus on the pattern matching problem when only the motif avoid $(213,231)$.
 
 \begin{proposition}
 Let $\pmotif$, $\ptext$ 
@@ -646,7 +647,7 @@ and the induction on $O(|\pmotif||\ptext|^2)$.
 \section{Pattern Matching With Bivincular Motif Avoiding (231,213)}	
 \label{section:bivincular}
 
-This section gives an algorithm to detect bivincular permutation in polynomial time in the case where the motif avoid $(231,213)$.
+This section gives an algorithm to detect bivincular permutation in polynomial time in the case where the motif avoid $(213,231)$.
 
 			\begin{proposition}
 			Let $\bmotif$ be a bivincular motif 
