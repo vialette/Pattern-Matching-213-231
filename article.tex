@@ -827,8 +827,8 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 					
 			There are two cases to consider searching for a match :
 			\begin{itemize}
-				\item If $n_\pmotif \in \x$ there exists a match if and only if there is a match with the first element of the text with every pair of min max possible :\\ $\bigcup_{0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,0)$ is true.
-				\item If $n_\pmotif \notin \x$ there exists a match if and only if there exists a match stating ar any index in the text with every pair of min max possible : \\	$\bigcup_{0<k<n_\ptext,0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,k)$
+				\item If $n_\pmotif \in \x$ there exists a match if and only if there is a match starting with the first element of the text:\\ $\bigcup_{0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,0)$ is true.
+				\item If $n_\pmotif \notin \x$ there exists a match if and only if there exists a match stating at any index: \\	$\bigcup_{0<k<n_\ptext,0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,k)$
 							is true.	
 			\end{itemize}
 
