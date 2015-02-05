@@ -522,12 +522,14 @@ Therefore we have an linear (online) algorithm.
 \section{Pattern Matching With Motif Avoiding (231,213)}	
 \label{section:sigma only avoid 231 and 213}
 
+This section focus on the pattern matching problem when only the motif avoid $(231,213)$.
+
 \begin{proposition}
 Let $\pmotif$, $\ptext$ 
 be two permutation,
 with  $\pmotif$ a permutation avoiding (231,213), 
-we can decide in $O(|\pmotif|*|\ptext|^2)$ time
-and $O(|\pmotif|*|\ptext|^2)$ space
+we can decide in $O(|\pmotif||\ptext|^2)$ time
+and $O(|\pmotif||\ptext|^2)$ space
 if $\pmotif$ 
 is a motif of $\ptext$.
 \end{proposition}
@@ -636,7 +638,7 @@ There exists a match of $\pmotif$ in $\ptext$ if and only if
 there exists a $LM(n,i)\neq 0$ for $1 \leq i \leq |\ptext|$,
 with $n$ the number of factor in $\pmotif$.
 Moreover the basic case can be computed in $O(|\ptext|^2)$
-and the induction on $O(|\pmotif|*|\ptext|^2)$.
+and the induction on $O(|\pmotif||\ptext|^2)$.
 \end{proof}
 					
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -644,11 +646,13 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 \section{Pattern Matching With Bivincular Motif Avoiding (231,213)}	
 \label{section:bivincular}
 
+This section gives an algorithm to detect bivincular permutation in polynomial time in the case where the motif avoid $(231,213)$.
+
 			\begin{proposition}
 			Let $\bmotif$ be a bivincular motif 
 			avoiding (231,213), 
 			$\ptext$ a permutation,
-			we can decide in $O(|\pmotif|*|\ptext|^3)$ time
+			we can decide in $O(|\pmotif||\ptext|^3)$ time
 			and $O(|\ptext|^3)$ space
 			if $\pmotif$ 
 			appear in $\ptext$.
@@ -660,11 +664,11 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 			Given a bivincular motif $\bmotif$ avoiding $(231,213)$,
 			a text $\ptext$, $i$,$j$ , $i<j$.\\
 			
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(i,j)= \left\{ 
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(i,j)= \left\{ 
 				\begin{array}{l l}
 					true & \text{If $\pmotif[i:]$ is a motif of $\ptext[j:]$}\\
 						& \text{with every element in}\\ 
-						&[min,max]\\
+						&[\min,\max]\\
 		
 					false & otherwise\\
 				\end{array} \right.$\\
@@ -672,7 +676,7 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 		
 		
 		
-			$\mathbb{P}_{\pmotif,\ptext,min,max}$ is closed under induction. 
+			$\mathbb{P}_{\pmotif,\ptext,\min,\max}$ is closed under induction. 
 			it can be
 			solved by means of the following relations:\\
 			
@@ -680,176 +684,107 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 			\textbf{BASE :} \\
 			
 			if $|\pmotif| \notin  \x : $\\		
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|,j)= \left\{ 
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|,j)= \left\{ 
 					\begin{array}{l l}
-						true & \text{if $min<\ptext[j]<max$
+						true & \text{if $\min<\ptext[j]<\max$
 						}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|+1,j)= true $\\
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|+1,j)= true $\\
 			
 			if $|\pmotif| \in  \x : $\\		
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|,|\ptext|)= \left\{ 
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|,|\ptext|)= \left\{ 
 					\begin{array}{l l}
-						true & \text{if $min<\ptext[|\ptext|]<max$
+						true & \text{if $\min<\ptext[|\ptext|]<\max$
 						}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|+1,|\ptext|)= true $\\
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|+1,|\ptext|)= true $\\
 			
 			if $|\pmotif| \notin  \x$  
 			and $|\pmotif| \in  \y$ 
 			and $\pmotif[|\pmotif|]$ is the maximal element: \\		
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|,j)= \left\{ 
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|,j)= \left\{ 
 					\begin{array}{l l}
-						true & \text{if $min<\ptext[j]<max$
+						true & \text{if $\min<\ptext[j]<\max$
 						}\\
 						&\text{$\ptext[j]$ is the maximal element}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|+1,j)= true $\\
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|+1,j)= true $\\
 			
 			if $|\pmotif| \in  \x$  
 			and $|\pmotif| \in  \y$ 
 			and $\pmotif[|\pmotif|]$ is the maximal element: \\		
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|,|\ptext|)= \left\{ 
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|,|\ptext|)= \left\{ 
 					\begin{array}{l l}
-						true & \text{if $min<\ptext[|\ptext|]<max$
+						true & \text{if $\min<\ptext[|\ptext|]<\max$
 						}\\
 						&\text{$\ptext[|\ptext|]$ is the maximal element}\\
 						false & otherwise\\
 					\end{array} \right. $\\	
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(|\pmotif|+1,|\ptext|)= true $\\		
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(|\pmotif|+1,|\ptext|)= true $\\		
 								
 			\textbf{STEP :} \\		
-			$\mathbb{P}_{\bmotif,\ptext,min,max}(i,j)= \\ \left\{ 
+			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(i,j)= \\ \left\{ 
 					\begin{array}{l l}
 					
-						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,\ptext[j],max}(i+1,k) 
+						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,\ptext[j],\max}(i+1,k) 
 							& \text{if $\stripe{\pmotif}{i}=\ustep$
 							and $i \notin \x$}\\
 							& \text{and $i \notin \y$ }\\
-							& \text{and $min<\ptext[j]<max$} \\
+							& \text{and $\min<\ptext[j]<\max$} \\
 						&\\
 							
-						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,min,\ptext[j]}(i+1,k) 
+						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,\min,\ptext[j]}(i+1,k) 
 							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							& \text{and $i \notin \x$ and $i \notin \y$  }\\
-							& \text{and $min<\ptext[j]<max$} \\		
+							& \text{and $\min<\ptext[j]<\max$} \\		
 						&\\
 							
-						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,j+1) 
+						\mathbb{P}_{\bmotif,\ptext,t(j),\max}(i+1,j+1) 
 							& \text{if $\stripe{\pmotif}{i}=\ustep$}\\
 							& \text{and $i \in \x$ and $i \notin \y$}\\
-							& \text{and $min<\ptext[j]<max$} \\
+							& \text{and $\min<\ptext[j]<\max$} \\
 						&\\
 							
-						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,j+1) 
+						\mathbb{P}_{\bmotif,\ptext,\min,t(j)}(i+1,j+1) 
 							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							& \text{and $i \in \x$ and $i \notin \y$ }\\
-							& \text{and $min<\ptext[j]<max$} \\
+							& \text{and $\min<\ptext[j]<\max$} \\
 														
 						&\\
 													
-						\mathbb{P}_{\bmotif,\ptext,\ptext[j],max}(i+1,\ptext^{-1}(\ptext[j]+1)) 
+						\mathbb{P}_{\bmotif,\ptext,\ptext[j],\max}(i+1,\ptext^{-1}(\ptext[j]+1)) 
 							&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
 							&\text{and $i \notin \x$ and $i \in \y$}\\
-							& \text{and $min<\ptext[j]<max$} \\
+							& \text{and $\min<\ptext[j]<\max$} \\
 							&\text{and $\ptext^{-1}(\ptext[j]+1)>j$}\\
 						&\\
 							
-						\mathbb{P}_{\bmotif,\ptext,min,\ptext[j]}(i+1,\ptext^{-1}(\ptext[j]-1)) 
+						\mathbb{P}_{\bmotif,\ptext,\min,\ptext[j]}(i+1,\ptext^{-1}(\ptext[j]-1)) 
 							&\text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							&\text{and $i \notin \x$ and $i \in \y$ }\\	
-							& \text{and $min<\ptext[j]<max$} \\
+							& \text{and $\min<\ptext[j]<\max$} \\
 							&\text{and $\ptext^{-1}(\ptext[j]-1)>j$}\\
 						&\\
 						
-						\mathbb{P}_{\bmotif,\ptext,\ptext[j]),max}(i+1,j+1) 
+						\mathbb{P}_{\bmotif,\ptext,\ptext[j]),\max}(i+1,j+1) 
 							&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
 							&\text{and $i \in \x$ and $i \in \y$}\\ 
 							&\text{and $\ptext[j]+1=\ptext[j+1]$ }\\
-							& \text{and $min<\ptext[j]<max$} \\
+							& \text{and $\min<\ptext[j]<\max$} \\
 						&\\
 							
-						\mathbb{P}_{\bmotif,\ptext,min,\ptext[j]}(i+1,j+1)
+						\mathbb{P}_{\bmotif,\ptext,\min,\ptext[j]}(i+1,j+1)
 							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
 							&\text{and $i \in \x$ and $i \in \y$}\\ 
 							&\text{and $\ptext[j]-1=\ptext[j+1]$ }\\
-							& \text{and $min<\ptext[j]<max$} \\
+							& \text{and $\min<\ptext[j]<\max$} \\
 						&\\	
 						False & Otherwise\\																		
 					\end{array} \right. $\\				
-				
-%			$\mathbb{P}_{\bmotif,\ptext,min,max}(i,j)= \\ \left\{ 
-%					\begin{array}{l l}
-%						False & \text{if $\ptext(j)<min$ or $max<\ptext(j)$}\\
-%						&\\
-%					
-%						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,k) 
-%							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$
-%							and $i \notin \x$}\\
-%							& \text{and $i \notin \y$ }\\
-%						&\\
-%							
-%						\bigcup_{j<k}\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,k) 
-%							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
-%							& \text{and $i \notin \x$ and $i \notin \y$  
-%							}\\
-%						&\\
-%							
-%						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,j+1) 
-%							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
-%							& \text{and $i \in \x$ and $i \notin \y$  
-%							}\\
-%						&\\
-%							
-%						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,j+1) 
-%							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
-%							& \text{and $i \in \x$ and $i \notin \y$  
-%							}\\							
-%						&\\
-%							
-%						False 
-%						& \text{if $\ptext^{-1}(\ptext(j)+1)<j$}\\
-%						&\text{and $\mathcal{S}(\pmotif,i)=\ustep$}\\
-%						&\text{and $i \in \y$}\\
-%						&\\
-%							
-%						False 
-%						& \text{if $\ptext^{-1}(\ptext(j)-1)<j$}\\
-%						& \text{and $\mathcal{S}(\pmotif,i)=\dstep$}\\
-%						& \text{and $i \in \y$}\\	
-%						&\\
-%						
-%						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,\ptext^{-1}(\ptext(j)+1)) 
-%							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
-%							&\text{and $i \notin \x$ and $i \in \y$ 
-%							}\\
-%						&\\
-%							
-%						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,\ptext^{-1}(\ptext(j)-1)) 
-%							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
-%							&\text{and $i \notin \x$ and $i \in \y$  
-%							}\\	
-%						&\\
-%						
-%						\mathbb{P}_{\bmotif,\ptext,t(j),max}(i+1,j+1) 
-%							& \text{if $\mathcal{S}(\pmotif,i)=\ustep$}\\
-%							&\text{and $i \in \x$ and $i \in \y$}\\ 
-%							&\text{and $\ptext(j)+1=\ptext(j+1)$ 
-%							}\\
-%						&\\
-%							
-%						\mathbb{P}_{\bmotif,\ptext,min,t(j)}(i+1,j+1)
-%							& \text{if $\mathcal{S}(\pmotif,i)=\dstep$}\\
-%							&\text{and $i \in \x$ and $i \in \y$}\\ 
-%							&\text{and $\ptext(j)-1=\ptext(j+1)$ 
-%							}\\		
-%						&\\	
-%						False & Otherwise\\																		
-%					\end{array} \right. $\\	
-						
+
 			At each step (i,j),
 			If $i \notin \x$ and $i \notin \y$,
 			we match the current element of $\pmotif$ ($\pmotif[i]$)
@@ -893,9 +828,9 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 					
 			There are two cases to consider searching for a match : \\
 			If $|\pmotif| \in \x$ there exists a match
-			if and only if\\ $\bigcup_{0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,max}(0,0)$ is true.\\
+			if and only if\\ $\bigcup_{0<\min<\max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,0)$ is true.\\
 			
-			If $|\pmotif| \notin \x$ there exists a match if and only if \\	$\bigcup_{0<k<|\ptext|,0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,max}(0,k)$
+			If $|\pmotif| \notin \x$ there exists a match if and only if \\	$\bigcup_{0<k<|\ptext|,0<\min<\max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,k)$
 			is true.			
 			\end{proof}
 			
@@ -922,7 +857,7 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 	\end{proposition}
 	
 	\begin{proof}
-	Let's $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$, 
+	Let's $s$ be a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$, 
 	suppose that $P(\pi)$ is not a longest increasing subsequence with last element at index $f$. Let's $s_m$ be a longest increasing subsequence with last element $f$.
 	Thus $|s_m|>P(\pi)$, clearly the sequence $s_m \cup M(\pi)$
 	is avoiding (213,231) and is longer than $s$ witch is not possible. 
@@ -932,7 +867,7 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 	\begin{proposition}
 	Given a permutation $\pi$, 
 	finding the longest subsequence avoiding (231,213)
-	can be done in $O(|\ptext|*log(log(|\ptext|)))$ time and in $O(n)$ space.	
+	can be done in $O(|\ptext|log(log(|\ptext|)))$ time and in $O(n)$ space.	
 	\end{proposition}
 	
 	\begin{proof}
@@ -951,7 +886,7 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 	\begin{proposition}
 	Given two permutation $\pi_1$ and $\pi_2$
 	The longest common subsequence
-	avoiding (231,213) can be solve in $O(|\pi_1|^3*|\pi_2|^3)$.	
+	avoiding (231,213) can be solve in $O(|\pi_1|^3|\pi_2|^3)$.	
 	\end{proposition}
 	
 	\begin{proof}
@@ -959,46 +894,46 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 	that compute the longest stripe common to $\pi_1$ and $\pi_2$.
 	Given two permutation $\pi_1$ and $\pi_2$.\\
 	
-	$S_{\pi_1,\pi_2}(min_1,max_1,min_2,min_2,i_1,i_2)$
+	$S_{\pi_1,\pi_2}(\min_1,\max_1,\min_2,\min_2,i_1,i_2)$
 	= max$\{$ $|m|$ $|$ 
 	s is a pattern occurring 
 	in  $\pi_1[i_1:]$
-	by the subsequence $s_1$ and $min(s_1)=min_1$ and $max(s_1)=max_1$
+	by the subsequence $s_1$ and $\min(s_1)=\min_1$ and $\max(s_1)=\max_1$
 	and s is occurring
 	in  $\pi_2[i_2:]$
-	by the subsequence $s_2$ and $min(s_2)=min_2$ and $max(s_2)=max_2$	
+	by the subsequence $s_2$ and $\min(s_2)=\min_2$ and $\max(s_2)=\max_2$	
 	$\}$\\
 	
 	We show that this family of problems are closed under induction.\\
 
 
 	\textbf{BASE :} \\
-	$S_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(|\pi_1|,|\pi_2|) = \left\{ 
+	$S_{\pi_1,\pi_2,\min_1,\max_1,\min_2,\max_2}(|\pi_1|,|\pi_2|) = \left\{ 
 			\begin{array}{l l}
-				1 & \text{if $min_1<\pi_1(j)<max_1$  
+				1 & \text{if $\min_1<\pi_1[j]<\max_1$  
 				}\\
-				& \text{ and $min_2<\pi_2(j)<max_2$}\\
+				& \text{ and $\min_2<\pi_2[j]<\max_2$}\\
 				0 & otherwise\\
 			\end{array} \right. $\\	
 
 	\textbf{STEP :} \\	
 	
-	$S_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(i_1,i_2) =$\\
-	\indent $ max \left\{ 
+	$S_{\pi_1,\pi_2,\min_1,\max_1,\min_2,\max_2}(i_1,i_2) =$\\
+	\indent $ \max \left\{ 
 			\begin{array}{l l}
-				S_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(i_1,i_2+1) \\
-				S_{\pi_1,\pi_2,min_1,max_1,min_2,max_22}(i_1+1,i_2) \\
-				S'_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(i_1,i_2)
+				S_{\pi_1,\pi_2,\min_1,\max_1,\min_2,\max_2}(i_1,i_2+1) \\
+				S_{\pi_1,\pi_2,\min_1,\max_1,\min_2,\max_22}(i_1+1,i_2) \\
+				S'_{\pi_1,\pi_2,\min_1,\max_1,\min_2,\max_2}(i_1,i_2)
 			\end{array} \right. $\vspace{20pt}\\	
 	
 	with 
-	$S'_{\pi_1,\pi_2,min_1,max_1,min_2,max_2}(i_1,i_2)=\\ \left\{ 
+	$S'_{\pi_1,\pi_2,\min_1,\max_1,\min_2,\max_2}(i_1,i_2)=\\ \left\{ 
 				\begin{array}{l l}
-					1+S_{\pi_1,\pi_2,\pi_1(i_1),max_1,\pi_2(i_2)}(max_2,i_1+1,i_2+1)  & \text{$\pi_1(i_1)<min_1$ } \\
-					& \text{and $\pi_2(i_2)<min_2$} \\
+					1+S_{\pi_1,\pi_2,\pi_1[i_1],\max_1,\pi_2[i_2]}(\max_2,i_1+1,i_2+1)  & \text{$\pi_1[i_1]<\min_1$ } \\
+					& \text{and $\pi_2[i_2]<\min_2$} \\
 					&\\
-					1+S_{\pi_1,\pi_2,min_1,\pi_1(i_1),min_2,\pi_2(i_2)}(i_1+1,i_2+1)  & \text{$\pi_1(i_1)>max_1$ } \\	
-					&\text{and $\pi_2(i_2)>max_2$}\\	
+					1+S_{\pi_1,\pi_2,\min_1,\pi_1[i_1],\min_2,\pi_2[i_2]}(i_1+1,i_2+1)  & \text{$\pi_1[i_1]>\max_1$ } \\	
+					&\text{and $\pi_2[i_2]>\max_2$}\\	
 					&\\	
 					0 & \text{otherwise}\\							
 				\end{array} \right.$\\
@@ -1006,7 +941,7 @@ and the induction on $O(|\pmotif|*|\ptext|^2)$.
 	For every pair $i,j$ we either ignore the element of $\pi_1$,
 	either ignore the element of $\pi_2$, 
 	either we match as the same step (if possible).
-	Those relation lead to a $O(|\pi_1|^3*|\pi_2|^3)$ time and $O(|\pi_1|^3*|\pi_2|^3)$ space algorithm.		
+	Those relation lead to a $O(|\pi_1|^3|\pi_2|^3)$ time and $O(|\pi_1|^3|\pi_2|^3)$ space algorithm.		
 	\end{proof}
 
 
