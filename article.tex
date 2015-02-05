@@ -92,8 +92,6 @@
   \email{romeo.rizzi@univr.it}
 }% end institute
 
-
-
 \date{\today}
 
 \maketitle
@@ -434,49 +432,25 @@ $$
 	 
 \begin{lemma}
 \label{lemma:MatchStripeToPermutation}
-Given two permutations $\ptext$,$\pmotif$ avoiding (231,213), If $\stripew{\pmotif}$ is a motif of stripe $\stripew{\ptext}$ by a subsequence $s$, then $\pmotif$ is a motif of $\ptext$ by subsequence $s$.
+	Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations.
+	Then $\pi$ contains $\sigma$ if and only if 
+	$s_\sigma$ is a subsequence of $s_\pi$.
 \end{lemma}	 
 	 
 \begin{proof} 
-We prove the lemma by induction on the size of the motif.The base case is a motif of size 2. Suppose that we have the motif $(12)$, thus the stripe of the motif is $\ustep$. If there is a match in stripe, then there exists two (contiguous) increasing elements in the text, which is a match in permutation. Same goes for the permutation $(21)$. Now, suppose that the lemma is true for every motif in $\Av{n}{(231,213)}$. Let $\pmotif$ be a motif in $\Av{n+1}{(231,213)}$, and $\ptext$ a permutation avoiding $(213,231)$. If there is a match of $\stripew{\pmotif}$ in $\stripew{\ptext}$ by subsequence $s$, then there is a match of $\stripew{\pmotif}[2:]$ in $\stripew{\ptext}[2:]$ by subsequence $s[2:]$, and by induction there is a match of $\pmotif[2:]$ in $\ptext[2:]$ by subsequence $s[2:]$. Moreover if the first element the stripe of the motif is ascend (descent), and by lemma \ref{lemma:first element is 1 or n} the minimal (maximal) element, and remark that a subsequence of a permutation avoiding (231,213) is also avoiding (231,213), thus the first element of the subsequence $s$ is either the minimal (maximal) element which complete our proof.
+	The forward direction is obvious.
+	We prove the backward direction by induction on the size of the motif
+	$\sigma$.
+	The base case is a motif of size 2. Suppose that we have the motif $(12)$, thus the stripe of the motif is $\ustep$. If there is a match in stripe, then there exists two (contiguous) increasing elements in the text, which is a match in permutation. Same goes for the permutation $(21)$. Now, suppose that the lemma is true for every motif in $\Av{n}{(231,213)}$. Let $\pmotif$ be a motif in $\Av{n+1}{(231,213)}$, and $\ptext$ a permutation avoiding $(213,231)$. If there is a match of $\stripew{\pmotif}$ in $\stripew{\ptext}$ by subsequence $s$, then there is a match of $\stripew{\pmotif}[2:]$ in $\stripew{\ptext}[2:]$ by subsequence $s[2:]$, and by induction there is a match of $\pmotif[2:]$ in $\ptext[2:]$ by subsequence $s[2:]$. Moreover if the first element the stripe of the motif is ascend (descent), and by lemma \ref{lemma:first element is 1 or n} the minimal (maximal) element, and remark that a subsequence of a permutation avoiding (231,213) is also avoiding (231,213), thus the first element of the subsequence $s$ is either the minimal (maximal) element which complete our proof.
+\qed
 \end{proof}	 
 
-\begin{proposition}
-Let $\sigma \in \AV_k(213,231)$ and $\pi \in \AV_k(213,231)$.
-$\sigma$ is a motif of $\pi$ if and only if 
-$s_\sigma$ is a subsequence of $s_\pi$.
-\end{proposition}
-
-		% without lost of generality we can suppose that $x<y$,
-% 		Let see all the case possible that can make this 
-% 		hypothesis possible :
-% 		\begin{itemize}		
-% 			\item if $\pmotif(x)<\pmotif(y)$, 
-% 			$\stripe{\pmotif}{x}=\ustep$ 
-% 			and $\stripe{\pmotif}{y}=\ustep$
-% 			(if x and y are increasing in $\pmotif$),
-% 			then $\stripe{\ptext}{\varphi(x)} =\ustep$ and $\stripe{\ptext}{\varphi(y)}=\ustep$,
-% 			(the match are also increasing).
-% 			As $x<y$ and as $\varphi$ is an increasing function, 
-% 			$\varphi(x) < \varphi(y)$.
-% 			And thus, by \textbf{Lemma \ref{lemma:upup}},
-% 			$\ptext(\varphi(x)) < \ptext(\varphi(y))$ .
-% 			Which contradict our hypothesis,
-% 			so this case is not possible.
-		
-
-\begin{proof}
-$\Rightarrow$ Suppose that $\pmotif$ is a motif of $\ptext$ by subsequence $s$. By definition $s$ normalized is equal to
-$\pmotif$ so they have the same stripe.\\ 
-$\Leftarrow$ This is proved by lemma \ref{lemma:MatchStripeToPermutation}.
-\end{proof}
-	 		
+We are now ready to solve the pattern containment in case
+both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 
 \begin{proposition}
-Let $\pmotif$ and $\ptext$
-be two permutations avoiding (231,213), 
-we can decide in linear-time if $\pmotif$ 
-appear in $\ptext$.	
+	Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations.
+	One can decide whether $\pi$ contains $\sigma$ in linear-time.
 \end{proposition}
 
 \begin{proof}
