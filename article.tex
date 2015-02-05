@@ -119,8 +119,12 @@ bla bla\ldots
 	an increasing (resp. decreasing) subsequence of length $3$.
 	Here, note that members need not actually to be consecutive, 
 	merely increasing (resp. descreasing).
+	As another example,
+	$6152347$ contains $213$ but not $231$.
 	During the last decade, the study of the pattern containment on permutations has
-	become a very active area of research.
+	become a very active area of research and
+	a whole annual conference (\textsc{Permutation Patterns}) is now devoted 
+	to this topic.
 
 	We consider here the so-called \emph{pattern containment} problem
 	(also sometimes referred to as the \emph{pattern involvement problem}):
@@ -132,17 +136,18 @@ bla bla\ldots
 	Improvements to this algorithm were presented in
 	\cite{Albert:Aldred:Atkinson:Holton:ISAAC:2001} and
 	\cite{Ahal:Rabinovich:2008},
-	the latter describing a $O(|\pi|^{0.47k+o(|\sigma| )})$ time algorithm.
+	the latter describing a $O(|\pi|^{0.47|\sigma|+o(|\sigma|)})$ time algorithm.
 	Bruner and Lackner \cite{Bruner:Lackner:SWAT:2012}
 	gave a fixed-parameter algorithm solving the pattern containment problem with
 	an exponential worst-case runtime of $O(1.79^{\RUN(\pi)})$,
 	where $\RUN(\pi)$ denotes the number of alternating runs of $\pi$.
 	(This is an improvement upon the $O(2^{|\pi|})$ runtime required by
 	brute-force search without imposing restrictions on $\sigma$ and $\pi$.)
-	Of particular importance, it was recently proved that
-	the permutation containment problem is fiexed-parameter tractable for
-	parameter $|\sigma|$
+	A recent major step was taken by􏰂 Marx and Guillemot
 	\cite{Guillemot:Marx:SODA:2014}.
+	They showed that
+	the permutation containment problem is fixed-parameter tractable for
+	parameter $|\sigma|$.
 
 	A few particular cases of the pattern containment problem have been attacked successfully.
 	The case of increasing patterns is solvable in
@@ -157,8 +162,9 @@ bla bla\ldots
 	Algorithmic issues for $321$-avoiding patterns containment has been investigated in
 	\cite{Guillemot:Vialette:ISAAC:2009}.
 	The pattern containment problem is also solvable in
-	polynomial-time for separable patterns \cite{Ibarra:1997}
-	(see also \cite{Bose:Buss:Lubiw:1998}).
+	polynomial-time for separable patterns \cite{Ibarra:1997,Bose:Buss:Lubiw:1998}
+	(see also \cite{Bouvel:Rossin:Vialette:CPM:2007} for LCS-like issues
+	of separable permutations).
 	Separable permutations are those permutations that contain neither
 	$2413$ nor $3142$, and they are enumerated by the Schröder numbers
 	(sequence A006318 in OEIS).
@@ -194,14 +200,34 @@ bla bla\ldots
 	We focus in this paper on pattern matching issues for
 	$(213,231)$-avoiding permutations.
 	The number of $n$-permutations that avoid both 
-	$231$ and $213$ is 
+	$213$ and $231$ is 
 	$t_0 = 1$ for $n = 0$ and 
-	$t_n =2^{n−1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985}.
-	The permutations that do not contain the permutation pattern $231$
+	$t_n =2^{n-1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985}.
+	On an individual basis,
+	the permutations that do not contain the permutation pattern $231$
 	are exactly the \emph{stack-sortable permutations} and they are counted by 
 	the Catalan numbers \cite{Knuth:1997:ACP:260999}.
 	A stack-sortable permutation is a permutation whose elements may be sorted by 
 	an algorithm whose internal storage is limited to a single stack data structure.
+	As for $213$, it is well-known that 
+ 	if $\pi = \pi_1\pi\,\ldots\,\pi_n$ avoids $132$, then its complement 
+ 	$\pi' = (n+1-\pi_1)(n+1-\pi_2)\,\ldots\,(n+1-\pi_n)$ avoids $312$, and 
+ 	the reverse of $\pi'$ avoids $213$.
+ 	From a combinatorial point of view,
+ 	B\'ona \cite{Bona:ElJC:2012} 
+ 	showed the rather surprising fact that the cumulative number of 
+ 	occurrences of the classical patterns $231$ and $213$ are the same on the 
+ 	set of permutations avoiding $132$, 
+ 	beside the pattern based statistics $231$ and $213$ 
+ 	do not have the same distribution on this set.
+ 	\emph{Almost avoidance} has also been considered;
+ 	a permutation $\pi$ almost avoids a set $X$ of permutations 
+ 	if there is a way to remove a single element of $\pi$ to get a permutation 
+ 	that avoids all elements in $X$
+ 	and $L_n(X)$ denotes the set of permutations of length $n$ that almost avoid 
+ 	$X$.
+ 	It is shown in \cite{Griffiths:Smith:Warren:PMA:2011} that
+ 	$L_n(213, 231) = L_n(132, 231) = L_n(132, 312) = L_n(213, 312)$.
 
 	This paper is organized as follows.
 	
