@@ -436,7 +436,7 @@ or the minimal element of $\pi[i:]$.
 \qed
 \end{proof}	 
 
-We are now ready to solve the pattern containment in case
+We are now ready to solve the pattern containment problem in case
 both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 
 \begin{proposition}
@@ -462,72 +462,9 @@ so it is an online algorithm.
 % Therefore we have an linear (online) algorithm.
 \end{proof}	
 
-		
-
-			
-%		\subsection{With Motif Avoiding (231,213)}	
-%		
-%			\textbf{Proposition \num} Let $\pmotif$, $\ptext$ 
-%			be two permutation,
-%			with  $\pmotif$ a permutation avoiding (231,213), 
-%			we can decide in $O(|\pmotif|*|\ptext|^3)$ time
-%			and $O(|\ptext|^3) space$
-%			if $\pmotif$ 
-%			appear in $\ptext$.\\	
-%
-%			\textbf{Proof}
-%			We consider the following problem :\\
-%			
-%			Given a motif $\pmotif$ avoiding $(213,231)$,
-%			a text $\ptext$, $i$,$j$ , $i<j$.\\
-%			
-%			$\mathbb{P}_{\pmotif,\ptext,min,max}(i,j)= \left\{ 
-%				\begin{array}{l l}
-%					true & \text{If the sufixe of $\pmotif$ starting at $i$}\\
-%						& \text{is a pattern of the suffix of $\ptext$} \\
-%						& \text{with every element in $[min,max]$}\\
-%		
-%					false & otherwise\\
-%				\end{array} \right.$\\
-%		
-%			$\mathbb{P}_{\pmotif,\ptext,min,max}$ is closed under induction. 
-%			it can be
-%			solved by means of the following relations:\\
-%			
-%			
-%			\textbf{BASE :} \\
-%			$\mathbb{P}_{\pmotif,\ptext,min,max}(|\pmotif|,j)= \left\{ 
-%					\begin{array}{l l}
-%						true & \text{if $min < \ptext(j) < max$
-%						}\\
-%						false & otherwise\\
-%					\end{array} \right. $\\	
-%		
-%			\textbf{STEP :} \\
-%			$\mathbb{P}_{\pmotif,\ptext,min,max}(i,j)= \left\{ 
-%					\begin{array}{l l}
-%						False & \text{if $\ptext(j)<min$ or $max<\ptext(j)$}\\
-%						\bigcup_{j<k}\mathbb{P}_{\pmotif,\ptext,t(j),max}(i+1,k) 
-%							& \text{if $\\mathcal{S}(\pmotif,i)=\ustep$
-%							}\\
-%						\bigcup_{j<k}\mathbb{P}_{\pmotif,\ptext,min,t(j)}(i+1,k) 
-%							& \text{if $\\mathcal{S}(\pmotif,i)=\dstep$
-%							}\\
-%					\end{array} \right. $\\
-%			At each step, 
-%			we are match the current element of $\pmotif$ ($\pmotif(i)$)
-%			with the current element of $\ptext$ ($\ptext(j)$), if possible.
-%			then we are match the rest of $\pmotif$ with 
-%			every suffixes $\ptext$ starting after $j$.
-%			Clearly there is a match if and only if 	$\bigcup_{0<k<|\ptext|,0<min<max<|\ptext|}\mathbb{P}_{\pmotif,\ptext,min,t(j)}(0,k)$
-%			is true.   
-%			This implies a $O(|\pmotif|*|\ptext|^3)$ time
-%			and $O(|\ptext|^3) space$ algorithm.\\ 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Pattern Matching With Motif Avoiding (231,213)}	
+\section{$\sigma$ only is $(231,213)$-avoiding}	
 \label{section:sigma only avoid 231 and 213}
 
 This section focus on the pattern matching problem when only the motif avoid $(213,231)$.
