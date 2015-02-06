@@ -44,7 +44,7 @@
 
 %Stripe
 \DeclareMathOperator{\stripea}{s}
-\newcommand{\stripe}[2]{\stripea_{{#1}}({#2})}
+\newcommand{\stripe}[2]{\stripea_{{#1}}[{#2}]}
 \newcommand{\stripew}[1]{\stripea_{{#1}}}
 
 % compteur pour les proposition, definition etc...
@@ -419,13 +419,21 @@ $\pi[i:]$ start either with the maximal element
 or the minimal element of $\pi[i:]$.
 \end{corollary}
 
+%\begin{corollary}
+%
+%If $\pi \in \Av{n}{(231,213)}$ its stripe can be define such as, \\
+%$\stripe{\pi}{i} = \left\{ 
+%	\begin{array}{l l}
+%			\ustep & \quad \text{if $\pi[i]$ is the minimal element of $\pi[i:]$}\\    
+%			\dstep & \quad \text{if $\pi[i]$ is the maximal element of $\pi[i:]$}\\
+%\end{array} \right.$ 
+%\end{corollary}
+
 The following lemma is central to all our algorithm.
 
 \begin{lemma}
 \label{lemma:MatchStripeToPermutation}
-	Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations.
-	Then $\pi$ contains $\sigma$ if and only if 
-	$s_\sigma$ is a subsequence of $s_\pi$.
+Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations. Then $\pi$ contains $\sigma$ by a subsequence $s$ if and only if $s_\sigma$ is a subsequence of $s_\pi$ by the same subsequence $s$.
 \end{lemma}	 
 	 
 \begin{proof} 
@@ -434,7 +442,7 @@ The following lemma is central to all our algorithm.
 	$\sigma$.
 	The base case is a motif of size 2. Suppose that we have the motif $(12)$, thus the stripe of the motif is $\ustep$. If there is a match in stripe, then there exists two (contiguous) increasing elements in the text, which is a match in permutation. Same goes for the permutation $(21)$. Now, suppose that the lemma is true for every motif in $\Av{n}{(231,213)}$. Let $\pmotif$ be a motif in $\Av{n+1}{(231,213)}$, and $\ptext$ a permutation avoiding $(213,231)$. Suppose that there is a match of $\stripew{\pmotif}$ in $\stripew{\ptext}$, Let's $s$ be the subsequence such that $\stripew{\pmotif}$ occurs in $\stripew{\ptext}$.
 	By induction $\pmotif[2:]$ appears in $\ptext$ by subsequence $s[2:]$.
-	Moreover if the first element the stripe of the motif is ascend (descent), then by lemma \ref{lemma:first element is 1 or n} the first element is the minimal (maximal) element. Remark that a subsequence of a permutation avoiding (231,213) is also avoiding (231,213), thus the first element of the subsequence $s$ is either the minimal (maximal), element which complete our proof.
+	Moreover if $\stripe{\pmotif}{1}$ is ascend (descent), then by lemma \ref{lemma:first element is 1 or n} $\pmotif[1]$ is the minimal (maximal) element of the motif. Furthermore $\stripew{\pmotif}$ occurs in $\stripew{\ptext}$ by subsequence $s$, so $\stripe{s}{1}$ is also ascend (descent) thus $s[1]$ is also the minimal (maximal) element of the subsequence $s$ which complete our proof.
 \qed
 \end{proof}	 
 
