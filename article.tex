@@ -83,7 +83,7 @@
 \DeclareMathOperator{\LCSa}{LCS}
 \newcommand{\LCS}[8]{\LCSa_{{#1},{#2},{#3}}^{{#4},{#5},{#6}}({#7},{#8})}
 
-\DeclareMathOperator{\matcha}{MATCH}
+\DeclareMathOperator{\matcha}{M}
 \newcommand{\match}[8]{\matcha_{{#1},{#2},{#3}}^{{#4},{#5},{#6}}({#7},{#8})}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -553,38 +553,34 @@ $LM(i,j)$ = the optimal match of $\first{i-1}$
 	is matched with element at index $j$.\\
 	
 This problem can be solve by induction.\\
+
+
 			
 \textbf{BASE :} \\
-$LM(1,j)= \left\{ 
-	\begin{array}{l l}
-	
+$
+LM(1,j)=
+\begin{cases}
 		MIN_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } & 
-		\text{if $\stripe{\pmotif}{\first{1}}=\ustep$}\\
-		\text{ $|\factor{1}| \leq LIS(j,j',\ptext[j'])  $}\}&\\			
-	
-	
-		&\\
-		
+			\text{if $\stripe{\pmotif}{\first{1}}=\ustep$} \\
+		\text{ $|\factor{1}| \leq LIS(j,j',\ptext[j'])  $}\}& \\
+		&\\	
 		MAX_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } &
-		\text{if $\stripe{\pmotif}{\first{1}}=\dstep$} \\
+			\text{if $\stripe{\pmotif}{\first{1}}=\dstep$} \\
 		\text{ $|\factor{1}| \leq LDS(j,j',\ptext[j']) $}\}&\\			
-	
-	\end{array} \right. $\\	
+\end{cases}
+$
 
 \textbf{STEP :} \\
-$LM(i,j)= \left\{ 
-	\begin{array}{l l}
-	
-		MIN \{0\} \cup  I(i,j) & 
-		\text{if $\stripe{\pmotif}{\first{i}}=\ustep$}\\
+$
+LM(i,j)=
+\begin{cases}
+	MIN \{0\} \cup  I(i,j) & 
+	\text{if $\stripe{\pmotif}{\first{i}}=\ustep$}\\
+	MAX \{0\} \cup  D(i,j) & 
+	\text{if $\stripe{\pmotif}{\first{i}}=\dstep$}\\		
+\end{cases}
+$
 
-		
-		MAX \{0\} \cup  D(i,j) & 
-		\text{if $\stripe{\pmotif}{\first{i}}=\dstep$}\\
-
-		
-							
-	\end{array} \right. $\\
 					
 With $I(i,j)$ ($D(i,j)$) the set of element such that
 if  $j' \in I(i,j)$ then there exists 
@@ -653,72 +649,72 @@ appear in $\ptext$.
 We consider the following problem :\\
 Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$, $i$,$j$ , $i<j$.\\
 
-%$
-%\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(i,j)= 
-%\begin{cases}
-%true & \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$ with every element in $[\min,\max]$} \\
-%false & otherwise
-%\end{cases}
-%$
+$
+\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
+\begin{cases}
+	true 	& \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$}\\
+			& \text{with every element in}\\ 
+			&[\min,\max]\\
 			
-$\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
-\left\{ 
-\begin{array}{l l}
-	true & \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$}\\
-		& \text{with every element in}\\ 
-		&[\min,\max]\\
+			&\\
 
-	false & otherwise\\
-\end{array} \right.$\\
+	false 	& otherwise\\
+\end{cases}
+$
 			
 $\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}$ is closed under induction. 
 it can be solved by means of the following relations:\\
 				
 \textbf{BASE :} \\
 if $n_\pmotif \notin  \x $ and $n_\pmotif \notin  \y$ : \\	
-$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}	
-= \left\{ 
-		\begin{array}{l l}
-			true 	& \text{if $\min<\ptext[j]<\max$}\\
-			false 	& otherwise\\
-		\end{array} \right. $\\	
+$
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j} =
+\begin{cases}
+	true 	& \text{if $\min<\ptext[j]<\max$}\\
+	false 	& otherwise\\
+\end{cases}
+$
 %$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif+1}{j}= true $
 \\
 			
 if $n_\pmotif \in  \x $ and $n_\pmotif \notin  \y$ : \\		
-$ \PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext}
-= \left\{ 
-		\begin{array}{l l}
-			true 	& \text{if $\min<\ptext[n_\ptext]<\max$}\\
-			false 	& otherwise\\
-		\end{array} \right. $\\	
+$
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext} =
+\begin{cases}
+	true 	& \text{if $\min<\ptext[n_\ptext]<\max$}\\
+	false 	& otherwise\\
+\end{cases}
+$
 %$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $
 \\
 			
 if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\		
-$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}= \left\{ 
-		\begin{array}{l l}
-			true 	& \text{if $\min<\ptext[j]<\max$ and }\\
-					&\text{$\ptext[j]$ is the maximal element}\\
-			false 	& otherwise\\
-		\end{array} \right. $\\	
+$
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
+\begin{cases}
+	true 	& \text{if $\min<\ptext[j]<\max$ and }\\
+			&\text{$\ptext[j]$ is the maximal element}\\
+	false 	& otherwise\\
+\end{cases}
+$
 %$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
 			
 if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\		
-$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext}
-= \left\{ 
-		\begin{array}{l l}
-			true 	& \text{if $\min<\ptext[n_\ptext]<\max$and }\\
-					&\text{$\ptext[n_\ptext]$ is the maximal element}\\
-			false 	& otherwise\\
-		\end{array} \right. $\\	
+$
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext}=
+\begin{cases}
+	true 	& \text{if $\min<\ptext[n_\ptext]<\max$and }\\
+			&\text{$\ptext[n_\ptext]$ is the maximal element}\\
+	false 	& otherwise\\
+\end{cases}
+$
 %$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\		
 								
 \textbf{STEP :} \\		
-$\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}= \\ \left\{ 
-		\begin{array}{l l}
-		
-			\bigcup_{j<k}
+$
+\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
+\begin{cases}
+\bigcup_{j<k}
 			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{k}
 				& \text{if $\stripe{\pmotif}{i}=\ustep$
 				and $i \notin \x$}\\
@@ -774,60 +770,61 @@ $\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}= \\ \left\{
 				&\text{and $\ptext[j]-1=\ptext[j+1]$ }\\
 				& \text{and $\min<\ptext[j]<\max$} \\
 			&\\	
-			False & Otherwise\\																		
-		\end{array} \right. $\\				
-
-			At each step (i,j),
-			If $i \notin \x$ and $i \notin \y$,
-			we match the current element of $\pmotif$ ($\pmotif[i]$)
-			with the current element of $\ptext$ ($\ptext[j]$), if possible.
-			Then we match $\pmotif[i+1:]$ with 
-			every suffixes $\ptext$ starting after $j$.\\
 			
-			If $i \in \x$ and $i \notin \y$,
-			we match $\pmotif[i]$ to $\ptext[j]$, 
-			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
-			with the condition that
-			$\pmotif[i+1]$ is matched to $\ptext[j+1]$.\\
-			
-			If $i \notin \x$, $i \in \y$ and i is a descent,
-			we match $\pmotif[i]$ to $\ptext[j]$, 
-			then we match $\pmotif[i+1:]$ 
-			with $\ptext[\ptext^{-1}[\ptext[j]-1]:]$
-			with the condition that
-			$\pmotif[i+1]$ is matched to the element $\ptext[j]-1$.\\						
-			
-			If $i \notin \x$, $i \in \y$ and i is an ascent,
-			we match $\pmotif[i]$ to $\ptext[j]$, 
-			then we match $\pmotif[i+1:]$ 
-			with $\ptext[\ptext^{-1}[\ptext[j]+1]:]$
-			with the condition that
-			$\pmotif[i+1]$ is matched to the element $\ptext[j]+1$.\\	
+			False & Otherwise\\	
+\end{cases}
+$
 
-			If $i \in \x$, $i \in \y$ and i is a descent,
-			we match $\pmotif[i]$ to $\ptext[j]$, 
-			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
-			with the condition that
-			$\pmotif[i+1]$ is matched to $\ptext[j+1]$,
-			and that $\ptext[j+1]=\ptext[j]-1$.\\			
+At each step (i,j),
+If $i \notin \x$ and $i \notin \y$,
+we match the current element of $\pmotif$ ($\pmotif[i]$)
+with the current element of $\ptext$ ($\ptext[j]$), if possible.
+Then we match $\pmotif[i+1:]$ with 
+every suffixes $\ptext$ starting after $j$.\\
 
-			If $i \in \x$, $i \in \y$ and i is an ascent,
-			we match $\pmotif[i]$ to $\ptext[j]$, 
-			then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
-			with the condition that
-			$\pmotif[i+1]$ is matched to $\ptext[j+1]$,
-			and that $\ptext[j+1]=\ptext[j]+1$.\\		
-					
-			There are two cases to consider searching for a match :
-			\begin{itemize}
-				\item If $n_\pmotif \in \x$ there exists a match if and only if there is a match starting with the first element of the text:\\ $\bigcup_{0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,0)$ is true.
-				\item If $n_\pmotif \notin \x$ there exists a match if and only if there exists a match stating at any index: \\	$\bigcup_{0<k<n_\ptext,0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,k)$
-							is true.	
-			\end{itemize}
+If $i \in \x$ and $i \notin \y$,
+we match $\pmotif[i]$ to $\ptext[j]$, 
+then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
+with the condition that
+$\pmotif[i+1]$ is matched to $\ptext[j+1]$.\\
 
-			
+If $i \notin \x$, $i \in \y$ and i is a descent,
+we match $\pmotif[i]$ to $\ptext[j]$, 
+then we match $\pmotif[i+1:]$ 
+with $\ptext[\ptext^{-1}[\ptext[j]-1]:]$
+with the condition that
+$\pmotif[i+1]$ is matched to the element $\ptext[j]-1$.\\						
+
+If $i \notin \x$, $i \in \y$ and i is an ascent,
+we match $\pmotif[i]$ to $\ptext[j]$, 
+then we match $\pmotif[i+1:]$ 
+with $\ptext[\ptext^{-1}[\ptext[j]+1]:]$
+with the condition that
+$\pmotif[i+1]$ is matched to the element $\ptext[j]+1$.\\	
+
+If $i \in \x$, $i \in \y$ and i is a descent,
+we match $\pmotif[i]$ to $\ptext[j]$, 
+then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
+with the condition that
+$\pmotif[i+1]$ is matched to $\ptext[j+1]$,
+and that $\ptext[j+1]=\ptext[j]-1$.\\			
+
+If $i \in \x$, $i \in \y$ and i is an ascent,
+we match $\pmotif[i]$ to $\ptext[j]$, 
+then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
+with the condition that
+$\pmotif[i+1]$ is matched to $\ptext[j+1]$,
+and that $\ptext[j+1]=\ptext[j]+1$.\\		
 		
-			\end{proof}
+There are two cases to consider searching for a match :
+\begin{itemize}
+	\item If $n_\pmotif \in \x$ there exists a match if and only if there is a match starting with the first element of the text:\\ $\bigcup_{0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,0)$ is true.
+	\item If $n_\pmotif \notin \x$ there exists a match if and only if there exists a match stating at any index: \\	$\bigcup_{0<k<n_\ptext,0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,k)$ is true.	
+\end{itemize}
+
+
+
+\end{proof}
 			
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -872,76 +869,87 @@ $\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}= \\ \left\{
 	\end{proof}
 
 
-	\section{Longest Subsequence Avoiding \\(231,213) Common for Two Permutation}
-	
-	In this section we present an algorithm to find 
-	the longest common subsequence avoiding (231,213) 
-	between two permutations.\\
+\section{Longest Subsequence Avoiding \\(231,213) Common for Two Permutation}
 
-	\begin{proposition}
-	Given two permutation $\pi_1$ and $\pi_2$,
-	the longest common subsequence
-	avoiding (231,213) can be compute in $O(|\pi_1|^3|\pi_2|^3)$ time and space.	
-	\end{proposition}
-	
-	\begin{proof}
-	Consider the following problem, 
-	that compute the longest stripe common to $\pi_1$ and $\pi_2$.
-	Given two permutation $\pi_1$ and $\pi_2$.\\
-	
-	$\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2}$
-	= max$\{$ $|s|$ $|$ 
-	s is a pattern occurring 
-	in  $\pi_1[i_1:]$
-	by the subsequence $s_1$ and $\min(s_1)=\min_1$ and $\max(s_1)=\max_1$
-	and s is occurring
-	in  $\pi_2[i_2:]$
-	by the subsequence $s_2$ and $\min(s_2)=\min_2$ and $\max(s_2)=\max_2$	
-	$\}$\\
-	
-	We show that this family of problems are closed under induction.\\
+In this section we present an algorithm to find 
+the longest common subsequence avoiding (231,213) 
+between two permutations.\\
+
+\begin{proposition}
+Given two permutation $\pi_1$ and $\pi_2$,
+the longest common subsequence
+avoiding (231,213) can be compute in $O(|\pi_1|^3|\pi_2|^3)$ time and space.	
+\end{proposition}
+
+\begin{proof}
+Consider the following problem, 
+that compute the longest stripe common to $\pi_1$ and $\pi_2$.
+Given two permutation $\pi_1$ and $\pi_2$.\\
+
+$\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2}$
+= max$\{$ $|s|$ $|$ 
+s is a pattern occurring 
+in  $\pi_1[i_1:]$
+by the subsequence $s_1$ and $\min(s_1)=\min_1$ and $\max(s_1)=\max_1$
+and s is occurring
+in  $\pi_2[i_2:]$
+by the subsequence $s_2$ and $\min(s_2)=\min_2$ and $\max(s_2)=\max_2$	
+$\}$\\
+
+We show that this family of problems are closed under induction.\\
 
 
-	\textbf{BASE :} \\
-	$	\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{|\pi_1|}{|\pi_2|} = \left\{ 
-			\begin{array}{l l}
-				1 & \text{if $\min_1=\pi_1[j]=\max_1$  
-				}\\
-				& \text{ and $\min_2=\pi_2[j]=\max_2$}\\
-				0 & otherwise\\
-			\end{array} \right. $\\	
+\textbf{BASE :} \\
+$
+\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{|\pi_1|}{|\pi_2|} =
+\begin{cases}
+	1 & \text{if $\min_1=\pi_1[j]=\max_1$  
+	}\\
+	& \text{ and $\min_2=\pi_2[j]=\max_2$}\\
+	0 & otherwise\\
+\end{cases}
+$
+	
 
-	\textbf{STEP :} \\	
+\textbf{STEP :} \\	
+
+$
+\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2}=max
+\begin{cases}
+	\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2+1} \\
+	\\
+	\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1+1}{i_2} \\
+	\\
+	\match{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2}
+\end{cases}
+$
+		
+with \\
+$
+\match{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2}=
+\begin{cases}
+1+\LCS{\pi_1}{\pi_1[i_1]}{\max_1}{\pi_2}{\pi_2[i_2]}{\max_2}{i_1}{i_2+1} 
+	& \text{$\pi_1[i_1]<\min_1$ } \\
+	& \text{and $\pi_2[i_2]<\min_2$} \\
 	
-	$\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2}
-	=$
-	$ \max \left\{ 
-			\begin{array}{l l}
-				\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2+1} \\
-				\\
-				\LCS{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1+1}{i_2} \\
-				\\
-				\match{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2}
-			\end{array} \right. $\vspace{20pt}\\	
-	
-	with
-	$\match{\pi_1}{\min_1}{\max_1}{\pi_2}{\min_2}{\max_2}{i_1}{i_2}=\\ \left\{ 
-				\begin{array}{l l}
-					1+\LCS{\pi_1}{\pi_1[i_1]}{\max_1}{\pi_2}{\pi_2[i_2]}{\max_2}{i_1}{i_2+1} & \text{$\pi_1[i_1]<\min_1$ } \\
-					& \text{and $\pi_2[i_2]<\min_2$} \\
-					&\\
-					1+\LCS{\pi_1}{\min_1}{\pi_1[i_1]}{\pi_2}{\min_2}{\pi_2[i_2]}{i_1+1}{i_2}
-					 & \text{$\pi_1[i_1]>\max_1$ } \\	
-					&\text{and $\pi_2[i_2]>\max_2$}\\	
-					&\\	
-					0 & \text{otherwise}\\							
-				\end{array} \right.$\\
-				
-	For every pair $i,j$ we either ignore the element of $\pi_1$,
-	either ignore the element of $\pi_2$, 
-	either we match as the same step (if possible).
-	Those relation lead to a $O(|\pi_1|^3|\pi_2|^3)$ time and $O(|\pi_1|^3|\pi_2|^3)$ space algorithm.		
-	\end{proof}
+&\\
+
+1+\LCS{\pi_1}{\min_1}{\pi_1[i_1]}{\pi_2}{\min_2}{\pi_2[i_2]}{i_1+1}{i_2}
+	& \text{$\pi_1[i_1]>\max_1$ } \\	
+	&\text{and $\pi_2[i_2]>\max_2$}\\
+		
+&\\	
+
+0 	& \text{otherwise}\\	
+\end{cases}
+$
+
+			
+For every pair $i,j$ we either ignore the element of $\pi_1$,
+either ignore the element of $\pi_2$, 
+either we match as the same step (if possible).
+Those relation lead to a $O(|\pi_1|^3|\pi_2|^3)$ time and $O(|\pi_1|^3|\pi_2|^3)$ space algorithm.		
+\end{proof}
 
 
 			
