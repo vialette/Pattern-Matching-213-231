@@ -73,6 +73,12 @@
 \newcommand{\pbmotifX}{\x_{\pbmotif}}
 \newcommand{\pbmotifY}{\y_{\pbmotif}}
 
+%Pattern Marching
+
+\DeclareMathOperator{\PMa}{PM}
+\newcommand{\PM}[6]{\PMa_{{#1}}^{{#2},{#3},{#4}}({#5},{#6})}
+
+
 %LSC
 \DeclareMathOperator{\LCSa}{LCS}
 \newcommand{\LCS}[8]{\LCSa_{{#1},{#2},{#3}}^{{#4},{#5},{#6}}({#7},{#8})}
@@ -643,133 +649,133 @@ if $\pbmotif$
 appear in $\ptext$.
 \end{proposition}
 					
-			\begin{proof}
-			We consider the following problem :\\
+\begin{proof}
+We consider the following problem :\\
+Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$, $i$,$j$ , $i<j$.\\
+
+%$
+%\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(i,j)= 
+%\begin{cases}
+%true & \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$ with every element in $[\min,\max]$} \\
+%false & otherwise
+%\end{cases}
+%$
 			
-			Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$, $i$,$j$ , $i<j$.\\
+$\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
+\left\{ 
+\begin{array}{l l}
+	true & \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$}\\
+		& \text{with every element in}\\ 
+		&[\min,\max]\\
+
+	false & otherwise\\
+\end{array} \right.$\\
 			
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(i,j)= \left\{ 
-				\begin{array}{l l}
-					true & \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$}\\
-						& \text{with every element in}\\ 
-						&[\min,\max]\\
-		
-					false & otherwise\\
-				\end{array} \right.$\\
-		
-		
-		
-		
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}$ is closed under induction. 
-			it can be
-			solved by means of the following relations:\\
+$\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}$ is closed under induction. 
+it can be solved by means of the following relations:\\
+				
+\textbf{BASE :} \\
+if $n_\pmotif \notin  \x $ and $n_\pmotif \notin  \y$ : \\	
+$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}	
+= \left\{ 
+		\begin{array}{l l}
+			true 	& \text{if $\min<\ptext[j]<\max$}\\
+			false 	& otherwise\\
+		\end{array} \right. $\\	
+%$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif+1}{j}= true $
+\\
 			
+if $n_\pmotif \in  \x $ and $n_\pmotif \notin  \y$ : \\		
+$ \PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext}
+= \left\{ 
+		\begin{array}{l l}
+			true 	& \text{if $\min<\ptext[n_\ptext]<\max$}\\
+			false 	& otherwise\\
+		\end{array} \right. $\\	
+%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $
+\\
 			
-			\textbf{BASE :} \\
+if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\		
+$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}= \left\{ 
+		\begin{array}{l l}
+			true 	& \text{if $\min<\ptext[j]<\max$ and }\\
+					&\text{$\ptext[j]$ is the maximal element}\\
+			false 	& otherwise\\
+		\end{array} \right. $\\	
+%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
 			
-			if $n_\pmotif \notin  \x $
-			and $n_\pmotif \notin  \y$ : \\		
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif,j)= \left\{ 
-					\begin{array}{l l}
-						true & \text{if $\min<\ptext[j]<\max$
-						}\\
-						false & otherwise\\
-					\end{array} \right. $\\	
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
-			
-			if $n_\pmotif \in  \x $
-			and $n_\pmotif \notin  \y$ : \\		
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif,n_\ptext)= \left\{ 
-					\begin{array}{l l}
-						true & \text{if $\min<\ptext[n_\ptext]<\max$
-						}\\
-						false & otherwise\\
-					\end{array} \right. $\\	
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\
-			
-			if $n_\pmotif \notin  \x$  
-			and $n_\pmotif \in  \y$ 
-			and $\pmotif[n_\pmotif]$ is the maximal element: \\		
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif,j)= \left\{ 
-					\begin{array}{l l}
-						true & \text{if $\min<\ptext[j]<\max$
-						and }\\
-						&\text{$\ptext[j]$ is the maximal element}\\
-						false & otherwise\\
-					\end{array} \right. $\\	
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
-			
-			if $n_\pmotif \in  \x$  
-			and $n_\pmotif \in  \y$ 
-			and $\pmotif[n_\pmotif]$ is the maximal element: \\		
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif,n_\ptext)= \left\{ 
-					\begin{array}{l l}
-						true & \text{if $\min<\ptext[n_\ptext]<\max$
-						and }\\
-						&\text{$\ptext[n_\ptext]$ is the maximal element}\\
-						false & otherwise\\
-					\end{array} \right. $\\	
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\		
+if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\		
+$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext}
+= \left\{ 
+		\begin{array}{l l}
+			true 	& \text{if $\min<\ptext[n_\ptext]<\max$and }\\
+					&\text{$\ptext[n_\ptext]$ is the maximal element}\\
+			false 	& otherwise\\
+		\end{array} \right. $\\	
+%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\		
 								
-			\textbf{STEP :} \\		
-			$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(i,j)= \\ \left\{ 
-					\begin{array}{l l}
-					
-						\bigcup_{j<k}\mathbb{P}_{\pbmotif,\ptext[j],\max}^{\ptext}(i+1,k) 
-							& \text{if $\stripe{\pmotif}{i}=\ustep$
-							and $i \notin \x$}\\
-							& \text{and $i \notin \y$ }\\
-							& \text{and $\min<\ptext[j]<\max$} \\
-						&\\
-							
-						\bigcup_{j<k}\mathbb{P}_{\pbmotif,\min,\ptext[j]}^{\ptext}(i+1,k) 
-							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
-							& \text{and $i \notin \x$ and $i \notin \y$  }\\
-							& \text{and $\min<\ptext[j]<\max$} \\		
-						&\\
-							
-						\mathbb{P}_{\pbmotif,\ptext[j],\max}^{\ptext}(i+1,j+1) 
-							& \text{if $\stripe{\pmotif}{i}=\ustep$}\\
-							& \text{and $i \in \x$ and $i \notin \y$}\\
-							& \text{and $\min<\ptext[j]<\max$} \\
-						&\\
-							
-						\mathbb{P}_{\pbmotif,\min,\ptext[j]}^{\ptext}(i+1,j+1) 
-							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
-							& \text{and $i \in \x$ and $i \notin \y$ }\\
-							& \text{and $\min<\ptext[j]<\max$} \\
-														
-						&\\
-													
-						\mathbb{P}_{\pbmotif,\ptext[j],\max}^{\ptext}(i+1,\ptext^{-1}[\ptext[j]+1]) 
-							&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
-							&\text{and $i \notin \x$ and $i \in \y$}\\
-							& \text{and $\min<\ptext[j]<\max$} \\
-							&\text{and $\ptext^{-1}[\ptext[j]+1]>j$}\\
-						&\\
-							
-						\mathbb{P}_{\pbmotif,\min,\ptext[j]}^{\ptext}(i+1,\ptext^{-1}[\ptext[j]-1]) 
-							&\text{if $\stripe{\pmotif}{i}=\dstep$}\\
-							&\text{and $i \notin \x$ and $i \in \y$ }\\	
-							& \text{and $\min<\ptext[j]<\max$} \\
-							&\text{and $\ptext^{-1}[\ptext[j]-1]>j$}\\
-						&\\
-						
-						\mathbb{P}_{\pbmotif,\ptext[j],\max}^{\ptext}(i+1,j+1) 
-							&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
-							&\text{and $i \in \x$ and $i \in \y$}\\ 
-							&\text{and $\ptext[j]+1=\ptext[j+1]$ }\\
-							& \text{and $\min<\ptext[j]<\max$} \\
-						&\\
-							
-						\mathbb{P}_{\pbmotif,\min,\ptext[j]}^{\ptext}(i+1,j+1)
-							& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
-							&\text{and $i \in \x$ and $i \in \y$}\\ 
-							&\text{and $\ptext[j]-1=\ptext[j+1]$ }\\
-							& \text{and $\min<\ptext[j]<\max$} \\
-						&\\	
-						False & Otherwise\\																		
-					\end{array} \right. $\\				
+\textbf{STEP :} \\		
+$\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}= \\ \left\{ 
+		\begin{array}{l l}
+		
+			\bigcup_{j<k}
+			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{k}
+				& \text{if $\stripe{\pmotif}{i}=\ustep$
+				and $i \notin \x$}\\
+				& \text{and $i \notin \y$ }\\
+				& \text{and $\min<\ptext[j]<\max$} \\
+			&\\
+				
+			\bigcup_{j<k}
+			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{k}
+				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
+				& \text{and $i \notin \x$ and $i \notin \y$  }\\
+				& \text{and $\min<\ptext[j]<\max$} \\		
+			&\\
+			
+			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{j+1}	
+				& \text{if $\stripe{\pmotif}{i}=\ustep$}\\
+				& \text{and $i \in \x$ and $i \notin \y$}\\
+				& \text{and $\min<\ptext[j]<\max$} \\
+			&\\
+				
+			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{j+1} 
+				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
+				& \text{and $i \in \x$ and $i \notin \y$ }\\
+				& \text{and $\min<\ptext[j]<\max$} \\
+											
+			&\\
+			
+			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{\ptext^{-1}[\ptext[j]+1]} 
+				&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
+				&\text{and $i \notin \x$ and $i \in \y$}\\
+				& \text{and $\min<\ptext[j]<\max$} \\
+				&\text{and $\ptext^{-1}[\ptext[j]+1]>j$}\\
+			&\\
+			
+			
+			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{\ptext^{-1}[\ptext[j]-1]} 	
+				&\text{if $\stripe{\pmotif}{i}=\dstep$}\\
+				&\text{and $i \notin \x$ and $i \in \y$ }\\	
+				& \text{and $\min<\ptext[j]<\max$} \\
+				&\text{and $\ptext^{-1}[\ptext[j]-1]>j$}\\
+			&\\
+			
+			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{j+1} 
+				&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
+				&\text{and $i \in \x$ and $i \in \y$}\\ 
+				&\text{and $\ptext[j]+1=\ptext[j+1]$ }\\
+				& \text{and $\min<\ptext[j]<\max$} \\
+			&\\
+				
+			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{j+1} 
+				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
+				&\text{and $i \in \x$ and $i \in \y$}\\ 
+				&\text{and $\ptext[j]-1=\ptext[j+1]$ }\\
+				& \text{and $\min<\ptext[j]<\max$} \\
+			&\\	
+			False & Otherwise\\																		
+		\end{array} \right. $\\				
 
 			At each step (i,j),
 			If $i \notin \x$ and $i \notin \y$,
