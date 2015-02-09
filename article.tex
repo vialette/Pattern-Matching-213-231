@@ -570,8 +570,24 @@ so it is an online algorithm.
 \section{$\sigma$ only is $(231,213)$-avoiding}
 \label{section:sigma only avoid 231 and 213}
 
-This section focus on the pattern containment problem
+This section focuses on the pattern containment problem
 in case only the pattern $\sigma$ avoids $231$ and $213$.
+We need to consider a specific decomposition $F$ of $\sigma$ into factors.
+For $\sigma \in S_k$, the factorization
+$\sigma = F(p) F(p-1) \ldots F(1)$ is defined as follows:
+(i) $\sigma[k]$ is the last letter of $F(1)$,
+(ii) for every $1 \leq i < k$,
+if $s_\sigma[i] = s_\sigma[i+1]$ then
+$\sigma[i]\sigma[i+1]$ is part of the same factor.
+For every factor $F(j)$ of the decomposition, we let
+$L(j)$ stand for the leftmost letter of $F(j)$.
+For example,
+for $\sigma = 981237654$,
+we have
+$\sigma = F(4) F(2) F(1)$ with
+$F(1) =7654$, $F(2) = 123$ and $F(3) = 98$.
+Furthermore,
+$L(1) = 7$, $L(2) = 1$ and $L(3) = 9$.
 
 \begin{proposition}
 	\label{Proposition:sigma avoids 213 and 231}
@@ -696,23 +712,16 @@ and the induction on $O(|\pmotif||\ptext|^2)$.
 \begin{proof}
 We consider the following problem :\\
 Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$, $i$,$j$ , $i<j$.\\
-
-$
+$$
 \PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
 \begin{cases}
 	true 	& \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$}\\
-			& \text{with every element in}\\
-			&[\min,\max]\\
->>>>>>> f9bc0a20a19c155782e9e48e9d01a9fb6f3718ac
-
-			&\\
-
+			  & \text{with every element in $[\min,\max]$}\\
 	false 	& otherwise\\
 \end{cases}
-$
-
+$$
 $\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}$ is closed under induction.
-it can be solved by means of the following relations:\\
+It can be solved by means of the following relations:\\
 
 \textbf{BASE :} \\
 if $n_\pmotif \notin  \x $ and $n_\pmotif \notin  \y$ : \\
