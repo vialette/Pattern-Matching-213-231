@@ -413,7 +413,7 @@ $\sigma = \BV{\overline{123}}{\llcorner 213 \lrcorner}$.
 If $\pi_i\pi_j\pi_\ell$ is an occurrence of $\sigma$ in $\pi \in S_n$,
 then $\pi_i\pi_j\pi_k = (x+1)x(x+2)$ for some $1 \leq x \leq n-2$,
 $i=1$ and $\ell = n$.
-For example $316524$ contains one occurrence of $\sigma$ (the subsequuence $324$),
+For example $316524$ contains one occurrence of $\sigma$ (the subsequence $324$),
 whereas $42351$ avoids it.
 It is straightforward to see that an $n$-permutation
 $\pi$ avoids $\BV{\overline{123}}{\llcorner 213 \lrcorner}$ unless
@@ -442,7 +442,7 @@ For example if we have $\overline{i\,i+1\,\ldots\,j}$, then ${i,i+1,\ldots,j-1} 
 This section is devoted to presenting a fast algorithm for deciding
 $\sigma \leq \pi$
 in case both $\pi$ and $\sigma$ are $(213,231)$-avoiding.
-We begin with an easy structure lemma.
+We begin with an easy but crucial structure lemma.
 
 \begin{lemma}[Folklore]
 \label{lemma:first element is 1 or n}
@@ -455,7 +455,10 @@ Any other initial element would serve as a `$2$' in either a
 $231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
 \end{proof}
 
-The above lemma gains in interest in the form of the following corollaries.
+Notice that Lemma~\ref{lemma:first element is 1 or n} gives as an
+immediate consequence that the number of $(213,231)$-avoiding $n$-permutations
+is $2^{n-1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985}.
+The above lemma also gains in interest in the form of the following corollary.
 
 \begin{corollary}
 \label{corollary:minmaxelement}
@@ -478,7 +481,10 @@ The following lemma is central to all our algorithm.
 
 \begin{lemma}
 \label{lemma:MatchStripeToPermutation}
-Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations, given a subsequence $t$ of $\ptext$, $t$ is an occurrence of $\pmotif$ in $\ptext$ if and only if $\stripew{t}$ is an occurrence of $\stripew{\pmotif}$ in $\stripew{\ptext}$.
+Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations,
+and $t$ be a subsequence of $\pi$ of length $\sigma$.
+Then $t$ is an occurrence of $\sigma$ in $\pi$ if and only if
+$\stripew{t}$ is an occurrence of $\stripew{\sigma}$ in $\stripew{\pi}$.
 \end{lemma}
 
 \begin{proof}
@@ -491,6 +497,45 @@ Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations, given a subsequ
 	Moreover if $\stripe{\pmotif}{1}$ is ascend (descent), then by lemma \ref{lemma:first element is 1 or n} $\pmotif[1]$ is the minimal (maximal) element of the motif. Furthermore $\stripew{t}$ is an occurrence of $\stripew{\pmotif}$ in $\stripew{\ptext}$ , so $\stripe{t}{1}$ is also ascend (descent) thus $t[1]$ is also the minimal (maximal) element of the subsequence $t$ which complete our proof.
 
 
+\qed
+\end{proof}
+
+\begin{lemma}
+\label{lemma:MatchStripeToPermutation}
+Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations,
+and $t$ be a subsequence of $\pi$ of length $|\sigma|$ such that $s_t = s_\sigma$.
+Then, $t$ is an occurrence of $\sigma$ in $\pi$ if and only if
+$s_t$ occurs as a subsequence in $s_\pi$.
+\end{lemma}
+
+\begin{proof}
+  The forward direction is obvious.
+  We prove the backward direction by induction on the size of the motif
+  $\sigma$.
+  The base case is a motif of size $2$.
+  Suppose first that $\sigma = 12$ and hence $s_\sigma = a$.
+  Let $t = \pi_{i_1}\pi_{i_2}$, $i_1 < i_2$, be a subsequence of $\pi$
+  such that $s_t$ occurs as a subsequence in $s_\pi$.
+  Since $s_\sigma = s_t = a$, this reduces to saying that
+  $\pi_{i_1} < \pi_{i_2}$, and hence $t$ is an occurrence of $\sigma = 12$ in $\pi$.
+  A similar argument shows that the lemma holds true for $\sigma = 21$.
+  Now, assume that the lemma is true for all motifs up to size $k \geq 2$.
+  Let $\sigma \in \Av{k+1}{231,213}$ and
+  let $t = \pi_{i_1}\pi_{i_2}\,\ldots\,\pi_{i_{k+1}}$,
+  $i_1 < i_2 < \ldots < i_{k+1}$,
+  be a subsequence of $\pi$ of length $k+1$ such that
+  $s_t = s_\sigma$.
+  Suppose that $s_t$ occurs in $s_\pi$ as a subsequence.
+  Then, $s_t[2:] = s_\sigma[2:]$ occurs as a subsequence in $s_\pi[2:]$.
+  But $\sigma[2:] \in \Av{k}{231,213}$ and hence,
+  by the inductive hypothesis, it follows that
+  $t[2:]$ is an occurrence of $\sigma[2:]$ in $\pi[2:]$.
+  Moreover, if $s_\sigma[1] = a$ (resp. $s_\sigma[1] = d$)
+  then $\sigma[1]$ is the minimum (resp. maximum) element of $\sigma$
+  (Lemma~\ref{lemma:first element is 1 or n}),
+  and hence, since $s_t = s_\sigma$ occurs as a subsequence in $s_\pi$,
+  $t[1]$ is the minimum (resp. maximum) element of $t$.
+  Therefore, $t$ is an occurrence of $\sigma$ in $\pi$.
 \qed
 \end{proof}
 
