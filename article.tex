@@ -116,8 +116,9 @@
 \maketitle
 
 \begin{abstract}
-	Given permutations $\sigma \in S_k$ and $\pi \in S_n$, the Permutation Pattern (PP)
-	problem is to decide whether $\pi$ contains $\sigma$ as an order-isomorphic pattern.
+	Given permutations $\sigma \in S_k$ and $\pi \in S_n$, the
+  \emph{pattern containment} problem is to decide whether $\pi$ contains
+  $\sigma$ as an order-isomorphic subsequence.
 	We give a linear-time algorithm in case both $\pi$ and $\sigma$ avoid
 	$213$ and $231$.
 	For the special where only $\sigma$ avoids $213$ and $231$, we present a
@@ -136,7 +137,7 @@
 	if there exists a subsequence of entries of $\pi$ that has the same relative
 	order as $\sigma$, and in this case $\sigma$ is said to be a
 	\emph{pattern} of $\pi$.
-	Otherwise, $\pi$ is said to avoid the permutation $\sigma$.
+	Otherwise, $\pi$ is said to \emph{avoid} the permutation $\sigma$.
 	For example a permutation contains the pattern $123$ (resp. $321$) if it has
 	an increasing (resp. decreasing) subsequence of length $3$.
 	Here, note that members need not actually to be consecutive,
@@ -188,7 +189,7 @@
 	(see also \cite{Bouvel:Rossin:Vialette:CPM:2007} for LCS-like issues
 	of separable permutations).
 	Separable permutations are those permutations that contain neither
-	$2413$ nor $3142$, and they are enumerated by the Schröder numbers
+	$2413$ nor $3142$, and they are enumerated by the Schr{\"o}der numbers
 	(sequence A006318 in OEIS).
 	To the best of our knowledge,
 	separable permutations first arose in the work of
@@ -288,7 +289,7 @@
 A \emph{permutation} of length $n$ is a one-to-one function from an
 $n$-element set to itself.
 We write permutations as words
-$\sigma = \sigma_1\sigma_2\,\ldots\,\sigma_n$, whose letters are distinct
+$\pi = \pi_1\pi_2\,\ldots\,\pi_n$, whose letters are distinct
 and uasually consist of the integers $12\,\ldots\,n$.
 We let
 $\pi[i]$ stands for $\pi_i$.
