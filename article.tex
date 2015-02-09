@@ -480,37 +480,19 @@ so it is an online algorithm.
 \section{$\sigma$ only is $(231,213)$-avoiding}	
 \label{section:sigma only avoid 231 and 213}
 
-This section focus on the pattern matching problem when only the motif avoid $(213,231)$.
+This section focus on the pattern containment problem 
+in case only the pattern $\sigma$ avoids $231$ and $213$.
 
 \begin{proposition}
-Let $\pmotif$, $\ptext$ 
-be two permutation,
-with  $\pmotif$ a permutation avoiding (231,213), 
-we can decide in $O(|\pmotif||\ptext|^2)$ time
-and $O(|\pmotif||\ptext|^2)$ space
-if $\pmotif$ 
-is a motif of $\ptext$.
+	\label{Proposition:sigma avoids 213 and 231}
+	Let $\sigma \in \AV_k(213,231)$ and $\pi \in S_n$.
+	One can decide in $O(kn^2)$ time
+	and $O(kn^2)$ space if $\pi$ contains $\sigma$.
 \end{proposition}
 
+For the proof and the algorithm we introduce a decomposition : we decompose the stripe of the motif into factor of same letter, and label those factor from right to left. We also need to add the last index into the first factor. For each factor, we denote the left most element by $\firsta$. For example, given the motif $981237654$, $\factor{1} =7654$, $\first{1}=7$, $\factor{2}=123$, $\first{2}=1$, $\factor{3}=98$ and $\first{9}$.
 			
-%			\textbf{Proof}
-%			The main point is that
-%			if we match a ascnt (descent) element $i_{\pmotif}$ of the motif
-%			with an element $i_{\ptext}$ of the text,
-%			the optimal way of matching
-%			the first previous ascnt (descent)
-%			that appear before an descent (ascent)
-%			is to choose the
-%			maximal (minimal) element possible.
-%			Indeed if we do not take
-%			the maximal (minimal) element,
-%			we may prevent some element
-%			in the future matching.\\
-
-			
-For the proof and the algorithm we introduce a decomposition : we decompose the stripe of the motif into factor of same letter, and label those factor from right to left. We also need to add the last index into the first factor. For each factor, we denote the left most element by $\firsta$. For example, given the motif $981237654$, $\factor{1} =7654$, $\first{1}=7$, $\factor{2}=123$, $\first{2}=1$, $\factor{3}=98$ and $\first{9}$. \\
-			
-\begin{proof}
+\begin{proof}[of Proposition~\ref{Proposition:sigma avoids 213 and 231}]
 Given an ascent (descent) factor $\factor{i}$ of a motif $\pmotif$, if we want to match the suffix of $\pmotif$ starting by $\factor{i}$, $\factor{i}\factor{i-1}\cdots\factor{1}$ and given that we know every match of $\factor{i-1}\cdots\factor{1}$, the optimal match is to choose the match of $\factor{i-1}\cdots\factor{1}$ that minimize (maximize) the maximal (minimal) element of the match of $\factor{i-1}\cdots\factor{1}$ and that allow a match of factor $\factor{i}$. In other word if we want to match $\pmotif[\first{i}:]$ with $\ptext[j:]$ such that $\first{i}$ is matched with element at index $j$ in $\ptext$, the optimal way of matching $\pmotif[\first{i-1}:]$ is to choose the minimal (maximal) element at index $j'$ of $\ptext[j:]$ such that : (1) $\pmotif[\first{i-1}:]$ is matched with $\ptext[j':]$ and element $\first{i-1}$ is matched with element at index $j'$, (2) the factor $\factor{i}$ is matched with $\ptext[j,j'-1]$ and element $\first{i}$ is matched with element at index $j$, (3) Every elements of the match of (2) if inferior (superior) to the minimal (maximal) element of the match of (1). Indeed when we will match $\factor{i+1}\factor{i}\factor{i-1}\cdots\factor{1}$, every element of $\factor{i+1}$ must be matched to element superior (inferior) to every element matched element of $\factor{i}\factor{i-1}\cdots\factor{1}$, particularly its must be superior (inferior) to the maximal (minimal) element of the match of $\factor{i}\factor{i-1}\cdots\factor{1}$.
 		
 \begin{remark}
@@ -605,28 +587,27 @@ there exists a $LM(n,i)\neq 0$ for $1 \leq i \leq |\ptext|$,
 with $n$ the number of factor in $\pmotif$.
 Moreover the basic case can be computed in $O(|\ptext|^2)$
 and the induction on $O(|\pmotif||\ptext|^2)$.
+\qed
 \end{proof}
 					
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Pattern Matching With Bivincular Motif Avoiding (231,213)}	
-\label{section:bivincular}
+\section{$(213,231)$-avoiding bivincular patterns}	
+	\label{section:bivincular}
 
-This section gives an algorithm to detect bivincular permutation in polynomial time in the case where the motif avoid $(213,231)$.
+	This section is devoted to presenting a polynomial-time algorithm for deciding whether
+	a $(213,231)$-avoiding bivincular pattern occurs in a permutation.
 
-			\begin{proposition}
-			Let $\bmotif$ be a bivincular motif 
-			avoiding (231,213), 
-			$\ptext$ a permutation,
-			we can decide in $O(|\pmotif||\ptext|^3)$ time
-			and $O(|\ptext|^3)$ space
-			if $\pmotif$ 
-			appear in $\ptext$.
-			\end{proposition}
+	\begin{proposition}
+		\label{Proposition:bivincular pattern}
+			Let $\sigma$ be a $(213,231)$-avoiding bivincular pattern of length $k$
+			and $\pi \in S_n$.
+			One can decide in $O(kn^3)$ time
+			and $O(kn^3)$ space if $\pi$ contains $\sigma$.
+	\end{proposition}
 					
 			\begin{proof}
-			We consider the following problem :\\
-			
+			We consider the following problem :
 			Given a bivincular motif $\bmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$, $i$,$j$ , $i<j$.\\
 			
 			$\mathbb{P}_{\bmotif,\ptext,\min,\max}(i,j)= \left\{ 
@@ -801,7 +782,7 @@ This section gives an algorithm to detect bivincular permutation in polynomial t
 			\end{itemize}
 
 			
-		
+			\qed
 			\end{proof}
 			
 
