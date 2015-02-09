@@ -380,7 +380,7 @@ of $\sigma$:
 	$\underline{\sigma_i\sigma_{i+1}\,\ldots\,\sigma_j}$
 	then the letters corresponding to
 	$\sigma_i\sigma_{i+1}\,\ldots\,\sigma_j$ in an occurrence of
-	$\sigma$ in a permutaton must be adjacent, whereas there is
+	$\sigma$ in a permutation must be adjacent, whereas there is
 	no adjacency condition for
 	non-underlined consecutive letters.
 	Moreover if the bottom row of $\sigma$ begins with
@@ -407,6 +407,7 @@ of $\sigma$:
 	any occurrence of $\sigma$ is a permutation $\pi$ must end with
 	the largest letter of $\pi$.
 \end{itemize}
+
 For example,
 let
 $\sigma = \BV{\overline{123}}{\llcorner 213 \lrcorner}$.
@@ -422,14 +423,9 @@ $\pi_1 = x > 1$
 and $\pi_n = x+1$
 (in which case there is one occurrence of the pattern).
 
-For algorithmic treatment, it will be convenient \ldots
-Given a motif $\pmotif$ we represent the elements underlined by the set $\x$. An index $i$ of an element is in $\x$ if and only if $i$ and $i+1$ need to be adjacent ($\pmotif[i]$ and $\pmotif[i+1]$ are underlined).
-For example if we have $\underline{\sigma_i\sigma_{i+1}\,\ldots\,\sigma_j}$, then ${i,i+1,\ldots,j-1} \in \y$.
-We represent the index that need to be overlined by the set $\y$. An index $i$ is in $\y$ if and only if $i$ and $i+1$ need to be adjacent ($i$ and $i+1$ are overlined).
-For example if we have
-For example if we have $\overline{i\,i+1\,\ldots\,j}$, then ${i,i+1,\ldots,j-1} \in \y$.
-
-
+For algorithmic treatment, it will be convenient to have \ldots
+Given a motif $\pmotif$ we represent the elements underlined by the set $\x$. An index $i$, $1 \leq i < |\sigma|$, of an element is in $\x$ if and only if $i$ and $i+1$ need to be adjacent ($\pmotif[i]$ and $\pmotif[i+1]$ are underlined). We also allow $0$ and $|\sigma|$ to be in the set $\x$ such that if $0 \in \x$ then we have $_\llcorner{\sigma_1}$ and if $|\sigma| \in \x$ then ${\sigma_{|\sigma|}}_\lrcorner$.
+We represent the index that need to be overlined by the set $\y$. An index $i$ is in $\y$ if and only if $i$ and $i+1$ need to be adjacent ($i$ and $i+1$ are overlined). We also allow $0$ and $|\sigma|$ to be in the set $\y$ such that if $0 \in \y$ then we have $^\ulcorner{1}$ and if $|\sigma| \in \y$ then ${|\sigma|}^\urcorner$.
 
 % A bivincular pattern avoids a set of permutations $P$ if its bottom
 % row $\sigma_1\sigma_2\,\ldots\,\sigma$ avoids every permutation in $P$.
@@ -874,18 +870,28 @@ we match $\pmotif[i]$ to $\ptext[j]$,
 then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
 with the condition that
 $\pmotif[i+1]$ is matched to $\ptext[j+1]$,
-and that $\ptext[j+1]=\ptext[j]+1$.\\
-
-There are two cases to consider searching for a match :
+and that $\ptext[j+1]=\ptext[j]+1$.\\		
+		
+There are 6 cases to consider to search for a match. The 6 cases depend on if $0 \in \x$, $0 \in \y$ and if the first element of the stripe of the motif is ascent or descent :
 \begin{itemize}
-	\item If $n_\pmotif \in \x$ there exists a match if and only if there is a match starting with the first element of the text:\\ $\bigcup_{0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,0)$ is true.
-	\item If $n_\pmotif \notin \x$ there exists a match if and only if there exists a match stating at any index: \\	$\bigcup_{0<k<n_\ptext,0<\min<\max<n_\ptext}\mathbb{P}_{\pmotif,\ptext,\min,\max}(0,k)$ is true.
+	\item If $0 \in \x$ and $0 \notin \y$ there exists a match if and only if there is a match starting with left most element of the text:\\ $\bigcup_{0<\min<\max<n_\ptext}
+	\PM{\pbmotif}{\ptext}{\min}{\max}{0}{0}$ is true.
+	
+	\item If $0 \notin \x$ and $0 \notin \y$ there exists a match if and only if there exists a match stating at any index: \\	$\bigcup_{0<k<n_\ptext,0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{k}$ is true.
+	
+	\item If $0 \in \x$, $0 \in \y$ and the first element of the stripe of the motif is ascent there exists a match if and only if there is a match starting with the left most element  of $\ptext$, and the left most element  of $\ptext$ is the minimal element  of $\ptext$:\\ $\bigcup_{0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{0}$  is true and the left most element of $\ptext$ is the minimal element of $\ptext$.
+	
+	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is ascent there exists a match if and only if there exists a match stating at the index of the minimal element of $\ptext$ : if $j_{\min}$ is the index of the minimal element then \\	$\bigcup_{0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{j_{\min}}$ is true.	
+			
+	\item If $0 \in \x$, $0 \notin \y$  and the first element of the stripe of the motif is descent then there exists a match if and only if there is a match starting with the left most element  of $\ptext$ and the left most element  of $\ptext$ is the maximal element  of $\ptext$:\\ $\bigcup_{0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{0}$ is true and the left most element of $\ptext$ is the maximal element of $\ptext$.
+	
+	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is descent there exists a match if and only if there exists a match stating at the index of the maximal element of $\ptext$ : if $j_{\max}$ is the index of the maximal element then  \\	$\bigcup_{0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{j_{\max}}$ is true.	
+
 \end{itemize}
 
 
 
 \end{proof}
->>>>>>> f9bc0a20a19c155782e9e48e9d01a9fb6f3718ac
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
