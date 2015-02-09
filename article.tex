@@ -38,7 +38,7 @@
 % permutation motif
 \newcommand{\pmotif}{\sigma}
 
-
+\newcommand\BV[2]{\genfrac{}{}{0pt}{}{#1}{#2}}
 
 %Stripe
 \DeclareMathOperator{\stripea}{s}
@@ -246,9 +246,9 @@
  	\emph{Almost avoidance} has also been considered;
  	a permutation $\pi$ almost avoids a set $X$ of permutations
  	if there is a way to remove a single element of $\pi$ to get a permutation
- 	that avoids all elements in $X$
- 	and $L_n(X)$ denotes the set of permutations of length $n$ that almost avoid
- 	$X$.
+ 	that avoids all elements in $P$
+ 	and $L_n(P)$ denotes the set of permutations of length $n$ that almost avoid
+ 	$P$.
  	It is shown in \cite{Griffiths:Smith:Warren:PMA:2011} that
  	$L_n(213, 231) = L_n(132, 231) = L_n(132, 312) = L_n(213, 312)$.
 
@@ -332,13 +332,14 @@ $91672$) is called a
 \emph{occurrence} of $\sigma$.
 Since the permutation $\pi = 391867452$  contains no increasing subsequence of length four, $\pi$ avoids $1234$.
 
-Suppose $P$ is a set of permutations. We let $\AV_n(p)$ denote the
+Suppose $P$ is a set of permutations. We let $\AV_n(P)$ denote the
 set of all $n$-permutations avoiding each permutation in $P$.
-For the sake of convenience, we omit $P$'s braces thus having
+For the sake of convenience
+(and as it is customary), we omit $P$'s braces thus having
 e.g. $\AV_3(132,4312)$ instead of
 $\AV_3(\{132,4312\})$.
 A basic example is if
-$\pi = \pi_1\pi_2\,\ldots\,\pi_n$ avoids $321$, i.e.,
+$\pi = \pi_1\pi_2\,\ldots\,\pi_n \in \AV_n(321)$, i.e.,
 has no decreasing subsequence of length $3$, then its reverse,
 $\pi' = \pi_n\pi_{n-1}\,\ldots\,\pi_1$ avoids $123$, i.e.,
 has no increasing subsequence of length $3$.
@@ -348,7 +349,7 @@ $1 \leq i < n$ where the following value is bigger than the current one.
 That is, if $\pi = \pi_1\pi_2\,\ldots\,\pi_n$, then
 $i$ is an ascent if $\pi_i < \pi_{i+1}$.
 For example, the permutation
-$345216$7 has ascents (at positions) $1,2,5,6$.
+$345216$7 has ascents (at positions) $1,2,5$ and $6$.
 Similarly, a \emph{descent} is a position
 $1 \leq i < n$ with $\pi_i > \pi_{i+1}$,
 so every $i$ with $1 \leq i < n$ either is an ascent or is a descent of
@@ -362,9 +363,9 @@ $\stripe{\pi}{i} = \dstep$ if $i$ a descent in $\pi$.
 For example the stripe of the permutation
 $\pi = 981234765$
 is $\stripew{\pi} = \dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep$.
-The stripe $\stripew{\sigma}$ is a \emph{pattern} of the strip $\stripew{\pi}$
-(or $\stripew{\sigma}$ \emph{occurs} of the strip $\stripew{\pi}$) if $\stripew{\sigma}$ occurs in
-$\stripew{\pi}$ as a subsequence.
+The stripe $\stripew{\sigma}$ is said to be a \emph{pattern} of the stripe $\stripew{\pi}$
+(or $\stripew{\sigma}$ \emph{occurs} of the stripe $\stripew{\pi}$)
+if $\stripew{\sigma}$ occurs in $\stripew{\pi}$ as a subsequence.
 
 A \emph{bivincular pattern} (abbreviated BVP) $\sigma$
 of length $k$ is a permutation in $S_k$ written in
@@ -406,11 +407,30 @@ of $\sigma$:
 	any occurrence of $\sigma$ is a permutation $\pi$ must end with
 	the largest letter of $\pi$.
 \end{itemize}
+For example,
+let
+$\sigma = \BV{\overline{123}}{\llcorner 213 \lrcorner}$.
+If $\pi_i\pi_j\pi_\ell$ is an occurrence of $\sigma$ in $\pi \in S_n$,
+then $\pi_i\pi_j\pi_k = (x+1)x(x+2)$ for some $1 \leq x \leq n-2$,
+$i=1$ and $\ell = n$.
+For example $316524$ contains one occurrence of $\sigma$ (the subsequuence $324$),
+whereas $42351$ avoids it.
+It is straightforward to see that an $n$-permutation
+$\pi$ avoids $\BV{\overline{123}}{\llcorner 213 \lrcorner}$ unless
+$n \geq 3$,
+$\pi_1 = x > 1$
+and $\pi_n = x+1$
+(in which case there is one occurrence of the pattern).
+
+For algorithmic treatment, it will be convenient \ldots
 Given a motif $\pmotif$ we represent the elements underlined by the set $\x$. An index $i$ of an element is in $\x$ if and only if $i$ and $i+1$ need to be adjacent ($\pmotif[i]$ and $\pmotif[i+1]$ are underlined).
 For example if we have $\underline{\sigma_i\sigma_{i+1}\,\ldots\,\sigma_j}$, then ${i,i+1,\ldots,j-1} \in \y$.
 We represent the index that need to be overlined by the set $\y$. An index $i$ is in $\y$ if and only if $i$ and $i+1$ need to be adjacent ($i$ and $i+1$ are overlined).
 For example if we have
 For example if we have $\overline{i\,i+1\,\ldots\,j}$, then ${i,i+1,\ldots,j-1} \in \y$.
+
+
+
 % A bivincular pattern avoids a set of permutations $P$ if its bottom
 % row $\sigma_1\sigma_2\,\ldots\,\sigma$ avoids every permutation in $P$.
 
