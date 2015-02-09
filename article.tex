@@ -584,7 +584,8 @@ $L(j)$ stand for the leftmost letter of $F(j)$.
 For example,
 for $\sigma = 981237654$,
 we have
-$\sigma = F(4) F(2) F(1)$ with
+$s_\sigma = ddaaaddd$ and hence
+$\sigma = F(3) F(2) F(1)$ with
 $F(1) =7654$, $F(2) = 123$ and $F(3) = 98$.
 Furthermore,
 $L(1) = 7$, $L(2) = 1$ and $L(3) = 9$.
@@ -596,9 +597,9 @@ $L(1) = 7$, $L(2) = 1$ and $L(3) = 9$.
 	and $O(kn^2)$ space if $\pi$ contains $\sigma$.
 \end{proposition}
 
-For the proof and the algorithm we introduce a decomposition : we decompose the stripe of the motif into factor of same letter, and label those factor from right to left. We also need to add the last index into the first factor. For each factor, we denote the left most element by $\firsta$. For example, given the motif $981237654$, $\factor{1} =7654$, $\first{1}=7$, $\factor{2}=123$, $\first{2}=1$, $\factor{3}=98$ and $\first{9}$.
+% For the proof and the algorithm we introduce a decomposition : we decompose the stripe of the motif into factor of same letter, and label those factor from right to left. We also need to add the last index into the first factor. For each factor, we denote the left most element by $\firsta$. For example, given the motif $981237654$, $\factor{1} =7654$, $\first{1}=7$, $\factor{2}=123$, $\first{2}=1$, $\factor{3}=98$ and $\first{9}$.
 
-\begin{proof}[of Proposition~\ref{Proposition:sigma avoids 213 and 231}]
+\begin{proof}%[of Proposition~\ref{Proposition:sigma avoids 213 and 231}]
 Given an ascent (descent) factor $\factor{i}$ of a motif $\pmotif$, if we want to match the suffix of $\pmotif$ starting by $\factor{i}$, $\factor{i}\factor{i-1}\cdots\factor{1}$ and given that we know every match of $\factor{i-1}\cdots\factor{1}$, the optimal match is to choose the match of $\factor{i-1}\cdots\factor{1}$ that minimize (maximize) the maximal (minimal) element of the match of $\factor{i-1}\cdots\factor{1}$ and that allow a match of factor $\factor{i}$. In other word if we want to match $\pmotif[\first{i}:]$ with $\ptext[j:]$ such that $\first{i}$ is matched with element at index $j$ in $\ptext$, the optimal way of matching $\pmotif[\first{i-1}:]$ is to choose the minimal (maximal) element at index $j'$ of $\ptext[j:]$ such that : (1) $\pmotif[\first{i-1}:]$ is matched with $\ptext[j':]$ and element $\first{i-1}$ is matched with element at index $j'$, (2) the factor $\factor{i}$ is matched with $\ptext[j,j'-1]$ and element $\first{i}$ is matched with element at index $j$, (3) Every elements of the match of (2) if inferior (superior) to the minimal (maximal) element of the match of (1). Indeed when we will match $\factor{i+1}\factor{i}\factor{i-1}\cdots\factor{1}$, every element of $\factor{i+1}$ must be matched to element superior (inferior) to every element matched element of $\factor{i}\factor{i-1}\cdots\factor{1}$, particularly its must be superior (inferior) to the maximal (minimal) element of the match of $\factor{i}\factor{i-1}\cdots\factor{1}$.
 
 \begin{remark}
