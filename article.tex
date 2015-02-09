@@ -256,33 +256,19 @@
  	$L_n(213, 231) = L_n(132, 231) = L_n(132, 312) = L_n(213, 312)$.
 
 	This paper is organized as follows.
-
-%	The permutation pattern problem asks if there exists a normalized subsequence of a text $\ptext$ which equals to a motif $\pmotif$.
-%	If so we write $\pmotif \preceq \ptext$.
-%	If not we say that $\ptext$ \textbf{avoid} $\pmotif$.
-%	This was first introduced by Knuth \cite{Knuth:1997:ACP:260999}
-%	who proves that permutation sortable by stacks
-%	avoid the motif $231$.
-%	The problem is NP-hard in general,
-%	but for some classes of permutation,
-%	polynomial time solution exists.
-%	For instance the separable permutation \cite{Bose93patternmatching}.
-%	We contribute studying this problem
-%	and related one for the class of permutation avoiding (231,213).
-%	This is interesting because this class is in linear bijection between the classes of (123,132),(132,213) and (132,213)
-%	avoiding permutation, and all the classes obtainable by reversal or/and
-%	complementation (see \cite{Simion1985383}).\\
-%
-%
-%
-%	This paper is organized as follows.
-%	Section 2 presents the needed definition.
-%	Section 3 solves the permutation pattern problem with
-%	(213,231) avoiding permutations.
-%	Section 4 focus on the problem the
-%	related problem of computing a longest permutation avoiding (213,231).
-%	Finally, section 5 summarizes
-%	results for related problems.
+	In Section~\ref{section:Definitions} the needed definition are presented.
+	Section~\ref{section:both are (231,213)-avoiding} is devoted to presenting 
+	an online linear-time algorithm in case both the pattern and the target
+	permutation are $(213,231)$-avoiding,
+	where Section~\ref{section:sigma only avoid 231 and 213} focuses on the case
+	where the pattern only is $(213,231)$-avoiding.
+	In Section~\ref{section:bivincular} we give a polynomial-time algorithm
+	for $(213,231)$-avoiding bivincular patterns.
+	In Section~\ref{section:LCS} we consider the problem of finding the longest
+	$(213,231)$-avoiding pattern in a permutation.
+	In Section~\ref{section:LCS common 2 permutations} we give a
+	polynomial-time algorithm for computing the longest 
+	$(213,231)$-avoiding pattern common to two permutations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -930,9 +916,6 @@ There are 6 cases to consider to search for a match. The 6 cases depend on if $0
 	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is descent there exists a match if and only if there exists a match stating at the index of the maximal element of $\ptext$ : if $j_{\max}$ is the index of the maximal element then  \\	$\bigcup_{0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{j_{\max}}$ is true.	
 
 \end{itemize}
-
-
-
 \end{proof}
 
 
@@ -979,6 +962,7 @@ There are 6 cases to consider to search for a match. The 6 cases depend on if $0
 
 
 \section{Longest Subsequence Avoiding \\(231,213) Common for Two Permutation}
+\label{section:LCS common 2 permutations}
 
 In this section we present an algorithm to find
 the longest common subsequence avoiding (231,213)
