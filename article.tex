@@ -59,10 +59,13 @@
 
 %first
 \DeclareMathOperator{\firsta}{L}
-\newcommand{\first}[1]{\firsta({#1})}
+\newcommand{\first}[2]{\firsta_{{#1}}({#2})}
+
+\DeclareMathOperator{\firstia}{LI}
+\newcommand{\firsti}[2]{\firstia_{{#1}}({#2})}
 
 \DeclareMathOperator{\factora}{F}
-\newcommand{\factor}[1]{\factora({#1})}
+\newcommand{\factor}[2]{\factora_{{#1}}({#2})}
 
 %binvincular
 \newcommand{\x}{X}
@@ -77,6 +80,15 @@
 \DeclareMathOperator{\PMa}{PM}
 \newcommand{\PM}[6]{\PMa_{{#1}}^{{#2},{#3},{#4}}({#5},{#6})}
 
+%LM
+\DeclareMathOperator{\LMa}{LM}
+\newcommand{\LM}[4]{\LMa_{{#1}}^{{#2}}(#3,#4)}
+
+\DeclareMathOperator{\AFa}{AF}
+\newcommand{\AF}[4]{\AFa_{{#1}}^{{#2}}(#3,#4)}
+
+\DeclareMathOperator{\DFa}{DF}
+\newcommand{\DF}[4]{\DFa_{{#1}}^{{#2}}(#3,#4)}
 
 %LSC
 \DeclareMathOperator{\LCSa}{LCS}
@@ -503,45 +515,6 @@ $s_t$ occurs as a subsequence in $s_\pi$.
 \qed
 \end{proof}
 
-\begin{lemma}
-\label{lemma:MatchStripeToPermutation}
-Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations,
-and $t$ be a subsequence of $\pi$ of length $|\sigma|$ such that $s_t = s_\sigma$.
-Then, $t$ is an occurrence of $\sigma$ in $\pi$ if and only if
-$s_t$ occurs as a subsequence in $s_\pi$.
-\end{lemma}
-
-\begin{proof}
-  The forward direction is obvious.
-  We prove the backward direction by induction on the size of the motif
-  $\sigma$.
-  The base case is a motif of size $2$.
-  Suppose first that $\sigma = 12$ and hence $s_\sigma = a$.
-  Let $t = \pi_{i_1}\pi_{i_2}$, $i_1 < i_2$, be a subsequence of $\pi$
-  such that $s_t$ occurs as a subsequence in $s_\pi$.
-  Since $s_\sigma = s_t = a$, this reduces to saying that
-  $\pi_{i_1} < \pi_{i_2}$, and hence $t$ is an occurrence of $\sigma = 12$ in $\pi$.
-  A similar argument shows that the lemma holds true for $\sigma = 21$.
-  Now, assume that the lemma is true for all motifs up to size $k \geq 2$.
-  Let $\sigma \in \Av{k+1}{231,213}$ and
-  let $t = \pi_{i_1}\pi_{i_2}\,\ldots\,\pi_{i_{k+1}}$,
-  $i_1 < i_2 < \ldots < i_{k+1}$,
-  be a subsequence of $\pi$ of length $k+1$ such that
-  $s_t = s_\sigma$.
-  Suppose that $s_t$ occurs in $s_\pi$ as a subsequence.
-  Then, $s_t[2:] = s_\sigma[2:]$ occurs as a subsequence in $s_\pi[2:]$.
-  But $\sigma[2:] \in \Av{k}{231,213}$ and hence,
-  by the inductive hypothesis, it follows that
-  $t[2:]$ is an occurrence of $\sigma[2:]$ in $\pi[2:]$.
-  Moreover, if $s_\sigma[1] = a$ (resp. $s_\sigma[1] = d$)
-  then $\sigma[1]$ is the minimum (resp. maximum) element of $\sigma$
-  (Lemma~\ref{lemma:first element is 1 or n}),
-  and hence, since $s_t = s_\sigma$ occurs as a subsequence in $s_\pi$,
-  $t[1]$ is the minimum (resp. maximum) element of $t$.
-  Therefore, $t$ is an occurrence of $\sigma$ in $\pi$.
-\qed
-\end{proof}
-
 We are now ready to solve the pattern containment problem in case
 both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 
@@ -575,44 +548,66 @@ so it is an online algorithm.
 
 This section focuses on the pattern containment problem
 in case only the pattern $\sigma$ avoids $231$ and $213$.
-We need to consider a specific decomposition $F$ of $\sigma$ into factors.
+We need to consider a specific decomposition $\factora$ of $\sigma$ into factors.
 For $\sigma \in S_k$, the factorization
-$\sigma = F(p) F(p-1) \ldots F(1)$ is defined as follows:
-(i) $\sigma[k]$ is the last letter of $F(1)$,
+$\sigma = \factor{\pmotif}{p} \factor{\pmotif}{p-1} \ldots \factor{\pmotif}{1}$ is defined as follows:
+(i) $\sigma[k]$ is the last letter of $\factor{\pmotif}{1}$,
 (ii) for every $1 \leq i < k$,
 if $s_\sigma[i] = s_\sigma[i+1]$ then
 $\sigma[i]\sigma[i+1]$ is part of the same factor.
-For every factor $F(j)$ of the decomposition, we let
-$L(j)$ stand for the leftmost letter of $F(j)$.
+For every factor $\factor{\pmotif}{j}$ of the decomposition, we let
+$\first{\pmotif}{j}$ stand for the leftmost letter of $\factor{\pmotif}{j}$,
+and $\firsti{\pmotif}{j}$ stand for the index of the leftmost letter of $\factor{\pmotif}{j}$.
 For example,
 for $\sigma = 981237654$,
 we have
 $s_\sigma = ddaaaddd$ and hence
-$\sigma = F(3) F(2) F(1)$ with
-$F(1) =7654$, $F(2) = 123$ and $F(3) = 98$.
+$\sigma = \factor{\pmotif}{3} \factor{\pmotif}{2} \factor{\pmotif}{1}$ with
+$\factor{\pmotif}{1} =7654$, $\factor{\pmotif}{2} = 123$ and $\factor{\pmotif}{3} = 98$.
 Furthermore,
-$L(1) = 7$, $L(2) = 1$ and $L(3) = 9$.
+$\first{\pmotif}{1} = 7$, $\first{\pmotif}{2} = 1$, $\first{\pmotif}{3} = 9$,
+$\firsti{\pmotif}{1} = 6$, $\firsti{\pmotif}{2} = 3$ and $\firsti{\pmotif}{3} = 1$.
 
-To ease the lemma and its proof we define the set $\SET{\pmotif}{\ptext}{i}{j}$ such that if $s \in S$, then $s$ is an occurrence of $\factor{i} \factor{i-1} \cdots \factor{1}$ in $\ptext[j:]$ and $s[\first{i}]=\ptext[j]$.
+\begin{remark}
+A Factor is either an increasing or a decreasing subsequence.
+\end{remark}
 
 \begin{lemma}
-Given a permutation $\pmotif$ and $\factor{i}$ an ascent (descent) factor.
-Let's choose a subsequence $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{i-1}]$ is minimal (maximal), given a subsequence
-$s' \in \SET{\pmotif}{\ptext}{i}{j}$ and a subsequence $t=t's'$ of $\ptext$  if $t$ is an occurrence of $\factor{i+1} \factor{i} \factor{i-1} \cdots \factor{1}$ then the subsequence $t's$ is an occurrence of $\factor{i+1} \factor{i} \factor{i-1} \cdots \factor{1}$ in $\ptext$.
+\label{lemma:whereIsMax}
+Given a permutation $\sigma \in \AV(213,231)$ and a suffix of its decomposition $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, if
+$\stripe{\sigma}{\firsti{\sigma}{i}}=\ustep$ ($\stripe{\sigma}{\firsti{\sigma}{i}}=\dstep$)  the maximal (minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ is $\first{\sigma}{i-1}$.
 \end{lemma}
 
 \begin{proof}
-Given a permutation $\pmotif$ and $\factor{i}$ an ascent (descent) factor.
-Let's choose a subsequence $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{i-1}]$ is minimal (maximal).
-Let's $s' \in \SET{\pmotif}{\ptext}{i}{j}$ and a subsequence $t=t's'$ of $\ptext$ such that $t$ is an occurrence of $\factor{i+1}\factor{i}\factor{i-1}\cdots\factor{1}$. 
-Remark that every element of $t'$ must be superior (inferior) to every element of $s'$, and that the maximal element of $s'$ is the element matched to $t[\first{i-1}]$. Thus if we have a subsequence $s \in \SET{\pmotif}{\ptext}{i}{j}$ such that $s[\first{i-1}]$ is minimal (maximal), then $s[\first{i-1}]\leq s'[\first{i-1}]$, so every element of $'t$ is also superior (inferior) to every element of $s$. Thus the subsequence $t's$ is an occurrence of $\factor{i+1}\factor{i}\factor{i-1}\cdots\factor{1}$ in $\ptext$.
+Take the right most element of $\factor{\sigma}{i}$, this element is an ascent (descent),
+so it is inferior (superior) to the next element which is $\first{\sigma}{i-1}$. Because $\factor{\sigma}{i}$ is an increasing (decreasing) subsequence, every element of $\factor{\sigma}{i}$ is inferior (superior) to $\first{\sigma}{i-1}$.
+By lemma \ref{lemma:first element is 1 or n}, $\first{\sigma}{i-1}$ is the maximal (minimal) element of $\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ thus $\first{\sigma}{i-1}$ is the maximal (minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$.
+
+\end{proof}
+
+To ease the next lemma and its proof we define the set $\SET{\pmotif}{\ptext}{i}{j}$ such that if $s \in S$, then $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$ and the element matching $\first{\pmotif}{i}$ is $\ptext[j]$.
+
+\begin{lemma}
+Given a permutation $\pmotif$ and $\factor{\pmotif}{i}$ an ascent (descent) factor.
+Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that the element matching $\first{\pmotif}{i-1}$ is minimal (maximal), for all subsequence 
+$s' \in \SET{\pmotif}{\ptext}{i}{j}$ and for all subsequence of $\ptext$ $t$, such that $t=t's'$, if $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ then the subsequence $t's$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$.
+\end{lemma}
+
+\begin{proof}
+Given a permutation $\pmotif$ and $\factor{\pmotif}{i}$ an ascent (descent) factor.
+Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that the element matching $\first{\pmotif}{i-1}$ is minimal (maximal).
+Let's $s' \in \SET{\pmotif}{\ptext}{i}{j}$ and $t$ subsequence of $\ptext$, such that $t=t's'$ and $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ in $\pi$. 
+Remark that every element of $t'$ is superior (inferior) to every element of $s'$.
+Note that the element matching $\first{\pmotif}{i-1}$ in $s$ is minimal (maximal) and it is the maximal (minimal) element of the subsequence (\ref{lemma:whereIsMax}), thus
+it is inferior (superior) to the element matching $\first{\pmotif}{i-1}$ in $s'$.
+So every element of $t'$ is also superior (inferior) to every element of $s$. Thus the subsequence $t's$ is an occurrence of $\pmotif[\first{\pmotif}{i+1}:]$ in $\ptext$.
 \end{proof}
 
 \begin{corollary}
-Let's choose a subsequence $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{i-1}]$ is minimal (maximal). There is a match of $\pmotif$ in $\ptext$ with element $\first{i}$ matched to $\ptext[j]$ if and only if there exists $t$ such that $ts$ is a match of $\pmotif$ in $\ptext$. 
+Let's choose a subsequence $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{\pmotif}{i-1}]$ is minimal (maximal). There is a match of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ matched to $\ptext[j]$ if and only if there exists $t$ such that $ts$ is a match of $\pmotif$ in $\ptext$. 
 \end{corollary}
 
-This corollary give us a safe way to choose a match.
+This corollary gives one a safe way to choose a match. Indeed if one does not find a match such that a well chosen subsequence is a suffix then there is no match at all.
 
 \begin{proposition}
 	\label{Proposition:sigma avoids 213 and 231}
@@ -635,11 +630,24 @@ This corollary give us a safe way to choose a match.
 %\end{remark}
 
 Consider the following problem :\\
-$LM(i,j)$ = the safest match of $\first{i-1}$
-	if there exists a match of $\pmotif[\first{i}:]$
-	with $\ptext[j:]$
-	and element $\first{i}$
-	is matched with element at index $j$.\\
+$
+\LM{\pmotif}{\ptext}{i}{j} = 
+\begin{cases}
+	\text{The maximal value of a subsequence} 
+		& \text{If $\stripe{\sigma}{\firsti{\sigma}{i}}=\ustep$ } \\
+	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & \\	
+	\text{ and that minimize the maximal value} & \\
+	\text{ and $\first{\sigma}{i}$ is matched with $\ptext[j]$} & \\
+	
+	&\\
+	
+	\text{The minimal value of a subsequence} 
+		& \text{If $\stripe{\sigma}{\firsti{\sigma}{i}}=\dstep$ } \\
+	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & \\	
+	\text{ and that maximize the minimal value} & \\
+	\text{ and $\first{\sigma}{i}$ is matched with $\ptext[j]$} & \\
+\end{cases}
+$
 
 This problem can be solve by induction.\\
 
@@ -647,73 +655,70 @@ This problem can be solve by induction.\\
 
 \textbf{BASE :} \\
 $
-LM(1,j)=
+\LM{\pmotif}{\ptext}{1}{j} = 
 \begin{cases}
-		MIN_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } &
-			\text{if $\stripe{\pmotif}{\first{1}}=\ustep$} \\
-		\text{ $|\factor{1}| \leq LIS(j,j',\ptext[j'])  $}\}& \\
+		\min_{j<j'}\{\infty\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } 
+			& \text{If $\stripe{\sigma}{\firsti{\sigma}{i}}=\ustep$ }  \\
+		\text{ $|\factor{\pmotif}{1}| \leq LIS(j,j',\ptext[j'])  $}\}& \\
 		&\\
-		MAX_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } &
-			\text{if $\stripe{\pmotif}{\first{1}}=\dstep$} \\
-		\text{ $|\factor{1}| \leq LDS(j,j',\ptext[j']) $}\}&\\
+		\max_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } 
+			& \text{If $\stripe{\sigma}{\firsti{\sigma}{i}}=\dstep$ } \\
+		\text{ $|\factor{\pmotif}{1}| \leq LDS(j,j',\ptext[j']) $}\}&\\
 \end{cases}
 $
 
 \textbf{STEP :} \\
 $
-LM(i,j)=
+\LM{\pmotif}{\ptext}{i}{j} =
 \begin{cases}
-	MIN \{0\} \cup  I(i,j) &
-	\text{if $\stripe{\pmotif}{\first{i}}=\ustep$}\\
-	MAX \{0\} \cup  D(i,j) &
-	\text{if $\stripe{\pmotif}{\first{i}}=\dstep$}\\
+	\min \{\infty\} \cup  \AF{\pmotif}{\ptext}{i}{j} &
+	\text{if $\stripe{\pmotif}{\first{\pmotif}{i}}=\ustep$}\\
+	\max \{0\} \cup  \DF{\pmotif}{\ptext}{i}{j} &
+	\text{if $\stripe{\pmotif}{\first{\pmotif}{i}}=\dstep$}\\
 \end{cases}
 $
 
 
-With $I(i,j)$ ($D(i,j)$) the set of element such that
-if  $j' \in I(i,j)$ then there exists
-a match of $\pmotif[\first{i-1}:]$ in $\ptext[j':]$ and
-the element $\first{i-1}$ is matched with element at index $j'$ and
-there is a match of $\factor{i}$ in $\ptext[j:j'-1]$ and
-the element $\first{i}$ is matched with element at index $j$ and every element is inferior (superior) to the match of
-$\pmotif[\first{i-1}:]$ in $\ptext[j':]$.
-Formally we define $I(s,i)$ and $D(s,i)$ such as:\\
+With $\AF{\pmotif}{\ptext}{i}{j}$ ($\DF{\pmotif}{\ptext}{i}{j}$) the set of element such that
+if  $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$ then there exists
+a match of $\pmotif[\firsti{\pmotif}{i-1}:]$ in $\ptext[k:]$ and
+the element $\first{\pmotif}{i-1}$ is matched with element $\ptext[k]$ and
+there is a match of $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ and
+the element $\first{\pmotif}{i}$ is matched with element $\ptext[j]$ and every element is inferior (superior) to the match of
+$\pmotif[\firsti{\pmotif}{i-1}:]$ in $\ptext[k:]$.
+Formally we define $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ such as:\\
 
-$I(i,j)=\{j'|\text{$j<j'$ and $LM(i-1,j')\neq 0$}$ \\
-\indent \indent \indent and  $|\factor{i}| \leq LIS(j,j'-1,\first{i-1})\}$ \\
+$\AF{\pmotif}{\ptext}{i}{j}=\{j'|\text{$j<j'$ and $\LM{\pmotif}{\ptext}{i-1}{j'} \neq 0$}$ \\
+\indent \indent \indent and  $|\factor{\pmotif}{i}| \leq LIS_{\ptext}(j,j'-1,\first{\pmotif}{i-1})\}$ \\
 
-$D(i,j)=\{j'|\text{$j<j'$ and $LM(i-1,j')\neq 0$}$ \\
-\indent \indent \indent and  $|\factor{i}| \leq LDS(j,j'-1,\first{i-1}) \}$ \\
+$\DF{\pmotif}{\ptext}{i}{j}=\{j'|\text{$j<j'$ and $\LM{\pmotif}{\ptext}{i-1}{j'} \neq \infty$}$ \\
+\indent \indent \indent and  $|\factor{\pmotif}{i}| \leq LDS_{\ptext}(j,j'-1,\first{\pmotif}{i-1}) \}$ \\
 
-With LIS(i,j,k) (LDS(i,j,k)) is the longest increasing (decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
+With $LIS_{\ptext}(i,j,k)$ ($LDS_{\ptext}(i,j,k)$) is the longest increasing (decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
 with every element of this sequence
 inferior (superior) to $k$.
-LIS and LDS can be computed in $O(|\ptext|^2*\log(\log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).\\
+$LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in $O(|\ptext|^2*\log(\log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).\\
 
 In the base case,
-we are looking for a match for the first factor.
-Each factor is either ascent or descent.
-If the factor is an ascent (descent)
-we have to find an increasing (decreasing) subsequence
+one is looking for a match for the first factor.
+If the factor is an ascent (descent),
+one has to find an increasing (decreasing) subsequence
 in the text of same size or longest that
 the size of the factor,
-and to find the optimal solution
-we must assure that the last element
+and to find the best solution
+one must assure that the last element
 of the sequence is minimal (maximal).\\
 For the induction, it is the same idea
-except that we must assure that
+except that one must assure that
 every element of the subsequence is superior (inferior)
-to the maximum (minimal) element of the rest of the match
-ie inferior (superior) to the minimal (maximal) element of the rest of the match
-which is given by $LM$ of
+to the maximum (minimal) element of the rest of the match which is given by $LM$ of
 the previous factor.\\
 
 There exists a match of $\pmotif$ in $\ptext$ if and only if
-there exists a $LM(n,i)\neq 0$ for $1 \leq i \leq |\ptext|$,
+there exists a $LM(n,i)\neq 0$ and $LM(n,i)\neq \infty$ for $1 \leq i \leq |\ptext|$,
 with $n$ the number of factor in $\pmotif$.
-Moreover the basic case can be computed in $O(|\ptext|^2)$
-and the induction on $O(|\pmotif||\ptext|^2)$.
+Moreover the basic case can be computed in $O(n^2)$
+and the induction on $O(kn^2)$ time and space.
 \qed
 \end{proof}
 
