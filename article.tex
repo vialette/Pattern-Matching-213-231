@@ -575,7 +575,7 @@ A Factor is either an increasing or a decreasing subsequence.
 \begin{lemma}
 \label{lemma:whereIsMax}
 Given a permutation $\sigma \in \AV(213,231)$ and a suffix of its decomposition $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, if
-$\stripe{\sigma}{\firsti{\sigma}{i}}=\ustep$ ($\stripe{\sigma}{\firsti{\sigma}{i}}=\dstep$)  the maximal (minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ is $\first{\sigma}{i-1}$.
+$\stripe{\sigma}{\firsti{\sigma}{i}}=\ustep$ ($\stripe{\sigma}{\firsti{\sigma}{i}}=\dstep$) then the maximal (minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ is $\first{\sigma}{i-1}$.
 \end{lemma}
 
 \begin{proof}
@@ -590,7 +590,7 @@ To ease the next lemma and its proof we define the set $\SET{\pmotif}{\ptext}{i}
 \begin{lemma}
 Given a permutation $\pmotif$ and $\factor{\pmotif}{i}$ an ascent (descent) factor.
 Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that the element matching $\first{\pmotif}{i-1}$ is minimal (maximal), for all subsequence 
-$s' \in \SET{\pmotif}{\ptext}{i}{j}$ and for all subsequence of $\ptext$ $t$, such that $t=t's'$, if $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ then the subsequence $t's$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$.
+$s' \in \SET{\pmotif}{\ptext}{i}{j}$ and for all subsequence $t$ of $\ptext$, such that $t=t's'$, if $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ then the subsequence $t's$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$.
 \end{lemma}
 
 \begin{proof}
@@ -598,16 +598,16 @@ Given a permutation $\pmotif$ and $\factor{\pmotif}{i}$ an ascent (descent) fact
 Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that the element matching $\first{\pmotif}{i-1}$ is minimal (maximal).
 Let's $s' \in \SET{\pmotif}{\ptext}{i}{j}$ and $t$ subsequence of $\ptext$, such that $t=t's'$ and $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ in $\pi$. 
 Remark that every element of $t'$ is superior (inferior) to every element of $s'$.
-Note that the element matching $\first{\pmotif}{i-1}$ in $s$ is minimal (maximal) and it is the maximal (minimal) element of the subsequence (\ref{lemma:whereIsMax}), thus
+Plus, remark that the element matching $\first{\pmotif}{i-1}$ in $s$ is minimal (maximal) and it is the maximal (minimal) element of the subsequence (\ref{lemma:whereIsMax}), thus
 it is inferior (superior) to the element matching $\first{\pmotif}{i-1}$ in $s'$.
 So every element of $t'$ is also superior (inferior) to every element of $s$. Thus the subsequence $t's$ is an occurrence of $\pmotif[\first{\pmotif}{i+1}:]$ in $\ptext$.
 \end{proof}
 
 \begin{corollary}
-Let's choose a subsequence $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{\pmotif}{i-1}]$ is minimal (maximal). There is a match of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ matched to $\ptext[j]$ if and only if there exists $t$ such that $ts$ is a match of $\pmotif$ in $\ptext$. 
+Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{\pmotif}{i-1}]$ is minimal (maximal). There is a match of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ matched to $\ptext[j]$ if and only if there exists $t$ such that $ts$ is a match of $\pmotif$ in $\ptext$. 
 \end{corollary}
 
-This corollary gives one a safe way to choose a match. Indeed if one does not find a match such that a well chosen subsequence is a suffix then there is no match at all.
+This corollary gives one a safe way to choose a match. Indeed if one does not find a match such that a well chosen subsequence is a suffix of the motif then there is no match at all.
 
 \begin{proposition}
 	\label{Proposition:sigma avoids 213 and 231}
@@ -678,15 +678,19 @@ $
 \end{cases}
 $
 
+%
+%With $\AF{\pmotif}{\ptext}{i}{j}$ ($\DF{\pmotif}{\ptext}{i}{j}$) the set of element such that
+%if  $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$ then there exists
+%a match of $\pmotif[\firsti{\pmotif}{i-1}:]$ in $\ptext[k:]$ and
+%the element $\first{\pmotif}{i-1}$ is matched with element $\ptext[k]$ and
+%there is a match of $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ and
+%the element $\first{\pmotif}{i}$ is matched with element $\ptext[j]$ and every element is inferior (superior) to the match of
+%$\pmotif[\firsti{\pmotif}{i-1}:]$ in $\ptext[k:]$.
 
-With $\AF{\pmotif}{\ptext}{i}{j}$ ($\DF{\pmotif}{\ptext}{i}{j}$) the set of element such that
-if  $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$ then there exists
-a match of $\pmotif[\firsti{\pmotif}{i-1}:]$ in $\ptext[k:]$ and
-the element $\first{\pmotif}{i-1}$ is matched with element $\ptext[k]$ and
-there is a match of $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ and
-the element $\first{\pmotif}{i}$ is matched with element $\ptext[j]$ and every element is inferior (superior) to the match of
-$\pmotif[\firsti{\pmotif}{i-1}:]$ in $\ptext[k:]$.
+With $\AF{\pmotif}{\ptext}{i}{j}$ ($\DF{\pmotif}{\ptext}{i}{j}$) the set of element such that if  $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$ ($\ptext[k] \in \DF{\pmotif}{\ptext}{i}{j}$) then there exists a match of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$ and the element $\first{\pmotif}{i-1}$ is matched with element $\ptext[k]$. Given that one has the set $\SET{\pmotif}{\ptext}{i-1}{k}$, to decide if $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$, one needs to find an match $t$ of $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ such there exists $s \in \SET{\pmotif}{\ptext}{i-1}{k}$ and $ts$ is a match of $\pmotif[\firsti{\pmotif}{i}:]$.
 Formally we define $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ such as:\\
+
+
 
 $\AF{\pmotif}{\ptext}{i}{j}=\{j'|\text{$j<j'$ and $\LM{\pmotif}{\ptext}{i-1}{j'} \neq 0$}$ \\
 \indent \indent \indent and  $|\factor{\pmotif}{i}| \leq LIS_{\ptext}(j,j'-1,\first{\pmotif}{i-1})\}$ \\
@@ -699,19 +703,19 @@ with every element of this sequence
 inferior (superior) to $k$.
 $LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in $O(|\ptext|^2*\log(\log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).\\
 
-In the base case,
+For the base case,
 one is looking for a match for the first factor.
 If the factor is an ascent (descent),
 one has to find an increasing (decreasing) subsequence
 in the text of same size or longest that
 the size of the factor,
-and to find the best solution
+and to find the safest solution
 one must assure that the last element
 of the sequence is minimal (maximal).\\
-For the induction, it is the same idea
+For the induction, it follows the same idea
 except that one must assure that
 every element of the subsequence is superior (inferior)
-to the maximum (minimal) element of the rest of the match which is given by $LM$ of
+to the maximum (minimal) element of the rest of the match which is given by $L$ of
 the previous factor.\\
 
 There exists a match of $\pmotif$ in $\ptext$ if and only if
@@ -746,7 +750,7 @@ $$
 \PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
 \begin{cases}
 	true 	& \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$}\\
-			  & \text{with every element in $[\min,\max]$}\\
+			  & \text{with every element in $]\min,\max[$}\\
 	false 	& otherwise\\
 \end{cases}
 $$
@@ -754,9 +758,12 @@ $\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}$ is closed under induction.
 It can be solved by means of the following relations:\\
 
 \textbf{BASE :} \\
+
+For the base case, one matches the right most element of the motif. If the motif has a right bottom corner (if $n_\pmotif \in  \x$) then one must assure that the right most element of the motif is matched to the right most of the text. If the motif has a right top corner (if $n_\pmotif \in  \y$) and the right most element of the motif is maximal (minimal) then one must assure that right most element of the motif is matched to the maximal (minimal) element of the text.
+
 if $n_\pmotif \notin  \x $ and $n_\pmotif \notin  \y$ : \\
 $
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j} =
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
 \begin{cases}
 	true 	& \text{if $\min<\ptext[j]<\max$}\\
 	false 	& otherwise\\
@@ -791,14 +798,41 @@ if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the 
 $
 \PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext}=
 \begin{cases}
-	true 	& \text{if $\min<\ptext[n_\ptext]<\max$and }\\
+	true 	& \text{if $\min<\ptext[n_\ptext]<\max$ and }\\
 			&\text{$\ptext[n_\ptext]$ is the maximal element}\\
 	false 	& otherwise\\
 \end{cases}
 $
 %$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\
 
+if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the minimal element: \\
+$
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
+\begin{cases}
+	true 	& \text{if $\min<\ptext[j]<\max$ and }\\
+			&\text{$\ptext[j]$ is the minimal element}\\
+	false 	& otherwise\\
+\end{cases}
+$
+%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
+
+if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the minimal element: \\
+$
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext}=
+\begin{cases}
+	true 	& \text{if $\min<\ptext[n_\ptext]<\max$ and }\\
+			&\text{$\ptext[n_\ptext]$ is the minimal element}\\
+	false 	& otherwise\\
+\end{cases}
+$
+%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\
+
+
 \textbf{STEP :} \\
+
+For the induction there are 8 cases to consider, depending on if $\pmotif[i]$ is ascend or descend, if elements $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) and if elements $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$). First one must assure that $\pmotif[i]$ can be matched to $\ptext[j]$, this is done by checking that $\ptext[j]$ is in the interval $]\min,\max[$. Then one must use the induction. The element $\ptext[j]$ gives us a new $\min$ if the element is ascent or a new $\max$ if the element is descent. 
+If $\pmotif[i]\pmotif[i+1]$ are not underlined nor overlined, then $\pmotif[i+1]$ can be matched to any upcoming element in the text. If $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) then the match of $\pmotif[i+1]$ must be $\ptext[j+1]$. If $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$) then ethe match of  $\pmotif[i+1]$ must be $\ptext[j]+1$.
+
 $
 \PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
 \begin{cases}
@@ -863,62 +897,21 @@ $
 			False & Otherwise\\
 \end{cases}
 $
-
-At each step (i,j),
-If $i \notin \x$ and $i \notin \y$,
-we match the current element of $\pmotif$ ($\pmotif[i]$)
-with the current element of $\ptext$ ($\ptext[j]$), if possible.
-Then we match $\pmotif[i+1:]$ with
-every suffixes $\ptext$ starting after $j$.\\
-
-If $i \in \x$ and $i \notin \y$,
-we match $\pmotif[i]$ to $\ptext[j]$,
-then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
-with the condition that
-$\pmotif[i+1]$ is matched to $\ptext[j+1]$.\\
-
-If $i \notin \x$, $i \in \y$ and i is a descent,
-we match $\pmotif[i]$ to $\ptext[j]$,
-then we match $\pmotif[i+1:]$
-with $\ptext[\ptext^{-1}[\ptext[j]-1]:]$
-with the condition that
-$\pmotif[i+1]$ is matched to the element $\ptext[j]-1$.\\
-
-If $i \notin \x$, $i \in \y$ and i is an ascent,
-we match $\pmotif[i]$ to $\ptext[j]$,
-then we match $\pmotif[i+1:]$
-with $\ptext[\ptext^{-1}[\ptext[j]+1]:]$
-with the condition that
-$\pmotif[i+1]$ is matched to the element $\ptext[j]+1$.\\
-
-If $i \in \x$, $i \in \y$ and i is a descent,
-we match $\pmotif[i]$ to $\ptext[j]$,
-then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
-with the condition that
-$\pmotif[i+1]$ is matched to $\ptext[j+1]$,
-and that $\ptext[j+1]=\ptext[j]-1$.\\
-
-If $i \in \x$, $i \in \y$ and i is an ascent,
-we match $\pmotif[i]$ to $\ptext[j]$,
-then we match $\pmotif[i+1:]$ with $\ptext[j+1:]$
-with the condition that
-$\pmotif[i+1]$ is matched to $\ptext[j+1]$,
-and that $\ptext[j+1]=\ptext[j]+1$.\\		
 		
-There are 6 cases to consider to search for a match. The 6 cases depend on if $0 \in \x$, $0 \in \y$ and if the first element of the stripe of the motif is ascent or descent :
+There are 6 cases to consider to search for a match.
+Depending on if the motif has a left bottom corner ($0 \in \x$), a left top corner, and if it has a left top corner $0 \notin \y$, if the left most element is minimal or maximal. If the motif left bottom corner, then one must assure that the left most element of the motif is matched to the left most element of the text. If the motif has a left top corner and the left most element of the motif is minimal (maximal) then one must assure that the left most element of the motif is matched with the minimal (maximal) element of the text :
 \begin{itemize}
-	\item If $0 \in \x$ and $0 \notin \y$ there exists a match if and only if there is a match starting with left most element of the text:\\ $\bigcup_{0<\min<\max<n_\ptext}
-	\PM{\pbmotif}{\ptext}{\min}{\max}{0}{0}$ is true.
+	\item If $0 \in \x$ and $0 \notin \y$ there exists a match if and only if there is a match starting with left most element of the text : $ \PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{0}$ is true.
 	
-	\item If $0 \notin \x$ and $0 \notin \y$ there exists a match if and only if there exists a match stating at any index: \\	$\bigcup_{0<k<n_\ptext,0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{k}$ is true.
+	\item If $0 \notin \x$ and $0 \notin \y$ there exists a match if and only if there exists a match stating at any index : 	$\bigcup_{0<k<n_\ptext}\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{k}$ is true.
 	
-	\item If $0 \in \x$, $0 \in \y$ and the first element of the stripe of the motif is ascent there exists a match if and only if there is a match starting with the left most element  of $\ptext$, and the left most element  of $\ptext$ is the minimal element  of $\ptext$:\\ $\bigcup_{0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{0}$  is true and the left most element of $\ptext$ is the minimal element of $\ptext$.
+	\item If $0 \in \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there is a match starting with the left most element  of $\ptext$, and the left most element  of $\ptext$ is the minimal element  of $\ptext$ : $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{0}$  is true and the left most element of $\ptext$ is the minimal element of $\ptext$.
 	
-	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is ascent there exists a match if and only if there exists a match stating at the index of the minimal element of $\ptext$ : if $j_{\min}$ is the index of the minimal element then \\	$\bigcup_{0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{j_{\min}}$ is true.	
+	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there exists a match stating at the minimal element of the text : if $j_{\min}$ is the index of the minimal element in $\ptext$ then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{j_{\min}}$ is true.	
 			
-	\item If $0 \in \x$, $0 \notin \y$  and the first element of the stripe of the motif is descent then there exists a match if and only if there is a match starting with the left most element  of $\ptext$ and the left most element  of $\ptext$ is the maximal element  of $\ptext$:\\ $\bigcup_{0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{0}$ is true and the left most element of $\ptext$ is the maximal element of $\ptext$.
+	\item If $0 \in \x$, $0 \notin \y$  and the first element of the stripe of the motif is maximal then there exists a match if and only if there is a match starting with the left most element  of $\ptext$ and the left most element  of $\ptext$ is the maximal element  of $\ptext$: $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{0}$ is true and the left most element of $\ptext$ is the maximal element of $\ptext$.
 	
-	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is descent there exists a match if and only if there exists a match stating at the index of the maximal element of $\ptext$ : if $j_{\max}$ is the index of the maximal element then  \\	$\bigcup_{0<\min<\max<n_\ptext}\PM{\pbmotif}{\ptext}{\min}{\max}{0}{j_{\max}}$ is true.	
+	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is maximal there exists a match if and only if there exists a match stating at the maximal element of the text : if $j_{\max}$ is the index of the maximal in $\ptext$ element then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{j_{\max}}$ is true.	
 
 \end{itemize}
 \end{proof}
