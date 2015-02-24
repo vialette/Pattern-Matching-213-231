@@ -745,7 +745,7 @@ and the induction on $O(kn^2)$ time and space.
 
 \begin{proof}
 We consider the following problem :\\
-Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$, $i$,$j$ , $i<j$.\\
+Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$.
 $$
 \PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
 \begin{cases}
@@ -759,7 +759,7 @@ It can be solved by means of the following relations:\\
 
 \textbf{BASE :} \\
 
-For the base case, one matches the right most element of the motif. If the motif has a right bottom corner (if $n_\pmotif \in  \x$) then one must assure that the right most element of the motif is matched to the right most of the text. If the motif has a right top corner (if $n_\pmotif \in  \y$) and the right most element of the motif is maximal (minimal) then one must assure that right most element of the motif is matched to the maximal (minimal) element of the text.
+For the base case, one matches the right most element of the motif. If the motif has a right bottom corner (if $n_\pmotif \in  \x$) then one must assure that the right most element of the motif is matched to the right most of the text. If the motif has a right top corner (if $n_\pmotif \in  \y$) and the right most element of the motif is maximal (minimal) then one must assure that right most element of the motif is matched to the maximal (minimal) element of the text. If there is not corner, there is no condition on the match of the right most element.
 
 if $n_\pmotif \notin  \x $ and $n_\pmotif \notin  \y$ : \\
 $
@@ -774,9 +774,10 @@ $
 
 if $n_\pmotif \in  \x $ and $n_\pmotif \notin  \y$ : \\
 $
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext} =
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j} =
 \begin{cases}
-	true 	& \text{if $\min<\ptext[n_\ptext]<\max$}\\
+	true 	& \text{if $\min<\ptext[j]<\max$}\\
+			& \text{and } j=n_\ptext\\	
 	false 	& otherwise\\
 \end{cases}
 $
@@ -787,8 +788,8 @@ if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is t
 $
 \PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
 \begin{cases}
-	true 	& \text{if $\min<\ptext[j]<\max$ and }\\
-			&\text{$\ptext[j]$ is the maximal element}\\
+	true 	& \text{if $\min<\ptext[j]<\max$ }\\
+			& \text{and $\ptext[j]$ is the maximal element}\\
 	false 	& otherwise\\
 \end{cases}
 $
@@ -796,10 +797,11 @@ $
 
 if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\
 $
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext}=
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
 \begin{cases}
-	true 	& \text{if $\min<\ptext[n_\ptext]<\max$ and }\\
-			&\text{$\ptext[n_\ptext]$ is the maximal element}\\
+	true 	& \text{if $\min<\ptext[j]<\max$}\\
+			& \text{and } j=n_\ptext\\		
+			& \text{and $\ptext[n_\ptext]$ is the maximal element}\\
 	false 	& otherwise\\
 \end{cases}
 $
@@ -809,8 +811,8 @@ if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is t
 $
 \PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
 \begin{cases}
-	true 	& \text{if $\min<\ptext[j]<\max$ and }\\
-			&\text{$\ptext[j]$ is the minimal element}\\
+	true 	& \text{if $\min<\ptext[j]<\max$}\\	
+			& \text{and $\ptext[j]$ is the minimal element}\\
 	false 	& otherwise\\
 \end{cases}
 $
@@ -818,10 +820,11 @@ $
 
 if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the minimal element: \\
 $
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{n_\ptext}=
+\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
 \begin{cases}
-	true 	& \text{if $\min<\ptext[n_\ptext]<\max$ and }\\
-			&\text{$\ptext[n_\ptext]$ is the minimal element}\\
+	true 	& \text{if $\min<\ptext[j]<\max$}\\
+			& \text{and } j=n_\ptext\\	
+			& \text{and $\ptext[n_\ptext]$ is the minimal element}\\
 	false 	& otherwise\\
 \end{cases}
 $
@@ -830,7 +833,7 @@ $
 
 \textbf{STEP :} \\
 
-For the induction there are 8 cases to consider, depending on if $\pmotif[i]$ is ascend or descend, if elements $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) and if elements $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$). First one must assure that $\pmotif[i]$ can be matched to $\ptext[j]$, this is done by checking that $\ptext[j]$ is in the interval $]\min,\max[$. Then one must use the induction. The element $\ptext[j]$ gives us a new $\min$ if the element is ascent or a new $\max$ if the element is descent. 
+For the induction there are 8 cases to consider, depending on if $\pmotif[i]$ is ascend or descend, if elements $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) and if elements $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$). First one must assure that $\pmotif[i]$ can be matched to $\ptext[j]$, this is done by checking that $\ptext[j]$ is in the interval $]\min,\max[$. Then one must use the induction. The element $\ptext[j]$ gives a new $\min$ if the element is ascent or a new $\max$ if the element is descent. 
 If $\pmotif[i]\pmotif[i+1]$ are not underlined nor overlined, then $\pmotif[i+1]$ can be matched to any upcoming element in the text. If $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) then the match of $\pmotif[i+1]$ must be $\ptext[j+1]$. If $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$) then ethe match of  $\pmotif[i+1]$ must be $\ptext[j]+1$.
 
 $
@@ -899,19 +902,19 @@ $
 $
 		
 There are 6 cases to consider to search for a match.
-Depending on if the motif has a left bottom corner ($0 \in \x$), a left top corner, and if it has a left top corner $0 \notin \y$, if the left most element is minimal or maximal. If the motif left bottom corner, then one must assure that the left most element of the motif is matched to the left most element of the text. If the motif has a left top corner and the left most element of the motif is minimal (maximal) then one must assure that the left most element of the motif is matched with the minimal (maximal) element of the text :
+Depending on if the motif has a left bottom corner ($0 \in \x$), a left top corner, and if it has a left top corner $0 \notin \y$, if the left most element is minimal or maximal. If the motif has a left bottom corner, then one must assure that the left most element of the motif is matched to the left most element of the text. If the motif has a left top corner and the left most element of the motif is minimal (maximal) then one must assure that the left most element of the motif is matched with the minimal (maximal) element of the text :
 \begin{itemize}
-	\item If $0 \in \x$ and $0 \notin \y$ there exists a match if and only if there is a match starting with left most element of the text : $ \PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{0}$ is true.
+	\item If $0 \in \x$ and $0 \notin \y$ there exists a match if and only if there is a match starting with left most element of the text : $ \PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true.
 	
-	\item If $0 \notin \x$ and $0 \notin \y$ there exists a match if and only if there exists a match stating at any index : 	$\bigcup_{0<k<n_\ptext}\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{k}$ is true.
+	\item If $0 \notin \x$ and $0 \notin \y$ there exists a match if and only if there exists a match stating at any index : 	$\bigcup_{1<k\leq n_\ptext}\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{k}$ is true.
 	
-	\item If $0 \in \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there is a match starting with the left most element  of $\ptext$, and the left most element  of $\ptext$ is the minimal element  of $\ptext$ : $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{0}$  is true and the left most element of $\ptext$ is the minimal element of $\ptext$.
+	\item If $0 \in \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there is a match starting with the left most element  of $\ptext$, and the left most element  of $\ptext$ is the minimal element  of $\ptext$ : $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$  is true and the left most element of $\ptext$ is the minimal element of $\ptext$.
 	
-	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there exists a match stating at the minimal element of the text : if $j_{\min}$ is the index of the minimal element in $\ptext$ then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{j_{\min}}$ is true.	
+	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there exists a match stating at the minimal element of the text : if $j_{\min}$ is the index of the minimal element in $\ptext$ then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\min}}$ is true.	
 			
-	\item If $0 \in \x$, $0 \notin \y$  and the first element of the stripe of the motif is maximal then there exists a match if and only if there is a match starting with the left most element  of $\ptext$ and the left most element  of $\ptext$ is the maximal element  of $\ptext$: $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{0}$ is true and the left most element of $\ptext$ is the maximal element of $\ptext$.
+	\item If $0 \in \x$, $0 \notin \y$  and the first element of the stripe of the motif is maximal then there exists a match if and only if there is a match starting with the left most element  of $\ptext$ and the left most element  of $\ptext$ is the maximal element  of $\ptext$: $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true and the left most element of $\ptext$ is the maximal element of $\ptext$.
 	
-	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is maximal there exists a match if and only if there exists a match stating at the maximal element of the text : if $j_{\max}$ is the index of the maximal in $\ptext$ element then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{0}{j_{\max}}$ is true.	
+	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is maximal there exists a match if and only if there exists a match stating at the maximal element of the text : if $j_{\max}$ is the index of the maximal in $\ptext$ element then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\max}}$ is true.	
 
 \end{itemize}
 \end{proof}
