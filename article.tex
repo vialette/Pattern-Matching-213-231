@@ -80,6 +80,9 @@
 \DeclareMathOperator{\PMa}{PM}
 \newcommand{\PM}[6]{\PMa_{{#1}}^{{#2},{#3},{#4}}({#5},{#6})}
 
+\DeclareMathOperator{\lb}{lb}
+\DeclareMathOperator{\ub}{ub}
+
 %LM
 \DeclareMathOperator{\LMa}{LM}
 \newcommand{\LM}[4]{\LMa_{{#1}}^{{#2}}(#3,#4)}
@@ -424,9 +427,9 @@ $\pi_1 = x > 1$
 and $\pi_n = x+1$
 (in which case there is one occurrence of the pattern).
 
-For algorithmic treatment, it will be convenient to have \ldots
-Given a motif $\pmotif$ we represent the elements underlined by the set $\x$. An index $i$, $1 \leq i < |\sigma|$, of an element is in $\x$ if and only if $i$ and $i+1$ need to be adjacent ($\pmotif[i]$ and $\pmotif[i+1]$ are underlined). We also allow $0$ and $|\sigma|$ to be in the set $\x$ such that if $0 \in \x$ then we have $_\llcorner{\sigma_1}$ and if $|\sigma| \in \x$ then ${\sigma_{|\sigma|}}_\lrcorner$.
-We represent the index that need to be overlined by the set $\y$. An index $i$ is in $\y$ if and only if $i$ and $i+1$ need to be adjacent ($i$ and $i+1$ are overlined). We also allow $0$ and $|\sigma|$ to be in the set $\y$ such that if $0 \in \y$ then we have $^\ulcorner{1}$ and if $|\sigma| \in \y$ then ${|\sigma|}^\urcorner$.
+%For algorithmic treatment, it will be convenient to have \ldots
+%Given a motif $\pmotif$ we represent the elements underlined by the set $\x$. An index $i$, $1 \leq i < |\sigma|$, of an element is in $\x$ if and only if $i$ and $i+1$ need to be adjacent ($\pmotif[i]$ and $\pmotif[i+1]$ are underlined). We also allow $0$ and $|\sigma|$ to be in the set $\x$ such that if $0 \in \x$ then we have $_\llcorner{\sigma_1}$ and if $|\sigma| \in \x$ then ${\sigma_{|\sigma|}}_\lrcorner$.
+%We represent the index that need to be overlined by the set $\y$. An index $i$ is in $\y$ if and only if $i$ and $i+1$ need to be adjacent ($i$ and $i+1$ are overlined). We also allow $0$ and $|\sigma|$ to be in the set $\y$ such that if $0 \in \y$ then we have $^\ulcorner{1}$ and if $|\sigma| \in \y$ then ${|\sigma|}^\urcorner$.
 
 % A bivincular pattern avoids a set of permutations $P$ if its bottom
 % row $\sigma_1\sigma_2\,\ldots\,\sigma$ avoids every permutation in $P$.
@@ -734,190 +737,360 @@ and the induction on $O(kn^2)$ time and space.
 		This section is devoted to presenting a polynomial-time algorithm for deciding whether
 	a $(213,231)$-avoiding bivincular pattern occurs in a permutation.
 
+We introduce property of bivincular permutation if the permutation is $(213,231)$-avoiding.
+
+\begin{lemma}
+\label{lemma:ascentDescentAscent}
+If $\overline{\sigma[i]\sigma[j]}$ (thus $\sigma[j]=\sigma[i]+1$) and if $\sigma[i]$ is ascent (decent) and $\sigma[i]+1$ is ascent (decent) then $i<j$ ($j>i$) and for every $k$, $i<k<j$ ($j>k>i$), $\pi[k]$ is descent (ascent).    
+\end{lemma}
+
+\begin{proof}
+Suppose that there exists $k$, $i<k<j$ ($i>k>j$),
+such that $\pmotif[k]$ is ascent (descent). Ascent (descent)  elements are increasing (decreasing) so $\sigma[i]<\sigma[k]<\sigma[j]$ ($\sigma[i]<\sigma[k]<\sigma[j]$) which is in contradiction that with $\sigma[j]=\sigma[i]+1$.
+\end{proof}
+
 	\begin{proposition}
 		\label{Proposition:bivincular pattern}
 			Let $\sigma$ be a $(213,231)$-avoiding bivincular pattern of length $k$
 			and $\pi \in S_n$.
-			One can decide in $O(kn^3)$ time
-			and $O(kn^3)$ space if $\pi$ contains $\sigma$.
+			One can decide in $O(kn^4)$ time
+			and $O(kn^4)$ space if $\pi$ contains $\sigma$.
 	\end{proposition}
-
 
 \begin{proof}
 We consider the following problem :\\
 Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$.
 $$
-\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
+\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
 \begin{cases}
-	true 	& \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$}\\
-			  & \text{with every element in $]\min,\max[$}\\
+	true 	& \text{If $\pbmotif[i:]$ occurs in $\ptext[j:]$}\\
+			& \text{with every element in $[\lb,\ub]$}\\
+			& \text{and element $\pmotif[i]$ occurs in $\ptext[j]$ }\\
 	false 	& otherwise\\
 \end{cases}
 $$
-$\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}$ is closed under induction.
+
+$\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ is closed under induction.
 It can be solved by means of the following relations:\\
-
 \textbf{BASE :} \\
-
-For the base case, one matches the right most element of the motif. If the motif has a right bottom corner (if $n_\pmotif \in  \x$) then one must assure that the right most element of the motif is matched to the right most of the text. If the motif has a right top corner (if $n_\pmotif \in  \y$) and the right most element of the motif is maximal (minimal) then one must assure that right most element of the motif is matched to the maximal (minimal) element of the text. If there is not corner, there is no condition on the match of the right most element.
-
-if $n_\pmotif \notin  \x $ and $n_\pmotif \notin  \y$ : \\
-$
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
+$$
+\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}=
 \begin{cases}
-	true 	& \text{if $\min<\ptext[j]<\max$}\\
-	false 	& otherwise\\
+	true 	& \text{if $\ptext[j] \in [\lb,\ub ]$}\\
+			& \text{and if ${\pmotif[n_\pmotif]}_\lrcorner$ then $j=n_\ptext$}\\
+			& \text{and if ${\pmotif[n_\pmotif]}^\urcorner$ then $\ptext[j]=\ub=n_\pmotif$}\\
+			& \text{and if  $^\ulcorner{\pmotif[n_\pmotif]}$ then $\ptext[j]=\lb=1$ } \\
+			& \text{and if  $\overline{(\pmotif[n_\pmotif]-1)\pmotif[n_\pmotif] }$ then $\ptext[j]=\lb$ }  \\
+			& \text{and if  $\overline{(\pmotif[n_\pmotif]\pmotif[n_\pmotif]-1)}$ then $\ptext[j]=\ub$}  \\
+		
+	false	& \text{otherwise} \\
 \end{cases}
-$
-%$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif+1}{j}= true $
-\\
+$$
 
-if $n_\pmotif \in  \x $ and $n_\pmotif \notin  \y$ : \\
-$
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j} =
-\begin{cases}
-	true 	& \text{if $\min<\ptext[j]<\max$}\\
-			& \text{and } j=n_\ptext\\	
-	false 	& otherwise\\
-\end{cases}
-$
-%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $
-\\
-
-if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\
-$
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
-\begin{cases}
-	true 	& \text{if $\min<\ptext[j]<\max$ }\\
-			& \text{and $\ptext[j]$ is the maximal element}\\
-	false 	& otherwise\\
-\end{cases}
-$
-%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
-
-if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\
-$
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
-\begin{cases}
-	true 	& \text{if $\min<\ptext[j]<\max$}\\
-			& \text{and } j=n_\ptext\\		
-			& \text{and $\ptext[n_\ptext]$ is the maximal element}\\
-	false 	& otherwise\\
-\end{cases}
-$
-%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\
-
-if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the minimal element: \\
-$
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
-\begin{cases}
-	true 	& \text{if $\min<\ptext[j]<\max$}\\	
-			& \text{and $\ptext[j]$ is the minimal element}\\
-	false 	& otherwise\\
-\end{cases}
-$
-%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
-
-if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the minimal element: \\
-$
-\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
-\begin{cases}
-	true 	& \text{if $\min<\ptext[j]<\max$}\\
-			& \text{and } j=n_\ptext\\	
-			& \text{and $\ptext[n_\ptext]$ is the minimal element}\\
-	false 	& otherwise\\
-\end{cases}
-$
-%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\
-
+The base case finds an occurrence for the right most element of the motif. If the last element do not have any restriction on position and on value, then $\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}$ is true if and only if $\pmotif[n_\pmotif]$ can occur in $\ptext[j]$. This condition is checked by assuring that $\ptext[j] \in [\lb,\ub]$. 
 
 \textbf{STEP :} \\
-
-For the induction there are 8 cases to consider, depending on if $\pmotif[i]$ is ascend or descend, if elements $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) and if elements $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$). First one must assure that $\pmotif[i]$ can be matched to $\ptext[j]$, this is done by checking that $\ptext[j]$ is in the interval $]\min,\max[$. Then one must use the induction. The element $\ptext[j]$ gives a new $\min$ if the element is ascent or a new $\max$ if the element is descent. 
-If $\pmotif[i]\pmotif[i+1]$ are not underlined nor overlined, then $\pmotif[i+1]$ can be matched to any upcoming element in the text. If $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) then the match of $\pmotif[i+1]$ must be $\ptext[j+1]$. If $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$) then ethe match of  $\pmotif[i+1]$ must be $\ptext[j]+1$.
-
-$
-\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
-\begin{cases}
-\bigcup_{j<k}
-			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{k}
-				& \text{if $\stripe{\pmotif}{i}=\ustep$
-				and $i \notin \x$}\\
-				& \text{and $i \notin \y$ }\\
-				& \text{and $\min<\ptext[j]<\max$} \\
-			&\\
-
-			\bigcup_{j<k}
-			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{k}
-				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
-				& \text{and $i \notin \x$ and $i \notin \y$  }\\
-				& \text{and $\min<\ptext[j]<\max$} \\
-			&\\
-
-			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{j+1}
-				& \text{if $\stripe{\pmotif}{i}=\ustep$}\\
-				& \text{and $i \in \x$ and $i \notin \y$}\\
-				& \text{and $\min<\ptext[j]<\max$} \\
-			&\\
-
-			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{j+1}
-				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
-				& \text{and $i \in \x$ and $i \notin \y$ }\\
-				& \text{and $\min<\ptext[j]<\max$} \\
-
-			&\\
-
-			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{\ptext^{-1}[\ptext[j]+1]}
-				&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
-				&\text{and $i \notin \x$ and $i \in \y$}\\
-				& \text{and $\min<\ptext[j]<\max$} \\
-				&\text{and $\ptext^{-1}[\ptext[j]+1]>j$}\\
-			&\\
-
-
-			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{\ptext^{-1}[\ptext[j]-1]}
-				&\text{if $\stripe{\pmotif}{i}=\dstep$}\\
-				&\text{and $i \notin \x$ and $i \in \y$ }\\
-				& \text{and $\min<\ptext[j]<\max$} \\
-				&\text{and $\ptext^{-1}[\ptext[j]-1]>j$}\\
-			&\\
-
-			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{j+1}
-				&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
-				&\text{and $i \in \x$ and $i \in \y$}\\
-				&\text{and $\ptext[j]+1=\ptext[j+1]$ }\\
-				& \text{and $\min<\ptext[j]<\max$} \\
-			&\\
-
-			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{j+1}
-				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
-				&\text{and $i \in \x$ and $i \in \y$}\\
-				&\text{and $\ptext[j]-1=\ptext[j+1]$ }\\
-				& \text{and $\min<\ptext[j]<\max$} \\
-			&\\
-
-
-			False & Otherwise\\
-\end{cases}
-$
-		
-There are 6 cases to consider to search for a match.
-Depending on if the motif has a left bottom corner ($0 \in \x$), a left top corner, and if it has a left top corner $0 \notin \y$, if the left most element is minimal or maximal. If the motif has a left bottom corner, then one must assure that the left most element of the motif is matched to the left most element of the text. If the motif has a left top corner and the left most element of the motif is minimal (maximal) then one must assure that the left most element of the motif is matched with the minimal (maximal) element of the text :
+For clarity of reading we consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
 \begin{itemize}
-	\item If $0 \in \x$ and $0 \notin \y$ there exists a match if and only if there is a match starting with left most element of the text : $ \PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true.
+	\item If $\ptext[j] \notin [\lb,\ub]$ then :
+	$$
+	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j} = false
+	$$
+	this is straightforward with the definition. If $\ptext[j] \notin [\lb,\ub]$ then it can not be part of an occurrence of  $\pmotif[i:]$ in $\pmotif[i:]$ with every element in $[\lb,\ub]$.
 	
-	\item If $0 \notin \x$ and $0 \notin \y$ there exists a match if and only if there exists a match stating at any index : 	$\bigcup_{1<k\leq n_\ptext}\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{k}$ is true.
+	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is ascent then :
+	$$
+	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}= 
+	\begin{cases}
+		\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}
+			& \text{if $\pmotif[i]$ is not underlined } \\
+			& \text{ and $\pmotif[i]$ is not overlined} \\ 
+		\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}
+			& \text{if $\pmotif[i]$ is not underlined } \\
+			& \text{ and $\overline{(\pmotif[i]-1)\pmotif[i]}$ or $^\ulcorner{\pmotif[i]}$}\\ 	
+			& \text{ and $\ptext[j]=\lb$} \\
+		\PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{j+1}	
+			& \text{if $\underline{\pmotif[i]\pmotif[i+1]}$ } \\
+			& \text{ and $\overline{(\pmotif[i]-1)\pmotif[i]}$ or $^\ulcorner{\pmotif[i]}$}\\ 	
+			& \text{ and $\ptext[j]=\lb$} \\				
+		\PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{j+1}	
+			& \text{if $\underline{\pmotif[i]\pmotif[i+1]}$ } \\
+			& \text{ and $\pmotif[i]$ is not overlined} \\
+		false & \text{otherwise}
+		 	
+	\end{cases}
+	$$	
+	$\pmotif[i]$ can occur in $\ptext[j]$ because $\ptext[j] \in [\lb,\ub]$. $\pmotif[i:]$ occurs in $\ptext[j:]$, if and only if $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$. $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$ if and only if there is an occurrence of $\pmotif[i+1:]$ in $\ptext[j+1:]$ starting at element $k$, $j<k$, which correspond to know if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{*}{*}{i+1}{k}$ is true. Because $\pmotif[i]$ is ascent,  $\pmotif[i]$ is the minimal element of $\pmotif[i:]$, thus a match of $\pmotif[i+1:]$ can not use value inferior to $\ptext[j]$ so $\ptext[j]+1$ is the new lower bound. The upper bound is unchanged. So there is a occurrence of  $\pmotif[i:]$ starting at element $j$ in $\ptext[j:]$ if and only if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}$. 
 	
-	\item If $0 \in \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there is a match starting with the left most element  of $\ptext$, and the left most element  of $\ptext$ is the minimal element  of $\ptext$ : $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$  is true and the left most element of $\ptext$ is the minimal element of $\ptext$.
-	
-	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there exists a match stating at the minimal element of the text : if $j_{\min}$ is the index of the minimal element in $\ptext$ then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\min}}$ is true.	
-			
-	\item If $0 \in \x$, $0 \notin \y$  and the first element of the stripe of the motif is maximal then there exists a match if and only if there is a match starting with the left most element  of $\ptext$ and the left most element  of $\ptext$ is the maximal element  of $\ptext$: $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true and the left most element of $\ptext$ is the maximal element of $\ptext$.
-	
-	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is maximal there exists a match if and only if there exists a match stating at the maximal element of the text : if $j_{\max}$ is the index of the maximal in $\ptext$ element then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\max}}$ is true.	
+	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is descent then :
+	$$
+	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
+	\begin{cases}
+			\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{k}
+				& \text{if $\pmotif[i]$ is not underlined } \\
+				& \text{ and $\pmotif[i]$ is not overlined} \\ 
+			\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{k}
+				& \text{if $\pmotif[i]$ is not underlined } \\
+				& \text{ and $\overline{\pmotif[i](\pmotif[i]+1)}$ or ${\pmotif[i]}^\urcorner$}\\ 	
+				& \text{ and $\ptext[j]=\ub$} \\
+			\PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{j+1}	
+				& \text{if $\underline{\pmotif[i]\pmotif[i+1]}$ } \\
+				& \text{ and $\overline{\pmotif[i](\pmotif[i]+1)}$ or ${\pmotif[i]}^\urcorner$}\\ 	
+				& \text{ and $\ptext[j]=\ub$} \\					
+			\PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{j+1}	
+				& \text{if $\underline{\pmotif[i]\pmotif[i+1]}$ } \\
+				& \text{ and $\pmotif[i]$ is not overlined} \\	
+			false & \text{otherwise}		
+	\end{cases}
+	$$	
+	We prove symmetrically as the last case that 
+	$\pmotif[i:]$ occurs in $\ptext[j:]$ starting at element $j$ if and only if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{k}$. 
 
 \end{itemize}
+
+Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then $\sigma$ occurs in $\pi$. We now discus about the position and value constraints.
+\paragraph{Position Constraint.} There are 3 types of position constraints 
+\begin{itemize}
+	\item If $_\llcorner{\sigma[1]}$ then the left most element of $\sigma$  must occurs in the left most element of $\pi$ ($\pmotif[1]$ occurs in $\ptext[1]$ on a occurrence of $\pmotif$ in $\ptext$). This constraint is assured by demanding that the occurrence starts at the left most element of $\ptext$ : if and only if  $\PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{1}$ is true.
+	
+	\item If ${\pmotif[n_\pmotif]}_\lrcorner$ then the right most element $\sigma$ must occurs in the right most element of $\pi$ ($\pmotif[n_\pmotif]$ occurs in $\ptext[n_\ptext]$ on a occurrence of $\pmotif$ in $\ptext$). This constraint is assured in the base case.
+	
+	\item If $\underline{\pmotif[i]\pmotif[i+1]}$ then the index of the occurrence of $\pmotif[i]$ and $\pmotif[i+1]$ must be consecutive. In other word if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i+1]$ must occur in $\ptext[j+1]$. We assure this restriction in the induction by demanding that occurrences of $\pmotif[i+1:]$  start at index $j+1$. 
+\end{itemize}
+
+\paragraph{Value Constraint.} There are 3 types of position constraints 
+\begin{itemize}
+	\item If $^\ulcorner{\sigma[i]}$ (and thus $\sigma[i]=1$) then the minimal value of $\pmotif$ must occur in the minimal value of $\ptext$. 
+	\begin{itemize}
+		\item If $\sigma[i]$ is ascent then $\sigma[i]$ is the left most ascent element (if not $\sigma[i]$ would not be the minimal element, because ascent elements are increasing). Remark that the problem starts with the lower bound as $1$, and inductive problems before the index $i$ are called with descent elements which do not modified the lower bound, so the lower bound for index $i$ is $1$. 
+		$\PM{\pbmotif}{\ptext}{1}{*}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{1}{*}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to lower bound which is  $1$.	
+				
+		\item If $\sigma[i]$ is descent then $i=n_\pmotif$ ($\sigma[i]$ is the right most element). Which is solved in the case case.
+	\end{itemize}
+	
+	
+	
+	
+	\item If ${\pmotif[i]}^\urcorner$ (and thus $\sigma[i]=n_\pmotif$) then the maximal value of $\pmotif$ must occur in the maximal value of $\ptext$.
+	\begin{itemize}
+		\item If $\sigma[i]$ is descent then $\sigma[i]$ is the left most ascent element (if not $\sigma[i]$ would not be the maximal element, because descent elements are decreasing). Remark that the problem starts with the upper bound as $n_\ptext$, and any inductive problems before the index $i$ are called with ascent elements which do not modified the upper bound, so the upper bound for index $i$ is $n_\ptext$. 		$\PM{\pbmotif}{\ptext}{*}{n_\pmotif}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{n_\pmotif}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to upper bound which is  $n_\pmotif$.
+		
+		
+		\item If $\sigma[i]$ is ascent then $\sigma[i]$ then $i=n_\pmotif$ ($\sigma[i]$ is the right most element) which is solved in the base case.
+	\end{itemize}
+	
+	  
+	
+	\item  If $\overline{\pmotif[i]\pmotif[i']}$, with $\pmotif[i']=\pmotif[i]+1$ then if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i']$ must occur in $\ptext[j]+1$. 
+		\begin{itemize}
+			\item The case $\pmotif[i]$ is descent, $\pmotif[i']$ is ascent and $i<i'$ (remark that this case is equivalent to the case $\pmotif[i]$ is ascent, $\pmotif[i']$ is descent and $i'<i$) is not possible. 
+			Indeed $\pmotif[i]$ is the maximal element of $\pmotif[i:]$ thus $\pmotif[i] > \pmotif[i']$ which is in contradiction with 
+			$\pmotif[i']=\pmotif[i]+1$. 
+			
+			\item If $\pmotif[i]$ is ascent, $\pmotif[i']$ is descent and $i<i'$ (remark that this case is equivalent to the case $\pmotif[i]$ is descent, $\pmotif[i']$ is ascent and $i'<i$) , then
+			$\pmotif[i]$ is the right most ascent element and $\pmotif[i']$ is the right most element (or $\pmotif[i'] \neq \pmotif[i]+1$). Thus inductive problems between $i+1$ and $i'$ do not modified the lower bound. If $\sigma[i]$ occurs in $\ptext[j]$ then the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ have for lower bound $\ptext[i]+1$. The problem $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is a base case and is true if and only if
+			the occurrence of $\sigma[i']$ is equal the lower bound which is equal to $\ptext[i]+1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
+				
+			\item If $\pmotif[i]$ is descent and $\pmotif[i']$ is descent then $i'<i$ and there is no descent element between $\pmotif[i]$ and $\pmotif[i']$ (lemma \ref{lemma:ascentDescentAscent}), Thus inductive problems between $i'+1$ and $i$ do not modified the upper bound. Remark that if $\pmotif[i']$ occurs in $\ptext[j]$ then 
+			the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ have for upper bound $\ptext[j]-1$. $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to upper bound which is equal to $\sigma[i']-1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
+			
+			\item If $\pmotif[i]$ is ascent and $\pmotif[i']$ is ascent then $i<i'$ and there is no ascent element between $\pmotif[i]$ and $\pmotif[i']$ (lemma \ref{lemma:ascentDescentAscent}), Thus inductive problems between $i+1$ and $i'$ do not modified the lower bound. Remark that if $\pmotif[i]$ occurs in $\ptext[j]$ then 
+			the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ have for lower bound $\ptext[j]+1$. $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is true if and only if the occurrence of $\sigma[i']$ is equal to lower bound which is equal to $\sigma[i']+1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
+		\end{itemize}
+	
+	
+	
+	
+	
+	
+	
+\end{itemize}
+
 \end{proof}
+
+
+
+
+
+
+
+
+
+%\begin{proof}
+%We consider the following problem :\\
+%Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$.
+%$$
+%\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
+%\begin{cases}
+%	true 	& \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$}\\
+%			  & \text{with every element in $]\min,\max[$}\\
+%	false 	& otherwise\\
+%\end{cases}
+%$$
+%$\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}$ is closed under induction.
+%It can be solved by means of the following relations:\\
+%
+%\textbf{BASE :} \\
+%
+%For the base case, one matches the right most element of the motif. If the motif has a right bottom corner (if $n_\pmotif \in  \x$) then one must assure that the right most element of the motif is matched to the right most of the text. If the motif has a right top corner (if $n_\pmotif \in  \y$) and the right most element of the motif is maximal (minimal) then one must assure that right most element of the motif is matched to the maximal (minimal) element of the text. If there is not corner, there is no condition on the match of the right most element.
+%
+%if $n_\pmotif \notin  \x $ and $n_\pmotif \notin  \y$ : \\
+%$
+%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
+%\begin{cases}
+%	true 	& \text{if $\min<\ptext[j]<\max$}\\
+%	false 	& otherwise\\
+%\end{cases}
+%$
+%%$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif+1}{j}= true $
+%\\
+%
+%if $n_\pmotif \in  \x $ and $n_\pmotif \notin  \y$ : \\
+%$
+%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j} =
+%\begin{cases}
+%	true 	& \text{if $\min<\ptext[j]<\max$}\\
+%			& \text{and } j=n_\ptext\\	
+%	false 	& otherwise\\
+%\end{cases}
+%$
+%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $
+%\\
+%
+%if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\
+%$
+%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
+%\begin{cases}
+%	true 	& \text{if $\min<\ptext[j]<\max$ }\\
+%			& \text{and $\ptext[j]$ is the maximal element}\\
+%	false 	& otherwise\\
+%\end{cases}
+%$
+%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
+%
+%if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\
+%$
+%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
+%\begin{cases}
+%	true 	& \text{if $\min<\ptext[j]<\max$}\\
+%			& \text{and } j=n_\ptext\\		
+%			& \text{and $\ptext[n_\ptext]$ is the maximal element}\\
+%	false 	& otherwise\\
+%\end{cases}
+%$
+%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\
+%
+%if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the minimal element: \\
+%$
+%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
+%\begin{cases}
+%	true 	& \text{if $\min<\ptext[j]<\max$}\\	
+%			& \text{and $\ptext[j]$ is the minimal element}\\
+%	false 	& otherwise\\
+%\end{cases}
+%$
+%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
+%
+%if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the minimal element: \\
+%$
+%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
+%\begin{cases}
+%	true 	& \text{if $\min<\ptext[j]<\max$}\\
+%			& \text{and } j=n_\ptext\\	
+%			& \text{and $\ptext[n_\ptext]$ is the minimal element}\\
+%	false 	& otherwise\\
+%\end{cases}
+%$
+%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\
+%
+%
+%\textbf{STEP :} \\
+%
+%For the induction there are 8 cases to consider, depending on if $\pmotif[i]$ is ascend or descend, if elements $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) and if elements $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$). First one must assure that $\pmotif[i]$ can be matched to $\ptext[j]$, this is done by checking that $\ptext[j]$ is in the interval $]\min,\max[$. Then one must use the induction. The element $\ptext[j]$ gives a new $\min$ if the element is ascent or a new $\max$ if the element is descent. 
+%If $\pmotif[i]\pmotif[i+1]$ are not underlined nor overlined, then $\pmotif[i+1]$ can be matched to any upcoming element in the text. If $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) then the match of $\pmotif[i+1]$ must be $\ptext[j+1]$. If $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$) then ethe match of  $\pmotif[i+1]$ must be $\ptext[j]+1$.
+%
+%$
+%\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
+%\begin{cases}
+%\bigcup_{j<k}
+%			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{k}
+%				& \text{if $\stripe{\pmotif}{i}=\ustep$
+%				and $i \notin \x$}\\
+%				& \text{and $i \notin \y$ }\\
+%				& \text{and $\min<\ptext[j]<\max$} \\
+%			&\\
+%
+%			\bigcup_{j<k}
+%			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{k}
+%				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
+%				& \text{and $i \notin \x$ and $i \notin \y$  }\\
+%				& \text{and $\min<\ptext[j]<\max$} \\
+%			&\\
+%
+%			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{j+1}
+%				& \text{if $\stripe{\pmotif}{i}=\ustep$}\\
+%				& \text{and $i \in \x$ and $i \notin \y$}\\
+%				& \text{and $\min<\ptext[j]<\max$} \\
+%			&\\
+%
+%			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{j+1}
+%				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
+%				& \text{and $i \in \x$ and $i \notin \y$ }\\
+%				& \text{and $\min<\ptext[j]<\max$} \\
+%
+%			&\\
+%
+%			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{\ptext^{-1}[\ptext[j]+1]}
+%				&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
+%				&\text{and $i \notin \x$ and $i \in \y$}\\
+%				& \text{and $\min<\ptext[j]<\max$} \\
+%				&\text{and $\ptext^{-1}[\ptext[j]+1]>j$}\\
+%			&\\
+%
+%
+%			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{\ptext^{-1}[\ptext[j]-1]}
+%				&\text{if $\stripe{\pmotif}{i}=\dstep$}\\
+%				&\text{and $i \notin \x$ and $i \in \y$ }\\
+%				& \text{and $\min<\ptext[j]<\max$} \\
+%				&\text{and $\ptext^{-1}[\ptext[j]-1]>j$}\\
+%			&\\
+%
+%			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{j+1}
+%				&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
+%				&\text{and $i \in \x$ and $i \in \y$}\\
+%				&\text{and $\ptext[j]+1=\ptext[j+1]$ }\\
+%				& \text{and $\min<\ptext[j]<\max$} \\
+%			&\\
+%
+%			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{j+1}
+%				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
+%				&\text{and $i \in \x$ and $i \in \y$}\\
+%				&\text{and $\ptext[j]-1=\ptext[j+1]$ }\\
+%				& \text{and $\min<\ptext[j]<\max$} \\
+%			&\\
+%
+%
+%			False & Otherwise\\
+%\end{cases}
+%$
+%		
+%There are 6 cases to consider to search for a match.
+%Depending on if the motif has a left bottom corner ($0 \in \x$), a left top corner, and if it has a left top corner $0 \notin \y$, if the left most element is minimal or maximal. If the motif has a left bottom corner, then one must assure that the left most element of the motif is matched to the left most element of the text. If the motif has a left top corner and the left most element of the motif is minimal (maximal) then one must assure that the left most element of the motif is matched with the minimal (maximal) element of the text :
+%\begin{itemize}
+%	\item If $0 \in \x$ and $0 \notin \y$ there exists a match if and only if there is a match starting with left most element of the text : $ \PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true.
+%	
+%	\item If $0 \notin \x$ and $0 \notin \y$ there exists a match if and only if there exists a match stating at any index : 	$\bigcup_{1<k\leq n_\ptext}\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{k}$ is true.
+%	
+%	\item If $0 \in \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there is a match starting with the left most element  of $\ptext$, and the left most element  of $\ptext$ is the minimal element  of $\ptext$ : $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$  is true and the left most element of $\ptext$ is the minimal element of $\ptext$.
+%	
+%	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there exists a match stating at the minimal element of the text : if $j_{\min}$ is the index of the minimal element in $\ptext$ then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\min}}$ is true.	
+%			
+%	\item If $0 \in \x$, $0 \notin \y$  and the first element of the stripe of the motif is maximal then there exists a match if and only if there is a match starting with the left most element  of $\ptext$ and the left most element  of $\ptext$ is the maximal element  of $\ptext$: $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true and the left most element of $\ptext$ is the maximal element of $\ptext$.
+%	
+%	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is maximal there exists a match if and only if there exists a match stating at the maximal element of the text : if $j_{\max}$ is the index of the maximal in $\ptext$ element then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\max}}$ is true.	
+%
+%\end{itemize}
+%\end{proof}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
