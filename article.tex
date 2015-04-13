@@ -239,7 +239,8 @@
 	of elements involved in a matching may be forced to be adjacent
 
 	We focus in this paper on pattern matching issues for
-	$(213,231)$-avoiding permutations.
+	$(213,231)$-avoiding permutations
+    (\emph{i.e.}, those permutations that avoid both $213$ and $231$).
 	The number of $n$-permutations that avoid both
 	$213$ and $231$ is
 	$t_0 = 1$ for $n = 0$ and
@@ -272,30 +273,29 @@
 
 	This paper is organized as follows.
 	In Section~\ref{section:Definitions} the needed definition are presented.
-	Section~\ref{section:both are (231,213)-avoiding} is devoted to presenting 
+	Section~\ref{section:both are (231,213)-avoiding} is devoted to presenting
 	an online linear-time algorithm in case both the pattern and the target
 	permutation are $(213,231)$-avoiding,
-	where Section~\ref{section:sigma only avoid 231 and 213} focuses on the case
+	whereas Section~\ref{section:sigma only avoid 231 and 213} focuses on the case
 	where the pattern only is $(213,231)$-avoiding.
 	In Section~\ref{section:bivincular} we give a polynomial-time algorithm
 	for $(213,231)$-avoiding bivincular patterns.
 	In Section~\ref{section:LCS} we consider the problem of finding the longest
 	$(213,231)$-avoiding pattern in a permutation.
 	In Section~\ref{section:LCS common 2 permutations} we give a
-	polynomial-time algorithm for computing the longest 
+	polynomial-time algorithm for computing the longest
 	$(213,231)$-avoiding pattern common to two permutations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Definition}
+\section{Definitions}
 \label{section:Definitions}
 
 A \emph{permutation} of length $n$ is a one-to-one function from an
 $n$-element set to itself.
 We write permutations as words
 $\pi = \pi_1\pi_2\,\ldots\,\pi_n$, whose letters are distinct
-and uasually consist of the integers $12\,\ldots\,n$.
-We let
+and uasually consist of the integers $12\,\ldots\,n$, and we let
 $\pi[i]$ stands for $\pi_i$.
 For the sake of convenience, we let
 $\pi[i:j]$ stand for
@@ -328,25 +328,27 @@ $\pi = 3\mathbf{9}\mathbf{1}8\mathbf{6}\mathbf{7}4\mathbf{5}2$
 or
 $\pi = 3\mathbf{9}\mathbf{1}8\mathbf{6}\mathbf{7}45\mathbf{2}$
 ).
-Each subsequence $(91674$,
+Each subsequence $91674$,
 $91675$,
-$91672$) is called a
+$91672$ in $\pi$ is called a
 \emph{copy},
-\emph{instance}, or
-\emph{occurrence} of $\sigma$.
-Since the permutation $\pi = 391867452$  contains no increasing subsequence of length four, $\pi$ avoids $1234$.
+(or \emph{instance} or \emph{occurrence}) of $\sigma$.
+Since the permutation $\pi = 391867452$  contains no increasing subsequence of
+length four, $\pi$ avoids $1234$.
 
 Suppose $P$ is a set of permutations. We let $\AV_n(P)$ denote the
 set of all $n$-permutations avoiding each permutation in $P$.
 For the sake of convenience
-(and as it is customary), we omit $P$'s braces thus having
-e.g. $\AV_3(132,4312)$ instead of
-$\AV_3(\{132,4312\})$.
-A basic example is if
-$\pi = \pi_1\pi_2\,\ldots\,\pi_n \in \AV_n(321)$, i.e.,
-has no decreasing subsequence of length $3$, then its reverse,
-$\pi' = \pi_n\pi_{n-1}\,\ldots\,\pi_1$ avoids $123$, i.e.,
-has no increasing subsequence of length $3$.
+(and as it is customary~\cite{Kitaev:book:2011}), we omit $P$'s braces thus having
+e.g. $\AV_3(213,231)$ instead of
+$\AV_3(\{213,231\})$.
+If $\pi \in \AV_n(P)$, we also say that $\pi$ is
+\emph{$P$-avoiding}.
+% A basic example is if
+% $\pi = \pi_1\pi_2\,\ldots\,\pi_n \in \AV_n(321)$, i.e.,
+% has no decreasing subsequence of length $3$, then its reverse,
+% $\pi' = \pi_n\pi_{n-1}\,\ldots\,\pi_1$ avoids $123$, i.e.,
+% has no increasing subsequence of length $3$.
 
 An \emph{ascent} of a permutation $\pi \in S_n$ is any position
 $1 \leq i < n$ where the following value is bigger than the current one.
@@ -463,8 +465,8 @@ The above lemma also gains in interest in the form of the following corollary.
 \begin{corollary}
 \label{corollary:minmaxelement}
 $\pi \in \AV_n(213,231)$ if and only if for $1 \leq i \leq n$,
-$\pi[i:]$ start either with the maximal element
-or the minimal element of $\pi[i:]$.
+$\pi[i:]$ starts either with the maximal element
+or with the minimal element of $\pi[i:]$.
 \end{corollary}
 
 %\begin{corollary}
@@ -552,15 +554,17 @@ so it is an online algorithm.
 This section focuses on the pattern containment problem
 in case only the pattern $\sigma$ avoids $231$ and $213$.
 We need to consider a specific decomposition $\factora$ of $\sigma$ into factors.
-For $\sigma \in S_k$, the factorization
-$\sigma = \factor{\pmotif}{p} \factor{\pmotif}{p-1} \ldots \factor{\pmotif}{1}$ is defined as follows:
+For $\sigma \in S_k$, the \emph{factorization}
+$\sigma = \factor{\pmotif}{p} \factor{\pmotif}{p-1} \ldots \factor{\pmotif}{1}$
+is defined as follows:
 (i) $\sigma[k]$ is the last letter of $\factor{\pmotif}{1}$,
 (ii) for every $1 \leq i < k$,
 if $s_\sigma[i] = s_\sigma[i+1]$ then
 $\sigma[i]\sigma[i+1]$ is part of the same factor.
 For every factor $\factor{\pmotif}{j}$ of the decomposition, we let
 $\first{\pmotif}{j}$ stand for the leftmost letter of $\factor{\pmotif}{j}$,
-and $\firsti{\pmotif}{j}$ stand for the index of the leftmost letter of $\factor{\pmotif}{j}$.
+and $\firsti{\pmotif}{j}$ stand for the index in $\sigma$
+of the leftmost letter of $\factor{\pmotif}{j}$.
 For example,
 for $\sigma = 981237654$,
 we have
@@ -577,37 +581,55 @@ A Factor is either an increasing or a decreasing subsequence.
 
 \begin{lemma}
 \label{lemma:whereIsMax}
-Given a permutation $\sigma \in \AV(213,231)$ and a suffix of its decomposition $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, if
-$\stripe{\sigma}{\firsti{\sigma}{i}}=\ustep$ ($\stripe{\sigma}{\firsti{\sigma}{i}}=\dstep$) then the maximal (minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ is $\first{\sigma}{i-1}$.
+Given a permutation $\sigma \in \AV(213,231)$ and a suffix of its decomposition $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$,
+if $\stripe{\sigma}{\firsti{\sigma}{i}}=\ustep$
+(resp. $\stripe{\sigma}{\firsti{\sigma}{i}}=\dstep$)
+then the maximal (resp. minimal) element of
+$\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$
+is $\first{\sigma}{i-1}$.
 \end{lemma}
 
 \begin{proof}
-Take the right most element of $\factor{\sigma}{i}$, this element is an ascent (descent),
-so it is inferior (superior) to the next element which is $\first{\sigma}{i-1}$. Because $\factor{\sigma}{i}$ is an increasing (decreasing) subsequence, every element of $\factor{\sigma}{i}$ is inferior (superior) to $\first{\sigma}{i-1}$.
-By lemma \ref{lemma:first element is 1 or n}, $\first{\sigma}{i-1}$ is the maximal (minimal) element of $\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ thus $\first{\sigma}{i-1}$ is the maximal (minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$.
+Consider the rightmost element of $\factor{\sigma}{i}$ and assume this element is an ascent.
+Then, it follows that it is smaller than the following element which is $\first{\sigma}{i-1}$.
+Now, since $\factor{\sigma}{i}$ is an increasing subsequence, every element of
+$\factor{\sigma}{i}$ is smaller than $\first{\sigma}{i-1}$.
+According to Lemma\ref{lemma:first element is 1 or n}, $\first{\sigma}{i-1}$ is the maximal (minimal) element of $\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, and hence
+$\first{\sigma}{i-1}$ is the maximal  element of
+$\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$.
 
+A similar argument shows that the lemma holds true if the rightmost element
+of $\factor{\sigma}{i}$ is a descent.
+\qed
+% so it is inferior (superior) to the next element which is $\first{\sigma}{i-1}$. Because $\factor{\sigma}{i}$ is an increasing (decreasing) subsequence, every element of $\factor{\sigma}{i}$ is inferior (superior) to $\first{\sigma}{i-1}$.
+% By lemma \ref{lemma:first element is 1 or n}, $\first{\sigma}{i-1}$ is the maximal (minimal) element of $\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ thus $\first{\sigma}{i-1}$ is the maximal (minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$.
 \end{proof}
 
-To ease the next lemma and its proof we define the set $\SET{\pmotif}{\ptext}{i}{j}$ such that if $s \in S$, then $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$ and the element matching $\first{\pmotif}{i}$ is $\ptext[j]$.
+For easy readability, we now define the set
+$\SET{\pmotif}{\ptext}{i}{j}$ as follows:
+if $s \in \SET{\pmotif}{\ptext}{i}{j}$ then
+$s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$
+and the element matching $\first{\pmotif}{i}$ is $\ptext[j]$.
 
 \begin{lemma}
 Given a permutation $\pmotif$ and $\factor{\pmotif}{i}$ an ascent (descent) factor.
-Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that the element matching $\first{\pmotif}{i-1}$ is minimal (maximal), for all subsequence 
+Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that the element matching $\first{\pmotif}{i-1}$ is minimal (maximal), for all subsequence
 $s' \in \SET{\pmotif}{\ptext}{i}{j}$ and for all subsequence $t$ of $\ptext$, such that $t=t's'$, if $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ then the subsequence $t's$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$.
 \end{lemma}
 
 \begin{proof}
 Given a permutation $\pmotif$ and $\factor{\pmotif}{i}$ an ascent (descent) factor.
 Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that the element matching $\first{\pmotif}{i-1}$ is minimal (maximal).
-Let's $s' \in \SET{\pmotif}{\ptext}{i}{j}$ and $t$ subsequence of $\ptext$, such that $t=t's'$ and $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ in $\pi$. 
+Let's $s' \in \SET{\pmotif}{\ptext}{i}{j}$ and $t$ subsequence of $\ptext$, such that $t=t's'$ and $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ in $\pi$.
 Remark that every element of $t'$ is superior (inferior) to every element of $s'$.
 Plus, remark that the element matching $\first{\pmotif}{i-1}$ in $s$ is minimal (maximal) and it is the maximal (minimal) element of the subsequence (\ref{lemma:whereIsMax}), thus
 it is inferior (superior) to the element matching $\first{\pmotif}{i-1}$ in $s'$.
 So every element of $t'$ is also superior (inferior) to every element of $s$. Thus the subsequence $t's$ is an occurrence of $\pmotif[\first{\pmotif}{i+1}:]$ in $\ptext$.
+\qed
 \end{proof}
 
 \begin{corollary}
-Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{\pmotif}{i-1}]$ is minimal (maximal). There is a match of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ matched to $\ptext[j]$ if and only if there exists $t$ such that $ts$ is a match of $\pmotif$ in $\ptext$. 
+Let's $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{\pmotif}{i-1}]$ is minimal (maximal). There is a match of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ matched to $\ptext[j]$ if and only if there exists $t$ such that $ts$ is a match of $\pmotif$ in $\ptext$.
 \end{corollary}
 
 This corollary gives one a safe way to choose a match. Indeed if one does not find a match such that a well chosen subsequence is a suffix of the motif then there is no match at all.
@@ -634,19 +656,19 @@ This corollary gives one a safe way to choose a match. Indeed if one does not fi
 
 Consider the following problem :\\
 $
-\LM{\pmotif}{\ptext}{i}{j} = 
+\LM{\pmotif}{\ptext}{i}{j} =
 \begin{cases}
-	\text{The maximal value of a subsequence} 
+	\text{The maximal value of a subsequence}
 		& \text{If $\stripe{\sigma}{\firsti{\sigma}{i}}=\ustep$ } \\
-	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & \\	
+	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & \\
 	\text{ and that minimize the maximal value} & \\
 	\text{ and $\first{\sigma}{i}$ is matched with $\ptext[j]$} & \\
-	
+
 	&\\
-	
-	\text{The minimal value of a subsequence} 
+
+	\text{The minimal value of a subsequence}
 		& \text{If $\stripe{\sigma}{\firsti{\sigma}{i}}=\dstep$ } \\
-	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & \\	
+	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & \\
 	\text{ and that maximize the minimal value} & \\
 	\text{ and $\first{\sigma}{i}$ is matched with $\ptext[j]$} & \\
 \end{cases}
@@ -658,13 +680,13 @@ This problem can be solve by induction.\\
 
 \textbf{BASE :} \\
 $
-\LM{\pmotif}{\ptext}{1}{j} = 
+\LM{\pmotif}{\ptext}{1}{j} =
 \begin{cases}
-		\min_{j<j'}\{\infty\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } 
+		\min_{j<j'}\{\infty\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent }
 			& \text{If $\stripe{\sigma}{\firsti{\sigma}{i}}=\ustep$ }  \\
 		\text{ $|\factor{\pmotif}{1}| \leq LIS(j,j',\ptext[j'])  $}\}& \\
 		&\\
-		\max_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } 
+		\max_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent }
 			& \text{If $\stripe{\sigma}{\firsti{\sigma}{i}}=\dstep$ } \\
 		\text{ $|\factor{\pmotif}{1}| \leq LDS(j,j',\ptext[j']) $}\}&\\
 \end{cases}
@@ -741,7 +763,7 @@ We introduce property of bivincular permutation if the permutation is $(213,231)
 
 \begin{lemma}
 \label{lemma:ascentDescentAscent}
-If $\overline{\sigma[i]\sigma[j]}$ (thus $\sigma[j]=\sigma[i]+1$) and if $\sigma[i]$ is ascent (decent) and $\sigma[i]+1$ is ascent (decent) then $i<j$ ($j>i$) and for every $k$, $i<k<j$ ($j>k>i$), $\pi[k]$ is descent (ascent).    
+If $\overline{\sigma[i]\sigma[j]}$ (thus $\sigma[j]=\sigma[i]+1$) and if $\sigma[i]$ is ascent (decent) and $\sigma[i]+1$ is ascent (decent) then $i<j$ ($j>i$) and for every $k$, $i<k<j$ ($j>k>i$), $\pi[k]$ is descent (ascent).
 \end{lemma}
 
 \begin{proof}
@@ -782,12 +804,12 @@ $$
 			& \text{and if  $^\ulcorner{\pmotif[n_\pmotif]}$ then $\ptext[j]=\lb=1$ } \\
 			& \text{and if  $\overline{(\pmotif[n_\pmotif]-1)\pmotif[n_\pmotif] }$ then $\ptext[j]=\lb$ }  \\
 			& \text{and if  $\overline{(\pmotif[n_\pmotif]\pmotif[n_\pmotif]-1)}$ then $\ptext[j]=\ub$}  \\
-		
+
 	false	& \text{otherwise} \\
 \end{cases}
 $$
 
-The base case finds an occurrence for the right most element of the motif. If the last element do not have any restriction on position and on value, then $\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}$ is true if and only if $\pmotif[n_\pmotif]$ can occur in $\ptext[j]$. This condition is checked by assuring that $\ptext[j] \in [\lb,\ub]$. 
+The base case finds an occurrence for the right most element of the motif. If the last element do not have any restriction on position and on value, then $\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}$ is true if and only if $\pmotif[n_\pmotif]$ can occur in $\ptext[j]$. This condition is checked by assuring that $\ptext[j] \in [\lb,\ub]$.
 
 \textbf{STEP :} \\
 For clarity of reading we consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
@@ -797,113 +819,113 @@ For clarity of reading we consider 3 cases for the problem $\PM{\pbmotif}{\ptext
 	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j} = false
 	$$
 	this is straightforward with the definition. If $\ptext[j] \notin [\lb,\ub]$ then it can not be part of an occurrence of  $\pmotif[i:]$ in $\pmotif[i:]$ with every element in $[\lb,\ub]$.
-	
+
 	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is ascent then :
 	$$
-	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}= 
+	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
 	\begin{cases}
 		\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}
 			& \text{if $\pmotif[i]$ is not underlined } \\
-			& \text{ and $\pmotif[i]$ is not overlined} \\ 
+			& \text{ and $\pmotif[i]$ is not overlined} \\
 		\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}
 			& \text{if $\pmotif[i]$ is not underlined } \\
-			& \text{ and $\overline{(\pmotif[i]-1)\pmotif[i]}$ or $^\ulcorner{\pmotif[i]}$}\\ 	
+			& \text{ and $\overline{(\pmotif[i]-1)\pmotif[i]}$ or $^\ulcorner{\pmotif[i]}$}\\
 			& \text{ and $\ptext[j]=\lb$} \\
-		\PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{j+1}	
+		\PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{j+1}
 			& \text{if $\underline{\pmotif[i]\pmotif[i+1]}$ } \\
-			& \text{ and $\overline{(\pmotif[i]-1)\pmotif[i]}$ or $^\ulcorner{\pmotif[i]}$}\\ 	
-			& \text{ and $\ptext[j]=\lb$} \\				
-		\PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{j+1}	
+			& \text{ and $\overline{(\pmotif[i]-1)\pmotif[i]}$ or $^\ulcorner{\pmotif[i]}$}\\
+			& \text{ and $\ptext[j]=\lb$} \\
+		\PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{j+1}
 			& \text{if $\underline{\pmotif[i]\pmotif[i+1]}$ } \\
 			& \text{ and $\pmotif[i]$ is not overlined} \\
 		false & \text{otherwise}
-		 	
+
 	\end{cases}
-	$$	
-	$\pmotif[i]$ can occur in $\ptext[j]$ because $\ptext[j] \in [\lb,\ub]$. $\pmotif[i:]$ occurs in $\ptext[j:]$, if and only if $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$. $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$ if and only if there is an occurrence of $\pmotif[i+1:]$ in $\ptext[j+1:]$ starting at element $k$, $j<k$, which correspond to know if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{*}{*}{i+1}{k}$ is true. Because $\pmotif[i]$ is ascent,  $\pmotif[i]$ is the minimal element of $\pmotif[i:]$, thus a match of $\pmotif[i+1:]$ can not use value inferior to $\ptext[j]$ so $\ptext[j]+1$ is the new lower bound. The upper bound is unchanged. So there is a occurrence of  $\pmotif[i:]$ starting at element $j$ in $\ptext[j:]$ if and only if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}$. 
-	
+	$$
+	$\pmotif[i]$ can occur in $\ptext[j]$ because $\ptext[j] \in [\lb,\ub]$. $\pmotif[i:]$ occurs in $\ptext[j:]$, if and only if $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$. $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$ if and only if there is an occurrence of $\pmotif[i+1:]$ in $\ptext[j+1:]$ starting at element $k$, $j<k$, which correspond to know if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{*}{*}{i+1}{k}$ is true. Because $\pmotif[i]$ is ascent,  $\pmotif[i]$ is the minimal element of $\pmotif[i:]$, thus a match of $\pmotif[i+1:]$ can not use value inferior to $\ptext[j]$ so $\ptext[j]+1$ is the new lower bound. The upper bound is unchanged. So there is a occurrence of  $\pmotif[i:]$ starting at element $j$ in $\ptext[j:]$ if and only if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}$.
+
 	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is descent then :
 	$$
 	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
 	\begin{cases}
 			\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{k}
 				& \text{if $\pmotif[i]$ is not underlined } \\
-				& \text{ and $\pmotif[i]$ is not overlined} \\ 
+				& \text{ and $\pmotif[i]$ is not overlined} \\
 			\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{k}
 				& \text{if $\pmotif[i]$ is not underlined } \\
-				& \text{ and $\overline{\pmotif[i](\pmotif[i]+1)}$ or ${\pmotif[i]}^\urcorner$}\\ 	
+				& \text{ and $\overline{\pmotif[i](\pmotif[i]+1)}$ or ${\pmotif[i]}^\urcorner$}\\
 				& \text{ and $\ptext[j]=\ub$} \\
-			\PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{j+1}	
+			\PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{j+1}
 				& \text{if $\underline{\pmotif[i]\pmotif[i+1]}$ } \\
-				& \text{ and $\overline{\pmotif[i](\pmotif[i]+1)}$ or ${\pmotif[i]}^\urcorner$}\\ 	
-				& \text{ and $\ptext[j]=\ub$} \\					
-			\PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{j+1}	
+				& \text{ and $\overline{\pmotif[i](\pmotif[i]+1)}$ or ${\pmotif[i]}^\urcorner$}\\
+				& \text{ and $\ptext[j]=\ub$} \\
+			\PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{j+1}
 				& \text{if $\underline{\pmotif[i]\pmotif[i+1]}$ } \\
-				& \text{ and $\pmotif[i]$ is not overlined} \\	
-			false & \text{otherwise}		
+				& \text{ and $\pmotif[i]$ is not overlined} \\
+			false & \text{otherwise}
 	\end{cases}
-	$$	
-	We prove symmetrically as the last case that 
-	$\pmotif[i:]$ occurs in $\ptext[j:]$ starting at element $j$ if and only if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{k}$. 
+	$$
+	We prove symmetrically as the last case that
+	$\pmotif[i:]$ occurs in $\ptext[j:]$ starting at element $j$ if and only if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{k}$.
 
 \end{itemize}
 
 Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then $\sigma$ occurs in $\pi$. We now discus about the position and value constraints.
-\paragraph{Position Constraint.} There are 3 types of position constraints 
+\paragraph{Position Constraint.} There are 3 types of position constraints
 \begin{itemize}
 	\item If $_\llcorner{\sigma[1]}$ then the left most element of $\sigma$  must occurs in the left most element of $\pi$ ($\pmotif[1]$ occurs in $\ptext[1]$ on a occurrence of $\pmotif$ in $\ptext$). This constraint is assured by demanding that the occurrence starts at the left most element of $\ptext$ : if and only if  $\PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{1}$ is true.
-	
+
 	\item If ${\pmotif[n_\pmotif]}_\lrcorner$ then the right most element $\sigma$ must occurs in the right most element of $\pi$ ($\pmotif[n_\pmotif]$ occurs in $\ptext[n_\ptext]$ on a occurrence of $\pmotif$ in $\ptext$). This constraint is assured in the base case.
-	
-	\item If $\underline{\pmotif[i]\pmotif[i+1]}$ then the index of the occurrence of $\pmotif[i]$ and $\pmotif[i+1]$ must be consecutive. In other word if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i+1]$ must occur in $\ptext[j+1]$. We assure this restriction in the induction by demanding that occurrences of $\pmotif[i+1:]$  start at index $j+1$. 
+
+	\item If $\underline{\pmotif[i]\pmotif[i+1]}$ then the index of the occurrence of $\pmotif[i]$ and $\pmotif[i+1]$ must be consecutive. In other word if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i+1]$ must occur in $\ptext[j+1]$. We assure this restriction in the induction by demanding that occurrences of $\pmotif[i+1:]$  start at index $j+1$.
 \end{itemize}
 
-\paragraph{Value Constraint.} There are 3 types of position constraints 
+\paragraph{Value Constraint.} There are 3 types of position constraints
 \begin{itemize}
-	\item If $^\ulcorner{\sigma[i]}$ (and thus $\sigma[i]=1$) then the minimal value of $\pmotif$ must occur in the minimal value of $\ptext$. 
+	\item If $^\ulcorner{\sigma[i]}$ (and thus $\sigma[i]=1$) then the minimal value of $\pmotif$ must occur in the minimal value of $\ptext$.
 	\begin{itemize}
-		\item If $\sigma[i]$ is ascent then $\sigma[i]$ is the left most ascent element (if not $\sigma[i]$ would not be the minimal element, because ascent elements are increasing). Remark that the problem starts with the lower bound as $1$, and inductive problems before the index $i$ are called with descent elements which do not modified the lower bound, so the lower bound for index $i$ is $1$. 
-		$\PM{\pbmotif}{\ptext}{1}{*}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{1}{*}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to lower bound which is  $1$.	
-				
+		\item If $\sigma[i]$ is ascent then $\sigma[i]$ is the left most ascent element (if not $\sigma[i]$ would not be the minimal element, because ascent elements are increasing). Remark that the problem starts with the lower bound as $1$, and inductive problems before the index $i$ are called with descent elements which do not modified the lower bound, so the lower bound for index $i$ is $1$.
+		$\PM{\pbmotif}{\ptext}{1}{*}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{1}{*}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to lower bound which is  $1$.
+
 		\item If $\sigma[i]$ is descent then $i=n_\pmotif$ ($\sigma[i]$ is the right most element). Which is solved in the case case.
 	\end{itemize}
-	
-	
-	
-	
+
+
+
+
 	\item If ${\pmotif[i]}^\urcorner$ (and thus $\sigma[i]=n_\pmotif$) then the maximal value of $\pmotif$ must occur in the maximal value of $\ptext$.
 	\begin{itemize}
 		\item If $\sigma[i]$ is descent then $\sigma[i]$ is the left most ascent element (if not $\sigma[i]$ would not be the maximal element, because descent elements are decreasing). Remark that the problem starts with the upper bound as $n_\ptext$, and any inductive problems before the index $i$ are called with ascent elements which do not modified the upper bound, so the upper bound for index $i$ is $n_\ptext$. 		$\PM{\pbmotif}{\ptext}{*}{n_\pmotif}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{n_\pmotif}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to upper bound which is  $n_\pmotif$.
-		
-		
+
+
 		\item If $\sigma[i]$ is ascent then $\sigma[i]$ then $i=n_\pmotif$ ($\sigma[i]$ is the right most element) which is solved in the base case.
 	\end{itemize}
-	
-	  
-	
-	\item  If $\overline{\pmotif[i]\pmotif[i']}$, with $\pmotif[i']=\pmotif[i]+1$ then if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i']$ must occur in $\ptext[j]+1$. 
+
+
+
+	\item  If $\overline{\pmotif[i]\pmotif[i']}$, with $\pmotif[i']=\pmotif[i]+1$ then if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i']$ must occur in $\ptext[j]+1$.
 		\begin{itemize}
-			\item The case $\pmotif[i]$ is descent, $\pmotif[i']$ is ascent and $i<i'$ (remark that this case is equivalent to the case $\pmotif[i]$ is ascent, $\pmotif[i']$ is descent and $i'<i$) is not possible. 
-			Indeed $\pmotif[i]$ is the maximal element of $\pmotif[i:]$ thus $\pmotif[i] > \pmotif[i']$ which is in contradiction with 
-			$\pmotif[i']=\pmotif[i]+1$. 
-			
+			\item The case $\pmotif[i]$ is descent, $\pmotif[i']$ is ascent and $i<i'$ (remark that this case is equivalent to the case $\pmotif[i]$ is ascent, $\pmotif[i']$ is descent and $i'<i$) is not possible.
+			Indeed $\pmotif[i]$ is the maximal element of $\pmotif[i:]$ thus $\pmotif[i] > \pmotif[i']$ which is in contradiction with
+			$\pmotif[i']=\pmotif[i]+1$.
+
 			\item If $\pmotif[i]$ is ascent, $\pmotif[i']$ is descent and $i<i'$ (remark that this case is equivalent to the case $\pmotif[i]$ is descent, $\pmotif[i']$ is ascent and $i'<i$) , then
 			$\pmotif[i]$ is the right most ascent element and $\pmotif[i']$ is the right most element (or $\pmotif[i'] \neq \pmotif[i]+1$). Thus inductive problems between $i+1$ and $i'$ do not modified the lower bound. If $\sigma[i]$ occurs in $\ptext[j]$ then the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ have for lower bound $\ptext[i]+1$. The problem $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is a base case and is true if and only if
 			the occurrence of $\sigma[i']$ is equal the lower bound which is equal to $\ptext[i]+1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
-				
-			\item If $\pmotif[i]$ is descent and $\pmotif[i']$ is descent then $i'<i$ and there is no descent element between $\pmotif[i]$ and $\pmotif[i']$ (lemma \ref{lemma:ascentDescentAscent}), Thus inductive problems between $i'+1$ and $i$ do not modified the upper bound. Remark that if $\pmotif[i']$ occurs in $\ptext[j]$ then 
+
+			\item If $\pmotif[i]$ is descent and $\pmotif[i']$ is descent then $i'<i$ and there is no descent element between $\pmotif[i]$ and $\pmotif[i']$ (lemma \ref{lemma:ascentDescentAscent}), Thus inductive problems between $i'+1$ and $i$ do not modified the upper bound. Remark that if $\pmotif[i']$ occurs in $\ptext[j]$ then
 			the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ have for upper bound $\ptext[j]-1$. $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to upper bound which is equal to $\sigma[i']-1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
-			
-			\item If $\pmotif[i]$ is ascent and $\pmotif[i']$ is ascent then $i<i'$ and there is no ascent element between $\pmotif[i]$ and $\pmotif[i']$ (lemma \ref{lemma:ascentDescentAscent}), Thus inductive problems between $i+1$ and $i'$ do not modified the lower bound. Remark that if $\pmotif[i]$ occurs in $\ptext[j]$ then 
+
+			\item If $\pmotif[i]$ is ascent and $\pmotif[i']$ is ascent then $i<i'$ and there is no ascent element between $\pmotif[i]$ and $\pmotif[i']$ (lemma \ref{lemma:ascentDescentAscent}), Thus inductive problems between $i+1$ and $i'$ do not modified the lower bound. Remark that if $\pmotif[i]$ occurs in $\ptext[j]$ then
 			the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ have for lower bound $\ptext[j]+1$. $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is true if and only if the occurrence of $\sigma[i']$ is equal to lower bound which is equal to $\sigma[i']+1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
 		\end{itemize}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 \end{itemize}
 
 \end{proof}
@@ -950,7 +972,7 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 %\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j} =
 %\begin{cases}
 %	true 	& \text{if $\min<\ptext[j]<\max$}\\
-%			& \text{and } j=n_\ptext\\	
+%			& \text{and } j=n_\ptext\\
 %	false 	& otherwise\\
 %\end{cases}
 %$
@@ -973,7 +995,7 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 %\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
 %\begin{cases}
 %	true 	& \text{if $\min<\ptext[j]<\max$}\\
-%			& \text{and } j=n_\ptext\\		
+%			& \text{and } j=n_\ptext\\
 %			& \text{and $\ptext[n_\ptext]$ is the maximal element}\\
 %	false 	& otherwise\\
 %\end{cases}
@@ -984,7 +1006,7 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 %$
 %\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
 %\begin{cases}
-%	true 	& \text{if $\min<\ptext[j]<\max$}\\	
+%	true 	& \text{if $\min<\ptext[j]<\max$}\\
 %			& \text{and $\ptext[j]$ is the minimal element}\\
 %	false 	& otherwise\\
 %\end{cases}
@@ -996,7 +1018,7 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 %\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
 %\begin{cases}
 %	true 	& \text{if $\min<\ptext[j]<\max$}\\
-%			& \text{and } j=n_\ptext\\	
+%			& \text{and } j=n_\ptext\\
 %			& \text{and $\ptext[n_\ptext]$ is the minimal element}\\
 %	false 	& otherwise\\
 %\end{cases}
@@ -1006,7 +1028,7 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 %
 %\textbf{STEP :} \\
 %
-%For the induction there are 8 cases to consider, depending on if $\pmotif[i]$ is ascend or descend, if elements $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) and if elements $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$). First one must assure that $\pmotif[i]$ can be matched to $\ptext[j]$, this is done by checking that $\ptext[j]$ is in the interval $]\min,\max[$. Then one must use the induction. The element $\ptext[j]$ gives a new $\min$ if the element is ascent or a new $\max$ if the element is descent. 
+%For the induction there are 8 cases to consider, depending on if $\pmotif[i]$ is ascend or descend, if elements $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) and if elements $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$). First one must assure that $\pmotif[i]$ can be matched to $\ptext[j]$, this is done by checking that $\ptext[j]$ is in the interval $]\min,\max[$. Then one must use the induction. The element $\ptext[j]$ gives a new $\min$ if the element is ascent or a new $\max$ if the element is descent.
 %If $\pmotif[i]\pmotif[i+1]$ are not underlined nor overlined, then $\pmotif[i+1]$ can be matched to any upcoming element in the text. If $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) then the match of $\pmotif[i+1]$ must be $\ptext[j+1]$. If $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$) then ethe match of  $\pmotif[i+1]$ must be $\ptext[j]+1$.
 %
 %$
@@ -1073,21 +1095,21 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 %			False & Otherwise\\
 %\end{cases}
 %$
-%		
+%
 %There are 6 cases to consider to search for a match.
 %Depending on if the motif has a left bottom corner ($0 \in \x$), a left top corner, and if it has a left top corner $0 \notin \y$, if the left most element is minimal or maximal. If the motif has a left bottom corner, then one must assure that the left most element of the motif is matched to the left most element of the text. If the motif has a left top corner and the left most element of the motif is minimal (maximal) then one must assure that the left most element of the motif is matched with the minimal (maximal) element of the text :
 %\begin{itemize}
 %	\item If $0 \in \x$ and $0 \notin \y$ there exists a match if and only if there is a match starting with left most element of the text : $ \PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true.
-%	
+%
 %	\item If $0 \notin \x$ and $0 \notin \y$ there exists a match if and only if there exists a match stating at any index : 	$\bigcup_{1<k\leq n_\ptext}\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{k}$ is true.
-%	
+%
 %	\item If $0 \in \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there is a match starting with the left most element  of $\ptext$, and the left most element  of $\ptext$ is the minimal element  of $\ptext$ : $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$  is true and the left most element of $\ptext$ is the minimal element of $\ptext$.
-%	
-%	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there exists a match stating at the minimal element of the text : if $j_{\min}$ is the index of the minimal element in $\ptext$ then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\min}}$ is true.	
-%			
+%
+%	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there exists a match stating at the minimal element of the text : if $j_{\min}$ is the index of the minimal element in $\ptext$ then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\min}}$ is true.
+%
 %	\item If $0 \in \x$, $0 \notin \y$  and the first element of the stripe of the motif is maximal then there exists a match if and only if there is a match starting with the left most element  of $\ptext$ and the left most element  of $\ptext$ is the maximal element  of $\ptext$: $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true and the left most element of $\ptext$ is the maximal element of $\ptext$.
-%	
-%	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is maximal there exists a match if and only if there exists a match stating at the maximal element of the text : if $j_{\max}$ is the index of the maximal in $\ptext$ element then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\max}}$ is true.	
+%
+%	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is maximal there exists a match if and only if there exists a match stating at the maximal element of the text : if $j_{\max}$ is the index of the maximal in $\ptext$ element then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\max}}$ is true.
 %
 %\end{itemize}
 %\end{proof}
