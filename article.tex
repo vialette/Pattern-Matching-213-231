@@ -480,11 +480,11 @@ $\pi[i]$ is the minimal or the maximal element of $\pi[i:]$.
 Let $\pi \in \in \AV_n(213,231)$ and $1 \leq i < n$.
 Then,
 (1) 
-if $\pi[i]$ is an ascent element then $\pi[i]$ is the minimum element 
+if $\pi[i]$ is an ascent element then $\pi[i]$ is the minimal element 
 of $\pi[i:]$
 and 
 (2)
-if if $\pi[i]$ is a descent element then $\pi[i]$ is the maximum element 
+if if $\pi[i]$ is a descent element then $\pi[i]$ is the maximal element 
 of $\pi[i:]$
 \end{corollary}
 
@@ -531,10 +531,10 @@ $s_t$ occurs as a subsequence in $s_\pi$.
   by the inductive hypothesis, it follows that
   $t[2:]$ is an occurrence of $\sigma[2:]$ in $\pi[2:]$.
   Moreover, if $s_\sigma[1] = a$ (resp. $s_\sigma[1] = d$)
-  then $\sigma[1]$ is the minimum (resp. maximum) element of $\sigma$
+  then $\sigma[1]$ is the minimal (resp. maximal) element of $\sigma$
   (Lemma~\ref{lemma:first element is 1 or n}),
   and hence, since $s_t = s_\sigma$ occurs as a subsequence in $s_\pi$,
-  $t[1]$ is the minimum (resp. maximum) element of $t$.
+  $t[1]$ is the minimal (resp. maximal) element of $t$.
   Therefore, $t$ is an occurrence of $\sigma$ in $\pi$.
   \qed
 \end{proof}
@@ -578,7 +578,7 @@ For $\sigma \in S_k$, the \emph{factorization}
 $\sigma = \factor{\pmotif}{p} \factor{\pmotif}{p-1} \ldots \factor{\pmotif}{1}$
 is defined as follows:
 (i) $\sigma[k]$ is the last letter of $\factor{\pmotif}{1}$,
-(ii)for every $1 \leq i < k$,
+(ii) for every $1 \leq i < k$,
 if $s_\sigma[i] = s_\sigma[i+1]$ then
 $\sigma[i]\sigma[i+1]$ is part of the same factor.
 For every factor $\factor{\pmotif}{j}$ of the decomposition, we let
@@ -601,8 +601,11 @@ A Factor is either an increasing or a decreasing subsequence.
 
 \begin{lemma}
 \label{lemma:whereIsMax}
-Given a permutation $\sigma \in \AV(213,231)$ and a suffix of its decomposition $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, if
-$\firsti{\sigma}{i}$ is an ascent element (respectively  if $\firsti{\sigma}{i}$ is a descent element) then the maximal (resp. minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ is $\first{\sigma}{i-1}$.
+Given a permutation $\sigma \in \AV(213,231)$ and a suffix of its 
+decomposition $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, 
+if $\firsti{\sigma}{i}$ is an ascent (resp. descent) element then the maximal 
+(resp. minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ is 
+$\first{\sigma}{i-1}$.
 \end{lemma}
 
 \begin{proof}
@@ -619,29 +622,30 @@ of $\factor{\sigma}{i}$ is a descent.
 \qed
 \end{proof}
 
-For easy readability, we now define the set
+For the sake of readability, we now define the set
 $\SET{\pmotif}{\ptext}{i}{j}$ as follows:
 if $s \in \SET{\pmotif}{\ptext}{i}{j}$ then
 $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$
 and the element matching $\first{\pmotif}{i}$ is $\ptext[j]$.
 
 \begin{lemma}
-Given a permutation $\pmotif$ and $\factor{\pmotif}{i}$ an ascent (respectively descent) factor.
+Let $\pmotif$ be a permutation where 
+$\factor{\pmotif}{i}$ is an ascent (resp. descent) factor.
 If $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that the element matching $\first{\pmotif}{i-1}$ is minimal (resp. maximal), for all subsequence 
 $s' \in \SET{\pmotif}{\ptext}{i}{j}$ and for all subsequence $t$ of $\ptext$, such that $t=t's'$, if $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ then the subsequence $t's$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$.
 \end{lemma}
 
 \begin{proof}
 By definition $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$. To prove that $ts$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ we prove that every element of t is larger than every element of $s$. If $ts'$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ so every element of $t$ is larger than every element of $s'$. Moreover the maximal element of $s$ is smaller than  the maximal element of $s'$ so every element of $s$ is smaller than every element of $s'$ thus every element of $s$ is smaller than every element of $t$. We use a similar argument if $\factor{\pmotif}{i}$ a descent factor.
-$\qed$
+\qed
 \end{proof}
 
 \begin{corollary}
-Given a permutation $\pmotif$ and $\factor{\pmotif}{i}$ an ascent (respectively descent) factor.
+Let $\pmotif$ be a permutation where $\factor{\pmotif}{i}$ is an ascent (resp. descent) factor.
 If $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). There is a match of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ matched to $\ptext[j]$ if and only if there exists $t$ such that $ts$ is a match of $\pmotif$ in $\ptext$. 
 \end{corollary}
 
-This corollary gives one a safe way to choose a match. Indeed if one does not find a match such that a well chosen subsequence is a suffix of the motif then there is no match at all.
+% This corollary allows us to way to choose a match. Indeed if one does not find a match such that a well chosen subsequence is a suffix of the motif then there is no match at all.
 
 \begin{proposition}
 	\label{Proposition:sigma avoids 213 and 231}
@@ -663,8 +667,8 @@ This corollary gives one a safe way to choose a match. Indeed if one does not fi
 %An ascent (descent) factor 	$\factor{i}$ is a match in $\ptext[j:j']$  if and only if there exists an increasing (decreasing) subsequence in $\ptext[j:j']$ of size superior or equal to the size of $\factor{i}$.
 %\end{remark}
 
-Consider the following problem :\\
-$
+Consider the following problem :
+$$
 \LM{\pmotif}{\ptext}{i}{j} =
 \begin{cases}
 
@@ -684,15 +688,14 @@ $
 	\text{ and that maximize the minimal value} & \\
 	\text{ and $\first{\sigma}{i}$ is matched with $\ptext[j]$} & \\
 \end{cases}
-$
+$$
 
-This problem can be solve by induction.\\
+This problem can be solve by induction as follows:
 
-
-
-\textbf{BASE :} \\
-$
-\LM{\pmotif}{\ptext}{1}{j} =
+\noindent\textbf{BASE :}
+\begin{align*}
+\LM{\pmotif}{\ptext}{1}{j} 
+&=
 \begin{cases}
 		\min_{j<j'}\{\infty\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } 
 			& \text{If $\first{\sigma}{i}$ is}  \\
@@ -702,43 +705,49 @@ $
 			& \text{If $\first{\sigma}{i}$ is}  \\
 		\text{ $|\factor{\pmotif}{1}| \leq LDS(j,j',\ptext[j']) $}\}&\text{ a descent element }\\
 \end{cases}
-$
-
-\textbf{STEP :} \\
-$
-\LM{\pmotif}{\ptext}{i}{j} =
+\\
+\intertext{\textbf{STEP :}}
+\LM{\pmotif}{\ptext}{i}{j} 
+&=
 \begin{cases}
 	\min \{\infty\} \cup  \AF{\pmotif}{\ptext}{i}{j} &
 	\text{If $\first{\sigma}{i}$ is an ascent element}\\
 	\max \{0\} \cup  \DF{\pmotif}{\ptext}{i}{j} &
 	\text{If $\first{\sigma}{i}$ is  a descent element}\\
 \end{cases}
-$
-
-%
-%With $\AF{\pmotif}{\ptext}{i}{j}$ ($\DF{\pmotif}{\ptext}{i}{j}$) the set of element such that
-%if  $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$ then there exists
-%a match of $\pmotif[\firsti{\pmotif}{i-1}:]$ in $\ptext[k:]$ and
-%the element $\first{\pmotif}{i-1}$ is matched with element $\ptext[k]$ and
-%there is a match of $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ and
-%the element $\first{\pmotif}{i}$ is matched with element $\ptext[j]$ and every element is inferior (superior) to the match of
-%$\pmotif[\firsti{\pmotif}{i-1}:]$ in $\ptext[k:]$.
-
-With $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ the set of element such that if  $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$ or if $\ptext[k] \in \DF{\pmotif}{\ptext}{i}{j}$ then there exists a match of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$ and the element $\first{\pmotif}{i-1}$ is matched with element $\ptext[k]$. Given that one has the set $\SET{\pmotif}{\ptext}{i-1}{k}$, to decide if $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$, one needs to find an occurrence $t$ of $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ such there exists $s \in \SET{\pmotif}{\ptext}{i-1}{k}$ and $ts$ is a match of $\pmotif[\firsti{\pmotif}{i}:]$. 
-Formally we define $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ such as:\\
-
-
-
-$\AF{\pmotif}{\ptext}{i}{j}=\{\ptext[j']|\text{$j<j'$ and $\LM{\pmotif}{\ptext}{i-1}{j'} \neq 0$}$ \\
-\indent \indent \indent and  $|\factor{\pmotif}{i}| \leq LIS_{\ptext}(j,j'-1,\first{\pmotif}{i-1})\}$ \\
-
-$\DF{\pmotif}{\ptext}{i}{j}=\{\ptext[j']|\text{$j<j'$ and $\LM{\pmotif}{\ptext}{i-1}{j'} \neq \infty$}$ \\
-\indent \indent \indent and  $|\factor{\pmotif}{i}| \leq LDS_{\ptext}(j,j'-1,\first{\pmotif}{i-1}) \}$ \\
-
-With $LIS_{\ptext}(i,j,k)$ (respectively $LDS_{\ptext}(i,j,k)$) is the longest increasing (resp. decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
+\end{align*}
+where $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ are the sets 
+of elements such that if  
+$\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$ or if $\ptext[k] \in \DF{\pmotif}{\ptext}{i}{j}$ 
+then there exists a match of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$ and the element 
+$\first{\pmotif}{i-1}$ is matched with element $\ptext[k]$. 
+Given that one has the set $\SET{\pmotif}{\ptext}{i-1}{k}$, 
+to decide if $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$, 
+one needs to find an occurrence $t$ of $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ 
+such there exists $s \in \SET{\pmotif}{\ptext}{i-1}{k}$ and $ts$ is a match of 
+$\pmotif[\firsti{\pmotif}{i}:]$. 
+Formally we define $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ as follows:
+\begin{align*}
+\AF{\pmotif}{\ptext}{i}{j}
+&=
+\text{$\{\ptext[j'] \;|\; j<j'$ and $\LM{\pmotif}{\ptext}{i-1}{j'} \neq 0$ and} 
+\\
+&\qquad 
+\text{$|\factor{\pmotif}{i}| \leq LIS_{\ptext}(j,j'-1,\first{\pmotif}{i-1})\}$} 
+\\
+\DF{\pmotif}{\ptext}{i}{j}
+&=
+\text{$\{\ptext[j'] \;|\; j<j'$ and $\LM{\pmotif}{\ptext}{i-1}{j'} \neq \infty$ and}
+\\
+&\qquad
+\text{$|\factor{\pmotif}{i}| \leq LDS_{\ptext}(j,j'-1,\first{\pmotif}{i-1})\}$}
+\end{align*}
+where $LIS_{\ptext}(i,j,k)$ (resp. $LDS_{\ptext}(i,j,k)$) is the longest increasing 
+(resp. decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
 with every element of this sequence
 smaller (resp. bigger) than $k$.
-$LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in $O(|\ptext|^2\log(\log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).\\
+$LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in 
+$O(|\ptext|^2\log(\log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).
 
 For the base case,
 one is looking for a match for the first factor.
@@ -752,15 +761,15 @@ of the sequence is minimal (resp. maximal).\\
 For the induction, it follows the same idea
 except that one must assure that
 every element of the subsequence is larger (resp. smaller)
-than the maximum (resp. minimal) element of the rest of the match which is given by the inductive problem of
-the previous factor.\\
+than the maximal (resp. minimal) element of the rest of the match which is given by the inductive problem of
+the previous factor.
 
 There exists a match of $\pmotif$ in $\ptext$ if and only if
 there exists a $LM(n,i)\neq 0$ and $LM(n,i)\neq \infty$ for $1 \leq i \leq |\ptext|$,
 with $n$ the number of factor in $\pmotif$.
 Moreover the basic case can be computed in $O(n^2)$
 and the induction on $O(kn^2)$ time and space.
-$\qed$
+\qed
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -768,33 +777,36 @@ $\qed$
 \section{$(213,231)$-avoiding bivincular patterns}
 	\label{section:bivincular}
 
-		This section is devoted to presenting a polynomial-time algorithm for deciding whether
-	a $(213,231)$-avoiding bivincular pattern occurs in a permutation.
-
-We introduce property of bivincular permutation for a motif avoiding both $213$ and $231$.
+This section is devoted to presenting a polynomial-time algorithm for deciding whether
+a $(213,231)$-avoiding bivincular pattern occurs in a permutation.
+We start by presenting a property of bivincular motifs avoiding both $213$ and $231$.
 
 \begin{lemma}
 \label{lemma:ascentDescentAscent}
-If $\overline{\sigma[i]\sigma[j]}$ (thus $\sigma[j]=\sigma[i]+1$) and if $\sigma[i]$ is an ascent (respectively decent) element and $\sigma[i]+1$ is an ascent (resp. decent) element then $i<j$ ($j>i$) and for every $k$, $i<k<j$ ($j>k>i$), $\pi[k]$ is a descent (resp. ascent) element.    
+If $\overline{\sigma[i]\sigma[j]}$ (thus $\sigma[j]=\sigma[i]+1$) and 
+if $\sigma[i]$ is an ascent (resp. decent) element and $\sigma[i]+1$ is an ascent 
+(resp. decent) element then 
+$i<j$ ($j>i$) and for every $k$, $i<k<j$ ($j>k>i$), $\pi[k]$ is a descent 
+(resp. ascent) element.    
 \end{lemma}
 
 \begin{proof}
 Suppose that there exists $k$, $i<k<j$,
 such that $\pmotif[k]$ is ascent. Ascent elements are increasing  so $\sigma[i]<\sigma[k]<\sigma[j]$ which is in contradiction that with $\sigma[j]=\sigma[i]+1$.
 We use a similar argument if $\sigma[i]$ is a descent element
-$\qed$
+\qed
 \end{proof}
 
-	\begin{proposition}
-		\label{Proposition:bivincular pattern}
-			Let $\sigma$ be a bivincular motif avoiding $213$ and $231$ of length $k$
-			and $\pi \in S_n$.
-			One can decide in $O(kn^5)$ time
-			and $O(kn^5)$ space if $\sigma$ occurs in $\pi$.
-	\end{proposition}
+\begin{proposition}
+	\label{Proposition:bivincular pattern}
+		Let $\sigma$ be a bivincular motif avoiding $213$ and $231$ of length $k$
+		and $\pi \in S_n$.
+		One can decide in $O(kn^5)$ time
+		and $O(kn^5)$ space if $\sigma$ occurs in $\pi$.
+\end{proposition}
 
 \begin{proof}
-We consider the following problem :\\
+We consider the following problem :
 Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$.
 $$
 \PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
@@ -807,8 +819,9 @@ $$
 $$
 
 $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ is closed under induction.
-It can be solved by means of the following relations:\\
-\textbf{BASE :} \\
+It can be solved by means by the following relations:
+
+\noindent\textbf{BASE :} \\
 $$
 \PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}=
 \begin{cases}
@@ -823,11 +836,11 @@ $$
 \end{cases}
 $$
 
-
 The base case finds an occurrence for the right most element of the motif. If the last element does not have any restriction on position and on value, then $\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}$ is true if and only if $\pmotif[n_\pmotif]$ can occur in $\ptext[j]$. This condition is checked by assuring that $\ptext[j] \in [\lb,\ub]$. 
 
-\textbf{STEP :} \\
-For clarity of reading we consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
+\noindent\textbf{STEP :} 
+
+We consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
 \begin{itemize}
 	\item If $\ptext[j] \notin [\lb,\ub]$ then :
 	$$
@@ -945,217 +958,29 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 
 			the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ have for lower bound $\ptext[j]+1$. $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is true if and only if the occurrence of $\sigma[i']$ is equal to lower bound which is equal to $\sigma[i']+1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
 		\end{itemize}
-
-
-
-
-
-
-
 \end{itemize}
-$\qed$
+\qed
 \end{proof}
-
-
-
-
-
-
-
-
-
-%\begin{proof}
-%We consider the following problem :\\
-%Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$.
-%$$
-%\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
-%\begin{cases}
-%	true 	& \text{If $\pbmotif[i:]$ is a motif of $\ptext[j:]$}\\
-%			  & \text{with every element in $]\min,\max[$}\\
-%	false 	& otherwise\\
-%\end{cases}
-%$$
-%$\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}$ is closed under induction.
-%It can be solved by means of the following relations:\\
-%
-%\textbf{BASE :} \\
-%
-%For the base case, one matches the right most element of the motif. If the motif has a right bottom corner (if $n_\pmotif \in  \x$) then one must assure that the right most element of the motif is matched to the right most of the text. If the motif has a right top corner (if $n_\pmotif \in  \y$) and the right most element of the motif is maximal (minimal) then one must assure that right most element of the motif is matched to the maximal (minimal) element of the text. If there is not corner, there is no condition on the match of the right most element.
-%
-%if $n_\pmotif \notin  \x $ and $n_\pmotif \notin  \y$ : \\
-%$
-%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
-%\begin{cases}
-%	true 	& \text{if $\min<\ptext[j]<\max$}\\
-%	false 	& otherwise\\
-%\end{cases}
-%$
-%%$\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif+1}{j}= true $
-%\\
-%
-%if $n_\pmotif \in  \x $ and $n_\pmotif \notin  \y$ : \\
-%$
-%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j} =
-%\begin{cases}
-%	true 	& \text{if $\min<\ptext[j]<\max$}\\
-%			& \text{and } j=n_\ptext\\
-%	false 	& otherwise\\
-%\end{cases}
-%$
-%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $
-%\\
-%
-%if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\
-%$
-%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
-%\begin{cases}
-%	true 	& \text{if $\min<\ptext[j]<\max$ }\\
-%			& \text{and $\ptext[j]$ is the maximal element}\\
-%	false 	& otherwise\\
-%\end{cases}
-%$
-%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
-%
-%if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the maximal element: \\
-%$
-%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
-%\begin{cases}
-%	true 	& \text{if $\min<\ptext[j]<\max$}\\
-%			& \text{and } j=n_\ptext\\
-%			& \text{and $\ptext[n_\ptext]$ is the maximal element}\\
-%	false 	& otherwise\\
-%\end{cases}
-%$
-%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\
-%
-%if $n_\pmotif \notin  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the minimal element: \\
-%$
-%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
-%\begin{cases}
-%	true 	& \text{if $\min<\ptext[j]<\max$}\\
-%			& \text{and $\ptext[j]$ is the minimal element}\\
-%	false 	& otherwise\\
-%\end{cases}
-%$
-%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,j)= true $\\
-%
-%if $n_\pmotif \in  \x$  and $n_\pmotif \in  \y$ and $\pmotif[n_\pmotif]$ is the minimal element: \\
-%$
-%\PM{\pbmotif}{\ptext}{\min}{\max}{n_\pmotif}{j}=
-%\begin{cases}
-%	true 	& \text{if $\min<\ptext[j]<\max$}\\
-%			& \text{and } j=n_\ptext\\
-%			& \text{and $\ptext[n_\ptext]$ is the minimal element}\\
-%	false 	& otherwise\\
-%\end{cases}
-%$
-%%$\mathbb{P}_{\pbmotif,\min,\max}^{\ptext}(n_\pmotif+1,n_\ptext)= true $\\
-%
-%
-%\textbf{STEP :} \\
-%
-%For the induction there are 8 cases to consider, depending on if $\pmotif[i]$ is ascend or descend, if elements $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) and if elements $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$). First one must assure that $\pmotif[i]$ can be matched to $\ptext[j]$, this is done by checking that $\ptext[j]$ is in the interval $]\min,\max[$. Then one must use the induction. The element $\ptext[j]$ gives a new $\min$ if the element is ascent or a new $\max$ if the element is descent.
-%If $\pmotif[i]\pmotif[i+1]$ are not underlined nor overlined, then $\pmotif[i+1]$ can be matched to any upcoming element in the text. If $\pmotif[i]\pmotif[i+1]$ are underlined ($i \in \x$) then the match of $\pmotif[i+1]$ must be $\ptext[j+1]$. If $\pmotif[i]\pmotif[i+1]$ are overlined ($i \in \y$) then ethe match of  $\pmotif[i+1]$ must be $\ptext[j]+1$.
-%
-%$
-%\PM{\pbmotif}{\ptext}{\min}{\max}{i}{j}=
-%\begin{cases}
-%\bigcup_{j<k}
-%			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{k}
-%				& \text{if $\stripe{\pmotif}{i}=\ustep$
-%				and $i \notin \x$}\\
-%				& \text{and $i \notin \y$ }\\
-%				& \text{and $\min<\ptext[j]<\max$} \\
-%			&\\
-%
-%			\bigcup_{j<k}
-%			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{k}
-%				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
-%				& \text{and $i \notin \x$ and $i \notin \y$  }\\
-%				& \text{and $\min<\ptext[j]<\max$} \\
-%			&\\
-%
-%			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{j+1}
-%				& \text{if $\stripe{\pmotif}{i}=\ustep$}\\
-%				& \text{and $i \in \x$ and $i \notin \y$}\\
-%				& \text{and $\min<\ptext[j]<\max$} \\
-%			&\\
-%
-%			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{j+1}
-%				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
-%				& \text{and $i \in \x$ and $i \notin \y$ }\\
-%				& \text{and $\min<\ptext[j]<\max$} \\
-%
-%			&\\
-%
-%			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{\ptext^{-1}[\ptext[j]+1]}
-%				&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
-%				&\text{and $i \notin \x$ and $i \in \y$}\\
-%				& \text{and $\min<\ptext[j]<\max$} \\
-%				&\text{and $\ptext^{-1}[\ptext[j]+1]>j$}\\
-%			&\\
-%
-%
-%			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{\ptext^{-1}[\ptext[j]-1]}
-%				&\text{if $\stripe{\pmotif}{i}=\dstep$}\\
-%				&\text{and $i \notin \x$ and $i \in \y$ }\\
-%				& \text{and $\min<\ptext[j]<\max$} \\
-%				&\text{and $\ptext^{-1}[\ptext[j]-1]>j$}\\
-%			&\\
-%
-%			\PM{\pbmotif}{\ptext}{\ptext[j]}{\max}{i+1}{j+1}
-%				&\text{if $\stripe{\pmotif}{i}=\ustep$}\\
-%				&\text{and $i \in \x$ and $i \in \y$}\\
-%				&\text{and $\ptext[j]+1=\ptext[j+1]$ }\\
-%				& \text{and $\min<\ptext[j]<\max$} \\
-%			&\\
-%
-%			\PM{\pbmotif}{\ptext}{\min}{\ptext[j]}{i+1}{j+1}
-%				& \text{if $\stripe{\pmotif}{i}=\dstep$}\\
-%				&\text{and $i \in \x$ and $i \in \y$}\\
-%				&\text{and $\ptext[j]-1=\ptext[j+1]$ }\\
-%				& \text{and $\min<\ptext[j]<\max$} \\
-%			&\\
-%
-%
-%			False & Otherwise\\
-%\end{cases}
-%$
-%
-%There are 6 cases to consider to search for a match.
-%Depending on if the motif has a left bottom corner ($0 \in \x$), a left top corner, and if it has a left top corner $0 \notin \y$, if the left most element is minimal or maximal. If the motif has a left bottom corner, then one must assure that the left most element of the motif is matched to the left most element of the text. If the motif has a left top corner and the left most element of the motif is minimal (maximal) then one must assure that the left most element of the motif is matched with the minimal (maximal) element of the text :
-%\begin{itemize}
-%	\item If $0 \in \x$ and $0 \notin \y$ there exists a match if and only if there is a match starting with left most element of the text : $ \PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true.
-%
-%	\item If $0 \notin \x$ and $0 \notin \y$ there exists a match if and only if there exists a match stating at any index : 	$\bigcup_{1<k\leq n_\ptext}\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{k}$ is true.
-%
-%	\item If $0 \in \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there is a match starting with the left most element  of $\ptext$, and the left most element  of $\ptext$ is the minimal element  of $\ptext$ : $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$  is true and the left most element of $\ptext$ is the minimal element of $\ptext$.
-%
-%	\item If $0 \notin \x$, $0 \in \y$ and the first element of the stripe of the motif is minimal there exists a match if and only if there exists a match stating at the minimal element of the text : if $j_{\min}$ is the index of the minimal element in $\ptext$ then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\min}}$ is true.
-%
-%	\item If $0 \in \x$, $0 \notin \y$  and the first element of the stripe of the motif is maximal then there exists a match if and only if there is a match starting with the left most element  of $\ptext$ and the left most element  of $\ptext$ is the maximal element  of $\ptext$: $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{1}$ is true and the left most element of $\ptext$ is the maximal element of $\ptext$.
-%
-%	\item If $0 \notin \x$, $0 \notin \y$ and the first element of the stripe of the motif is maximal there exists a match if and only if there exists a match stating at the maximal element of the text : if $j_{\max}$ is the index of the maximal in $\ptext$ element then $\PM{\pbmotif}{\ptext}{0}{n_{\pmotif}}{1}{j_{\max}}$ is true.
-%
-%\end{itemize}
-%\end{proof}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Longest Subsequence Avoiding \\(231,213) for a Permutation}
+\section{Computing the longest $(213,231)$-avoiding subsequence}
 \label{section:LCS}
 
-	This section and the next one are devoted to the longest subsequence avoiding (231,213).
-	The general problem asks to find the longest subsequence that occur in a set of permutations. We add the constraint that this subsequence avoid $213$ and $231$.
-	This section focuses on the case where the set is of size one.
-	To do so, we need the set of descent elements and the set of ascent elements.
+	This section is devoted to finding longest $(213,231)$-avoiding subsequences in permutations:
+	Given a set of permutations, find a longest $(213,231)$-avoiding that occurs as a pattern
+	in each input permutation.
+
+	We start with the easiest case where we are given just one input permutation.
+	We need the set of descent elements and the set of ascent elements.
 	$P(\pi) = \{i | \stripe{\pi}{i} = \ustep \} \cup \{n\}$ and
 	$M(\pi) = \{i | \stripe{\pi}{i} = \dstep \} \cup \{n\}$.\\
 
 	\begin{proposition}
 	\label{proposition:longestIncreasingSubsequence}
-	If $s$ is a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$ then
+	If $s$ is a longest $(213,231)$-avoiding subsequence with last element at index 
+	$f$ in $\pi$ then
 	$P(\pi)$ is a longest increasing subsequence with last element at index $f$ and
 	$M(\pi)$ is a longest decreasing subsequence with last element at index $f$.
 	\end{proposition}
@@ -1164,29 +989,28 @@ $\qed$
 	Let $s$ be a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$,
 	suppose that $P(\pi)$ is not a longest increasing subsequence with last element at index $f$. Let $s_m$ be a longest increasing subsequence with last element $f$.
 	Thus $|s_m|>|P(\pi)|$, clearly the sequence $s_m \cup M(\pi)$
-	is avoiding (213,231) and is longer than $s$ which is not possible.
-	The same idea goes for the demonstration that $M(\pi)$ is the longest decreasing subsequence.
-	$\qed$
+	is $(213,231)$-avoiding and is longer than $s$, this is a contradiction.
+	The same ideacan be used to show that $M(\pi)$ is the longest decreasing subsequence.
+	\qed
 	\end{proof}
 
 	\begin{proposition}
-	Given a permutation $\pi$,
-	finding the longest subsequence avoiding (231,213)
+	Let $\pi$ be a permutation.
+	Computing the longest $(213,231)$-pattern that occurs in $\pi$
 	can be done in $O(|\ptext|\log(\log(|\ptext|)))$ time and in $O(n)$ space.
 	\end{proposition}
 
 	\begin{proof}
 	The proposition \ref{proposition:longestIncreasingSubsequence} lead to an algorithm
-	where one has to compute longest increasing and decreasing subsequence ending at every index. Then finding the maximum sum of longest increasing and decreasing subsequence ending at the same index.
-	Computing the longest increasing subsequence and the  lonfest decreasing subsequence can be done in $O(|\ptext|\log(\log(|\ptext|)))$ time and $O(n)$ space (see \cite{Bespamyatnikh00enumeratinglongest}), then finding the maximum can be done in linear time.
-	$\qed$
+	where one has to compute longest increasing and decreasing subsequence ending at every index. Then finding the maximal sum of longest increasing and decreasing subsequence ending at the same index.
+	Computing the longest increasing subsequence and the longest decreasing subsequence can be done in 
+	$O(|\ptext|\log(\log(|\ptext|)))$ time and $O(n)$ space 
+	(see \cite{Bespamyatnikh00enumeratinglongest}), 
+	then finding the maximal can be done in linear time.
+	\qed
 	\end{proof}
 
-
-\section{Longest Subsequence Avoiding \\(231,213) Common for Two Permutations}
-\label{section:LCS common 2 permutations}
-
-This section is devoted to the longest subsequence avoiding (231,213) for two permutations : Given two (random) permutations, find a permutation $\pi$ such that $\pi$ occurs in both permutation and $\pi$ avoids $231$ and $213$. 
+We now turn to considering the case where the input is composed of two permutations.
 
 \begin{proposition}
 Given two permutations $\pi_1$ and $\pi_2$,
@@ -1211,8 +1035,9 @@ $$
 We show that this family of problems are closed under induction.\\
 
 
-\textbf{BASE :} \\
-$
+\noindent\textbf{BASE :}
+
+$$
 \LCS{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{|\pi_1|}{|\pi_2|} =
 \begin{cases}
 	1 & \text{if $\lb_1 \leq \pi_1[j] \leq \ub_1$
@@ -1220,12 +1045,11 @@ $
 	& \text{ and $\lb_2 \leq \pi_2[j] \leq \ub_2$}\\
 	0 & otherwise\\
 \end{cases}
-$
+$$
 
+\noindent\textbf{STEP :}
 
-\textbf{STEP :} \\
-
-$
+$$
 \LCS{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{i_1}{i_2}=max
 \begin{cases}
 	\LCS{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{i_1}{i_2+1} \\
@@ -1234,7 +1058,7 @@ $
 	\\
 	\match{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{i_1}{i_2}
 \end{cases}
-$
+$$
 
 with \\
 $
@@ -1263,23 +1087,6 @@ or we match as the same step (if possible).
 Those relations lead to a $O(|\pi_1|^3|\pi_2|^3)$ time and $O(|\pi_1|^3|\pi_2|^3)$ space algorithm.
 $\qed$
 \end{proof}
-
-
-
-%	\section{Related problems}
-%
-%		\textbf{Proposition 3.1} Longest Minimal Common Supersequence, Shortest Maximal Common Subsequence, and Shortest Maximal Common Non-Supersequence are MAX SNP-hard.\\
-%
-%		Clearly every problem over (231,213)-Avoiding permutation
-%		are equivalent to problem over binary word.
-%		The proposition follow what we know about those problem over binary alphabet
-%		\cite{Middendorf1995317}.\\
-
-
-
-	\section{Conclusion}
-
-
 
 
 \bibliography{bibli}{}
