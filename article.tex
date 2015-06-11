@@ -965,14 +965,14 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Computing the longest $(213,231)$-avoiding subsequence}
+\section{Computing the longest $(213,231)$-avoiding pattern}
 \label{section:LCS}
 
-	This section is devoted to finding longest $(213,231)$-avoiding subsequences in permutations:
-	Given a set of permutations, find a longest $(213,231)$-avoiding that occurs as a pattern
-	in each input permutation.
-
-	We start with the easiest case where we are given just one input permutation.
+	This section is devoted to finding longest $(213,231)$-avoiding patterns 
+	in permutations.
+	We start with the easiest case where we are given just one input permutation
+	and we are asked to find the longest $(213,231)$-avoiding pattern that 
+	occurs in the input permutation.
 	We need the set of descent elements and the set of ascent elements.
 	$P(\pi) = \{i | \stripe{\pi}{i} = \ustep \} \cup \{n\}$ and
 	$M(\pi) = \{i | \stripe{\pi}{i} = \dstep \} \cup \{n\}$.\\
@@ -1020,19 +1020,17 @@ avoiding (231,213) can be compute in $O(|\pi_1|^3|\pi_2|^3)$ time and space.
 
 \begin{proof}
 Consider the following problem,
-that compute the longest stripe common to $\pi_1$ and $\pi_2$.
-Given two permutations $\pi_1$ and $\pi_2$.\\
-
-$$
+that compute the longest stripe common to $\pi_1$ and $\pi_2$:
+Given two permutations $\pi_1$ and $\pi_2$, we define
+$
 \LCS{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{i_1}{i_2}
-$$
-\begin{center}
-= $\max$ \{$|s|$ $|$ $s$ occurs in $\pi_1[i_1:]$ with every element is in $[\lb_1,\ub_1]$ and $s$ occurs in $\pi_2[i_2:]$ with every element is in $[\lb_2,\ub_2]$ \}
-\end{center}
+=
+\max\{|s| \;|\; s \text{ occurs in } \pi_1[i_1:] \text{ with every element is in }
+[\lb_1,\ub_1] \text{ and } s \text{ occurs in } \pi_2[i_2:] \text{ with every element is in }
+[\lb_2,\ub_2]\}$.
 
 
-
-We show that this family of problems are closed under induction.\\
+We show that this family of problems is closed under induction.
 
 
 \noindent\textbf{BASE :}
