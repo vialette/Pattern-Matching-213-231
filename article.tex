@@ -138,10 +138,11 @@
   \emph{pattern containment} problem is to decide whether $\pi$ contains
   $\sigma$ as an order-isomorphic subsequence.
 	We give a linear-time algorithm in case both $\pi$ and $\sigma$ avoid
-	$213$ and $231$.
+	the two size-$3$ permutations $213$ and $231$.
 	For the special where only $\sigma$ avoids $213$ and $231$, we present a
-	$O(kn^2)$ time algorithm. We extend our research to $(213,231)$-avoiding
-	bivincular pattern and present a $O(kn^5)$ time algorithm.
+	$O(kn^2)$ time algorithm. 
+	Finally We extend our research to bivincular pattern that avoid $213$ and $231$
+	 and present a $O(kn^5)$ time algorithm.
 \end{abstract}
 
 
@@ -163,7 +164,7 @@
 	As another example,
 	$6152347$ contains $213$ but not $231$.
 	During the last decade, the study of the pattern containment on permutations has
-	become a very active area of research and
+	become a very active area of research \cite{Kitaev:book:2011} and
 	a whole annual conference (\textsc{Permutation Patterns}) is now devoted
 	to this topic.
 
@@ -171,7 +172,7 @@
 	(also sometimes referred to as the \emph{pattern involvement problem}):
 	Given two permutations $\sigma$ and $\pi$, this problem is to decide whether
 	$\sigma \preceq \pi$ (the problem is ascribed to Wilf in \cite{Bose:Buss:Lubiw:1998}).
-	The permutation containment problem is \NPhard~\cite{Bose:Buss:Lubiw:1998}.
+	The permutation containment problem is known to be \NPhard~\cite{Bose:Buss:Lubiw:1998}.
 	It is, however, polynomial-time solvable by brute-force enumeration
 	if $\sigma$ has bounded size.
 	Improvements to this algorithm were presented in
@@ -187,7 +188,7 @@
 	A recent major step was taken by􏰂 Marx and Guillemot
 	\cite{Guillemot:Marx:SODA:2014}.
 	They showed that
-	the permutation containment problem is fixed-parameter tractable for
+	the permutation containment problem is fixed-parameter tractable (FPT) for
 	parameter $|\sigma|$.
 
 	A few particular cases of the pattern containment problem have been attacked successfully.
@@ -224,14 +225,16 @@
 	(see \cite{Kitaev:book:2011} for an up-to-date survey).
 	\emph{Vincular patterns}, also called
 	\emph{generalized patterns},
-	resemble (classical) patterns, with the constraint that some of the letters in
+	resemble (classical) patterns with the additional constraint that some of the letters in
 	an occurrence must be consecutive.
 	Of particular importance in our context,
 	Bruner and Lackner \cite{Bruner:Lackner:SWAT:2012}
 	proved that deciding whether a vincular pattern
 	$\sigma$ of length $k$ occurs in a longer permutation
 	$\pi$ is $W[1]$-complete for
-	parameter $k$.
+	parameter $k$;
+	for an up to date survey of the $W[1]$ class and related material, see
+	\cite{Downey:Fellows:2013}.
 	\emph{Bivincular patterns} generalize classical patterns even further
 	than vincular
 	patterns. Indeed, in bivincular patterns,
@@ -358,9 +361,10 @@ For example, the permutation
 $345216$7 has ascents (at positions) $1,2,5$ and $6$.
 Similarly, a \emph{descent} is a position
 $1 \leq i < n$ with $\pi_i > \pi_{i+1}$,
-so every $i$ with $1 \leq i < n$ either is an ascent or is a descent of
+so every $1 \leq i < n$  is either an ascent or is a descent of
 $\pi$.
-Let $\ustep$ and $\dstep$ denote an ascend and a descend, respectively.
+To clarify the exposition,
+we let $\ustep$ and $\dstep$ denote an ascend and a descend, respectively.
 The \emph{stripe} $s_\pi$ of a permutation $\pi \in S_n$ is the word
 $\stripe{\pi}{1} \stripe{\pi}{2} \ldots \stripe{\pi}{n-1} \in \{\ustep,\dstep\}^{n-1}$
 defined by
@@ -413,7 +417,6 @@ of $\sigma$:
 	any occurrence of $\sigma$ is a permutation $\pi$ must end with
 	the largest letter of $\pi$.
 \end{itemize}
-
 For example,
 let
 $\sigma = \BV{\overline{123}}{\llcorner 213 \lrcorner}$.
@@ -428,6 +431,7 @@ $n \geq 3$,
 $\pi_1 = x > 1$
 and $\pi_n = x+1$
 (in which case there is one occurrence of the pattern).
+The best general reference is \cite{Kitaev:book:2011}.
 
 %For algorithmic treatment, it will be convenient to have \ldots
 %Given a motif $\pmotif$ we represent the elements underlined by the set $\x$. An index $i$, $1 \leq i < |\sigma|$, of an element is in $\x$ if and only if $i$ and $i+1$ need to be adjacent ($\pmotif[i]$ and $\pmotif[i+1]$ are underlined). We also allow $0$ and $|\sigma|$ to be in the set $\x$ such that if $0 \in \x$ then we have $_\llcorner{\sigma_1}$ and if $|\sigma| \in \x$ then ${\sigma_{|\sigma|}}_\lrcorner$.
@@ -455,24 +459,33 @@ must be either $1$ or $n$.
 \begin{proof}
 Any other initial element would serve as a `$2$' in either a
 $231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
-$\qed$
+\qed
 \end{proof}
 
 Notice that Lemma~\ref{lemma:first element is 1 or n} gives as an
 immediate consequence that the number of $(213,231)$-avoiding $n$-permutations
 is $2^{n-1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985}.
-The above lemma also gains in interest in the form of the following corollaries.
+The above structural lemma gains in interest in the form of the following corollaries.
 
 \begin{corollary}
 \label{corollary:minmaxelement}
+Let $\pi \in S_n$.
+Then
 $\pi \in \AV_n(213,231)$ if and only if for $1 \leq i \leq n$,
 $\pi[i]$ is the minimal or the maximal element of $\pi[i:]$.
 \end{corollary}
 
 \begin{corollary}
 \label{corollary:max is ascent}
-For $\pi \in \AV_n(213,231)$ if $\pi[i]$ is an ascent element then $\pi[i]$ is the minimal of $\pi[i:]$
-and if if $\pi[i]$ is a descent element then $\pi[i]$ is the maximal of $\pi[i:]$
+Let $\pi \in \in \AV_n(213,231)$ and $1 \leq i < n$.
+Then,
+(1) 
+if $\pi[i]$ is an ascent element then $\pi[i]$ is the minimum element 
+of $\pi[i:]$
+and 
+(2)
+if if $\pi[i]$ is a descent element then $\pi[i]$ is the maximum element 
+of $\pi[i:]$
 \end{corollary}
 
 %\begin{corollary}
@@ -489,7 +502,7 @@ The following lemma is central to all our algorithm.
 
 \begin{lemma}
 \label{lemma:MatchStripeToPermutation}
-If $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations,
+Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations,
 and $t$ be a subsequence of $\pi$ of length $|\sigma|$ such that $s_t = s_\sigma$.
 Then, $t$ is an occurrence of $\sigma$ in $\pi$ if and only if
 $s_t$ occurs as a subsequence in $s_\pi$.
@@ -523,7 +536,7 @@ $s_t$ occurs as a subsequence in $s_\pi$.
   and hence, since $s_t = s_\sigma$ occurs as a subsequence in $s_\pi$,
   $t[1]$ is the minimum (resp. maximum) element of $t$.
   Therefore, $t$ is an occurrence of $\sigma$ in $\pi$.
-$\qed$
+  \qed
 \end{proof}
 
 We are now ready to solve the pattern containment problem in case
@@ -538,10 +551,7 @@ both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 According to Lemma~\ref{lemma:MatchStripeToPermutation} the problem reduces
 to deciding whether $s_\sigma$ occurs as a subsequence in $s_\pi$.
 A straightforward greedy approach solves this issue in linear-time.
-Furthermore, in the light of Corollary~\ref{corollary:minmaxelement},
-the effective construction of the two stripes is not required,
-so it is an online algorithm.
-$\qed$
+\qed
 % To solve the permutation pattern for a permutation in $\AV_n(213,231)$,
 % we find a find a match of the stripe of the pattern in the stripe of the text.
 % This can be done linearly by a greedy algorithm,
@@ -551,6 +561,10 @@ $\qed$
 % we do not have to compute the stripe in advance.
 % Therefore we have an linear (online) algorithm.
 \end{proof}
+
+Observe that, according to Corollary~\ref{corollary:minmaxelement},
+the effective construction of the two stripes is not required for the above proposition,
+and hence we have an online algorithm.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
