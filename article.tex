@@ -469,16 +469,13 @@ The above structural lemma gains in interest in the form of the following coroll
 
 \begin{corollary}
 \label{corollary:minmaxelement}
-Let $\pi \in S_n$.
-Then
 $\pi \in \AV_n(213,231)$ if and only if for $1 \leq i \leq n$,
 $\pi[i]$ is the minimal or the maximal element of $\pi[i:]$.
 \end{corollary}
 
 \begin{corollary}
 \label{corollary:max is ascent}
-Let $\pi \in \in \AV_n(213,231)$ and $1 \leq i < n$.
-Then,
+Let $\pi \in \AV_n(213,231)$ and $1 \leq i < n$. Then,
 (1) 
 if $\pi[i]$ is an ascent element then $\pi[i]$ is the minimal element 
 of $\pi[i:]$
@@ -622,16 +619,18 @@ of $\factor{\sigma}{i}$ is a descent.
 \qed
 \end{proof}
 
-For the sake of readability, we now define the set
+we now define the set
 $\SET{\pmotif}{\ptext}{i}{j}$ as follows:
-if $s \in \SET{\pmotif}{\ptext}{i}{j}$ then
+given a subsequence $s$ of $\ptext[j:]$,
+$s \in \SET{\pmotif}{\ptext}{i}{j}$ if and only if
 $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$
-and the element matching $\first{\pmotif}{i}$ is $\ptext[j]$.
+and the element$\first{\pmotif}{i}$ occurs in $\ptext[j]$.
 
 \begin{lemma}
-Let $\pmotif$ be a permutation where 
-$\factor{\pmotif}{i}$ is an ascent (resp. descent) factor.
-If $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that the element matching $\first{\pmotif}{i-1}$ is minimal (resp. maximal), for all subsequence 
+Let $\pmotif$ be a permutation 
+with $\factor{\pmotif}{i}$ as an ascent (respectively descent) factor,
+$s$ a subsequence such that, $s \in \SET{\pmotif}{\ptext}{i}{j}$ and $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). 
+For all subsequence 
 $s' \in \SET{\pmotif}{\ptext}{i}{j}$ and for all subsequence $t$ of $\ptext$, such that $t=t's'$, if $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ then the subsequence $t's$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$.
 \end{lemma}
 
@@ -641,8 +640,15 @@ By definition $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$. To prove 
 \end{proof}
 
 \begin{corollary}
-Let $\pmotif$ be a permutation where $\factor{\pmotif}{i}$ is an ascent (resp. descent) factor.
-If $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). There is a match of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ matched to $\ptext[j]$ if and only if there exists $t$ such that $ts$ is a match of $\pmotif$ in $\ptext$. 
+Let $\pmotif$ be a permutation 
+with $\factor{\pmotif}{i}$ as an ascent (respectively descent) factor,
+and let $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). 
+Those following statements are equivalent :
+\begin{itemize}
+	\item There exists an 
+	occurrence of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ occurs in $\ptext[j]$.
+	\item There exists a subsequence $t$ of $\ptext[1:j-1]$  such that $ts$ is an occurrence of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ occurs in $\ptext[j]$. 
+\end{itemize}
 \end{corollary}
 
 % This corollary allows us to way to choose a match. Indeed if one does not find a match such that a well chosen subsequence is a suffix of the motif then there is no match at all.
@@ -677,7 +683,7 @@ $$
 	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & 
 		\text{ an ascent element } \\	
 	\text{ and that minimize the maximal value} & \\
-	\text{ and $\first{\sigma}{i}$ is matched with $\ptext[j]$} & \\
+	\text{ and $\first{\sigma}{i}$ occurs in $\ptext[j]$} & \\
 
 	&\\
 
@@ -686,7 +692,7 @@ $$
 		& \text{If $\first{\sigma}{i}$ is  } \\
 	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & \text{ a descent element } \\	
 	\text{ and that maximize the minimal value} & \\
-	\text{ and $\first{\sigma}{i}$ is matched with $\ptext[j]$} & \\
+	\text{ and $\first{\sigma}{i}$ occurs in $\ptext[j]$} & \\
 \end{cases}
 $$
 
@@ -719,12 +725,12 @@ This problem can be solve by induction as follows:
 where $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ are the sets 
 of elements such that if  
 $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$ or if $\ptext[k] \in \DF{\pmotif}{\ptext}{i}{j}$ 
-then there exists a match of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$ and the element 
-$\first{\pmotif}{i-1}$ is matched with element $\ptext[k]$. 
+then there exists an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$ and the element 
+$\first{\pmotif}{i-1}$ occurs in element $\ptext[k]$. 
 Given that one has the set $\SET{\pmotif}{\ptext}{i-1}{k}$, 
 to decide if $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$, 
 one needs to find an occurrence $t$ of $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ 
-such there exists $s \in \SET{\pmotif}{\ptext}{i-1}{k}$ and $ts$ is a match of 
+such there exists $s \in \SET{\pmotif}{\ptext}{i-1}{k}$ and $ts$ is an occurrence of 
 $\pmotif[\firsti{\pmotif}{i}:]$. 
 Formally we define $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ as follows:
 \begin{align*}
@@ -750,7 +756,7 @@ $LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in
 $O(|\ptext|^2\log(\log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).
 
 For the base case,
-one is looking for a match for the first factor.
+one is looking for an occurrence for the first factor.
 If the factor is an ascent (respectively descent) factor, then
 one has to find an increasing (resp. decreasing) subsequence
 in the text of same size or longest that
@@ -761,10 +767,10 @@ of the sequence is minimal (resp. maximal).\\
 For the induction, it follows the same idea
 except that one must assure that
 every element of the subsequence is larger (resp. smaller)
-than the maximal (resp. minimal) element of the rest of the match which is given by the inductive problem of
+than the maximal (resp. minimal) element of the rest of the occurrence which is given by the inductive problem of
 the previous factor.
 
-There exists a match of $\pmotif$ in $\ptext$ if and only if
+There exists a occurrence of $\pmotif$ in $\ptext$ if and only if
 there exists a $LM(n,i)\neq 0$ and $LM(n,i)\neq \infty$ for $1 \leq i \leq |\ptext|$,
 with $n$ the number of factor in $\pmotif$.
 Moreover the basic case can be computed in $O(n^2)$
@@ -784,9 +790,9 @@ We start by presenting a property of bivincular motifs avoiding both $213$ and $
 \begin{lemma}
 \label{lemma:ascentDescentAscent}
 If $\overline{\sigma[i]\sigma[j]}$ (thus $\sigma[j]=\sigma[i]+1$) and 
-if $\sigma[i]$ is an ascent (resp. decent) element and $\sigma[i]+1$ is an ascent 
+if $\sigma[i]$ is an ascent (respectively decent) element and $\sigma[i]+1$ is an ascent 
 (resp. decent) element then 
-$i<j$ ($j>i$) and for every $k$, $i<k<j$ ($j>k>i$), $\pi[k]$ is a descent 
+$i<j$ (resp. $j>i$) and for every $k$, $i<k<j$ (resp. $j>k>i$), $\pi[k]$ is a descent 
 (resp. ascent) element.    
 \end{lemma}
 
@@ -871,8 +877,12 @@ We consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
 
 	\end{cases}
 	$$	
-	
-	$\pmotif[i]$ can occur in $\ptext[j]$ because $\ptext[j] \in [\lb,\ub]$. $\pmotif[i:]$ occurs in $\ptext[j:]$, if and only if $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$. $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$ if and only if there is an occurrence of $\pmotif[i+1:]$ in $\ptext[j+1:]$ starting at element $k$, $j<k$, which correspond to know if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{*}{*}{i+1}{k}$ is true. Because $\pmotif[i]$ is an ascent element,  $\pmotif[i]$ is the minimal element of $\pmotif[i:]$, thus a match of $\pmotif[i+1:]$ can not use value smaller than $\ptext[j]$, so $\ptext[j]+1$ is a (new) lower bound. The upper bound is unchanged. So there is a occurrence of  $\pmotif[i:]$ starting at element $j$ in $\ptext[j:]$ if and only if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}$. 
+	Remark that $\pmotif[i]$ can occur in $\ptext[j]$ because $\ptext[j] \in [\lb,\ub]$.
+	Thus if $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$ with every element in $[\pmotif[i]+1,\ub]$ then 
+ 	$\pmotif[i:]$ occurs in $\ptext[j:]$  	
+ 	which correspond to know if there exists $k$, $j<k$ such that
+	$\PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}$ is true.
+
 	
 	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is a descent element then :
 
@@ -896,7 +906,7 @@ We consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
 			false & \text{otherwise}
 	\end{cases}
 	$$	
-	We prove symmetrically as the last case that 
+	We can show symmetrically as the last case that 
 	$\pmotif[i:]$ occurs in $\ptext[j:]$
 	with $\sigma[i]$ occurs in $\pi[j]$.
 	 starting at element $j$ if and only if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{k}$. 
@@ -906,7 +916,7 @@ We consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
 Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then $\sigma$ occurs in $\pi$. We now discuss about the position and value constraints.
 \paragraph{Position Constraint.} There are 3 types of position constraints 
 \begin{itemize}
-	\item If $_\llcorner{\sigma[1]}$ then the left most element of $\sigma$  must occur in the left most element of $\pi$ ($\pmotif[1]$ occurs in $\ptext[1]$ on a occurrence of $\pmotif$ in $\ptext$). This constraint is assured by demanding that the occurrence starts at the left most element of $\ptext$ : if  $\PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{1}$ is true.
+	\item If $_\llcorner{\sigma[1]}$ then the left most element of $\sigma$  must occur in the left most element of $\pi$ ($\pmotif[1]$ occurs in $\ptext[1]$ on an occurrence of $\pmotif$ in $\ptext$). This constraint is assured by demanding that the occurrence starts at the left most element of $\ptext$ : if  $\PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{1}$ is true.
 	
 	\item If ${\pmotif[n_\pmotif]}_\lrcorner$ then the right most element $\sigma$ must occurs in the right most element of $\pi$ ($\pmotif[n_\pmotif]$ occurs in $\ptext[n_\ptext]$ on a occurrence of $\pmotif$ in $\ptext$). This constraint is assured in the base case.
 
@@ -995,9 +1005,9 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 	\end{proof}
 
 	\begin{proposition}
-	Let $\pi$ be a permutation.
-	Computing the longest $(213,231)$-pattern that occurs in $\pi$
-	can be done in $O(|\ptext|\log(\log(|\ptext|)))$ time and in $O(n)$ space.
+	Let $\pi$ be a permutation. One can compute the
+	the longest $(213,231)$-pattern that occurs in $\pi$
+	in $O(|\ptext|\log(\log(|\ptext|)))$ time and in $O(n)$ space.
 	\end{proposition}
 
 	\begin{proof}
@@ -1014,8 +1024,9 @@ We now turn to considering the case where the input is composed of two permutati
 
 \begin{proposition}
 Given two permutations $\pi_1$ and $\pi_2$,
+one can compute 
 the longest common subsequence
-avoiding (231,213) can be compute in $O(|\pi_1|^3|\pi_2|^3)$ time and space.
+avoiding (231,213) in $O(|\pi_1|^3|\pi_2|^3)$ time and space.
 \end{proposition}
 
 \begin{proof}
