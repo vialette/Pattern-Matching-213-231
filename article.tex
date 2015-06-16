@@ -57,15 +57,17 @@
 %upstep
 \newcommand{\ustep}{a}
 
-%first
-\DeclareMathOperator{\firsta}{L}
-\newcommand{\first}[2]{\firsta_{{#1}}({#2})}
 
-\DeclareMathOperator{\firstia}{LI}
+
+\DeclareMathOperator{\firstia}{first}
 \newcommand{\firsti}[2]{\firstia_{{#1}}({#2})}
 
-\DeclareMathOperator{\factora}{F}
+\DeclareMathOperator{\factora}{factor}
 \newcommand{\factor}[2]{\factora_{{#1}}({#2})}
+
+%first
+\DeclareMathOperator{\firsta}{first}
+\newcommand{\first}[2]{\firsta(\factor{#1}{#2})}
 
 %binvincular
 \newcommand{\x}{X}
@@ -276,7 +278,7 @@
 
 	This paper is organized as follows.
 	In Section~\ref{section:Definitions} the needed definition are presented.
-	Section~\ref{section:both are (231,213)-avoiding} is devoted to presenting
+	Section~\ref{section:both are (213,231)-avoiding} is devoted to presenting
 	an online linear-time algorithm in case both the pattern and the target
 	permutation are $(213,231)$-avoiding,
 	whereas Section~\ref{section:sigma only avoid 231 and 213} focuses on the case
@@ -443,7 +445,7 @@ The best general reference is \cite{Kitaev:book:2011}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Both $\pi$ and $\sigma$ are $(213,231)$-avoiding}
-\label{section:both are (231,213)-avoiding}
+\label{section:both are (213,231)-avoiding}
 
 This section is devoted to presenting a fast algorithm for deciding if
 $\sigma \preceq \pi$
@@ -540,14 +542,15 @@ We are now ready to solve the pattern containment problem in case
 both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 
 \begin{proposition}
+	\label{Proposition:both permutations are avoiding}
 	Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations.
-	One can decide whether $\pi$ contains $\sigma$ in linear-time.
+	One can decide whether $\pi$ contains $\sigma$ in linear time.
 \end{proposition}
 
 \begin{proof}
 According to Lemma~\ref{lemma:MatchStripeToPermutation} the problem reduces
 to deciding whether $s_\sigma$ occurs as a subsequence in $s_\pi$.
-A straightforward greedy approach solves this issue in linear-time.
+A natural greedy approach solves this issue in linear-time.
 \qed
 % To solve the permutation pattern for a permutation in $\AV_n(213,231)$,
 % we find a find a match of the stripe of the pattern in the stripe of the text.
@@ -560,19 +563,20 @@ A straightforward greedy approach solves this issue in linear-time.
 \end{proof}
 
 Observe that, according to Corollary~\ref{corollary:minmaxelement},
-the effective construction of the two stripes is not required for the above proposition,
+the effective construction of the two stripes is not required in stretch 
+of algorithm given for the proof in the proposition \ref{Proposition:both permutations are avoiding},
 and hence we have an online algorithm.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{$\sigma$ only is $(231,213)$-avoiding}
+\section{$\sigma$ only is $(213,231)$-avoiding}
 \label{section:sigma only avoid 231 and 213}
 
 This section focuses on the pattern containment problem
 in case only the pattern $\sigma$ avoids $231$ and $213$.
 We need to consider a specific decomposition $\factora$ of $\sigma$ into factors.
 For $\sigma \in S_k$, the \emph{factorization}
-$\sigma = \factor{\pmotif}{p} \factor{\pmotif}{p-1} \ldots \factor{\pmotif}{1}$
+$\sigma = \factor{\pmotif}{p} \factor{\pmotif}{p-1} \ldots$ $\factor{\pmotif}{1}$
 is defined as follows:
 (i) $\sigma[k]$ is the last letter of $\factor{\pmotif}{1}$,
 (ii) for every $1 \leq i < k$,
@@ -586,22 +590,22 @@ For example,
 for $\sigma = 981237654$,
 we have
 $s_\sigma = ddaaaddd$ and hence
-$\sigma = \factor{\pmotif}{3} \factor{\pmotif}{2} \factor{\pmotif}{1}$ with
+$\sigma = \factor{\pmotif}{3} \factor{\pmotif}{2}$ $ \factor{\pmotif}{1}$ with
 $\factor{\pmotif}{1} =7654$, $\factor{\pmotif}{2} = 123$ and $\factor{\pmotif}{3} = 98$.
 Furthermore,
 $\first{\pmotif}{1} = 7$, $\first{\pmotif}{2} = 1$, $\first{\pmotif}{3} = 9$,
 $\firsti{\pmotif}{1} = 6$, $\firsti{\pmotif}{2} = 3$ and $\firsti{\pmotif}{3} = 1$.
 
 \begin{remark}
-A Factor is either an increasing or a decreasing subsequence.
+All the elements of a factor are all increasing elements or all decreasing elements
 \end{remark}
 
 \begin{lemma}
 \label{lemma:whereIsMax}
 Given a permutation $\sigma \in \AV(213,231)$ and a suffix of its 
-decomposition $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, 
+decomposition $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots$$\factor{\sigma}{1}$, 
 if $\firsti{\sigma}{i}$ is an ascent (resp. descent) element then the maximal 
-(resp. minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$ is 
+(resp. minimal) element of $\factor{\sigma}{i}\factor{\sigma}{i-1}$ $\ldots$ $\factor{\sigma}{1}$ is 
 $\first{\sigma}{i-1}$.
 \end{lemma}
 
@@ -624,14 +628,14 @@ $\SET{\pmotif}{\ptext}{i}{j}$ as follows:
 given a subsequence $s$ of $\ptext[j:]$,
 $s \in \SET{\pmotif}{\ptext}{i}{j}$ if and only if
 $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$
-and the element$\first{\pmotif}{i}$ occurs in $\ptext[j]$.
+and the element $\first{\pmotif}{i}$ occurs in $\ptext[j]$.
 
 \begin{lemma}
-Let $\pmotif$ be a permutation 
-with $\factor{\pmotif}{i}$ as an ascent (respectively descent) factor,
-$s$ a subsequence such that, $s \in \SET{\pmotif}{\ptext}{i}{j}$ and $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). 
-For all subsequence 
-$s' \in \SET{\pmotif}{\ptext}{i}{j}$ and for all subsequence $t$ of $\ptext$, such that $t=t's'$, if $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ then the subsequence $t's$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$.
+Let $\pmotif$ be a permutation , 
+$\factor{\pmotif}{i}$ be an ascent (resp. descent) factor,
+$s$ be a subsequence such that $s \in \SET{\pmotif}{\ptext}{i}{j}$ and $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). 
+For all subsequences 
+$s' \in \SET{\pmotif}{\ptext}{i}{j}$ and for all subsequences $t$ of $\ptext$, such that $t=t's'$, if $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ then the subsequence $t's$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ in $\ptext[j:]$ such that $\first{\pmotif}{i}$ occurs in $\ptext[j]$.
 \end{lemma}
 
 \begin{proof}
@@ -640,10 +644,11 @@ By definition $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$. To prove 
 \end{proof}
 
 \begin{corollary}
-Let $\pmotif$ be a permutation 
-with $\factor{\pmotif}{i}$ as an ascent (respectively descent) factor,
-and let $s \in \SET{\pmotif}{\ptext}{i}{j}$, such that $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). 
-Those following statements are equivalent :
+Let $\pmotif$ be a permutation , 
+$\factor{\pmotif}{i}$ be an ascent (resp. descent) factor
+and 
+$s$ be a subsequence such that $s \in \SET{\pmotif}{\ptext}{i}{j}$ and $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). 
+These following statements are equivalent :
 \begin{itemize}
 	\item There exists an 
 	occurrence of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ occurs in $\ptext[j]$.
@@ -680,7 +685,7 @@ $$
 
 	\text{The maximal value of a subsequence} 
 		& \text{If $\first{\sigma}{i}$ is  } \\
-	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & 
+	\text{ that is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & 
 		\text{ an ascent element } \\	
 	\text{ and that minimize the maximal value} & \\
 	\text{ and $\first{\sigma}{i}$ occurs in $\ptext[j]$} & \\
@@ -690,13 +695,14 @@ $$
 	
 	\text{The minimal value of a subsequence} 
 		& \text{If $\first{\sigma}{i}$ is  } \\
-	\text{ which is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & \text{ a descent element } \\	
+	\text{ that is an occurence of $\sigma[\firsti{\sigma}{i}:]$ in $\pi[j:]$} & \text{ a descent element } \\	
 	\text{ and that maximize the minimal value} & \\
 	\text{ and $\first{\sigma}{i}$ occurs in $\ptext[j]$} & \\
 \end{cases}
 $$
 
 This problem can be solve by induction as follows:
+
 
 \noindent\textbf{BASE :}
 \begin{align*}
@@ -712,6 +718,17 @@ This problem can be solve by induction as follows:
 		\text{ $|\factor{\pmotif}{1}| \leq LDS(j,j',\ptext[j']) $}\}&\text{ a descent element }\\
 \end{cases}
 \\
+\intertext{
+In the base case,
+one is looking for an occurrence of the first factor.
+If the factor has only ascent (resp. descent) elements, then
+one has to find an increasing (resp. decreasing) subsequence
+in the text of the same size or that is longer that
+the size of the first factor. To find the occurrence that is
+the less restrictive (for the future matching)
+one must find the occurrence with the right most element
+of the sequence minimal (resp. maximal).}
+\\
 \intertext{\textbf{STEP :}}
 \LM{\pmotif}{\ptext}{i}{j} 
 &=
@@ -725,55 +742,46 @@ This problem can be solve by induction as follows:
 where $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ are the sets 
 of elements such that if  
 $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$ or if $\ptext[k] \in \DF{\pmotif}{\ptext}{i}{j}$ 
-then there exists an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$ and the element 
+then there exists an occurrence $t$ of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$ and the element 
 $\first{\pmotif}{i-1}$ occurs in element $\ptext[k]$. 
-Given that one has the set $\SET{\pmotif}{\ptext}{i-1}{k}$, 
-to decide if $\ptext[k] \in \AF{\pmotif}{\ptext}{i}{j}$, 
-one needs to find an occurrence $t$ of $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ 
-such there exists $s \in \SET{\pmotif}{\ptext}{i-1}{k}$ and $ts$ is an occurrence of 
-$\pmotif[\firsti{\pmotif}{i}:]$. 
-Formally we define $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ as follows:
+$t$ exists if and only if $t=t's'$ with $t'$ is an occurrence of  $\factor{\pmotif}{i}$ in $\ptext[j:k-1]$ with element
+$\first{\pmotif}{i-1}$ occurs in element $\ptext[k]$
+and $s \in \SET{\pmotif}{\ptext}{i-1}{k}$.
+If $\factor{\pmotif}{i}$ is an increasing (resp. decreasing)
+sequence $t'$ must be an increasing (resp. decreasing) 
+subsequence
+in $\ptext[j:k-1]$ of the same size or that is longer that
+the size of $\factor{\pmotif}{i}$ (denoted $|\factor{\pmotif}{i}|$).
+Moreover one must assure that the elements of subsequence 
+$t'$ are smaller (resp. bigger) than the element of $s'$ 
+in particular the minimal (resp. maximal) element.
+Thus we can compute $\AF{\pmotif}{\ptext}{i}{j}$ and $\DF{\pmotif}{\ptext}{i}{j}$ as follows:
 \begin{align*}
 \AF{\pmotif}{\ptext}{i}{j}
 &=
 \text{$\{\ptext[j'] \;|\; j<j'$ and $\LM{\pmotif}{\ptext}{i-1}{j'} \neq 0$ and} 
 \\
 &\qquad 
-\text{$|\factor{\pmotif}{i}| \leq LIS_{\ptext}(j,j'-1,\first{\pmotif}{i-1})\}$} 
+\text{$|\factor{\pmotif}{i}| \leq LIS_{\ptext}(j,j'-1,\LM{\pmotif}{\ptext}{i-1}{j'})\}$} 
 \\
 \DF{\pmotif}{\ptext}{i}{j}
 &=
 \text{$\{\ptext[j'] \;|\; j<j'$ and $\LM{\pmotif}{\ptext}{i-1}{j'} \neq \infty$ and}
 \\
 &\qquad
-\text{$|\factor{\pmotif}{i}| \leq LDS_{\ptext}(j,j'-1,\first{\pmotif}{i-1})\}$}
+\text{$|\factor{\pmotif}{i}| \leq LDS_{\ptext}(j,j'-1,\LM{\pmotif}{\ptext}{i-1}{j'})\}$}
 \end{align*}
 where $LIS_{\ptext}(i,j,k)$ (resp. $LDS_{\ptext}(i,j,k)$) is the longest increasing 
 (resp. decreasing) sequence in $\ptext$ starting at $i$ and ending at $j$,
 with every element of this sequence
 smaller (resp. bigger) than $k$.
 $LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in 
-$O(|\ptext|^2\log(\log(|\ptext|)))$ (see \cite{Bespamyatnikh00enumeratinglongest}).
-
-For the base case,
-one is looking for an occurrence for the first factor.
-If the factor is an ascent (respectively descent) factor, then
-one has to find an increasing (resp. decreasing) subsequence
-in the text of same size or longest that
-the size of the first factor.
-To find the "safest" solution
-one must assure that the right most element
-of the sequence is minimal (resp. maximal).\\
-For the induction, it follows the same idea
-except that one must assure that
-every element of the subsequence is larger (resp. smaller)
-than the maximal (resp. minimal) element of the rest of the occurrence which is given by the inductive problem of
-the previous factor.
+$O(|\ptext|^2\log(\log(|\ptext|)))$ time (see \cite{Bespamyatnikh00enumeratinglongest}).
 
 There exists a occurrence of $\pmotif$ in $\ptext$ if and only if
 there exists a $LM(n,i)\neq 0$ and $LM(n,i)\neq \infty$ for $1 \leq i \leq |\ptext|$,
-with $n$ the number of factor in $\pmotif$.
-Moreover the basic case can be computed in $O(n^2)$
+with $n$ the number of factors in $\pmotif$.
+Moreover the basic case can be computed in $O(n^2)$ time
 and the induction on $O(kn^2)$ time and space.
 \qed
 \end{proof}
@@ -783,37 +791,43 @@ and the induction on $O(kn^2)$ time and space.
 \section{$(213,231)$-avoiding bivincular patterns}
 	\label{section:bivincular}
 
-This section is devoted to presenting a polynomial-time algorithm for deciding whether
-a $(213,231)$-avoiding bivincular pattern occurs in a permutation.
-We start by presenting a property of bivincular motifs avoiding both $213$ and $231$.
+This section is devoted to the pattern matching problem with $(213,231)$-avoiding bivincular motif.
+Recall that a bivincular motif generalise a permutation motif by
+be able to force elements to be consecutive in value or in position.
+Hence,  bivincular motif is stronger in constraint that motif by permutation, intuitively we can not use the previous algorithm.
+As in a $(213,231)$-avoiding permutation, we can describe structural property of a $(213,231)$-avoiding bivincular motif.
 
 \begin{lemma}
 \label{lemma:ascentDescentAscent}
-If $\overline{\sigma[i]\sigma[j]}$ (thus $\sigma[j]=\sigma[i]+1$) and 
-if $\sigma[i]$ is an ascent (respectively decent) element and $\sigma[i]+1$ is an ascent 
+Given $\pmotif$ a $(213,231)$-avoiding bivincular,
+If $\overline{\sigma[i]\sigma[j]}$ (this implies that $\sigma[j]=\sigma[i]+1$) and 
+if $\sigma[i]$ is an ascent (resp. decent) element and $\sigma[i]+1$ is an ascent 
 (resp. decent) element then 
 $i<j$ (resp. $j>i$) and for every $k$, $i<k<j$ (resp. $j>k>i$), $\pi[k]$ is a descent 
 (resp. ascent) element.    
 \end{lemma}
 
+A way to understand this lemma is if two ascent (resp. decsent) elements
+need to occur in consecutive elements in value then every element in $\pmotif$ which are between those two elements (if any) are descent (resp. ascent) elements. 
+
 \begin{proof}
 Suppose that there exists $k$, $i<k<j$,
-such that $\pmotif[k]$ is ascent. Ascent elements are increasing  so $\sigma[i]<\sigma[k]<\sigma[j]$ which is in contradiction that with $\sigma[j]=\sigma[i]+1$.
+such that $\pmotif[k]$ is ascent. Ascent elements are increasing  so $\sigma[i]<\sigma[k]<\sigma[j]$ which is in contradiction with $\sigma[j]=\sigma[i]+1$.
 We use a similar argument if $\sigma[i]$ is a descent element
 \qed
 \end{proof}
 
 \begin{proposition}
-	\label{Proposition:bivincular pattern}
-		Let $\sigma$ be a bivincular motif avoiding $213$ and $231$ of length $k$
-		and $\pi \in S_n$.
-		One can decide in $O(kn^5)$ time
-		and $O(kn^5)$ space if $\sigma$ occurs in $\pi$.
+\label{Proposition:bivincular pattern}
+Let $\sigma$ be a $(213,231)$-avoiding bivincular of length $k$
+and $\pi \in S_n$.
+One can decide in $O(kn^5)$ time
+and $O(kn^5)$ space if $\sigma$ occurs in $\pi$.
 \end{proposition}
 
 \begin{proof}
 We consider the following problem :
-Given a bivincular motif $\pbmotif$ with $\pmotif \in \Av{n_\pmotif}{231,213} $, and a text $\ptext \in \Av{n_\ptext}{231,213}$.
+Given $\pmotif$ a $(213,231)$-avoiding bivincular, and a text $\ptext \in \Av{n_\ptext}{231,213}$,
 $$
 \PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
 \begin{cases}
@@ -824,8 +838,7 @@ $$
 \end{cases}
 $$
 
-$\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ is closed under induction.
-It can be solved by means by the following relations:
+$\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ can be solved by means by the following relations:
 
 \noindent\textbf{BASE :} \\
 $$
@@ -842,18 +855,18 @@ $$
 \end{cases}
 $$
 
-The base case finds an occurrence for the right most element of the motif. If the last element does not have any restriction on position and on value, then $\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}$ is true if and only if $\pmotif[n_\pmotif]$ can occur in $\ptext[j]$. This condition is checked by assuring that $\ptext[j] \in [\lb,\ub]$. 
+The base case finds an occurrence for the rightmost element of the motif. If the last element does not have any restriction on positions and on values, then $\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}$ is true if and only if $\pmotif[n_\pmotif]$ occurs in $\ptext[j]$. This is true if $\ptext[j] \in [\lb,\ub]$. 
 
 \noindent\textbf{STEP :} 
 
-We consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
+We need to consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
 \begin{itemize}
 	\item If $\ptext[j] \notin [\lb,\ub]$ then :
 	$$
 	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j} = false
 	$$
 
-	this is straightforward with the definition. If $\ptext[j] \notin [\lb,\ub]$ then it can not be part of an occurrence of  $\pmotif[i:]$ in $\ptext[i:]$ with every element is in $[\lb,\ub]$.
+	which is immediate from the definition. If $\ptext[j] \notin [\lb,\ub]$ then it can not be part of an occurrence of  $\pmotif[i:]$ in $\ptext[i:]$ with every element is in $[\lb,\ub]$.
 	
 	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is an ascent element then :
 	$$
@@ -877,7 +890,7 @@ We consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
 
 	\end{cases}
 	$$	
-	Remark that $\pmotif[i]$ can occur in $\ptext[j]$ because $\ptext[j] \in [\lb,\ub]$.
+	Remark that $\pmotif[i]$ occurs in $\ptext[j]$ because $\ptext[j] \in [\lb,\ub]$.
 	Thus if $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$ with every element in $[\pmotif[i]+1,\ub]$ then 
  	$\pmotif[i:]$ occurs in $\ptext[j:]$  	
  	which correspond to know if there exists $k$, $j<k$ such that
@@ -906,21 +919,18 @@ We consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
 			false & \text{otherwise}
 	\end{cases}
 	$$	
-	We can show symmetrically as the last case that 
-	$\pmotif[i:]$ occurs in $\ptext[j:]$
-	with $\sigma[i]$ occurs in $\pi[j]$.
-	 starting at element $j$ if and only if $\bigcup_{j<k} \PM{\pbmotif}{\ptext}{\lb}{\ptext[j]-1}{i+1}{k}$. 
+	The same remark as the last case holds.
 
 \end{itemize}
 
-Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then $\sigma$ occurs in $\pi$. We now discuss about the position and value constraints.
+Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then $\sigma$ occurs in $\pi$. We now discuss the position and value constraints.
 \paragraph{Position Constraint.} There are 3 types of position constraints 
 \begin{itemize}
-	\item If $_\llcorner{\sigma[1]}$ then the left most element of $\sigma$  must occur in the left most element of $\pi$ ($\pmotif[1]$ occurs in $\ptext[1]$ on an occurrence of $\pmotif$ in $\ptext$). This constraint is assured by demanding that the occurrence starts at the left most element of $\ptext$ : if  $\PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{1}$ is true.
+	\item If $_\llcorner{\sigma[1]}$ then the leftmost element of $\sigma$  must occur in the leftmost element of $\pi$ ($\pmotif[1]$ occurs in $\ptext[1]$ on an occurrence of $\pmotif$ in $\ptext$). This constraint is checked by requiring the occurrence to starts at the left most element of $\ptext$ : if  $\PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{1}$ is true.
 	
-	\item If ${\pmotif[n_\pmotif]}_\lrcorner$ then the right most element $\sigma$ must occurs in the right most element of $\pi$ ($\pmotif[n_\pmotif]$ occurs in $\ptext[n_\ptext]$ on a occurrence of $\pmotif$ in $\ptext$). This constraint is assured in the base case.
+	\item If ${\pmotif[n_\pmotif]}_\lrcorner$ then the rightmost element $\sigma$ must occurs in the rightmost element of $\pi$ ($\pmotif[n_\pmotif]$ occurs in $\ptext[n_\ptext]$ on a occurrence of $\pmotif$ in $\ptext$). This constraint is checked in the base case.
 
-	\item If $\underline{\pmotif[i]\pmotif[i+1]}$ then the index of the occurrence of $\pmotif[i]$ and $\pmotif[i+1]$ must be consecutive. In other word if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i+1]$ must occur in $\ptext[j+1]$. We assure this restriction in the induction by demanding that occurrences of $\pmotif[i+1:]$  start at index $j+1$.
+	\item If $\underline{\pmotif[i]\pmotif[i+1]}$ then the index of the occurrence of $\pmotif[i]$ and $\pmotif[i+1]$ must be consecutive. In other word, if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i+1]$ must occur in $\ptext[j+1]$. We assure this restriction in the induction by requiring occurrences of $\pmotif[i+1:]$ to start at index $j+1$.
 \end{itemize}
 
 \paragraph{Value Constraint.} There are 3 types of position constraints
@@ -928,10 +938,13 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 	\item If $^\ulcorner{\sigma[i]}$ (and thus $\sigma[i]=1$) then the minimal value of $\pmotif$ must occur in the minimal value of $\ptext$.
 	\begin{itemize}
 
-		\item If $\sigma[i]$ is an ascent element then $\sigma[i]$ is the left most ascent element (if not $\sigma[i]$ would not be the minimal element, because ascent elements are increasing). Remark that the problem starts with the lower bound as $1$, and inductive problems before the index $i$ are called with descent elements which do not modified the lower bound, so for every problem with index $i$ has for lower bound $1$. 
-		$\PM{\pbmotif}{\ptext}{1}{*}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{1}{*}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to lower bound which is  $1$.	
-				
-		\item If $\sigma[i]$ is a descent element then $i=n_\pmotif$ ($\sigma[i]$ is the right most element). Which is solved in the case case.
+		\item If $\sigma[i]$ is an ascent element, then remark that 
+		every problem 
+		$\PM{\pbmotif}{\ptext}{\lb}{*}{i}{*}$ is true if $\sigma[i]$ occurs in element $\lb$ thus it is enough to require that $\lb=1$.
+		Now remark that $\sigma[i]$ is the leftmost ascent element, indeed if not, then there exists an ascent element $\sigma[i']$, $i'<i$ and by definition $\sigma[i']<\sigma[i]$ which is not possible as $\sigma[i]$ must be the minimal element. As a consequence every problem $\PM{\pbmotif}{\ptext}{1}{n_{\pi}}{1}{*}$, $\dots$, $\PM{\pbmotif}{\ptext}{*}{*}{i-1}{*}$ is called with descent thus every problem 
+		$\PM{\pbmotif}{\ptext}{\lb}{*}{i}{*}$ has same lower bound as $\PM{\pbmotif}{\ptext}{1}{n_{\ptext}}{1}{*}$ thus for every $\PM{\pbmotif}{\ptext}{\lb}{*}{i}{*}$, $\lb=1$.
+					
+		\item If $\sigma[i]$ is a descent element then $i=n_\pmotif$ ($\sigma[i]$ is the right most element). Thus every $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ occurs in $1$.
 
 	\end{itemize}
 
@@ -941,32 +954,48 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 	\item If ${\pmotif[i]}^\urcorner$ (and thus $\sigma[i]=n_\pmotif$) then the maximal value of $\pmotif$ must occur in the maximal value of $\ptext$.
 	\begin{itemize}
 
-		\item If $\sigma[i]$ is a descent element then $\sigma[i]$ is the left most ascent element (if not $\sigma[i]$ would not be the maximal element, because descent elements are decreasing). Remark that the problem starts with the upper bound as $n_\ptext$, and any inductive problems before the index $i$ are called with ascent elements which do not modified the upper bound, every problem with index $i$ has for upper bound $n_\ptext$. 		$\PM{\pbmotif}{\ptext}{*}{n_\pmotif}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{n_\pmotif}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to upper bound which is  $n_\pmotif$.
+		\item If $\sigma[i]$ is an descent element, then remark that 
+		every problem 
+		$\PM{\pbmotif}{\ptext}{*}{\ub}{i}{*}$ is true if $\sigma[i]$ occurs in element $\ub$ thus it is enough to require that $\ub=n_{\ptext}$.
+		Now remark that $\sigma[i]$ is the leftmost descent element, indeed if not, then there exists an descent element $\sigma[i']$, $i'<i$ and by definition $\sigma[i']>\sigma[i]$ which is not possible as $\sigma[i]$ must be the maximal element. As a consequence every problem $\PM{\pbmotif}{\ptext}{1}{n_{\ptext}}{1}{*}$, $\dots$, $\PM{\pbmotif}{\ptext}{*}{*}{i-1}{*}$ is called with ascent elements thus every problem 
+		$\PM{\pbmotif}{\ptext}{*}{\ub}{i}{*}$ has same upper bound as $\PM{\pbmotif}{\ptext}{1}{n_{\ptext}}{1}{*}$ thus for every $\PM{\pbmotif}{\ptext}{*}{\ub}{i}{*}$,
+		$\ub=n_{\ptext}$.	
 		
 		
-		\item If $\sigma[i]$ is an ascent element then $\sigma[i]$ then $i=n_\pmotif$ ($\sigma[i]$ is the right most element) which is solved in the base case.
+		\item If $\sigma[i]$ is an ascent element then $\sigma[i]$ then $i=n_\pmotif$ ($\sigma[i]$ is the right most element). Thus every $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ occurs in $n_{\ptext}$.
 
 	\end{itemize}
 
 
 
-	\item  If $\overline{\pmotif[i]\pmotif[i']}$, with $\pmotif[i']=\pmotif[i]+1$ then if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i']$ must occur in $\ptext[j]+1$.
+	\item  If $\overline{\pmotif[i]\pmotif[i']}$,  (which implies that $\pmotif[i']=\pmotif[i]+1$) then if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i']$ must occur in $\ptext[j]+1$.
 		\begin{itemize}
 
 			\item The case $\pmotif[i]$ is a descent element, $\pmotif[i']$ is an ascent element and $i<i'$ (remark that this case is equivalent to the case $\pmotif[i]$ is an ascent element, $\pmotif[i']$ is a descent element and $i'<i$) is not possible. 
 			Indeed $\pmotif[i]$ is the maximal element of $\pmotif[i:]$ thus $\pmotif[i] > \pmotif[i']$ which is in contradiction with 
 			$\pmotif[i']=\pmotif[i]+1$. 
 			
-			\item If $\pmotif[i]$ is an ascent element, $\pmotif[i']$ is a descent element and $i<i'$ (remark that this case is equivalent to the case $\pmotif[i]$ is a descent element, $\pmotif[i']$ is an ascent element and $i'<i$) , then
-			$\pmotif[i]$ is the right most ascent element and $\pmotif[i']$ is the right most element (or $\pmotif[i'] \neq \pmotif[i]+1$). Thus inductive problems between $i+1$ and $i'$ do not modified the lower bound. If $\sigma[i]$ occurs in $\ptext[j]$ then the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ have for lower bound $\ptext[i]+1$. The problem $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is a base case and is true if and only if
-			the occurrence of $\sigma[i']$ is equal the lower bound which is equal to $\ptext[i]+1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
-				
-			\item If $\pmotif[i]$ is a descent element and $\pmotif[i']$ is a descent element then $i'<i$ and there is no descent element between $\pmotif[i]$ and $\pmotif[i']$ (lemma \ref{lemma:ascentDescentAscent}), Thus inductive problems between $i'+1$ and $i$ do not modified the upper bound. Remark that if $\pmotif[i']$ occurs in $\ptext[j]$ then 
-			the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ have for upper bound $\ptext[j]-1$. $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is true if and only if the occurrence of $\sigma[i]$ is equal to upper bound which is equal to $\sigma[i']-1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
+			\item If $\pmotif[i]$ is an ascent element, $\pmotif[i']$ is a descent element and $i<i'$ (remark that this case is symmetric to the case $\pmotif[i]$ is a descent element, $\pmotif[i']$ is an ascent element and $i'<i$), then
+			remark that every problem 
+			$\PM{\pbmotif}{\ptext}{\lb}{*}{i'}{*}$ is true if $\sigma[i']$ occur in $\lb$ thus it is enough to require that $\lb=\ptext[j]+1$.
+			Now remark that
+			$\pmotif[i]$ is the right most ascent element and $\pmotif[i']$ is the right most element (or $\pmotif[i'] \neq \pmotif[i]+1$). 
+			As a consequence every problem $\PM{\pbmotif}{\ptext}{*}{*}{i+1}{*}$, $\dots$, $\PM{\pbmotif}{\ptext}{*}{*}{i'-1}{*}$ is called with descent elements
+			thus every problem 
+			$\PM{\pbmotif}{\ptext}{\lb}{*}{i'}{*}$ 
+			has the same lower bound as $\PM{\pbmotif}{\ptext}{\lb}{*}{i+1}{*}$.
+			Finally remark that if $\pmotif[i]$ occurs in $\ptext[j]$ then  $\PM{\pbmotif}{\ptext}{\lb}{*}{i+1}{*}$ has for lower bound $\ptext[j]+1$.
 			
-			\item If $\pmotif[i]$ is an ascent element and $\pmotif[i']$ is an ascent element then $i<i'$ and there is no  ascent element between $\pmotif[i]$ and $\pmotif[i']$ (lemma \ref{lemma:ascentDescentAscent}), Thus inductive problems between $i+1$ and $i'$ do not modified the lower bound. Remark that if $\pmotif[i]$ occurs in $\ptext[j]$ then 
+			\item If $\pmotif[i]$ is an ascent element and $\pmotif[i']$ is an ascent element then
+			first remark that every problem 
+			$\PM{\pbmotif}{\ptext}{*}{\ub}{i'}{*}$ is true if $\sigma[i']$ occurs in $\lb$.
+			Now remark that
+			$i<i'$ and there is no  ascent element between $\pmotif[i]$ and $\pmotif[i']$ (lemma \ref{lemma:ascentDescentAscent}), 
+			Thus for every problem $\PM{\pbmotif}{\ptext}{*}{*}{i+1}{*}$, $\dots$, $\PM{\pbmotif}{\ptext}{*}{*}{i'-1}{*}$ is called with descent elements
+			thus every problem 
+			$\PM{\pbmotif}{\ptext}{\lb}{*}{i'}{*}$ has same lower bound as $\PM{\pbmotif}{\ptext}{\lb}{*}{i+1}{*}$.
+			Finally remark that if $\pmotif[i]$ occurs in $\ptext[j]$ then  $\PM{\pbmotif}{\ptext}{\lb}{*}{i+1}{*}$ has for lower bound $\ptext[j]+1$.			
 
-			the inductive problems after $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ have for lower bound $\ptext[j]+1$. $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is either an inductive case or a base case, in either way  $\PM{\pbmotif}{\ptext}{*}{*}{i'}{*}$ is true if and only if the occurrence of $\sigma[i']$ is equal to lower bound which is equal to $\sigma[i']+1$ so the occurrence of $\pmotif[i]$ and $\pmotif[i']$ are consecutive in value.
 		\end{itemize}
 \end{itemize}
 \qed
@@ -978,9 +1007,10 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 \section{Computing the longest $(213,231)$-avoiding subsequence}
 \label{section:LCS}
 
-	This section is devoted to finding longest $(213,231)$-avoiding subsequences in permutations:
+	This section is focused on a problem related to the pattern matching problem, finding the longest $(213,231)$-avoiding subsequences in permutations:
 	Given a set of permutations, find a longest $(213,231)$-avoiding that occurs as a pattern
 	in each input permutation.
+	This problem is know to be NP-Hard for an arbitrary number of permutations and we do not hope it to be solvable in polynomial time even with the constraint of the subsequence must avoid $(213,231)$. Thus we focus on the cases where only one or two permutations are given in input.
 
 	We start with the easiest case where we are given just one input permutation.
 	We need the set of descent elements and the set of ascent elements.
@@ -1026,13 +1056,13 @@ We now turn to considering the case where the input is composed of two permutati
 Given two permutations $\pi_1$ and $\pi_2$,
 one can compute 
 the longest common subsequence
-avoiding (231,213) in $O(|\pi_1|^3|\pi_2|^3)$ time and space.
+avoiding (213,231) in $O(|\pi_1|^3|\pi_2|^3)$ time and space.
 \end{proposition}
 
 \begin{proof}
 Consider the following problem,
 that compute the longest stripe common to $\pi_1$ and $\pi_2$.
-Given two permutations $\pi_1$ and $\pi_2$.\\
+Given two permutations $\pi_1$ and $\pi_2$,\\
 
 $$
 \LCS{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{i_1}{i_2}
@@ -1041,10 +1071,7 @@ $$
 = $\max$ \{$|s|$ $|$ $s$ occurs in $\pi_1[i_1:]$ with every element is in $[\lb_1,\ub_1]$ and $s$ occurs in $\pi_2[i_2:]$ with every element is in $[\lb_2,\ub_2]$ \}
 \end{center}
 
-
-
-We show that this family of problems are closed under induction.\\
-
+We show that we can compute by induction the problem.\\
 
 \noindent\textbf{BASE :}
 
@@ -1095,7 +1122,9 @@ $
 For every pair $i,j$ we either ignore the element of $\pi_1$,
 ot we ignore the element of $\pi_2$,
 or we match as the same step (if possible).
-Those relations lead to a $O(|\pi_1|^3|\pi_2|^3)$ time and $O(|\pi_1|^3|\pi_2|^3)$ space algorithm.
+These relations lead to a $O(|\pi_1|^3|\pi_2|^3)$ time and $O(|\pi_1|^3|\pi_2|^3)$ space algorithm.
+Indeed there is $|\pi_1|^3|\pi_2|^3$ cases possible for the problem
+and each case is solved in constant time.
 $\qed$
 \end{proof}
 
