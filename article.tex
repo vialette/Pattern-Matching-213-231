@@ -197,8 +197,8 @@
 	The case of increasing patterns is solvable in
 	$O(|\pi| \log \log |\sigma|)$ time in the RAM model \cite{Crochemore:Porat:2010},
 	improving the previous 30-year bound of $O(|\pi| \log |\sigma|)$.
-	(The algorithm also improves on the previous
-	$O(|\pi| \log \log |\pi|)$ bound.)
+	% (The algorithm also improves on the previous
+	% $O(|\pi| \log \log |\pi|)$ bound.)
 	Furthermore, the patterns $132$, $213$, $231$, $312$ can all be handled in linear-time
 	by stack sorting algorithms.
 	Any pattern of length $4$ can be detected in $O(|\pi| \log |\pi|)$ time
@@ -212,8 +212,8 @@
 	Separable permutations are those permutations that contain neither
 	$2413$ nor $3142$, and they are enumerated by the Schr{\"o}der numbers
 	(sequence A006318 in OEIS).
-	To the best of our knowledge,
-	separable permutations first arose in the work of
+	% To the best of our knowledge,
+	Separable permutations first arose in the work of
 	Avis and Newborn~\cite{Avis:Newborn:1981},
 	who showed that they are precisely the permutations which can be sorted by an
 	arbitrary number of pop-stacks in series,
@@ -260,21 +260,21 @@
  	if $\pi = \pi_1\pi\,\ldots\,\pi_n$ avoids $132$, then its complement
  	$\pi' = (n+1-\pi_1)(n+1-\pi_2)\,\ldots\,(n+1-\pi_n)$ avoids $312$, and
  	the reverse of $\pi'$ avoids $213$.
- 	From a combinatorial point of view,
- 	B\'ona \cite{Bona:ElJC:2012}
- 	showed the rather surprising fact that the cumulative number of
- 	occurrences of the classical patterns $231$ and $213$ are the same on the
- 	set of permutations avoiding $132$,
- 	beside the pattern based statistics $231$ and $213$
- 	do not have the same distribution on this set.
- 	\emph{Almost avoidance} has also been considered;
- 	a permutation $\pi$ almost avoids a set $X$ of permutations
- 	if there is a way to remove a single element of $\pi$ to get a permutation
- 	that avoids all elements in $P$
- 	and $L_n(P)$ denotes the set of permutations of length $n$ that almost avoid
- 	$P$.
- 	It is shown in \cite{Griffiths:Smith:Warren:PMA:2011} that
- 	$L_n(213, 231) = L_n(132, 231) = L_n(132, 312) = L_n(213, 312)$.
+ 	% From a combinatorial point of view,
+ 	% B\'ona \cite{Bona:ElJC:2012}
+ 	% showed the rather surprising fact that the cumulative number of
+ 	% occurrences of the classical patterns $231$ and $213$ are the same on the
+ 	% set of permutations avoiding $132$,
+ 	% beside the pattern based statistics $231$ and $213$
+ 	% do not have the same distribution on this set.
+ 	% \emph{Almost avoidance} has also been considered;
+ 	% a permutation $\pi$ almost avoids a set $X$ of permutations
+ 	% if there is a way to remove a single element of $\pi$ to get a permutation
+ 	% that avoids all elements in $P$
+ 	% and $L_n(P)$ denotes the set of permutations of length $n$ that almost avoid
+ 	% $P$.
+ 	% It is shown in \cite{Griffiths:Smith:Warren:PMA:2011} that
+ 	% $L_n(213, 231) = L_n(132, 231) = L_n(132, 312) = L_n(213, 312)$.
 
 	This paper is organized as follows.
 	In Section~\ref{section:Definitions} the needed definition are presented.
@@ -286,10 +286,7 @@
 	In Section~\ref{section:bivincular} we give a polynomial-time algorithm
 	for $(213,231)$-avoiding bivincular patterns.
 	In Section~\ref{section:LCS} we consider the problem of finding the longest
-	$(213,231)$-avoiding pattern in a permutation.
-	In Section~\ref{section:LCS common 2 permutations} we give a
-	polynomial-time algorithm for computing the longest
-	$(213,231)$-avoiding pattern common to two permutations.
+	$(213,231)$-avoiding pattern that occurs in one or two permutations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -338,8 +335,8 @@ $91675$,
 $91672$ in $\pi$ is called a
 \emph{copy},
 (or \emph{instance} or \emph{occurrence}) of $\sigma$.
-Since the permutation $\pi = 391867452$  contains no increasing subsequence of
-length four, $\pi$ avoids $1234$.
+% Since the permutation $\pi = 391867452$  contains no increasing subsequence of
+% length four, $\pi$ avoids $1234$.
 
 Suppose $P$ is a set of permutations. We let $\AV_n(P)$ denote the
 set of all $n$-permutations avoiding each permutation in $P$.
@@ -458,12 +455,6 @@ The first element of any $(213,231)$-avoiding permutation
 must be either $1$ or $n$.
 \end{lemma}
 
-\begin{proof}
-Any other initial element would serve as a `$2$' in either a
-$231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
-\qed
-\end{proof}
-
 Notice that Lemma~\ref{lemma:first element is 1 or n} gives as an
 immediate consequence that the number of $(213,231)$-avoiding $n$-permutations
 is $2^{n-1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985}.
@@ -471,20 +462,18 @@ The above structural lemma gains in interest in the form of the following coroll
 
 \begin{corollary}
 \label{corollary:minmaxelement}
-$\pi \in \AV_n(213,231)$ if and only if for $1 \leq i \leq n$,
+Let $\pi \in S_n$. 
+Then,
+$\pi \in \AV_n(213,231)$ if and only if for $1 \leq i \leq n$
 $\pi[i]$ is the minimal or the maximal element of $\pi[i:]$.
 \end{corollary}
 
 \begin{corollary}
 \label{corollary:max is ascent}
 Let $\pi \in \AV_n(213,231)$ and $1 \leq i < n$. Then,
-(1) 
-if $\pi[i]$ is an ascent element then $\pi[i]$ is the minimal element 
-of $\pi[i:]$
-and 
-(2)
-if if $\pi[i]$ is a descent element then $\pi[i]$ is the maximal element 
-of $\pi[i:]$
+if $\pi[i]$ is an ascent (resp. descent) element 
+then $\pi[i]$ is the minimal (resp. maximal) element 
+of $\pi[i:]$.
 \end{corollary}
 
 %\begin{corollary}
@@ -507,37 +496,6 @@ Then, $t$ is an occurrence of $\sigma$ in $\pi$ if and only if
 $s_t$ occurs as a subsequence in $s_\pi$.
 \end{lemma}
 
-\begin{proof}
-  The forward direction is obvious.
-  We prove the backward direction by induction on the size of the motif
-  $\sigma$.
-  The base case is a motif of size $2$.
-  Suppose first that $\sigma = 12$ and hence $s_\sigma = a$.
-  Let $t = \pi_{i_1}\pi_{i_2}$, $i_1 < i_2$, be a subsequence of $\pi$
-  such that $s_t$ occurs as a subsequence in $s_\pi$.
-  Since $s_\sigma = s_t = a$, this reduces to saying that
-  $\pi_{i_1} < \pi_{i_2}$, and hence $t$ is an occurrence of $\sigma = 12$ in $\pi$.
-  A similar argument shows that the lemma holds true for $\sigma = 21$.
-  Now, assume that the lemma is true for all motifs up to size $k \geq 2$.
-  Let $\sigma \in \Av{k+1}{231,213}$ and
-  let $t = \pi_{i_1}\pi_{i_2}\,\ldots\,\pi_{i_{k+1}}$,
-  $i_1 < i_2 < \ldots < i_{k+1}$,
-  be a subsequence of $\pi$ of length $k+1$ such that
-  $s_t = s_\sigma$.
-  Suppose that $s_t$ occurs in $s_\pi$ as a subsequence.
-  Then, $s_t[2:] = s_\sigma[2:]$ occurs as a subsequence in $s_\pi[2:]$.
-  But $\sigma[2:] \in \Av{k}{231,213}$ and hence,
-  by the inductive hypothesis, it follows that
-  $t[2:]$ is an occurrence of $\sigma[2:]$ in $\pi[2:]$.
-  Moreover, if $s_\sigma[1] = a$ (resp. $s_\sigma[1] = d$)
-  then $\sigma[1]$ is the minimal (resp. maximal) element of $\sigma$
-  (Lemma~\ref{lemma:first element is 1 or n}),
-  and hence, since $s_t = s_\sigma$ occurs as a subsequence in $s_\pi$,
-  $t[1]$ is the minimal (resp. maximal) element of $t$.
-  Therefore, $t$ is an occurrence of $\sigma$ in $\pi$.
-  \qed
-\end{proof}
-
 We are now ready to solve the pattern containment problem in case
 both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 
@@ -547,24 +505,11 @@ both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 	One can decide whether $\pi$ contains $\sigma$ in linear time.
 \end{proposition}
 
-\begin{proof}
-According to Lemma~\ref{lemma:MatchStripeToPermutation} the problem reduces
-to deciding whether $s_\sigma$ occurs as a subsequence in $s_\pi$.
-A natural greedy approach solves this issue in linear-time.
-\qed
-% To solve the permutation pattern for a permutation in $\AV_n(213,231)$,
-% we find a find a match of the stripe of the pattern in the stripe of the text.
-% This can be done linearly by a greedy algorithm,
-% by matching a step whenever it is possible.
-% And thank to the definition of the definition of a stripe in
-% Corollary~\ref{corollary:minmaxelement},
-% we do not have to compute the stripe in advance.
-% Therefore we have an linear (online) algorithm.
-\end{proof}
-
 Observe that, according to Corollary~\ref{corollary:minmaxelement},
 the effective construction of the two stripes is not required in stretch 
-of algorithm given for the proof in the proposition \ref{Proposition:both permutations are avoiding},
+of algorithm given for the proof in 
+Proposition~
+\ref{Proposition:both permutations are avoiding},
 and hence we have an online algorithm.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -609,21 +554,7 @@ if $\firsti{\sigma}{i}$ is an ascent (resp. descent) element then the maximal
 $\first{\sigma}{i-1}$.
 \end{lemma}
 
-\begin{proof}
-Consider the rightmost element of $\factor{\sigma}{i}$ and assume this element is an ascent.
-Then, it follows that it is smaller than the following element which is $\first{\sigma}{i-1}$.
-Now, since $\factor{\sigma}{i}$ is an increasing subsequence, every element of
-$\factor{\sigma}{i}$ is smaller than $\first{\sigma}{i-1}$.
-According to Lemma\ref{lemma:first element is 1 or n}, $\first{\sigma}{i-1}$ is the maximal (minimal) element of $\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, and hence
-$\first{\sigma}{i-1}$ is the maximal  element of
-$\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$.
-
-A similar argument shows that the lemma holds true if the rightmost element
-of $\factor{\sigma}{i}$ is a descent.
-\qed
-\end{proof}
-
-we now define the set
+We now define the set
 $\SET{\pmotif}{\ptext}{i}{j}$ as follows:
 given a subsequence $s$ of $\ptext[j:]$,
 $s \in \SET{\pmotif}{\ptext}{i}{j}$ if and only if
@@ -631,6 +562,7 @@ $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$ in $\ptext[j:]$
 and the element $\first{\pmotif}{i}$ occurs in $\ptext[j]$.
 
 \begin{lemma}
+\label{lemma:ts}
 Let $\pmotif$ be a permutation , 
 $\factor{\pmotif}{i}$ be an ascent (resp. descent) factor,
 $s$ be a subsequence such that $s \in \SET{\pmotif}{\ptext}{i}{j}$ and $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). 
@@ -638,22 +570,19 @@ For all subsequences
 $s' \in \SET{\pmotif}{\ptext}{i}{j}$ and for all subsequences $t$ of $\ptext$, such that $t=t's'$, if $t$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ then the subsequence $t's$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ in $\ptext[j:]$ such that $\first{\pmotif}{i}$ occurs in $\ptext[j]$.
 \end{lemma}
 
-\begin{proof}
-By definition $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$. To prove that $ts$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ we prove that every element of t is larger than every element of $s$. If $ts'$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ so every element of $t$ is larger than every element of $s'$. Moreover the maximal element of $s$ is smaller than  the maximal element of $s'$ so every element of $s$ is smaller than every element of $s'$ thus every element of $s$ is smaller than every element of $t$. We use a similar argument if $\factor{\pmotif}{i}$ a descent factor.
-\qed
-\end{proof}
-
 \begin{corollary}
 Let $\pmotif$ be a permutation , 
 $\factor{\pmotif}{i}$ be an ascent (resp. descent) factor
 and 
 $s$ be a subsequence such that $s \in \SET{\pmotif}{\ptext}{i}{j}$ and $s[\first{\pmotif}{i-1}]$ is minimal (resp. maximal). 
-These following statements are equivalent :
-\begin{itemize}
-	\item There exists an 
-	occurrence of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ occurs in $\ptext[j]$.
-	\item There exists a subsequence $t$ of $\ptext[1:j-1]$  such that $ts$ is an occurrence of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ occurs in $\ptext[j]$. 
-\end{itemize}
+These following statements are equivalent:
+(1)
+There exists an 
+occurrence of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ occurs in $\ptext[j]$,
+and (2)
+There exists a subsequence $t$ of $\ptext[1:j-1]$  such that $ts$ is 
+an occurrence of $\pmotif$ in $\ptext$ with element $\first{\pmotif}{i}$ occurs 
+in $\ptext[j]$. 
 \end{corollary}
 
 % This corollary allows us to way to choose a match. Indeed if one does not find a match such that a well chosen subsequence is a suffix of the motif then there is no match at all.
@@ -665,10 +594,10 @@ These following statements are equivalent :
 	and $O(kn^2)$ space if $\pi$ contains $\sigma$.
 \end{proposition}
 
-% For the proof and the algorithm we introduce a decomposition : we decompose the stripe of the motif into factor of same letter, and label those factor from right to left. We also need to add the last index into the first factor. For each factor, we denote the left most element by $\firsta$. For example, given the motif $981237654$, $\factor{1} =7654$, $\first{1}=7$, $\factor{2}=123$, $\first{2}=1$, $\factor{3}=98$ and $\first{9}$.
+% For the proof and the algorithm we introduce a decomposition: we decompose the stripe of the motif into factor of same letter, and label those factor from right to left. We also need to add the last index into the first factor. For each factor, we denote the leftmost element by $\firsta$. For example, given the motif $981237654$, $\factor{1} =7654$, $\first{1}=7$, $\factor{2}=123$, $\first{2}=1$, $\factor{3}=98$ and $\first{9}$.
 
 \begin{proof}%[of Proposition~\ref{Proposition:sigma avoids 213 and 231}]
-%Given an ascent (descent) factor $\factor{i}$ of a motif $\pmotif$, if we want to match the suffix of $\pmotif$ starting by $\factor{i}$, $\factor{i}\factor{i-1}\cdots\factor{1}$ and given that we know every match of $\factor{i-1}\cdots\factor{1}$, the safest match is to choose the match of $\factor{i-1}\cdots\factor{1}$ that minimize (maximize) the maximal (minimal) element of the match of $\factor{i-1}\cdots\factor{1}$ and that allow a match of factor $\factor{i}$. Indeed when we will match $\factor{i+1}\factor{i}\factor{i-1}\cdots\factor{1}$, every element of $\factor{i+1}$ must be matched to element superior (inferior) to every element matched element of $\factor{i}\factor{i-1}\cdots\factor{1}$, particularly its must be superior (inferior) to the maximal (minimal) element of the match of $\factor{i}\factor{i-1}\cdots\factor{1}$. In other word if we want to match $\pmotif[\first{i}:]$ with $\ptext[j:]$ such that $\first{i}$ is matched with element at index $j$ in $\ptext$, the optimal way of matching $\pmotif[\first{i-1}:]$ is to choose the minimal (maximal) element at index $j'$ of $\ptext[j:]$ such that : (1) $\pmotif[\first{i-1}:]$ is matched with $\ptext[j':]$ and element $\first{i-1}$ is matched with element at index $j'$, (2) the factor $\factor{i}$ is matched with $\ptext[j,j'-1]$ and element $\first{i}$ is matched with element at index $j$, (3) Every elements of the match of (2) if inferior (superior) to the minimal (maximal) element of the match of (1).
+%Given an ascent (descent) factor $\factor{i}$ of a motif $\pmotif$, if we want to match the suffix of $\pmotif$ starting by $\factor{i}$, $\factor{i}\factor{i-1}\cdots\factor{1}$ and given that we know every match of $\factor{i-1}\cdots\factor{1}$, the safest match is to choose the match of $\factor{i-1}\cdots\factor{1}$ that minimize (maximize) the maximal (minimal) element of the match of $\factor{i-1}\cdots\factor{1}$ and that allow a match of factor $\factor{i}$. Indeed when we will match $\factor{i+1}\factor{i}\factor{i-1}\cdots\factor{1}$, every element of $\factor{i+1}$ must be matched to element superior (inferior) to every element matched element of $\factor{i}\factor{i-1}\cdots\factor{1}$, particularly its must be superior (inferior) to the maximal (minimal) element of the match of $\factor{i}\factor{i-1}\cdots\factor{1}$. In other word if we want to match $\pmotif[\first{i}:]$ with $\ptext[j:]$ such that $\first{i}$ is matched with element at index $j$ in $\ptext$, the optimal way of matching $\pmotif[\first{i-1}:]$ is to choose the minimal (maximal) element at index $j'$ of $\ptext[j:]$ such that: (1) $\pmotif[\first{i-1}:]$ is matched with $\ptext[j':]$ and element $\first{i-1}$ is matched with element at index $j'$, (2) the factor $\factor{i}$ is matched with $\ptext[j,j'-1]$ and element $\first{i}$ is matched with element at index $j$, (3) Every elements of the match of (2) if inferior (superior) to the minimal (maximal) element of the match of (1).
 %
 %\begin{remark}
 %Given an ascent (descent) factor $\factor{i}$, the maximal (minimal) element of $\factor{i}\factor{i-1}\cdots\factor{1}$ is $\first{i-1}$.
@@ -678,7 +607,7 @@ These following statements are equivalent :
 %An ascent (descent) factor 	$\factor{i}$ is a match in $\ptext[j:j']$  if and only if there exists an increasing (decreasing) subsequence in $\ptext[j:j']$ of size superior or equal to the size of $\factor{i}$.
 %\end{remark}
 
-Consider the following problem :
+Consider the following problem:
 $$
 \LM{\pmotif}{\ptext}{i}{j} =
 \begin{cases}
@@ -703,8 +632,7 @@ $$
 
 This problem can be solve by induction as follows:
 
-
-\noindent\textbf{BASE :}
+\noindent\textbf{BASE:}
 \begin{align*}
 \LM{\pmotif}{\ptext}{1}{j} 
 &=
@@ -726,10 +654,10 @@ one has to find an increasing (resp. decreasing) subsequence
 in the text of the same size or that is longer that
 the size of the first factor. To find the occurrence that is
 the less restrictive (for the future matching)
-one must find the occurrence with the right most element
+one must find the occurrence with the rightmost element
 of the sequence minimal (resp. maximal).}
 \\
-\intertext{\textbf{STEP :}}
+\intertext{\textbf{STEP:}}
 \LM{\pmotif}{\ptext}{i}{j} 
 &=
 \begin{cases}
@@ -794,8 +722,10 @@ and the induction on $O(kn^2)$ time and space.
 This section is devoted to the pattern matching problem with $(213,231)$-avoiding bivincular motif.
 Recall that a bivincular motif generalise a permutation motif by
 be able to force elements to be consecutive in value or in position.
-Hence,  bivincular motif is stronger in constraint that motif by permutation, intuitively we can not use the previous algorithm.
-As in a $(213,231)$-avoiding permutation, we can describe structural property of a $(213,231)$-avoiding bivincular motif.
+Hence,  bivincular motif is stronger in constraint that motif by permutation, 
+intuitively we can not use the previous algorithm.
+As in a $(213,231)$-avoiding permutation, we can describe structural property of 
+a $(213,231)$-avoiding bivincular motif.
 
 \begin{lemma}
 \label{lemma:ascentDescentAscent}
@@ -810,12 +740,6 @@ $i<j$ (resp. $j>i$) and for every $k$, $i<k<j$ (resp. $j>k>i$), $\pi[k]$ is a de
 A way to understand this lemma is if two ascent (resp. decsent) elements
 need to occur in consecutive elements in value then every element in $\pmotif$ which are between those two elements (if any) are descent (resp. ascent) elements. 
 
-\begin{proof}
-Suppose that there exists $k$, $i<k<j$,
-such that $\pmotif[k]$ is ascent. Ascent elements are increasing  so $\sigma[i]<\sigma[k]<\sigma[j]$ which is in contradiction with $\sigma[j]=\sigma[i]+1$.
-We use a similar argument if $\sigma[i]$ is a descent element
-\qed
-\end{proof}
 
 \begin{proposition}
 \label{Proposition:bivincular pattern}
@@ -826,7 +750,7 @@ and $O(kn^5)$ space if $\sigma$ occurs in $\pi$.
 \end{proposition}
 
 \begin{proof}
-We consider the following problem :
+We consider the following problem:
 Given $\pmotif$ a $(213,231)$-avoiding bivincular, and a text $\ptext \in \Av{n_\ptext}{231,213}$,
 $$
 \PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
@@ -840,7 +764,7 @@ $$
 
 $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ can be solved by means by the following relations:
 
-\noindent\textbf{BASE :} \\
+\noindent\textbf{BASE:} \\
 $$
 \PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}=
 \begin{cases}
@@ -857,18 +781,20 @@ $$
 
 The base case finds an occurrence for the rightmost element of the motif. If the last element does not have any restriction on positions and on values, then $\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}$ is true if and only if $\pmotif[n_\pmotif]$ occurs in $\ptext[j]$. This is true if $\ptext[j] \in [\lb,\ub]$. 
 
-\noindent\textbf{STEP :} 
+\noindent\textbf{STEP:} 
 
-We need to consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ :
+We need to consider $3$ cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$:
 \begin{itemize}
-	\item If $\ptext[j] \notin [\lb,\ub]$ then :
-	$$
+	\item If $\ptext[j] \notin [\lb,\ub]$ then
+	$
 	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j} = false
-	$$
-
-	which is immediate from the definition. If $\ptext[j] \notin [\lb,\ub]$ then it can not be part of an occurrence of  $\pmotif[i:]$ in $\ptext[i:]$ with every element is in $[\lb,\ub]$.
+	$
+	which is immediate from the definition. 
+	If $\ptext[j] \notin [\lb,\ub]$ then it can not be part of an 
+	occurrence of  $\pmotif[i:]$ in $\ptext[i:]$ with every element is 
+	in $[\lb,\ub]$.
 	
-	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is an ascent element then :
+	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is an ascent element then:
 	$$
 	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
 	\begin{cases}
@@ -897,7 +823,7 @@ We need to consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{
 	$\PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}$ is true.
 
 	
-	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is a descent element then :
+	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is a descent element then:
 
 	$$
 	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
@@ -926,7 +852,7 @@ We need to consider 3 cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{
 Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then $\sigma$ occurs in $\pi$. We now discuss the position and value constraints.
 \paragraph{Position Constraint.} There are 3 types of position constraints 
 \begin{itemize}
-	\item If $_\llcorner{\sigma[1]}$ then the leftmost element of $\sigma$  must occur in the leftmost element of $\pi$ ($\pmotif[1]$ occurs in $\ptext[1]$ on an occurrence of $\pmotif$ in $\ptext$). This constraint is checked by requiring the occurrence to starts at the left most element of $\ptext$ : if  $\PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{1}$ is true.
+	\item If $_\llcorner{\sigma[1]}$ then the leftmost element of $\sigma$  must occur in the leftmost element of $\pi$ ($\pmotif[1]$ occurs in $\ptext[1]$ on an occurrence of $\pmotif$ in $\ptext$). This constraint is checked by requiring the occurrence to starts at the leftmost element of $\ptext$: if  $\PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{1}$ is true.
 	
 	\item If ${\pmotif[n_\pmotif]}_\lrcorner$ then the rightmost element $\sigma$ must occurs in the rightmost element of $\pi$ ($\pmotif[n_\pmotif]$ occurs in $\ptext[n_\ptext]$ on a occurrence of $\pmotif$ in $\ptext$). This constraint is checked in the base case.
 
@@ -944,12 +870,8 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 		Now remark that $\sigma[i]$ is the leftmost ascent element, indeed if not, then there exists an ascent element $\sigma[i']$, $i'<i$ and by definition $\sigma[i']<\sigma[i]$ which is not possible as $\sigma[i]$ must be the minimal element. As a consequence every problem $\PM{\pbmotif}{\ptext}{1}{n_{\pi}}{1}{*}$, $\dots$, $\PM{\pbmotif}{\ptext}{*}{*}{i-1}{*}$ is called with descent thus every problem 
 		$\PM{\pbmotif}{\ptext}{\lb}{*}{i}{*}$ has same lower bound as $\PM{\pbmotif}{\ptext}{1}{n_{\ptext}}{1}{*}$ thus for every $\PM{\pbmotif}{\ptext}{\lb}{*}{i}{*}$, $\lb=1$.
 					
-		\item If $\sigma[i]$ is a descent element then $i=n_\pmotif$ ($\sigma[i]$ is the right most element). Thus every $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ occurs in $1$.
-
+		\item If $\sigma[i]$ is a descent element then $i=n_\pmotif$ ($\sigma[i]$ is the rightmost element). Thus every $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ occurs in $1$.
 	\end{itemize}
-
-
-
 
 	\item If ${\pmotif[i]}^\urcorner$ (and thus $\sigma[i]=n_\pmotif$) then the maximal value of $\pmotif$ must occur in the maximal value of $\ptext$.
 	\begin{itemize}
@@ -962,11 +884,9 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 		$\ub=n_{\ptext}$.	
 		
 		
-		\item If $\sigma[i]$ is an ascent element then $\sigma[i]$ then $i=n_\pmotif$ ($\sigma[i]$ is the right most element). Thus every $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ occurs in $n_{\ptext}$.
+		\item If $\sigma[i]$ is an ascent element then $\sigma[i]$ then $i=n_\pmotif$ ($\sigma[i]$ is the rightmost element). Thus every $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ occurs in $n_{\ptext}$.
 
 	\end{itemize}
-
-
 
 	\item  If $\overline{\pmotif[i]\pmotif[i']}$,  (which implies that $\pmotif[i']=\pmotif[i]+1$) then if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i']$ must occur in $\ptext[j]+1$.
 		\begin{itemize}
@@ -979,7 +899,7 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 			remark that every problem 
 			$\PM{\pbmotif}{\ptext}{\lb}{*}{i'}{*}$ is true if $\sigma[i']$ occur in $\lb$ thus it is enough to require that $\lb=\ptext[j]+1$.
 			Now remark that
-			$\pmotif[i]$ is the right most ascent element and $\pmotif[i']$ is the right most element (or $\pmotif[i'] \neq \pmotif[i]+1$). 
+			$\pmotif[i]$ is the rightmost ascent element and $\pmotif[i']$ is the rightmost element (or $\pmotif[i'] \neq \pmotif[i]+1$). 
 			As a consequence every problem $\PM{\pbmotif}{\ptext}{*}{*}{i+1}{*}$, $\dots$, $\PM{\pbmotif}{\ptext}{*}{*}{i'-1}{*}$ is called with descent elements
 			thus every problem 
 			$\PM{\pbmotif}{\ptext}{\lb}{*}{i'}{*}$ 
@@ -995,7 +915,6 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 			thus every problem 
 			$\PM{\pbmotif}{\ptext}{\lb}{*}{i'}{*}$ has same lower bound as $\PM{\pbmotif}{\ptext}{\lb}{*}{i+1}{*}$.
 			Finally remark that if $\pmotif[i]$ occurs in $\ptext[j]$ then  $\PM{\pbmotif}{\ptext}{\lb}{*}{i+1}{*}$ has for lower bound $\ptext[j]+1$.			
-
 		\end{itemize}
 \end{itemize}
 \qed
@@ -1012,12 +931,7 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 	We start with the easiest case where we are given just one input permutation
 	and we are asked to find the longest $(213,231)$-avoiding pattern that 
 	occurs in the input permutation.
-	% This section is focused on a problem related to the pattern matching problem, finding the longest $(213,231)$-avoiding subsequences in permutations:
-	% Given a set of permutations, find a longest $(213,231)$-avoiding that occurs as a pattern
-	% in each input permutation.
-	% This problem is know to be NP-Hard for an arbitrary number of permutations and we do not hope it to be solvable in polynomial time even with the constraint of the subsequence must avoid $(213,231)$. Thus we focus on the cases where only one or two permutations are given in input.
-
-	We need the set of descent elements and the set of ascent elements.
+	We need the set of descent elements and the set of ascent elements
 	$P(\pi) = \{i | \stripe{\pi}{i} = \ustep \} \cup \{n\}$ and
 	$M(\pi) = \{i | \stripe{\pi}{i} = \dstep \} \cup \{n\}$.\\
 
@@ -1029,30 +943,12 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 	$M(\pi)$ is a longest decreasing subsequence with last element at index $f$.
 	\end{proposition}
 
-	\begin{proof}
-	Let $s$ be a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$,
-	suppose that $P(\pi)$ is not a longest increasing subsequence with last element at index $f$. Let $s_m$ be a longest increasing subsequence with last element $f$.
-	Thus $|s_m|>|P(\pi)|$, clearly the sequence $s_m \cup M(\pi)$
-	is $(213,231)$-avoiding and is longer than $s$, this is a contradiction.
-	The same ideacan be used to show that $M(\pi)$ is the longest decreasing subsequence.
-	\qed
-	\end{proof}
-
 	\begin{proposition}
+	\label{proposition:longest 2}
 	Let $\pi$ be a permutation. One can compute the
 	the longest $(213,231)$-pattern that occurs in $\pi$
 	in $O(|\ptext|\log(\log(|\ptext|)))$ time and in $O(n)$ space.
 	\end{proposition}
-
-	\begin{proof}
-	The proposition \ref{proposition:longestIncreasingSubsequence} lead to an algorithm
-	where one has to compute longest increasing and decreasing subsequence ending at every index. Then finding the maximal sum of longest increasing and decreasing subsequence ending at the same index.
-	Computing the longest increasing subsequence and the longest decreasing subsequence can be done in 
-	$O(|\ptext|\log(\log(|\ptext|)))$ time and $O(n)$ space 
-	(see \cite{Bespamyatnikh00enumeratinglongest}), 
-	then finding the maximal can be done in linear time.
-	\qed
-	\end{proof}
 
 We now turn to considering the case where the input is composed of two permutations.
 
@@ -1077,8 +973,7 @@ $
 
 We show how to solve this problem by dynamic programming.
 
-\noindent\textbf{BASE :}
-
+\noindent\textbf{BASE:}
 $$
 \LCS{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{|\pi_1|}{|\pi_2|} =
 \begin{cases}
@@ -1089,8 +984,7 @@ $$
 \end{cases}
 $$
 
-\noindent\textbf{STEP :}
-
+\noindent\textbf{STEP:}
 $$
 \LCS{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{i_1}{i_2}=max
 \begin{cases}
@@ -1136,5 +1030,142 @@ $\qed$
 \bibliography{bibli}{}
 \bibliographystyle{plain}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section*{Appendix (Reviewers' version only)}
+
+\begin{proof}[of Lemma~\ref{lemma:first element is 1 or n}]
+Any other initial element would serve as a `$2$' in either a
+$231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
+\qed
+\end{proof}
+
+\bigskip
+
+\begin{proof}[of Lemma~\ref{lemma:MatchStripeToPermutation}]
+  The forward direction is obvious.
+  We prove the backward direction by induction on the size of the motif
+  $\sigma$.
+  The base case is a motif of size $2$.
+  Suppose first that $\sigma = 12$ and hence $s_\sigma = a$.
+  Let $t = \pi_{i_1}\pi_{i_2}$, $i_1 < i_2$, be a subsequence of $\pi$
+  such that $s_t$ occurs as a subsequence in $s_\pi$.
+  Since $s_\sigma = s_t = a$, this reduces to saying that
+  $\pi_{i_1} < \pi_{i_2}$, and hence $t$ is an occurrence of $\sigma = 12$ in $\pi$.
+  A similar argument shows that the lemma holds true for $\sigma = 21$.
+  Now, assume that the lemma is true for all motifs up to size $k \geq 2$.
+  Let $\sigma \in \Av{k+1}{231,213}$ and
+  let $t = \pi_{i_1}\pi_{i_2}\,\ldots\,\pi_{i_{k+1}}$,
+  $i_1 < i_2 < \ldots < i_{k+1}$,
+  be a subsequence of $\pi$ of length $k+1$ such that
+  $s_t = s_\sigma$.
+  Suppose that $s_t$ occurs in $s_\pi$ as a subsequence.
+  Then, $s_t[2:] = s_\sigma[2:]$ occurs as a subsequence in $s_\pi[2:]$.
+  But $\sigma[2:] \in \Av{k}{231,213}$ and hence,
+  by the inductive hypothesis, it follows that
+  $t[2:]$ is an occurrence of $\sigma[2:]$ in $\pi[2:]$.
+  Moreover, if $s_\sigma[1] = a$ (resp. $s_\sigma[1] = d$)
+  then $\sigma[1]$ is the minimal (resp. maximal) element of $\sigma$
+  (Lemma~\ref{lemma:first element is 1 or n}),
+  and hence, since $s_t = s_\sigma$ occurs as a subsequence in $s_\pi$,
+  $t[1]$ is the minimal (resp. maximal) element of $t$.
+  Therefore, $t$ is an occurrence of $\sigma$ in $\pi$.
+  \qed
+\end{proof}
+
+\bigskip
+
+\begin{proof}
+According to Lemma~\ref{lemma:MatchStripeToPermutation} the problem reduces
+to deciding whether $s_\sigma$ occurs as a subsequence in $s_\pi$.
+A straightforward greedy approach solves this issue in linear-time.
+\qed
+% To solve the permutation pattern for a permutation in $\AV_n(213,231)$,
+% we find a find a match of the stripe of the pattern in the stripe of the text.
+% This can be done linearly by a greedy algorithm,
+% by matching a step whenever it is possible.
+% And thank to the definition of the definition of a stripe in
+% Corollary~\ref{corollary:minmaxelement},
+% we do not have to compute the stripe in advance.
+% Therefore we have an linear (online) algorithm.
+\end{proof}
+
+\bigskip
+
+\begin{proof}[of Lemma~\ref{lemma:whereIsMax}]
+Consider the rightmost element of $\factor{\sigma}{i}$ and assume this element is an ascent.
+Then, it follows that it is smaller than the following element which is $\first{\sigma}{i-1}$.
+Now, since $\factor{\sigma}{i}$ is an increasing subsequence, every element of
+$\factor{\sigma}{i}$ is smaller than $\first{\sigma}{i-1}$.
+According to Lemma~
+\ref{lemma:first element is 1 or n}, $\first{\sigma}{i-1}$ is 
+the maximal (minimal) element of $\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, 
+and hence
+$\first{\sigma}{i-1}$ is the maximal  element of
+$\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$.
+
+A similar argument shows that the lemma holds true if the rightmost element
+of $\factor{\sigma}{i}$ is a descent.
+\qed
+\end{proof}
+
+\bigskip
+
+\begin{proof}[of Lemma~\ref{lemma:ts}]
+By definition $s$ is an occurrence of $\pmotif[\firsti{\pmotif}{i}:]$. 
+To prove that $ts$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$,
+we prove that every element of t is larger than every element of $s$. 
+If $ts'$ is an occurrence of $\pmotif[\firsti{\pmotif}{i+1}:]$ so every element of $t$ 
+is larger than every element of $s'$. 
+Moreover, the maximal element of $s$ is smaller than  the maximal element of $s'$ 
+so every element of $s$ is smaller than every element of $s'$ thus every 
+element of $s$ is smaller than every element of $t$. We use a similar argument 
+if $\factor{\pmotif}{i}$ a descent factor.
+\qed
+\end{proof}
+
+\bigskip
+
+\begin{proof}[of Lemma~\ref{lemma:ascentDescentAscent}]
+Suppose that there exists $k$, $i<k<j$,
+such that $\pmotif[k]$ is ascent. 
+Ascent elements are increasing and hence $\sigma[i]<\sigma[k]<\sigma[j]$.
+This is a contradiction since $\sigma[j]=\sigma[i]+1$.
+
+We use a similar argument if $\sigma[i]$ is a descent element
+\qed
+\end{proof}
+
+\bigskip
+
+\begin{proof}[of Proposition~\ref{proposition:longestIncreasingSubsequence}]
+Let $s$ be a longest subsequence avoiding both $213$ and $231$ 
+with last element at index $f$ in $\pi$,
+and
+suppose that $P(\pi)$ is not a longest increasing subsequence
+with last element at index $f$. 
+Let $s_m$ be a longest increasing subsequence with last element $f$.
+Thus $|s_m|>|P(\pi)|$, clearly the sequence $s_m \cup M(\pi)$
+is $(213,231)$-avoiding and is longer than $s$, this is a contradiction.
+
+The same idea can be used to show that $M(\pi)$ is the longest decreasing 
+subsequence.
+\qed
+\end{proof}
+
+\bigskip
+
+\begin{proof}[of Proposition~\ref{proposition:longest 2}]
+Proposition~\ref{proposition:longestIncreasingSubsequence} leads to an algorithm
+where one has to compute longest increasing and decreasing subsequence ending at every index. Then finding the maximal sum of longest increasing and decreasing subsequence ending at the same index.
+Computing the longest increasing subsequence and the longest decreasing subsequence can be done in 
+$O(|\ptext|\log(\log(|\ptext|)))$ time and $O(n)$ space 
+(see \cite{Bespamyatnikh00enumeratinglongest}), 
+then finding the maximal can be done in linear time.
+\qed
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
