@@ -753,7 +753,8 @@ and $O(kn^5)$ space if $\sigma$ occurs in $\pi$.
 
 \begin{proof}
 We consider the following problem:
-Given $\pmotif$ a $(213,231)$-avoiding bivincular, and a text $\ptext \in \Av{n_\ptext}{231,213}$,
+Given $\pmotif$ a $(213,231)$-avoiding bivincular, and a 
+text $\ptext \in \Av{n_\ptext}{231,213}$,
 $$
 \PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
 \begin{cases}
@@ -764,7 +765,8 @@ $$
 \end{cases}
 $$
 
-$\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ can be solved by means by the following relations:
+$\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}$ can be solved according to  
+the following relations:
 
 \noindent\textbf{BASE:} \\
 $$
@@ -781,7 +783,11 @@ $$
 \end{cases}
 $$
 
-The base case finds an occurrence for the rightmost element of the motif. If the last element does not have any restriction on positions and on values, then $\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}$ is true if and only if $\pmotif[n_\pmotif]$ occurs in $\ptext[j]$. This is true if $\ptext[j] \in [\lb,\ub]$. 
+The base case finds an occurrence for the rightmost element of the motif. 
+If the last element does not have any restriction on positions and on values, 
+then $\PM{\pbmotif}{\ptext}{\lb}{\ub}{n_\pmotif}{j}$ is true if and only if 
+$\pmotif[n_\pmotif]$ occurs in $\ptext[j]$. 
+This is true if $\ptext[j] \in [\lb,\ub]$. 
 
 \noindent\textbf{STEP:} 
 
@@ -819,14 +825,13 @@ We need to consider $3$ cases for the problem $\PM{\pbmotif}{\ptext}{\lb}{\ub}{i
 	\end{cases}
 	$$	
 	Remark that $\pmotif[i]$ occurs in $\ptext[j]$ because $\ptext[j] \in [\lb,\ub]$.
-	Thus if $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$ with every element in $[\pmotif[i]+1,\ub]$ then 
+	Thus if $\pmotif[i+1:]$ occurs in $\ptext[j+1:]$ with every element 
+	in $[\pmotif[i]+1,\ub]$ then 
  	$\pmotif[i:]$ occurs in $\ptext[j:]$  	
  	which correspond to know if there exists $k$, $j<k$ such that
 	$\PM{\pbmotif}{\ptext}{\ptext[j]+1}{\ub}{i+1}{k}$ is true.
 
-	
 	\item If $\ptext[j] \in [\lb,\ub]$ and $\pmotif[i]$ is a descent element then:
-
 	$$
 	\PM{\pbmotif}{\ptext}{\lb}{\ub}{i}{j}=
 	\begin{cases}
@@ -875,14 +880,25 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 		\item If $\sigma[i]$ is a descent element then $i=n_\pmotif$ ($\sigma[i]$ is the rightmost element). Thus every $\PM{\pbmotif}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ occurs in $1$.
 	\end{itemize}
 
-	\item If ${\pmotif[i]}^\urcorner$ (and thus $\sigma[i]=n_\pmotif$) then the maximal value of $\pmotif$ must occur in the maximal value of $\ptext$.
+	\item If ${\pmotif[i]}^\urcorner$ (and thus $\sigma[i]=n_\pmotif$) 
+	then the maximal value of $\pmotif$ must occur in the maximal value of $\ptext$.
 	\begin{itemize}
 
 		\item If $\sigma[i]$ is an descent element, then remark that 
 		every problem 
-		$\PM{\pbmotif}{\ptext}{*}{\ub}{i}{*}$ is true if $\sigma[i]$ occurs in element $\ub$ thus it is enough to require that $\ub=n_{\ptext}$.
-		Now remark that $\sigma[i]$ is the leftmost descent element, indeed if not, then there exists an descent element $\sigma[i']$, $i'<i$ and by definition $\sigma[i']>\sigma[i]$ which is not possible as $\sigma[i]$ must be the maximal element. As a consequence every problem $\PM{\pbmotif}{\ptext}{1}{n_{\ptext}}{1}{*}$, $\dots$, $\PM{\pbmotif}{\ptext}{*}{*}{i-1}{*}$ is called with ascent elements thus every problem 
-		$\PM{\pbmotif}{\ptext}{*}{\ub}{i}{*}$ has same upper bound as $\PM{\pbmotif}{\ptext}{1}{n_{\ptext}}{1}{*}$ thus for every $\PM{\pbmotif}{\ptext}{*}{\ub}{i}{*}$,
+		$\PM{\pbmotif}{\ptext}{*}{\ub}{i}{*}$ is true if $\sigma[i]$ occurs 
+		in element $\ub$ thus it is enough to require that $\ub=n_{\ptext}$.
+		Now remark that $\sigma[i]$ is the leftmost descent element, indeed if it is not
+		then there exists an descent element $\sigma[i']$, $i'<i$ and by definition 
+		$\sigma[i']>\sigma[i]$ which is not possible as $\sigma[i]$ must be the maximal
+		element. 
+		As a consequence every problem 
+		$\PM{\pbmotif}{\ptext}{1}{n_{\ptext}}{1}{*}$, $\dots$, 
+		$\PM{\pbmotif}{\ptext}{*}{*}{i-1}{*}$ 
+		is called with ascent elements thus every problem 
+		$\PM{\pbmotif}{\ptext}{*}{\ub}{i}{*}$ 
+		has same upper bound as $\PM{\pbmotif}{\ptext}{1}{n_{\ptext}}{1}{*}$ 
+		thus for every $\PM{\pbmotif}{\ptext}{*}{\ub}{i}{*}$,
 		$\ub=n_{\ptext}$.	
 		
 		
@@ -890,23 +906,31 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 
 	\end{itemize}
 
-	\item  If $\overline{\pmotif[i]\pmotif[i']}$,  (which implies that $\pmotif[i']=\pmotif[i]+1$) then if $\pmotif[i]$ occurs in $\ptext[j]$ then $\pmotif[i']$ must occur in $\ptext[j]+1$.
+	\item  If $\overline{\pmotif[i]\pmotif[i']}$
+	(which implies that $\pmotif[i']=\pmotif[i]+1$), 
+	then if $\pmotif[i]$ occurs in $\ptext[j]$ 
+	then $\pmotif[i']$ must occur in $\ptext[j]+1$.
 		\begin{itemize}
 
 			\item The case $\pmotif[i]$ is a descent element, $\pmotif[i']$ is an ascent element and $i<i'$ (remark that this case is equivalent to the case $\pmotif[i]$ is an ascent element, $\pmotif[i']$ is a descent element and $i'<i$) is not possible. 
 			Indeed $\pmotif[i]$ is the maximal element of $\pmotif[i:]$ thus $\pmotif[i] > \pmotif[i']$ which is in contradiction with 
 			$\pmotif[i']=\pmotif[i]+1$. 
 			
-			\item If $\pmotif[i]$ is an ascent element, $\pmotif[i']$ is a descent element and $i<i'$ (remark that this case is symmetric to the case $\pmotif[i]$ is a descent element, $\pmotif[i']$ is an ascent element and $i'<i$), then
+			\item If $\pmotif[i]$ is an ascent element, $\pmotif[i']$ is a descent element 
+			and $i<i'$ (remark that this case is symmetric to the case $\pmotif[i]$ 
+			is a descent element, $\pmotif[i']$ is an ascent element and $i'<i$), then
 			remark that every problem 
 			$\PM{\pbmotif}{\ptext}{\lb}{*}{i'}{*}$ is true if $\sigma[i']$ occur in $\lb$ thus it is enough to require that $\lb=\ptext[j]+1$.
 			Now remark that
 			$\pmotif[i]$ is the rightmost ascent element and $\pmotif[i']$ is the rightmost element (or $\pmotif[i'] \neq \pmotif[i]+1$). 
-			As a consequence every problem $\PM{\pbmotif}{\ptext}{*}{*}{i+1}{*}$, $\dots$, $\PM{\pbmotif}{\ptext}{*}{*}{i'-1}{*}$ is called with descent elements
+			As a consequence every problem 
+			$\PM{\pbmotif}{\ptext}{*}{*}{i+1}{*}$, $\dots$, $\PM{\pbmotif}{\ptext}{*}{*}{i'-1}{*}$ 
+			is called with descent elements
 			thus every problem 
 			$\PM{\pbmotif}{\ptext}{\lb}{*}{i'}{*}$ 
 			has the same lower bound as $\PM{\pbmotif}{\ptext}{\lb}{*}{i+1}{*}$.
-			Finally remark that if $\pmotif[i]$ occurs in $\ptext[j]$ then  $\PM{\pbmotif}{\ptext}{\lb}{*}{i+1}{*}$ has for lower bound $\ptext[j]+1$.
+			Finally remark that if $\pmotif[i]$ occurs in $\ptext[j]$ then  
+			$\PM{\pbmotif}{\ptext}{\lb}{*}{i+1}{*}$ has for lower bound $\ptext[j]+1$.
 			
 			\item If $\pmotif[i]$ is an ascent element and $\pmotif[i']$ is an ascent element then
 			first remark that every problem 
@@ -921,7 +945,6 @@ Clearly if $\bigcup_{0<j} \PM{\pbmotif}{\ptext}{1}{n_\ptext}{1}{j}$ is true then
 \end{itemize}
 \qed
 \end{proof}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
