@@ -661,7 +661,11 @@ The first element of any $(213,231)$-avoiding permutation
 must be either the minimal or the maximal element.
 \end{lemma}
 
-
+\begin{proof}[of Lemma~\ref{lemma:first element is 1 or n}]
+Any other initial element would serve as a `$2$' in either a
+$231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
+\qed
+\end{proof}
 
 \begin{corollary}
 \label{corollary:minmaxelement}
@@ -730,6 +734,32 @@ Then, $\pi$ matches $\sigma$ if and only if
 there exists a subsequence $t$ of $\pi$ such $\bijection(t)=\bijection(\sigma)$.
 \end{lemma}
 
+\begin{proof}[of Lemma~\ref{lemma:MatchStripeToPermutation}]
+The forward direction is obvious.
+We prove the backward direction by induction on the size of the pattern
+$\sigma$.
+The base case is a pattern of size $2$.
+Suppose that $\sigma = 12$ and thus $\bijection(\sigma) = ascent$.
+Let $t = \pi_{i_1}\pi_{i_2}$, $i_1 < i_2$, be a subsequence of $\pi$
+such that $\bijection(t) = ascent$, this reduces to saying that
+$\pi_{i_1} < \pi_{i_2}$, 
+and hence that $t$ is a matching of $\sigma = 12$ in $\pi$.
+A similar argument shows that the lemma holds true for $\sigma = 21$.
+Now, assume that the lemma is true for all patterns up to size $k \geq 2$.
+Let $\sigma \in \Av{k+1}{231,213}$ and
+let $t$,
+be a subsequence of $\pi$ of length $k+1$ such that
+$\bijection(t) = \bijection(\sigma)$.
+As $\bijection(t)[2:] = \bijection(\sigma)[2:]$
+by the inductive hypothesis, it follows that
+$t[2:]$ is a matching of $\sigma[2:]$.
+Moreover $\bijection(t)[1] = \bijection(\sigma)[1]$ 
+thus $t[1]$ and $\sigma[1]$ are both either the minimal or the maximal
+element of their respective subsequences.
+Therefore, $t$ is a matching of $\sigma$ in $\pi$.
+\qed
+\end{proof}
+
 We are now ready to solve the pattern matching problem in case
 both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 
@@ -738,6 +768,13 @@ both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
 	Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations.
 	One can decide whether $\pi$ matches $\sigma$ in linear time.
 \end{proposition}
+
+\begin{proof}
+According to Lemma~\ref{Proposition:both permutations are avoiding} the problem reduces
+to deciding whether $s_\sigma$ occurs as a subsequence in $s_\pi$.
+A straightforward greedy approach solves this issue in linear-time.
+\qed
+\end{proof}
 
 Thank to Corollary~\ref{corollary:max is ascent},
 we can compute the bijected words in the same time that we running the greedy algorithm, this gives us a on-line algorithm.
@@ -940,6 +977,11 @@ This lemma states that given any matching of $\factor(i+1)$ $\factor(i)$ $\ldots
 where $\factor(i)$ is an ascent (resp. descent) factor,
 we can replace the part of the match that match $\factor(i)$ $\ldots$ $\factor(1)$ by any match
 that minimise (resp. maximise) the left most element of $\factor(i-1)$. Indeed the left most element of $\factor(i-1)$ is the maximal (resp. minimal) element of  $\factor(i)$ $\ldots$ $\factor(1)$ (see figure \ref{fig:minimise the max}). 
+
+\begin{proof}[of Lemma~\ref{lemma:ts}]
+	By definition $s$ is a matching of $\ppattern[\LMEi(\factor(i)):]$. To prove that $ts$ is an matching of $\ppattern[\LMEi(\factor(i+1)):]$ we need to prove that every element of t is larger than every element of $s$. If $ts'$ is a matching of $\ppattern[\LMEi(\factor(i+1)):]$ then every element of $t$ is larger than every element of $s'$. Moreover the maximal element of $s$ is smaller than  the maximal element of $s'$ so every element of $s$ is smaller than every element of $s'$ thus every element of $s$ is smaller than every element of $t$. We use a similar argument if $\factor(i)$ is a descent factor.
+	\qed
+\end{proof}
 
 \begin{corollary}
 \label{corollary:we can chose a matching}	
@@ -1155,11 +1197,17 @@ if $\sigma[i]$ is an ascent (resp. decent) element and $\sigma[i]+1$ is an ascen
 	\item $i<j$ (resp. $j>i$)
 	\item For every $l$, $i<l<j$ (resp. $j>l>i$), $\pi[l]$ is a descent (resp. ascent) element.    
 \end{itemize}
-
 \end{lemma}
 
 This lemma states that if two ascent (resp. decsent) elements
 need to be matched to consecutive elements in value then every element between those two elements (if any) is a descent (resp. ascent) element. 
+
+\begin{proof}[of Lemma~\ref{lemma:ascentDescentAscent}]
+	Suppose that there exists $l$, $i<l<j$,
+	such that $\ppattern[l]$ is ascent. Ascent elements are increasing  so $\sigma[i]<\sigma[l]<\sigma[j]$ which is in contradiction with $\sigma[j]=\sigma[i]+1$.
+	We use a similar argument if $\sigma[i]$ is a descent element
+	\qed
+\end{proof}
 
 \begin{proposition}
 \label{Proposition:bivincular pattern}
@@ -1433,29 +1481,48 @@ Each case take $O(1)$ space, thus we need $O(kn^3)$ space.
 \section{Computing the longest $(213,231)$-avoiding pattern}
 \label{section:LCS}
 
-	This section is focused on a problem related to the pattern matching problem, finding the longest $(213,231)$-avoiding subsequences in permutations:
-	Given a set of permutations, find a longest $(213,231)$-avoiding that can be matched
-	by each input permutation.
-	This problem is know to be NP-Hard for an arbitrary number of permutations and we do not hope it to be solvable in polynomial time even with the constraint of the subsequence must avoid $(213,231)$. Thus we focus on the cases where only one or two permutations are given in input.
-	We start with the easiest case where we are given just one input permutation.
-	We need the set of descent elements and the set of ascent elements.
-	$A(\pi) = \{i | \text{$\pi[i]$ is an ascent element} \} \cup \{n\}$ and
-	$D(\pi) = \{i | \text{$\pi[i]$ is a descent element} \cup \{n\}$.\\
+This section is focused on a problem related to the pattern matching problem, finding the longest $(213,231)$-avoiding subsequences in permutations:
+Given a set of permutations, find a longest $(213,231)$-avoiding that can be matched
+by each input permutation.
+This problem is know to be NP-Hard for an arbitrary number of permutations and we do not hope it to be solvable in polynomial time even with the constraint of the subsequence must avoid $(213,231)$. Thus we focus on the cases where only one or two permutations are given in input.
+We start with the easiest case where we are given just one input permutation.
+We need the set of descent elements and the set of ascent elements.
+$A(\pi) = \{i | \text{$\pi[i]$ is an ascent element} \} \cup \{n\}$ and
+$D(\pi) = \{i | \text{$\pi[i]$ is a descent element} \cup \{n\}$.\\
 
-	\begin{proposition}
-	\label{proposition:longestIncreasingSubsequence}
-	If $s$ is a longest $(213,231)$-avoiding subsequence with last element at index 
-	$f$ in $\pi$ then
-	$A(\pi)$ is a longest increasing subsequence with last element at index $f$ and
-	$D(\pi)$ is a longest decreasing subsequence with last element at index $f$.
-	\end{proposition}
+\begin{proposition}
+\label{proposition:longestIncreasingSubsequence}
+If $s$ is a longest $(213,231)$-avoiding subsequence with last element at index 
+$f$ in $\pi$ then
+$A(\pi)$ is a longest increasing subsequence with last element at index $f$ and
+$D(\pi)$ is a longest decreasing subsequence with last element at index $f$.
+\end{proposition}
 
-	\begin{proposition}
-	\label{proposition:longest 2}
-	Let $\pi$ be a permutation. One can compute
-	the longest $(213,231)$-avoiding subsequence that can be matched in $\pi$
-	in $O(n\log(\log(n)))$ time and in $O(n)$ space.
-	\end{proposition}
+\begin{proof}[of Proposition~\ref{proposition:longestIncreasingSubsequence}]
+Let $s$ be a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$,
+suppose that $P(s)$ is not a longest increasing subsequence with last element at index $f$. Let $s_m$ be a longest increasing subsequence with last element $f$.
+Thus $|s_m|>|A(s)|$, clearly the sequence $s_m \cup D(s)$
+is $(213,231)$-avoiding and is longer than $s$, this is a contradiction.
+The same idea can be used to show that $D(\pi)$ is the longest decreasing subsequence.
+\qed
+\end{proof}
+
+\begin{proposition}
+\label{proposition:longest 2}
+Let $\pi$ be a permutation. One can compute
+the longest $(213,231)$-avoiding subsequence that can be matched in $\pi$
+in $O(n\log(\log(n)))$ time and in $O(n)$ space.
+\end{proposition}
+
+\begin{proof}[of Proposition~\ref{proposition:longest 2}]
+The proposition \ref{proposition:longestIncreasingSubsequence} lead to an algorithm
+where one has to compute longest increasing and decreasing subsequence ending at every index. Then finding the maximal sum of longest increasing and decreasing subsequence ending at the same index.
+Computing the longest increasing subsequence and the longest decreasing subsequence can be done in 
+$O(n\log(\log(n)))$ time and $O(n)$ space 
+(see \cite{Bespamyatnikh00enumeratinglongest}), 
+then finding the maximal can be done in linear time.
+\qed
+\end{proof}
 
 We  now consider the case where the input is composed of two permutations.
 
@@ -1539,113 +1606,6 @@ $\qed$
 \bibliography{bibli}{}
 \bibliographystyle{plain}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newpage
-\section*{Appendix (Reviewers' version only)}
-
-\begin{proof}[of Lemma~\ref{lemma:first element is 1 or n}]
-Any other initial element would serve as a `$2$' in either a
-$231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
-\qed
-\end{proof}
-
-\bigskip
-
-\begin{proof}[of Lemma~\ref{lemma:MatchStripeToPermutation}]
-  The forward direction is obvious.
-  We prove the backward direction by induction on the size of the pattern
-  $\sigma$.
-  The base case is a pattern of size $2$.
-  Suppose that $\sigma = 12$ and thus $\bijection(\sigma) = ascent$.
-  Let $t = \pi_{i_1}\pi_{i_2}$, $i_1 < i_2$, be a subsequence of $\pi$
-  such that $\bijection(t) = ascent$, this reduces to saying that
-  $\pi_{i_1} < \pi_{i_2}$, 
-  and hence that $t$ is a matching of $\sigma = 12$ in $\pi$.
-  A similar argument shows that the lemma holds true for $\sigma = 21$.
-  Now, assume that the lemma is true for all patterns up to size $k \geq 2$.
-  Let $\sigma \in \Av{k+1}{231,213}$ and
-  let $t$,
-  be a subsequence of $\pi$ of length $k+1$ such that
-  $\bijection(t) = \bijection(\sigma)$.
-  As $\bijection(t)[2:] = \bijection(\sigma)[2:]$
-  by the inductive hypothesis, it follows that
-  $t[2:]$ is a matching of $\sigma[2:]$.
-  Moreover $\bijection(t)[1] = \bijection(\sigma)[1]$ 
-  thus $t[1]$ and $\sigma[1]$ are both either the minimal or the maximal
-  element of their respective subsequences.
-  Therefore, $t$ is a matching of $\sigma$ in $\pi$.
-  \qed
-\end{proof}
-
-\bigskip
-
-\begin{proof}
-According to Lemma~\ref{Proposition:both permutations are avoiding} the problem reduces
-to deciding whether $s_\sigma$ occurs as a subsequence in $s_\pi$.
-A straightforward greedy approach solves this issue in linear-time.
-\qed
-\end{proof}
-
-\bigskip
-
-%\begin{proof}[of Lemma~\ref{lemma:whereIsMax}]
-%Consider the rightmost element of $\factor{\sigma}{i}$ and assume this element is an ascent.
-%Then, it follows that it is smaller than the following element which is $\first{\sigma}{i-1}$.
-%Now, since $\factor{\sigma}{i}$ is an increasing subsequence, every element of
-%$\factor{\sigma}{i}$ is smaller than $\first{\sigma}{i-1}$.
-%According to Lemma~
-%\ref{lemma:first element is 1 or n}, $\first{\sigma}{i-1}$ is 
-%the maximal (minimal) element of $\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$, 
-%and hence
-%$\first{\sigma}{i-1}$ is the maximal  element of
-%$\factor{\sigma}{i}\factor{\sigma}{i-1}\ldots\factor{\sigma}{1}$.
-%
-%A similar argument shows that the lemma holds true if the rightmost element
-%of $\factor{\sigma}{i}$ is a descent.
-%\qed
-%\end{proof}
-
-\bigskip
-
-\begin{proof}[of Lemma~\ref{lemma:ts}]
-By definition $s$ is a matching of $\ppattern[\LMEi(\factor(i)):]$. To prove that $ts$ is an matching of $\ppattern[\LMEi(\factor(i+1)):]$ we need to prove that every element of t is larger than every element of $s$. If $ts'$ is a matching of $\ppattern[\LMEi(\factor(i+1)):]$ then every element of $t$ is larger than every element of $s'$. Moreover the maximal element of $s$ is smaller than  the maximal element of $s'$ so every element of $s$ is smaller than every element of $s'$ thus every element of $s$ is smaller than every element of $t$. We use a similar argument if $\factor(i)$ is a descent factor.
-\qed
-\end{proof}
-
-\bigskip
-
-\begin{proof}[of Lemma~\ref{lemma:ascentDescentAscent}]
-Suppose that there exists $l$, $i<l<j$,
-such that $\ppattern[l]$ is ascent. Ascent elements are increasing  so $\sigma[i]<\sigma[l]<\sigma[j]$ which is in contradiction with $\sigma[j]=\sigma[i]+1$.
-We use a similar argument if $\sigma[i]$ is a descent element
-\qed
-\end{proof}
-
-\bigskip
-
-\begin{proof}[of Proposition~\ref{proposition:longestIncreasingSubsequence}]
-Let $s$ be a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$,
-suppose that $P(s)$ is not a longest increasing subsequence with last element at index $f$. Let $s_m$ be a longest increasing subsequence with last element $f$.
-Thus $|s_m|>|A(s)|$, clearly the sequence $s_m \cup D(s)$
-is $(213,231)$-avoiding and is longer than $s$, this is a contradiction.
-The same idea can be used to show that $D(\pi)$ is the longest decreasing subsequence.
-\qed
-\end{proof}
-
-
-\bigskip
-
-\begin{proof}[of Proposition~\ref{proposition:longest 2}]
-The proposition \ref{proposition:longestIncreasingSubsequence} lead to an algorithm
-where one has to compute longest increasing and decreasing subsequence ending at every index. Then finding the maximal sum of longest increasing and decreasing subsequence ending at the same index.
-Computing the longest increasing subsequence and the longest decreasing subsequence can be done in 
-$O(n\log(\log(n)))$ time and $O(n)$ space 
-(see \cite{Bespamyatnikh00enumeratinglongest}), 
-then finding the maximal can be done in linear time.
-\qed
-\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
