@@ -10,6 +10,8 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 
+
+
 \usepackage{tikz}
 \usetikzlibrary{patterns}
 \usepackage{subcaption} 
@@ -64,6 +66,15 @@
 %upstep
 \newcommand{\ustep}{a}
 
+% MACRO % % % % % % % % % % % % % % % % % % % % % %
+\newcommand{\isbelow}{<_y}
+\newcommand{\isabove}{>_y}
+
+\newcommand{\ontheleft}{<_x}
+\newcommand{\ontheright}{>_x}
+
+\newcommand{\borneinf}{inf}
+\newcommand{\bornesup}{sup}
 
 
 \DeclareMathOperator{\firstia}{first}
@@ -148,15 +159,15 @@
 \maketitle
 
 \begin{abstract}
-	Given permutations $\sigma \in S_k$ and $\pi \in S_n$ with $k<n$, the
-  \emph{pattern matching} problem is to decide whether $\pi$ matches
-  $\sigma$ as an order-isomorphic subsequence.
-	We give a linear-time algorithm in case both $\pi$ and $\sigma$ avoid
-	the two size-$3$ permutations $213$ and $231$.
-	For the special case where only $\sigma$ avoids $213$ and $231$, we present a
-	$O(max(kn^2,n^2\log(\log(n)))$ time algorithm. 
-	We extend our research to bivincular patterns that avoid $213$ and $231$ and present a $O(kn^4)$ time algorithm.
-	Finally we look at the related problem of the longest subsequence which avoids $213$ and $231$.  
+Given permutations $\sigma \in S_k$ and $\pi \in S_n$ with $k<n$, the
+\emph{pattern matching} problem is to decide whether $\sigma$ occurs
+$\pi$ as an order-isomorphic subsequence.
+We give a linear-time algorithm in case both $\pi$ and $\sigma$ avoid
+the two size-$3$ permutations $213$ and $231$.
+For the special case where only $\sigma$ avoids $213$ and $231$, we present a
+$O(max(kn^2,n^2\log(\log(n)))$ time algorithm. 
+We extend our research to bivincular patterns that avoid $213$ and $231$ and present a $O(kn^4)$ time algorithm.
+Finally we look at the related problem of the longest subsequence which avoids $213$ and $231$.  
 \end{abstract}
 
 
@@ -165,63 +176,61 @@
 \section{Introduction}
 \label{section:Introduction}
 
-   
 
-	A permutation $\pi$ is said to match another permutation $\sigma$,
-	in symbols $\sigma \preceq \pi$,
-	if there exists a subsequence of elements of $\pi$ that has the same relative
-	order as $\sigma$.
-	Otherwise, $\pi$ is said to \emph{avoid} the permutation $\sigma$.
-	For example a permutation matches the pattern $123$ (resp. $321$) if it has
-	an increasing (resp. decreasing) subsequence of length $3$.
-	As another example,
-	$6152347$ matches $213$ but not $231$.
-	During the last decade, the study of the pattern matching on permutations has
-	become a very active area of research \cite{Kitaev:book:2011} and
-	a whole annual conference (\textsc{Permutation Patterns}) is now devoted
-	to this topic.
 
-	We consider here the so-called \emph{pattern matching} problem
-	(also sometimes referred to as the \emph{pattern involvement problem}):
-	Given two permutations $\sigma$ and $\pi$, this problem is to decide whether
-	$\sigma \preceq \pi$ (the problem is ascribed to Wilf in \cite{Bose:Buss:Lubiw:1998}).
-	The permutation matching problem is known to be \NPhard~\cite{Bose:Buss:Lubiw:1998}.
-	It is, however, polynomial-time solvable by brute-force enumeration
-	if $\sigma$ has bounded size.
-	Improvements to this algorithm were presented in
-	\cite{Albert:Aldred:Atkinson:Holton:ISAAC:2001} and
-	\cite{Ahal:Rabinovich:2008},
-	the latter describing a $O(|\pi|^{0.47|\sigma|+o(|\sigma|)})$ time algorithm.
-	Bruner and Lackner $\cite{DBLP:journals/corr/abs-1204-5224}$
-	gave a fixed-parameter algorithm solving the pattern matching problem with
-	an exponential worst-case runtime of $O(1.79^{\RUN(\pi)})$,
-	where $\RUN(\pi)$ denotes the number of alternating runs of $\pi$.
-	(This is an improvement upon the $O(2^{|\pi|})$ runtime required by
-	brute-force search without imposing restrictions on $\sigma$ and $\pi$.)
-	A recent major step was taken by Marx and Guillemot
-	\cite{Guillemot:Marx:SODA:2014}.
-	They showed that
-	the permutation matching problem is fixed-parameter tractable (FPT) for
-	parameter $|\sigma|$.
+A permutation $\sigma$ is said to occur in another permutation $\pi$,
+denoted $\sigma \preceq \pi$,
+if there exists a subsequence of elements of $\pi$ that has the same relative
+order as $\sigma$.
+Otherwise, $\pi$ is said to \emph{avoid} the permutation $\sigma$.
+For example a permutation has an occurrence of the pattern $123$ (resp. $321$) if it has
+an increasing (resp. decreasing) subsequence of length $3$.
+Similarly,
+$6152347$ has an occurrence of $213$ but not $231$.
+During the last decade, the study of the pattern matching for permutations has
+become a very active area of research \cite{Kitaev:book:2011}. and
+a whole annual conference (\textsc{Permutation Patterns}) focuses
+on pattern in permutation.
 
-	A few particular cases of the pattern matching problem have been attacked successfully.
-	The case of increasing patterns is solvable in
-	$O(|\pi| \log \log |\sigma|)$ time in the RAM model \cite{Crochemore:Porat:2010},
-	improving the previous 30-year bound of $O(|\pi| \log |\sigma|)$.
-	% (The algorithm also improves on the previous
-	% $O(|\pi| \log \log |\pi|)$ bound.)
-	Furthermore, the patterns $132$, $213$, $231$, $312$ can all be handled in linear-time
-	by stack sorting algorithms.
-	Any pattern of length $4$ can be detected in $O(|\pi| \log |\pi|)$ time
-	\cite{Albert:Aldred:Atkinson:Holton:ISAAC:2001}.
-	Algorithmic issues for $321$-avoiding patterns matching has been investigated in
-	\cite{Guillemot:Vialette:ISAAC:2009}.
-	The pattern matching problem is also solvable in
-	polynomial-time for separable patterns \cite{Ibarra:1997,Bose:Buss:Lubiw:1998}
-	(see also \cite{Bouvel:Rossin:Vialette:CPM:2007} for LCS-like issues
-	of separable permutations).
-	Separable permutations are those permutations that match neither
-	$2413$ nor $3142$, and they are enumerated by the Schr{\"o}der numbers
+We consider here the so-called \emph{pattern matching} problem
+(also sometimes referred to as the \emph{pattern involvement problem}):
+Given two permutations $\sigma$ and $\pi$, this problem is to decide whether
+$\sigma \preceq \pi$ (the problem is attributed to Wilf in \cite{Bose:Buss:Lubiw:1998}).
+The pattern matching for permutations is known to be \NPhard~\cite{Bose:Buss:Lubiw:1998}.
+It is, however, polynomial-time solvable by brute-force enumeration
+if $\sigma$ has bounded size.
+Improvements to this algorithm were presented in
+\cite{Albert:Aldred:Atkinson:Holton:ISAAC:2001} and
+\cite{Ahal:Rabinovich:2008},
+the latter describing a $O(|\pi|^{0.47|\sigma|+o(|\sigma|)})$ time algorithm.
+Bruner and Lackner \cite{DBLP:journals/corr/abs-1204-5224}
+gave a fixed-parameter algorithm solving the pattern matching for permutations problem with
+an exponential worst-case runtime of $O(1.52^{n}.n.k)$,
+(This is an improvement upon the $O(2^{|\pi|})$ runtime required by
+brute-force search without imposing restrictions on $\sigma$ and $\pi$.)
+A recent major step was taken by Marx and Guillemot
+\cite{Guillemot:Marx:SODA:2014}.
+They showed that
+the pattern matching for permutations problem is fixed-parameter tractable (FPT) for
+parameter $|\sigma|$.
+
+A few particular cases of the pattern matching for permutations problem have been attacked successfully.
+The case of increasing patterns is solvable in
+$O(|\pi| \log \log |\sigma|)$ time in the RAM model \cite{Crochemore:Porat:2010},
+improving the previous 30-year bound of $O(|\pi| \log |\sigma|)$.
+% (The algorithm also improves on the previous
+% $O(|\pi| \log \log |\pi|)$ bound.)
+Furthermore, the patterns $132$, $213$, $231$, $312$ can all be handled in linear-time
+by stack sorting algorithms.
+Any pattern of length $4$ can be detected in $O(|\pi| \log |\pi|)$ time
+\cite{Albert:Aldred:Atkinson:Holton:ISAAC:2001}.
+Algorithmic issues for $321$-avoiding patterns matching for permutations have been investigated in
+\cite{Guillemot:Vialette:ISAAC:2009} and more recently in \cite{2015arXiv151006051A}.
+The pattern matching for permutation problem is also solvable in
+polynomial-time for separable patterns \cite{Ibarra:1997,Bose:Buss:Lubiw:1998}
+(see also \cite{Bouvel:Rossin:Vialette:CPM:2007} for Longest common subsequence problem and related one on separable permutations).
+Separable permutations are permutations that do not have an occurrence of
+$2413$ nor $3142$, and they are enumerated by the Schr{\"o}der numbers.
 %	(sequence A006318 in OEIS).
 %	To the best of our knowledge,
 %	separable permutations first arose in the work of
@@ -230,71 +239,71 @@
 %	arbitrary number of pop-stacks in series,
 %	where a pop-stack is a restricted form of stack in which any pop operation
 %	pops all items at once.
-	(Notice that the separable permutations include as a special case the
-	stack-sortable permutations, which avoid the pattern $231$.)
+(Notice that the separable permutations include as a special case the
+stack-sortable permutations, which avoid the pattern $231$.)
 
-	There exists many generalisation of patterns that are worth considering
-	in the context of algorithmic issues in pattern matching
-	(see \cite{Kitaev:book:2011} for an up-to-date survey).
-	\emph{Vincular patterns}, also called
-	\emph{generalized patterns},
-	resemble (classical) patterns with the additional constraint that some of the elements in
-	a matching must be consecutive in postitions.
-	Of particular importance in our context,
-	Bruner and Lackner \cite{DBLP:journals/corr/abs-1204-5224}
-	proved that deciding whether a vincular pattern
-	$\sigma$ of length $k$ can be match to a longer permutation
-	$\pi$ is $W[1]$-complete for
-	parameter $k$;
-	for an up to date survey of the $W[1]$ class and related material, see
-	\cite{Downey:Fellows:2013}.
-	\emph{Bivincular patterns} generalize classical patterns even further
-	than vincular
-	patterns by adding a constraint on values.
+There exist many generalisations of patterns that are worth considering
+in the context of algorithmic issues in pattern matching
+(see \cite{Kitaev:book:2011} for an up-to-date survey).
+\emph{Vincular patterns}, also called
+\emph{generalized patterns},
+resemble (classical) patterns with the additional constraint that some of the elements in
+a occurrence must be consecutive in postitions.
+Of particular importance in our context,
+Bruner and Lackner \cite{DBLP:journals/corr/abs-1204-5224}
+proved that deciding whether a vincular pattern
+$\sigma$ of length $k$ can occur in a longer permutation
+$\pi$ is $W[1]$-complete for
+parameter $k$;
+for an up-to-date survey of the $W[1]$ class and related material, see
+\cite{Downey:Fellows:2013}.
+\emph{Bivincular patterns} generalize classical patterns even further
+than vincular
+patterns by adding a constraint on values.
 
-	We focus in this paper on pattern matching issues for
-	$(213,231)$-avoiding permutations
-    (\emph{i.e.}, those permutations that avoid both $213$ and $231$).
-	The number of $n$-permutations that avoid both
-	$213$ and $231$ is
-	$t_0 = 1$ for $n = 0$ and
-	$t_n =2^{n-1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985}.
-	On an individual basis,
-	the permutations that do not match the permutation pattern $231$
-	are exactly the \emph{stack-sortable permutations} and they are counted by
-	the Catalan numbers \cite{Knuth:1997:ACP:260999}.
-	A stack-sortable permutation is a permutation whose elements may be sorted by
-	an algorithm whose internal storage is limited to a single stack data structure.
-	As for $213$, it is well-known that
- 	if $\pi = \pi_1\pi\,\ldots\,\pi_n$ avoids $132$, then its complement
- 	$\pi' = (n+1-\pi_1)(n+1-\pi_2)\,\ldots\,(n+1-\pi_n)$ avoids $312$, and
- 	the reverse of $\pi'$ avoids $213$.
- 	% From a combinatorial point of view,
- 	% B\'ona \cite{Bona:ElJC:2012}
- 	% showed the rather surprising fact that the cumulative number of
- 	% occurrences of the classical patterns $231$ and $213$ are the same on the
- 	% set of permutations avoiding $132$,
- 	% beside the pattern based statistics $231$ and $213$
- 	% do not have the same distribution on this set.
- 	% \emph{Almost avoidance} has also been considered;
- 	% a permutation $\pi$ almost avoids a set $X$ of permutations
- 	% if there is a way to remove a single element of $\pi$ to get a permutation
- 	% that avoids all elements in $P$
- 	% and $L_n(P)$ denotes the set of permutations of length $n$ that almost avoid
- 	% $P$.
- 	% It is shown in \cite{Griffiths:Smith:Warren:PMA:2011} that
- 	% $L_n(213, 231) = L_n(132, 231) = L_n(132, 312) = L_n(213, 312)$.
-	This paper is organized as follows.
-	In Section~\ref{section:Definitions} the needed definitions are presented.
-	Section~\ref{section:both are (213,231)-avoiding} is devoted to presenting
-	an online linear-time algorithm in case both 
-	permutations are $(213,231)$-avoiding,
-	whereas Section~\ref{section:sigma only avoid 231 and 213} focuses on the case
-	where only the pattern is $(213,231)$-avoiding.
-	In Section~\ref{section:bivincular} we give a polynomial-time algorithm
-	for $(213,231)$-avoiding bivincular patterns.
-	In Section~\ref{section:LCS} we consider the problem of finding the longest
-	$(213,231)$-avoiding pattern in permutations.
+We focus in this paper on pattern matching issues for
+$(213,231)$-avoiding permutations that we call wedge permutations.
+(\emph{i.e.}, those permutations that avoid both $213$ and $231$).
+The number of $n$-wedge permutations is
+$t_0 = 1$ for $n = 0$ and
+$t_n =2^{n-1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985},
+as they are in bijection with binary word of size $n-1$.
+On an individual basis,
+the permutations that do not have an occurrence of the permutation pattern $231$
+are exactly the \emph{stack-sortable permutations} and they are counted by
+the Catalan numbers \cite{Knuth:1997:ACP:260999}.
+%	A stack-sortable permutation is a permutation whose elements may be sorted by
+%	an algorithm whose internal storage is limited to a single stack data structure.
+%	As for $213$, it is well-known that
+% 	if $\pi = \pi_1\pi\,\ldots\,\pi_n$ avoids $132$, then its complement
+% 	$\pi' = (n+1-\pi_1)(n+1-\pi_2)\,\ldots\,(n+1-\pi_n)$ avoids $312$, and
+% 	the reverse of $\pi'$ avoids $213$.
+% From a combinatorial point of view,
+% B\'ona \cite{Bona:ElJC:2012}
+% showed the rather surprising fact that the cumulative number of
+% occurrences of the classical patterns $231$ and $213$ are the same on the
+% set of permutations avoiding $132$,
+% beside the pattern based statistics $231$ and $213$
+% do not have the same distribution on this set.
+% \emph{Almost avoidance} has also been considered;
+% a permutation $\pi$ almost avoids a set $X$ of permutations
+% if there is a way to remove a single element of $\pi$ to get a permutation
+% that avoids all elements in $P$
+% and $L_n(P)$ denotes the set of permutations of length $n$ that almost avoid
+% $P$.
+% It is shown in \cite{Griffiths:Smith:Warren:PMA:2011} that
+% $L_n(213, 231) = L_n(132, 231) = L_n(132, 312) = L_n(213, 312)$.
+This paper is organized as follows.
+In Section~\ref{section:Definitions} the needed definitions are presented.
+Section~\ref{section:both are (213,231)-avoiding} is devoted to presenting
+an online linear-time algorithm in case both 
+permutations are wedge permutations,
+whereas Section~\ref{section:sigma only avoid 231 and 213} focuses on the case
+where only the pattern is a wedge permutation.
+In Section~\ref{section:bivincular} we give a polynomial-time algorithm
+for a bivincular wedge permutations pattern.
+In Section~\ref{section:LCS} we consider the problem of finding the longest
+wedge permutations pattern in permutations.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -302,22 +311,61 @@
 \section{Definitions}
 \label{section:Definitions}
 
-A \emph{permutation} of length $n$ is a one-to-one function from an
-$n$-element set to itself.
-We write permutations as words
+A \textit{permutation} of size $n$ is a linear ordering of an ordered set of size $n$.
+When writing the permutation we omit the $<$ sign, thus
+writing the permutation as a word  :
 $\pi = \pi_1\pi_2\,\ldots\,\pi_n$, whose elements are distinct
-and usually consist of the integers $12\,\ldots\,n$, and we let
-$\pi[i]$ stands for $\pi_i$.
-For the sake of convenience, we let
-$\pi[i:j]$ stand for
+and usually consist of the integers $12\,\ldots\,n$. 
+We let $\pi[i]$ stands for $\pi_i$.
+Conveniently, we let
+$\pi[i:j]$ stands for
 $\pi_i\pi_{i+1}\,\ldots\,\pi_j$,
-$\pi[:j]$ stand for $\pi[1:j]$ and
-$\pi[i:]$ stand for $\pi[i:n]$.
-As usual, we let $S_n$ denote the set of all permutations of length $n$.
+$\pi[:j]$ stands for $\pi[1:j]$ and
+$\pi[i:]$ stands for $\pi[i:n]$.
+
+We need to consider both the natural order of the set
+and the linear order given by the permutation.
+When talking about an element,
+we refer to the relative position in
+the natural order of the set
+as its value 
+and 
+we refer to the relative position
+in the order given by the permutation 
+as its position.
+We write 
+$\pi[i]$ to indicate the value of the element 
+at position $i$.  
+For example, in the permutation $\pi = 51342$,
+The element $1$ is at position $2$
+and the element at position $1$ has for value $5$.
+
 It is convenient to use a geometric representation of permutation
 to ease the understanding of algorithms. 
-The geometric representation corresponds to the set of point with coordinate $(i,\pi[i])$
-(see figure \ref{example: pattern matching}).
+The geometric representation corresponds to the set of points with coordinate $(i,\pi[i])$
+(see Figure \ref{example: pattern matching}).
+
+
+When an element $e_1$ is smaller (resp. bigger)
+than an element $e_2$  by value (in the natural order of the set),
+we say that $e_1$ is below (resp. above) $e_2$,
+as a reference to the figure of the permutation.
+Besides, the element with the biggest value is called
+the topmost element and the element with the smallest value
+is called the bottommost element.
+For example, in the permutation $\pi = 51342$,
+$2$ is below $4$, the topmost element is $5$
+and the bottommost element is $1$.
+
+When an element $e_1$ is smaller (resp. bigger)
+than an element $e_2$  by position (in the order given by the permutation),
+we say that $e_1$ is on the left of (resp. on the right of) $e_2$.
+Besides, the element with the biggest position is called the rightmost element
+and the element with the smallest position is called the leftmost element.
+For example, in the permutation $\pi = 51342$,
+$5$ is on the left of $3$, the leftmost element is $5$
+and the rightmost element is $2$.
+
 
 % The \emph{reduced form} of a permutation $\sigma$ on a set
 % $\{j_1, j_2, \ldots, j_k\}$ where
@@ -328,14 +376,12 @@ The geometric representation corresponds to the set of point with coordinate $(i
 % For example $\RED(453) = 231$
 % while $\RED(3174) = 2143$.
 
-A permutation $\pi$ is said to \emph{match} the permutation $\sigma$
+A permutation $\sigma$ is said to \emph{occur} in the permutation $\pi$, written $\sigma \preceq \pi$,
 if there exists a subsequence of (not necessarily consecutive)
-element of $\pi$ that has the same relative order as $\sigma$,
-and in this case $\pi$ is said to match $\sigma$, 
-written $\sigma \preceq \pi$.
+elements of $\pi$ that has the same relative order as $\sigma$.
 Otherwise, $\pi$ is said to \emph{avoid} the permutation $\sigma$.
 For example, the permutation $\pi = 391867452$
-matches the pattern $\sigma = 51342$,
+has an occurrence of the pattern $\sigma = 51342$,
 as can be seen in the highlighted subsequence of
 $\pi = 3\mathbf{9}\mathbf{1}8\mathbf{6}\mathbf{7}\mathbf{4}52$
 (or
@@ -349,14 +395,22 @@ Each subsequence $91674$,
 $91675$,
 $91672$,
 $91452$,
- in $\pi$ is called a
-\emph{matching}
+ in $\pi$ is called an
+\emph{occurrence}
 of $\sigma$.
 Since the permutation $\pi = 391867452$  contains no increasing subsequence of
 length four, $\pi$ avoids $1234$.
-Geometrically, $\pi$ matches $\sigma$ if there exists
-a set of point in $\pi$ that is isomorph to the set of point of $\sigma$. In other word,
-if there exists a set of point in $\pi$ with the same disposition as the set of point of $\sigma$, without regard to the distance (see figure \ref{example: pattern matching}).
+
+For an occurrence $s$ of $\sigma$ in $\pi$, 
+we say that $\pi[j]$ is a matching of $\sigma[i]$ or 
+that $\sigma[i]$ is matched to $\pi[j]$  
+if and only if $\pi[j]=s[i]$.
+
+Geometrically, $\pi$ has an occurrence of $\sigma$ if there exists
+a set of points in $\pi$ that is isomorphic to the set of points of $\sigma$. 
+In other words,
+if there exists a set of points in $\pi$ with the same disposition as the set of points of $\sigma$, 
+regardless of the distance (see Figure \ref{example: pattern matching}).
 
 \begin{figure}
 	\centering
@@ -442,33 +496,32 @@ if there exists a set of point in $\pi$ with the same disposition as the set of 
 	
 	\caption[Example pattern matching]{
 		The pattern $\sigma=51342$
-		and four matchings of $\sigma$ in $391867452$.} 
+		and four occurrences of $\sigma$ in $391867452$.} 
 	\label{example: pattern matching}
 \end{figure}
 
-Suppose $P$ is a set of permutations. We let $\AV_n(P)$ denote the
-set of all $n$-permutations avoiding each permutation in $P$.
-For the sake of convenience
-(and as it is customary~\cite{Kitaev:book:2011}), we omit $P$'s braces thus having
-e.g. $\AV_n(213,231)$ instead of
-$\AV_n(\{213,231\})$.
-If $\pi \in \AV_n(P)$, we also say that $\pi$ is
-\emph{$P$-avoiding}.
+%Suppose $P$ is a set of permutations. We let $\AV_n(P)$ denote the
+%set of all $n$-permutations avoiding each permutation in $P$.
+%For the sake of convenience
+%(and as it is customary~\cite{Kitaev:book:2011}), we omit $P$'s braces thus having
+%e.g. $\AV_n(213,231)$ instead of
+%$\AV_n(\{213,231\})$.
+%If $\pi \in \AV_n(P)$, we also say that $\pi$ is
+%\emph{$P$-avoiding}.
+
 % A basic example is if
 % $\pi = \pi_1\pi_2\,\ldots\,\pi_n \in \AV_n(321)$, i.e.,
 % has no decreasing subsequence of length $3$, then its reverse,
 % $\pi' = \pi_n\pi_{n-1}\,\ldots\,\pi_1$ avoids $123$, i.e.,
 % has no increasing subsequence of length $3$.
 
-An \emph{ascent} of a permutation $\pi \in S_n$ is any element
-$1 \leq i < n$ where the following value is bigger than the current one.
-That is, if $\pi = \pi_1\pi_2\,\ldots\,\pi_n$, then
-$\pi_i$ is an ascent if $\pi_i < \pi_{i+1}$.
+An \emph{ascent element} of an $n$-permutation $\pi \in S_n$ is any element
+$\pi[i]$ such that $i<n$ and $\pi[i] < \pi[i+1]$.
 For example, the permutation
 $3452167$ has ascents $3$, $4$, $1$ and $6$.
 Similarly, a \emph{descent} is any element
-$1 \leq i < n$ with $\pi_i > \pi_{i+1}$,
-so for every $1 \leq i < n$, $\pi_i$  is either an ascent or is a descent of
+$\pi[i]$ such that $i<n$ and $\pi[i] > \pi[i+1]$.
+So for every $1 \leq i < n$, $\pi[i]$  is either an ascent or a descent of
 $\pi$.
 %To clarify the exposition,
 %we let $\ustep$ and $\dstep$ denote an ascend and a descend, respectively.
@@ -481,7 +534,7 @@ $\pi$.
 %$\pi = 981234765$
 %is $\stripew{\pi} = \dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep$.
 
-A $\textit{left to right maxima}$ (abbreviate LRMax) of $\pi$ is a element that does not have any element bigger than it on its right (see fig. $\ref{fig:left to right maxima}$). Formally, $\pi[i]$ is a LRMax if and only if $\pi[i]$ is the biggest element of $\pi[i:]$. Similarly $\pi[i:]$ is a $\textit{left to right minima}$ (abbreviate LRMin) if and only if $\pi[i]$ is the smallest element of $\pi[i:]$.
+A $\textit{right to left maximum}$ (abbreviate RLMax) of $\pi$ is an element that does not have any element above it at its right (see Figure $\ref{fig:left to right maxima}$). Formally, $\pi[i]$ is a RLMax if and only if $\pi[i]$ is topmost element of $\pi[i:]$. Similarly $\pi[i]$ is a $\textit{left to right minima}$ (abbreviate RLMin) if and only if $\pi[i]$ is the bottommost element of $\pi[i:]$.
 
 \begin{figure}
 	\centering
@@ -503,64 +556,68 @@ A $\textit{left to right maxima}$ (abbreviate LRMax) of $\pi$ is a element that 
 	
 	
 	\caption[Example pattern matching]{
-		The element is a LRMax if and only if the dashed area is empty.} 
+		The element is a RLMax if and only if the dashed area is empty.} 
 	\label{fig:left to right maxima}
 \end{figure}
 
 A \emph{bivincular pattern} $\sigma$
 of length $k$ is a permutation in $S_k$ written in
 two-line notation
-(that is the top row is $12\,\ldots\,k$ and the bottom row
-is a permutation $\sigma_1\sigma_2\,\ldots\,\sigma_k$).
+(the top row is $12\,\ldots\,k$ and the bottom row
+is a permutation $\sigma_1\sigma_2\,\ldots\,\sigma_k$)
+with overlined elements in the top row and underlined element in the bottom row.
 We have the following conditions on the top and bottom rows
-of $\sigma$, as see in \cite{Kitaev:book:2011} in definition 1.4.1:
+of $\sigma$, as see in \cite{Kitaev:book:2011} in Definition 1.4.1:
 \begin{itemize}
 	\item
 	If the bottom line of $\sigma$ contains
 	$\underline{\sigma_i\sigma_{i+1}\,\ldots\,\sigma_j}$
 	then the elements corresponding to
-	$\sigma_i\sigma_{i+1}\,\ldots\,\sigma_j$ in a matching of
+	$\sigma_i\sigma_{i+1}\,\ldots\,\sigma_j$ in a occurrence of
 	$\sigma$ in $\pi$ must be adjacent, whereas there is
 	no adjacency condition for
 	non-underlined consecutive elements.
 	Moreover if the bottom row of $\sigma$ begins with
-	$_\llcorner{\sigma_1}$ then any matching of $\sigma$
+	$_\llcorner{\sigma_1}$ then any occurrence of $\sigma$
 	in a permutation $\pi$ must begin with the leftmost
 	element of $\pi$,
 	and
 	if the bottom row of $\sigma$ begins with
-	${\sigma_k}_\lrcorner$ then any matching of $\sigma$
+	${\sigma_k}_\lrcorner$ then any occurrence of $\sigma$
 	in a permutation $\pi$ must end with the rightmost
 	element of $\pi$.
 	\item
 	If the top line of $\sigma$ contains
 	$\overline{i\,i+1\,\ldots\,j}$ then the elements corresponding to
 	$i, i+1, \ldots, j$ in an
-	matching of $\sigma$ in $\pi$ must be adjacent in values,
+	occurrence of $\sigma$ in $\pi$ must be adjacent in values,
 	whereas there is no value adjacency restriction for non-overlined
 	elements.
 	Moreover, if the top row of $\sigma$ begins with
 	$^\ulcorner{1}$ then
-	any matching of $\sigma$ is a permutation $\pi$ must contain 
-	the smallest element of $\pi$, and
+	any occurrence of $\sigma$ is a permutation $\pi$ must contain 
+	the bottommost element of $\pi$, and
 	if top row of $\sigma$ ends with $k^\urcorner$ then
-	any matching of $\sigma$ is a permutation $\pi$ must contain
-	the largest element of $\pi$.
-	
+	any occurrence of $\sigma$ is a permutation $\pi$ must contain
+	the topmost element of $\pi$.
 \end{itemize}
 
 For example,
 let
 $\sigma = \BV{1\overline{23}4\urcorner}{\llcorner 21\underline{43}  }$.
-In $3217845$, $\textbf{32}17\textbf{84}5$ is a matching of $\sigma$ but
+In $3217845$, $\textbf{32}17\textbf{84}5$ is an occurrence  of $\sigma$ but
  $3\textbf{21}\textbf{7}8\textbf{4}5$ is not.
 The best general reference is \cite{Kitaev:book:2011}.
 
 Geometrically, We represent underlined and overlined elements by \textit{forbidden areas}.
-A vertical area between two points indicates that the two matching of those points must be consecutive in positions, whereas a horizontal area between two points indicates that the two  matching of those points must be consecutive in value. The forbidden areas can be understand as follow : in a matching, the forbidden areas must be empty. Thus, 
-$\pi$ matches a bivincular pattern $\sigma$ if there exists a set of point in $\pi$ that is isomorph to $\sigma$ and if
-the forbidden areas are empty.
-(see figure \ref{example:bivincular pattern matching}).
+If two elements are overlined then we draw a vertical forbidden areas between those two points.
+In an occurrence, we also draw the forbidden area between the matching of two overlined elements.
+This area must be empty for an occurrence to be called so. 
+If the area is empty then there is no element between them when reading the permutation
+from bottom to top, 
+in other words the matching elements are consecutive in value.
+If two elements are underlined then we draw an horizontal forbidden area.
+(See figure \ref{example:bivincular pattern matching}).
 
 
 \begin{figure}[t] 
@@ -639,26 +696,26 @@ the forbidden areas are empty.
     	    	
     	\caption[Example pattern matching]{
     		From left to right,
-    		the bivincular pattern $\sigma = \BV{1\overline{23}4\urcorner}{\llcorner 21\underline{43}  }$, A matching of $\sigma$ in $3216745$, A matching of $2143$ in $3216745$ but not a matching of $\sigma$ in $3216745$ because the point $(1,3)$ and $(5,7)$ are in the forbidden area.} 
+    		the bivincular pattern $\sigma = \BV{1\overline{23}4\urcorner}{\llcorner 21\underline{43}  }$, An occurrence of $\sigma$ in $3216745$, An occurrence of $2143$ in $3216745$ but not an occurrence of $\sigma$ in $3216745$ because the point $(1,3)$ and $(5,7)$ are in the forbidden area.} 
     	\label{example:bivincular pattern matching}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Both $\pi$ and $\sigma$ are $(213,231)$-avoiding}
+\section{Both $\pi$ and $\sigma$ are wedge permutation}
 \label{section:both are (213,231)-avoiding}
 
 
 
 This section is devoted to presenting a fast algorithm for deciding if
 $\sigma \preceq \pi$
-in case both $\pi$ and $\sigma$ are $(213,231)$-avoiding.
+in case both $\pi$ and $\sigma$ are wedge permutations.
 We begin with an easy but crucial structure lemma.
 
-\begin{lemma}[Folklore]
+\begin{lemma} %[Folklore]
 \label{lemma:first element is 1 or n}
-The first element of any $(213,231)$-avoiding permutation
-must be either the minimal or the maximal element.
+The first element of any wedge permutations
+must be either the bottommost or the topmost element.
 \end{lemma}
 
 \begin{proof}[of Lemma~\ref{lemma:first element is 1 or n}]
@@ -669,29 +726,32 @@ $231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' respectively.
 
 \begin{corollary}
 \label{corollary:minmaxelement}
-$\pi \in \AV_n(213,231)$ if and only if for $1 \leq i < n$,
-$\pi[i]$ is a LRMax or a LRMin.
+$\pi$ is a wedge permutation if and only if for $1 \leq i \leq n$,
+$\pi[i]$ is a RLMax or a RLMin.
 \end{corollary}
 
 
 \begin{corollary}
 \label{corollary:max is ascent}
-Let $\pi \in \AV_n(213,231)$ and $1 \leq i < n$. Then,
+Let $\pi$ be a wedge permutation and $1 \leq i < n$. Then,
 (1) 
-$\pi[i]$ is an ascent element if and only if $\pi[i]$ is a LRMin
+$\pi[i]$ is an ascent element if and only if $\pi[i]$ is a RLMin
 and 
 (2)
-$\pi[i]$ is a descent element if and only if $\pi[i]$ is a LRMax
+$\pi[i]$ is a descent element if and only if $\pi[i]$ is a RLMax
 \end{corollary}
 
-Lemma $\ref{corollary:max is ascent}$ gives a bijection between $\AV_n(213,231)$ and the set of binary word of size $n-1$. The bijected word $w$ of $\pi$, is the word where each letter at position $i$ represents if $\pi[i]$ is an ascent or descent element (or is a LRMax or a LRMin). We call this bijection $\bijection$. 
+Corollary $\ref{corollary:max is ascent}$ gives a bijection between the set of wedge permutations and the set of binary word of size $n-1$. The word $w$ which corresponds to $\pi$ is the word where each letter at position $i$ represents whether $\pi[i]$ is an ascent or descent element (equivalently, is a RLMax or a RLMin). We call this bijection $\bijection$. 
 
+A wedge permutation has a particular form that gives its name.
+If we take only the descent elements, 
+they form a decreasing subsequence
+and the ascent elements form an increasing subsequence.
+Moreover the descent elements are above the ascent elements.
+This shapes the permutation as a $>$. 
 
-A $(213,231)$-avoiding permutation has a particular form.
-If we take only the descent elements, the points draw a north-east to south-west line
-and if we take only the ascent elements, the points draw a south-east to north-west line.
-This shape the permutation as a $>$. For convenience when drawing a random $(213,231)$-avoiding permutation
-we will sometime represent a sequence of ascent/descent element by lines (see figure \ref{fig:shape of the permutation} and \ref{fig:shape of the permutation plus factor}).
+%For convenience when drawing a random wedge permutation
+%we will sometime represent a sequence of ascent/descent element by lines (see Figure \ref{fig:shape of the permutation} and \ref{fig:shape of the permutation plus factor}).
 
 
 \begin{figure}[t] 
@@ -721,7 +781,7 @@ we will sometime represent a sequence of ascent/descent element by lines (see fi
 	\end{tikzpicture}	
 	
 	
-	\caption{The $(213,231)$-avoiding permutation $123984765$, every point which is on a north-east to south-west line represents a descent element and every point which is on a south-east to north-west line represents an ascent element.}
+	\caption{The wedge permutation $123984765$, every point which is on a north-west to south-east line represents a descent element and every point which is on a south-west to north-east line represents an ascent element.}
 	\label{fig:shape of the permutation}
 \end{figure}	
 
@@ -729,8 +789,8 @@ The following lemma is central to our algorithm.
 
 \begin{lemma}
 \label{lemma:MatchStripeToPermutation}
-Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations,
-Then, $\pi$ matches $\sigma$ if and only if 
+Let $\pi$ and $\sigma$ be two wedge permutations,
+Then, $\pi$ has an occurrence of $\sigma$ if and only if 
 there exists a subsequence $t$ of $\pi$ such $\bijection(t)=\bijection(\sigma)$.
 \end{lemma}
 
@@ -743,74 +803,65 @@ Suppose that $\sigma = 12$ and thus $\bijection(\sigma) = ascent$.
 Let $t = \pi_{i_1}\pi_{i_2}$, $i_1 < i_2$, be a subsequence of $\pi$
 such that $\bijection(t) = ascent$, this reduces to saying that
 $\pi_{i_1} < \pi_{i_2}$, 
-and hence that $t$ is a matching of $\sigma = 12$ in $\pi$.
-A similar argument shows that the lemma holds true for $\sigma = 21$.
+and hence that $t$ is an occurrence of $\sigma = 12$ in $\pi$.
+A similar argument shows that the lemma holds for $\sigma = 21$.
 Now, assume that the lemma is true for all patterns up to size $k \geq 2$.
-Let $\sigma \in \Av{k+1}{231,213}$ and
+Let $\sigma$ be an k-wedge permutation and
 let $t$,
 be a subsequence of $\pi$ of length $k+1$ such that
 $\bijection(t) = \bijection(\sigma)$.
 As $\bijection(t)[2:] = \bijection(\sigma)[2:]$
 by the inductive hypothesis, it follows that
-$t[2:]$ is a matching of $\sigma[2:]$.
+$t[2:]$ is an occurrence of $\sigma[2:]$.
 Moreover $\bijection(t)[1] = \bijection(\sigma)[1]$ 
-thus $t[1]$ and $\sigma[1]$ are both either the minimal or the maximal
+thus $t[1]$ and $\sigma[1]$ are both either the bottommost or the topmost
 element of their respective subsequences.
-Therefore, $t$ is a matching of $\sigma$ in $\pi$.
+Therefore, $t$ is an occurrence of $\sigma$ in $\pi$.
 \qed
 \end{proof}
 
 We are now ready to solve the pattern matching problem in case
-both $\pi$ and $\sigma$ are $(213, 231)$-avoiding.
+both $\pi$ and $\sigma$ are wedge permutations.
 
 \begin{proposition}
-	\label{Proposition:both permutations are avoiding}
-	Let $\pi$ and $\sigma$ be two $(213,231)$-avoiding permutations.
-	One can decide whether $\pi$ matches $\sigma$ in linear time.
+\label{Proposition:both permutations are avoiding}
+Let $\pi$ and $\sigma$ be two wedge permutations.
+One can decide whether $\pi$ has an occurrence of $\sigma$ in linear time.
 \end{proposition}
 
 \begin{proof}
 According to Lemma~\ref{Proposition:both permutations are avoiding} the problem reduces
-to deciding whether $s_\sigma$ occurs as a subsequence in $s_\pi$.
-A straightforward greedy approach solves this issue in linear-time.
+to deciding whether $\bijection(\sigma)$ occurs as a subsequence in $\bijection(\pi)$.
+A straightforward greedy approach solves this issue in linear-time,
+by reading both words from left to right and matching two letters when they are equal then passing
+to the next letters for both words
+or passing to the next letter in the word of the text.
 \qed
 \end{proof}
 
 Thank to Corollary~\ref{corollary:max is ascent},
-we can compute the bijected words in the same time that we running the greedy algorithm, this gives us a on-line algorithm.
+we do not need to compute the word corresponding to the permutations before running the greedy algorithm. This computation can be done in the same time with the algorithm,
+thus, this gives on-line algorithm.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{$\sigma$ only is $(213,231)$-avoiding}
+\section{Only $\sigma$ is a wedge permutation}
 \label{section:sigma only avoid 231 and 213}
 
 This section focuses on the pattern matching problem
-in case only the pattern $\sigma$ avoids $231$ and $213$.
+in case only the pattern $\sigma$ is a wedge permutation.
 We need to consider a specific decomposition of $\sigma$ into \textit{factor} :
-we split the permutation into largest sequences of ascent element and descent element, respectively called an ascent factor and a descent factor.
-This correspond to split the permutation between every pair of ascent-descent element and descent-ascent element (see figure \ref{fig:shape of the permutation plus factor}).
-For the special case of $(213,231)$-avoiding, this correspond to split the permutation into largest sequence of consecutive element.
+we split the permutation into maximal sequences of consecutive ascent and descent elements, respectively called an ascent factor and a descent factor.
+This corresponds to splitting the permutation between every pair of ascent-descent and descent-ascent element (see Figure \ref{fig:shape of the permutation plus factor}).
+For the special case of a wedge permutation, this also corresponds to split the permutation into maximal sequences of element consecutive in value.
 We will label the factors from right to left.
-
-We introduce the notation $\LMEi(s)$ : Suppose that $s$ is a subsequence of $S$, $\LMEi(s)$ is the index of the left most element of $s$ in $S$. Thus
-for every $\factor$, $\LMEi(\factor(j))$ stand for the index in $\sigma$
-of the leftmost element of $\factor(j)$.
 For example,
 $\sigma = 123984765$ is split as
- $123-98-4-765$. 
+$123-98-4-765$.
 Hence
 $\sigma =$ $\factor(4)$ $\factor(3)$ $\factor(2)$ $\factor(1)$ with
-$\factor(4) =123$, $\factor(3) = 98$, $\factor(2) = 4$ and $\factor(1) = 765$.
-Furthermore,
-$\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\LMEi(\factor(1)) = 7$.
-We represent elements matching an ascent (resp. descent) factor 
-by a rectangle which has the left most matched point of the factor as the left bottom (resp. top) corner and the right most matched point of the factor as the right top (resp. bottom) corner.
-We can remove the two right most rectangles and replace it by the smallest rectangle that contains both of them and repeat this operation to represent part of a matching (see figure \ref{fig:shape of the permutation plus factor plus factor}).
-
-\begin{remark}
-A factor is either an increasing or a decreasing sequence of element. Thus while matching a factor, it is enough to find an increasing or a decreasing subsequence of same size or bigger than the factor.
-\end{remark}
+$\factor(4) =123$, $\factor(3) = 98$, $\factor(2) = 4$ and $\factor(1) = 765$. 
 
 \begin{figure}[t] 
 	\centering
@@ -835,42 +886,25 @@ A factor is either an increasing or a decreasing sequence of element. Thus while
 	\draw (5,3) -- (6,4);
 	\draw (6,7) -- (9,4);
 	
-	\end{tikzpicture}	
-	\begin{tikzpicture}[scale=.3]
+	\end{tikzpicture}		
+	\caption{The  wedge permutation $123984765$. Every line represents a factor, every circled point represents the leftmost element of each factor. }
+	\label{fig:shape of the permutation plus factor}
+\end{figure}
+ 
+We introduce the notation $\LMEi(s)$ : Suppose that $s$ is a subsequence of $S$, $\LMEi(s)$ is the position of the leftmost element of $s$ in $S$. Thus
+for every $\factor$, $\LMEi(\factor(j))$ stands for the position in $\sigma$
+of the leftmost element of $\factor(j)$.
+From the above example,
+$\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\LMEi(\factor(1)) = 7$.
 
-	
-	\draw (0,0) -- (1,1);
-	\draw (1,9) -- (2,8);
-	\draw (2,1) -- (3,2);
-	\draw (4,8) -- (5,7);
-	
-	\draw[fill=black] (6.5,5) circle (1mm);
-	\draw[fill=black] (7,5) circle (1mm);
-	\draw[fill=black] (7.5,5) circle (1mm);
-	
-	\draw (9,6) -- (10,5);
-	\draw (10,4) -- (11,5);
-	
-	\draw[fill=black,double, double distance=0.5pt] (0,0) circle (1mm);
-	\draw[fill=black,double, double distance=0.5pt] (1,9) circle (1mm);
-	\draw[fill=black,double, double distance=0.5pt] (2,1) circle (1mm);
-	\draw[fill=black,double, double distance=0.5pt] (4,8) circle (1mm);
-	\draw[fill=black,double, double distance=0.5pt] (9,6) circle (1mm);
-	\draw[fill=black,double, double distance=0.5pt] (10,4) circle (1mm);
-	
-	\end{tikzpicture}	
+To lighten the figure of a wedge permutation, 
+we represent the elements of an ascent (resp. descent) factor 
+by a rectangle which has the matching of the leftmost point of the factor as the left bottom (resp. top) corner and the matching of the rightmost point of the factor as the right top (resp. bottom) corner.
+We can merge the two rightmost rectangles and replace them by the smallest rectangle that contains both of them and repeat this operation to represent part of an occurrence (see Figure \ref{fig:decomposition of an occurrence}).
+
+\begin{figure}[t] 
+	\centering	
 	\begin{tikzpicture}[scale=.3]
-	
-	\fill[blue!40!white] (1.5,1.5) rectangle (2.5,0.5);
-	\fill[blue!40!white] (4.5,8.5) rectangle (6.5,6.5);
-	\fill[blue!40!white] (7.5,3.5) rectangle (8.5,5.5);
-	
-	\draw[red,dashed] (1.5,1.5) rectangle (2.5,0.5);
-	\draw[red,dashed] (4.5,8.5) rectangle (8.5,3.5);
-	
-	\draw[green,dashed] (1.5,0.5) rectangle (8.5,8.5);
-	
-	
 	
 	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
 	\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
@@ -886,55 +920,129 @@ A factor is either an increasing or a decreasing sequence of element. Thus while
 	\draw[fill=black,double, double distance=1pt] (6.5,6.5) circle (2mm);
 	\draw[fill=black, double distance=1pt] (7.5,3.5) circle (2mm);
 	\draw[fill=black, double distance=1pt] (8.5,5.5) circle (2mm);
-	
-	
-	
 	\end{tikzpicture}				
+	\begin{tikzpicture}[scale=.3]
 	
-	\caption{The left figure is the  $(213,231)$-avoiding permutation $123984765$. Every line represents a factor, every circled point represents the left most element of each factor. 
-	The central figure is a generalisation of $(213,231)$-avoiding permutation.	
-	The right figure represents a matching of $1276534$ in $312598746$, the blue rectangles represent the matching, the red dotted rectangles represent the matching after the first replacement and the green rectangle represents the matching after the second replacement.}
-	\label{fig:shape of the permutation plus factor}
+
+		
+	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
+	\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
+		\draw[dotted] (0,\i) -- (9, \i);
+		\draw[dotted] (\i,0) -- (\i, 9);
+	}
+	\draw[fill=black] (0.5,2.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (1.5,0.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (2.5,1.5) circle (2mm);
+	\draw[fill=black] (3.5,4.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (4.5,8.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (5.5,7.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (6.5,6.5) circle (2mm);
+%	\draw[fill=black, double distance=1pt] (7.5,3.5) circle (2mm);
+%	\draw[fill=black, double distance=1pt] (8.5,5.5) circle (2mm);
+	\draw [pattern=north east lines] (1.5,1.5) rectangle (2.5,0.5);
+	\draw [pattern=north east lines] (4.5,8.5) rectangle (6.5,6.5);
+	\draw [pattern=north east lines] (7.5,3.5) rectangle (8.5,5.5);	
+	
+	\end{tikzpicture}
+	\begin{tikzpicture}[scale=.3]
+	
+
+		
+	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
+	\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
+		\draw[dotted] (0,\i) -- (9, \i);
+		\draw[dotted] (\i,0) -- (\i, 9);
+	}
+	\draw[fill=black] (0.5,2.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (1.5,0.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (2.5,1.5) circle (2mm);
+	\draw[fill=black] (3.5,4.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (4.5,8.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (5.5,7.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (6.5,6.5) circle (2mm);
+%	\draw[fill=black, double distance=1pt] (7.5,3.5) circle (2mm);
+%	\draw[fill=black, double distance=1pt] (8.5,5.5) circle (2mm);
+
+	\draw [pattern=north east lines] (1.5,1.5) rectangle (2.5,0.5);
+	\draw [pattern=north east lines] (4.5,8.5) rectangle (8.5,3.5);
+	%\fill[black] (7.5,3.5) rectangle (8.5,5.5);	
+	
+	\end{tikzpicture}
+	\begin{tikzpicture}[scale=.3]
+	
+
+		
+	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
+	\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
+		\draw[dotted] (0,\i) -- (9, \i);
+		\draw[dotted] (\i,0) -- (\i, 9);
+	}
+	\draw[fill=black] (0.5,2.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (1.5,0.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (2.5,1.5) circle (2mm);
+	\draw[fill=black] (3.5,4.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (4.5,8.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (5.5,7.5) circle (2mm);
+%	\draw[fill=black,double, double distance=1pt] (6.5,6.5) circle (2mm);
+%	\draw[fill=black, double distance=1pt] (7.5,3.5) circle (2mm);
+%	\draw[fill=black, double distance=1pt] (8.5,5.5) circle (2mm);
+
+	\draw [pattern=north east lines] (1.5,1.5) rectangle (8.5,8.5);
+	%\draw [pattern=north east lines] (4.5,8.5) rectangle (8.5,3.5);
+	%\fill[black] (7.5,3.5) rectangle (8.5,5.5);	
+	
+	\end{tikzpicture}
+		
+	\caption{The operation of merging the two rightmost rectangle.}
+	\label{fig:decomposition of an occurrence}
 \end{figure}
+
+\begin{remark}
+A factor is either an increasing or a decreasing sequence of element. 
+Thus to find an occurrence for a factor, one must find an increasing or a decreasing subsequence of same size or bigger than the factor.
+\end{remark}
 
 
 
 \begin{corollary}
 \label{corollary:whereIsMax}
-Given a permutation $\sigma \in \AV(213,231)$ and a suffix of its 
-decomposition $\factor(i)$ $\factor(i-1)$ $\ldots$ $\factor(1)$, 
+Given a wedge permutation $\sigma$, 
 if $\factor(i)$ is an ascent (respectively descent) factor 
-then the maximal (resp. minimal) element of $\factor(i)$ $\factor(i-1)$ $\ldots$ $\factor(1)$
-is the left most element of $\factor(i-1)$
+then topmost (resp. bottommost) element of $\ppattern[\LMEi(\factor(i+1)):]$
+is the leftmost element of $\factor(i-1)$.
 \end{corollary}
 
-This is a corollary of lemma \ref{lemma:first element is 1 or n}.
-This states that given a permutation in $\AV(213,231)$ 
-if the permutation starts with ascent (respectively descent) elements then the maximal (resp. minimal) element of this permutation is the first descent (resp. ascent) element (see figure \ref{fig:where to find the max}).
+\begin{proof}[of Corollary~\ref{corollary:whereIsMax}]
+This corollary states that, given a wedge permutation 
+if the permutation starts with an ascent (respectively descent) elements then the topmost (resp. bottommost) element of this permutation is the first descent (resp. ascent) element (see Figure \ref{fig:where to find the max}). This is easy to see from Corollary  \ref{corollary:max is ascent}.
+The ascent elements are below the descent element, thus the topmost element must be 
+the first descent element, which is the leftmost element of $\factor(i-1)$.
+\qed
+\end{proof}
 
 \begin{figure}[t] 
 	\centering	
 	\begin{tikzpicture}[scale=.3]
 	
 	
-	\draw (0,0) -- (1,1);
-	\draw (2,10) -- (3,9);
+%	\draw (0,0) -- (1,1);
+%	\draw (2,10) -- (3,9);
 	
 	\draw[fill=black] (3.5,5) circle (1mm);
 	\draw[fill=black] (4,5) circle (1mm);
 	\draw[fill=black] (4.5,5) circle (1mm);
 	
-	\draw [blue] (6,2) -- (7,3);
+	\draw (6,2) -- (7,3);
 	\draw (7,7) -- (8,6);
 	\draw (8,3) -- (9,4);
 	\draw (9,6) -- (10,5);
 	\draw (10,4) -- (11,5);
 
-	\draw[fill=black] (7,7) circle (2mm);
-	\draw[fill=blue] (6,2) circle (2mm);
+	\draw[fill=gray] (7,7) circle (2mm) node[above] {factor(i-1)};
+	\draw[fill=black] (6,2) circle (0mm) node[below] {factor(i)};;
 	
-	\draw[dotted,-] (0,7) -- (13,7) node[right] {Maximal y-coordinate};
-	\draw[dotted,-] (0,2) -- (13,2) node[right] {Minimal y-coordinate};
+	\draw[dotted,-] (0,7) -- (13,7) node[right] {topmost element};
+	\draw[dotted,-] (0,2) -- (13,2) node[right] {bottommost element};
 	
 	\draw[|->] (6,0) -- (13,0) node[below] {Suffix starting at $\factor(i)$};
 	
@@ -947,40 +1055,38 @@ if the permutation starts with ascent (respectively descent) elements then the m
 		
 	
 	\caption{
-		The maximal element of the suffix starting at  $\factor(i)$ (represented by the blue line)
-		is the left most element of $\factor(i-1)$ (represented by the the black dot).
-		$\LM{\ppattern}{\ptext}{i}{j}$ is the minimal value of the matching of the maximal element (the black dot) in all the matchings of the suffix starting at $\LMEi(\factor(i))$ (the blue dot) in $\pi[j:]$.
+		The topmost element of the suffix starting at  $\factor(i)$ 
+		is the leftmost element of $\factor(i-1)$ (represented by the grey dot).
+		$\LM{\ppattern}{\ptext}{i}{j}$ is the smallest value of the matching of the topmost element (the grey dot) in all the occurrences of the suffix starting at $\LMEi(\factor(i))$ in $\pi[j:]$.
 	}	
 	\label{fig:where to find the max}
 \end{figure}
 
-We now define the set
+We define the set
 $\SET{\ppattern}{\ptext}{i}{j}$ 
 as the set of every subsequence $s$ of $\ptext[j:]$ that starts at $\ptext[j]$ and
-that is a matching of $\factor(i)$ $\factor(i-1)$ $\ldots$ $\factor(1)$ and .
-
-
-
+that is an occurrence of $\ppattern[\LMEi(\factor(i+1)):]$.
 
 \begin{lemma}
 \label{lemma:ts}
 Let $\ppattern$ be a permutation, 
 $\factor(i)$ be an ascent (respectively descent) factor,
 $s$ be a subsequence of $\pi$ such that $s \in \SET{\ppattern}{\ptext}{i}{j}$ and
-that minimizes (resp. maximizes) the match of the left most element of $\factor(i-1)$.
+that minimizes (resp. maximizes) the matching of the leftmost element of $\factor(i-1)$.
 For all subsequences 
 $s' \in \SET{\ppattern}{\ptext}{i}{j}$ and for all subsequences $t$ of $\ptext$, such that $t=t's'$, 
-if $t$ is a matching of $\ppattern[\LMEi(\factor(i+1)):]$ such that the left most element of $\factor(i)$ is matched to $\ptext[j]$ then the subsequence $t's$ is a matching of $\ppattern[\LMEi(\factor(i+1)):]$ such that the left most element of $\factor(i)$ is matched to $\ptext[j]$.
+if $t$ is an occurrence of $\ppattern[\LMEi(\factor(i+1)):]$ such that the leftmost element of $\factor(i)$ is matched to $\ptext[j]$ then the subsequence $t's$ is an occurrence of $\ppattern[\LMEi(\factor(i+1)):]$ such that the leftmost element of $\factor(i)$ is matched to $\ptext[j]$.
 \end{lemma}
 
-This lemma states that given any matching of $\factor(i+1)$ $\factor(i)$ $\ldots$ $\factor(1)$,
+This lemma states that given any occurrence of $\factor(i+1)$ $\factor(i)$ $\ldots$ $\factor(1)$,
 where $\factor(i)$ is an ascent (resp. descent) factor,
-we can replace the part of the match that match $\factor(i)$ $\ldots$ $\factor(1)$ by any match
-that minimise (resp. maximise) the left most element of $\factor(i-1)$. Indeed the left most element of $\factor(i-1)$ is the maximal (resp. minimal) element of  $\factor(i)$ $\ldots$ $\factor(1)$ (see figure \ref{fig:minimise the max}). 
+we can replace the part of the occurrence where $\factor(i)$ $\ldots$ $\factor(1)$ occurs, by any occurrence
+that minimises (resp. maximises) the leftmost element of $\factor(i-1)$. Indeed the leftmost element of $\factor(i-1)$ is the topmost (resp. bottommost) element of  $\factor(i)$ $\ldots$ $\factor(1)$ (see Figure \ref{fig:where to find the max}). 
 
 \begin{proof}[of Lemma~\ref{lemma:ts}]
-	By definition $s$ is a matching of $\ppattern[\LMEi(\factor(i)):]$. To prove that $ts$ is an matching of $\ppattern[\LMEi(\factor(i+1)):]$ we need to prove that every element of t is larger than every element of $s$. If $ts'$ is a matching of $\ppattern[\LMEi(\factor(i+1)):]$ then every element of $t$ is larger than every element of $s'$. Moreover the maximal element of $s$ is smaller than  the maximal element of $s'$ so every element of $s$ is smaller than every element of $s'$ thus every element of $s$ is smaller than every element of $t$. We use a similar argument if $\factor(i)$ is a descent factor.
-	\qed
+Let us consider the case where $\factor(i)$ is an ascent factor.
+By definition $s$ is an occurrence of $\ppattern[\LMEi(\factor(i)):]$. To prove that $t's$ is an occurrence of $\ppattern[\LMEi(\factor(i+1)):]$ we need to prove that the elements of t' are above the elements of $s$. If $t's'$ is an occurrence of $\ppattern[\LMEi(\factor(i+1)):]$ then the elements of $t'$ are above the elements of $s'$. Moreover the topmost element of $s$ is below (or equal to) the topmost element of $s'$ thus the elements of $s$ are below the elements of $t$. We use a similar argument if $\factor(i)$ is a descent factor.
+\qed
 \end{proof}
 
 \begin{corollary}
@@ -989,49 +1095,47 @@ Let $\ppattern$ be a permutation,
 $\factor(i)$ be an ascent (respectively descent) factor
 and 
 $s$ be a subsequence of $\pi$ such that $s \in \SET{\ppattern}{\ptext}{i}{j}$ and
-that minimizes (resp. maximizes) the match of the left most element of $\factor(i-1)$.
+that minimizes (resp. maximizes) the matching of the leftmost element of $\factor(i-1)$.
 These following statements are equivalent :
 \begin{itemize}
-	\item There exists a 
-	matching of $\ppattern$ in $\ptext$ with the left most element of $\factor(i)$ is matched to $\ptext[j]$.
-	\item There exists a matching $t$ of $\sigma[:\LMEi(\factor(i))-1]$ in $\ptext[:j-1]$  such that $ts$ is a matching of $\ppattern$ in $\ptext$ with the left most element of $\factor(i)$ matched to $\ptext[j]$.
+	\item There exists an occurrence
+	 of $\ppattern$ in $\ptext$ where the leftmost element of $\factor(i)$ is matched to $\ptext[j]$.
+	\item There exists an occurrence $t$ of $\sigma[:\LMEi(\factor(i))-1]$ in $\ptext[:j-1]$  such that $ts$ is an occurrence of $\ppattern$ in $\ptext$ with the leftmost element of $\factor(i)$ is matched to $\ptext[j]$.
 \end{itemize}
 \end{corollary}
 
-This corollary takes a step further from the previous one, it states that if there is no matching using any match that maximise (resp. minimise) the left most element of $\factor(i-1)$ then there does not exist any matching at all. This is central to the algorithm because it allows to test only the matching that  maximise (resp. minimise) the left most element of $\factor(i-1)$ (see figure \ref{fig:minimise the max}).
+\begin{proof}[of Corollary~\ref{corollary:we can chose a matching}]
+This corollary takes a step further from the previous one, as it states that if there is no occurrence using any occurrence that maximises (resp. minimises) the leftmost element of $\factor(i-1)$ then there does not exist any occurrence at all. The backward direction is trivial and the forward direction is applying the Lemma~\ref{lemma:ts}. 
+\qed
+\end{proof}
 
-\begin{figure}[t] 
-	\centering	
-	\begin{tikzpicture}[scale=.3]
-	
-	\fill[blue!40!white] (0,9) rectangle (3,7);
-	\fill[blue!40!white] (4,0) rectangle (6,3);
-	\fill[green!40!white] (6,3) rectangle (12,7);
-	
-	
-	
-	%		\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
-	%		\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
-	%			\draw[dotted] (0,\i) -- (9, \i);
-	%			\draw[dotted] (\i,0) -- (\i, 9);
-	%		}
-	\draw[red,dashed] (6,3) rectangle (12,6);
-	
-	\end{tikzpicture}
-	
-	\caption{In a matching, we can replace the green area by the red dashed area.}
-	\label{fig:minimise the max}
-\end{figure}
+This corollary is central to the algorithm because it allows to test only the occurrence that  maximises (resp. minimises) the leftmost element of $\factor(i-1)$.
+
+%\begin{figure}[t] 
+%	\centering	
+%	\begin{tikzpicture}[scale=.3]
+%	
+%	\draw (0,9) rectangle (3,7);
+%	\draw (4,0) rectangle (6,3);
+%	\draw (6,3) rectangle (12,7);
+%	\draw [pattern=north east lines] (6,3) rectangle (12,6);
+%
+%	\end{tikzpicture}
+%
+%	
+%	\caption{In an occurrence, we can replace the rightmost rectangle by the dashed rectangle.}
+%	\label{fig:minimise the max}
+%\end{figure}
 
 
 
 % This corollary allows us to way to choose a match. Indeed if one does not find a match such that a well chosen subsequence is a suffix of the pattern then there is no match at all.
 
 \begin{proposition}
-	\label{Proposition:sigma avoids 213 and 231}
-	Let $\sigma \in \AV_k(213,231)$ and $\pi \in S_n$.
-	\\ One can decide in $O(max(kn^2,n^2\log(\log(n)))$ time
-	and $O(kn^2)$ space if $\pi$ matches $\sigma$.
+\label{Proposition:sigma avoids 213 and 231}
+Let $\sigma$ be a wedge permutation and $\pi \in S_n$.
+One can decide in $O(max(kn^2,n^2\log(\log(n)))$ time
+and $O(kn^2)$ space if $\pi$ has an occurrence $\sigma$.
 \end{proposition}
 
 
@@ -1040,37 +1144,41 @@ This corollary takes a step further from the previous one, it states that if the
 We first introduce a set of values needed to our proof.
 Let $LIS_{\ptext}(i,j,bound)$ (resp. $LDS_{\ptext}(i,j,bound)$) be the longest increasing 
 (resp. decreasing) sequence in $\ptext[i:j]$ starting at $i$,
-with every element of this sequence
+with every element of this sequence being
 smaller (resp. bigger) than $bound$.
 $LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in 
 $O(n^2\log(\log(n)))$ time (see \cite{Bespamyatnikh00enumeratinglongest}).
-As stated before, those values allow us to find a matching of a factor.
+As stated before, those values allow us to find an occurrence of a factor.
 
-Now consider the following set of values (see figure \ref{fig: algo 1 fig}) :
+Given a factor $i$ of $\sigma$ and a position j of $\pi$,
+we want the optimal value of the matching of $\LMEi(\factor(i-1))$
+in any occurrence of  $\sigma[\LMEi(\factor(i)):]$
+in $\pi[j:]$ starting at $\pi[j]$ (see Figure \ref{fig: algo 1 fig}),
+which we denote as:
+
+
 $$
 \LM{\ppattern}{\ptext}{i}{j} =
 \begin{cases}
 
-	\text{The match of $\LMEi(\factor(i-1))$ } 
+	\text{The minimal value of the matching } 
 		& \text{If $\factor(i)$ is} \\
-	\text{ in a matching of $\sigma[\LMEi(\factor(i)):]$ in $\pi[j:]$} 
+	\text{ of $\LMEi(\factor(i-1))$ } 
 		& \text{an ascent factor} \\	
-	\text{ and that minimizes the match } & \\
-	\text{ $\LMEi(\factor(i-1))$} & \\
-	\text{ and starts with $\ptext[j]$} & \\
-	\text{Or $\infty$ if no such matching exists} & \text{} \\ 
+	\text{ in any occurrence of  $\sigma[\LMEi(\factor(i)):]$ } & \\
+	\text{ in $\pi[j:]$ strarting at $\pi[j]$} & \\
+	\text{Or $\infty$ if no occurrence exists} & \text{} \\ 
 		
 	&\\
 
 	
-	\text{The match of $\LMEi(\factor(i-1))$ } 
-	& \text{If $\factor(i)$ is} \\
-	\text{ in a matching of $\sigma[\LMEi(\factor(i)):]$ in $\pi[j:]$} 
-	& \text{a descent factor} \\	
-	\text{ and that maximizes the match } & \\
-	\text{ $\LMEi(\factor(i-1))$} & \\
-	\text{ and starts with $\ptext[j]$} & \\
-	\text{Or $\infty$ if no such matching exists} & \text{} \\ 
+	\text{The maximal value of the matching } 
+		& \text{If $\factor(i)$ is} \\
+	\text{ of $\LMEi(\factor(i-1))$ } 
+		& \text{an descent factor} \\	
+	\text{ in any occurrence of  $\sigma[\LMEi(\factor(i)):]$ } & \\
+	\text{ in $\pi[j:]$ strarting at $\pi[j]$} & \\
+	\text{Or $0$ if no occurrence exists} & \text{} \\ 
 
 	
 \end{cases}
@@ -1080,8 +1188,8 @@ $$
 	\centering	
 	\begin{tikzpicture}[scale=.3]
 	
-	\fill[red!40!white] (2,3) rectangle (5.5,5);
-	\fill[blue!40!white] (6,10) rectangle (12,5);
+	\draw[pattern=north east lines] (2,3) rectangle (5.5,5);
+	\draw[pattern=grid] (6,10) rectangle (12,5);
 
 	\draw[dotted,-] (0,10) -- (13,10) node[right] {$\LM{\ppattern}{\ptext}{i}{j}$};
 	
@@ -1098,14 +1206,14 @@ $$
 	
 	
 	\caption{
-		When looking for a matching of $\sigma[\LMEi(\factor(i)):]$ (red and blue areas) starting at $\pi[j:]$, (1) the red area is a matching of $\factor(i)$ ie. if and only if
-		its contains an increasing subsequence of size equal or bigger than $|\factor(i)|$.
-		(2) the red and blue areas have to be "compatible" (their x-coordinates and y-coordinates have to be disjoint and the red area has to be before the blue area in the x-coordinate and y-coordinate).
-		$\AF{\ppattern}{\ptext}{i}{j}$ is the set of every top y-coordinate of every blue area which is compatible. $\LM{\ppattern}{\ptext}{i}{j}$ is the minimal value of $\AF{\ppattern}{\ptext}{i}{j}$ if he set is not void.}	
+		When looking for an occurrence of $\sigma[\LMEi(\factor(i)):]$ (represented by the dashed and gridded rectangle) starting at $\pi[j:]$, (1) the dashed rectangle is an occurrence of $\factor(i)$ if and only if
+		it contains an increasing subsequence of size equal or bigger than $|\factor(i)|$.
+		(2) the dashed and gridded rectangles have to be "compatible": their x-coordinates and y-coordinates have to be disjoint and the dashed rectangle has to be on the left and below the gridded rectangle.
+		$\AF{\ppattern}{\ptext}{i}{j}$ is the set of y-coordinates of every top edge of the gridded rectangle which is compatible. $\LM{\ppattern}{\ptext}{i}{j}$ is the minimal element of $\AF{\ppattern}{\ptext}{i}{j}$ if the set is not empty.}	
 	\label{fig: algo 1 fig}	
 \end{figure}
 
-Clearly there exists a matching of $\ppattern$ in $\ptext$ if and only if
+There exists an occurrence of $\ppattern$ in $\ptext$ if and only if
 there exists a $1 \leq i \leq n$ such that $LM(n_{factors},i)$ $\neq$ $0$ and $LM(n_{factors},i)\neq \infty$
 with $n_{factors}$ the number of factor in $\ppattern$.
 We show how to compute recursively those values.
@@ -1116,19 +1224,19 @@ We show how to compute recursively those values.
 &=
 \begin{cases}
 		\min_{j<j'}\{\infty\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } 
-			& \text{If $\factor(i)$ is}  \\
+			& \text{If $\factor(1)$ is}  \\
 		\text{ $|\factor(1)| \leq LIS(j,j',\ptext[j']+1)  $}\}
 			&\text{ an ascent factor} \\
 		&\\
 		\max_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } 
-			& \text{If $\factor(i)$ is}  \\
+			& \text{If $\factor(1)$ is}  \\
 		\text{ $|\factor(1)| \leq LDS(j,j',\ptext[j']-1) $}\}
 			&\text{ a descent factor}\\
 \end{cases}
 \\
 \intertext{
 In the base case,
-one is looking for a matching of the first factor.
+one is looking for an occurrence of the first factor.
 }
 \\
 \intertext{\textbf{STEP :}}
@@ -1142,9 +1250,10 @@ one is looking for a matching of the first factor.
 \end{cases}
 \end{align*}
 where $\AF{\ppattern}{\ptext}{i}{j}$ and $\DF{\ppattern}{\ptext}{i}{j}$ are the sets 
-of elements matching the left most element of $\factor(i-1)$ in a match of $\sigma[\LMEi(\factor(i)):]$ starting at $\ptext[j:]$.
-Suppose that $\factor(i)$ is an ascent (resp descent) factor, index $j'$ and matching $t$ exists if and only if
-$\ptext[j:j']$ contains a matching of $\factor(i)$ "compatibles" with a matching in $\ptext[j'+1:]$ of $\sigma[\LMEi(\factor(i-1)):]$. It is enough to assure that every element of the matching of $\factor(i)$ are smaller (resp. bigger) than the element of the matching of $\sigma[\LMEi(\factor(i-1)):]$. 
+of elements matching the leftmost element of $\factor(i-1)$ in an occurrence of $\sigma[\LMEi(\factor(i)):]$ starting at $\ptext[j:]$.
+$\LM{\ppattern}{\ptext}{i}{j}$  has a solution
+if and only if
+$\ptext[j:j']$ contains an occurrence of $\factor(i)$ "compatibles" with an occurrence in $\ptext[j'+1:]$ of $\sigma[\LMEi(\factor(i-1)):]$. It is enough to ensure that every element of the occurrence of $\factor(i)$ is below (resp. above) the elements of the occurrence of $\sigma[\LMEi(\factor(i-1)):]$. 
 
 Thus we can compute $\AF{\ppattern}{\ptext}{i}{j}$ and $\DF{\ppattern}{\ptext}{i}{j}$ as follows:
 \begin{align*}
@@ -1163,58 +1272,64 @@ Thus we can compute $\AF{\ppattern}{\ptext}{i}{j}$ and $\DF{\ppattern}{\ptext}{i
 \text{$|\factor(i)| \leq LDS_{\ptext}(j,j',\LM{\ppattern}{\ptext}{i-1}{j'+1})\}$}
 \end{align*}
 
-The number of factor is bound by $k$.
+The number of factors is bound by $k$.
 Every instance of $LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in $O(n^2\log(\log(n))$.
-There are $n$ base cases that can be computed $O(n)$ time, thus computing every base cases
+There are $n$ base cases that can be computed in $O(n)$ time, thus computing every base case
 takes $O(n^2)$ time.
-There are $kn$ different instance of $\AFa$ and each one of them take $O(n)$ time to compute, 
+There are $kn$ different instances of $\AFa$ and each one of them takes $O(n)$ time to compute, 
 thus computing every instance of $\AFa$ takes $O(kn^2)$ time.
-There are $kn$ different instance of $\LMa$ and each one of them take $O(n)$, because the size of an $\AFa$
-is bounded by $n$, thus computing every $\LMa$ takes $O(kn^2)$ time.
-Thus computing all the values takes $O(max(kn^2,n^2\log(\log(n)))$.
+There are $kn$ different instances of $\LMa$ and each one of them takes $O(n)$, 
+thus computing every $\LMa$ takes $O(kn^2)$ time.
+Thus computing all the values takes $O(max(kn^2,n^2\log(\log(n)))$ time.
 Every value takes $O(1)$ space, thus the whole problem takes $O(kn^2)$ space.
 \qed
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{$(213,231)$-avoiding bivincular patterns}
+\section{Bivincular wedge permutation patterns}
 	\label{section:bivincular}
 
-This section is devoted to the pattern matching problem with $(213,231)$-avoiding bivincular pattern.
+This section is devoted to the pattern matching problem with bivincular wedge permutation pattern.
 Recall that a bivincular pattern generalises a permutation pattern by
-being able to force elements to be consecutive in value or in position.
-Hence,  bivincular pattern is stronger in constraint than permutation pattern, intuitively we can not use the previous algorithm.
-As in a $(213,231)$-avoiding permutation, we can describe structural property of a $(213,231)$-avoiding bivincular pattern.
+being able to force elements to be consecutive in value or/and in position.
+Hence,  bivincular pattern adds more restrictions on what the occurrence must look like.
+As a consequence it is easier to avoid a bivincular permutation pattern than
+the same permutation pattern.
+Intuitively we cannot use the previous algorithm, as the restrictions on position and value are not managed.
+As in a wedge permutation, we can describe the structural property of a  bivincular wedge permutation pattern.
 
 \begin{lemma}
 \label{lemma:ascentDescentAscent}
-Given $\ppattern$ a $(213,231)$-avoiding bivincular pattern,
-If $\overline{\sigma[i]\sigma[j]}$ (this implies that $\sigma[j]=\sigma[i]+1$) and 
-if $\sigma[i]$ is an ascent (resp. decent) element and $\sigma[i]+1$ is an ascent 
+Given $\ppattern$ a bivincular wedge permutation pattern,
+if $\overline{m(m+1)}$ such that $\sigma[i]=m$ and $\sigma[j]=m+1$,
+if $\sigma[i]$ is an ascent (resp. decent) element and if $\sigma[i]+1$ is an ascent 
 (resp. decent) element then :  
 \begin{itemize}
 	\item $i<j$ (resp. $j>i$)
-	\item For every $l$, $i<l<j$ (resp. $j>l>i$), $\pi[l]$ is a descent (resp. ascent) element.    
+	\item For every $\ell$, $i<\ell<j$ (resp. $j>\ell>i$), $\sigma[\ell]$ is a descent (resp. ascent) element.    
 \end{itemize}
 \end{lemma}
 
-This lemma states that if two ascent (resp. decsent) elements
+This lemma states that if two ascent (resp. descent) elements
 need to be matched to consecutive elements in value then every element between those two elements (if any) is a descent (resp. ascent) element. 
 
 \begin{proof}[of Lemma~\ref{lemma:ascentDescentAscent}]
-	Suppose that there exists $l$, $i<l<j$,
-	such that $\ppattern[l]$ is ascent. Ascent elements are increasing  so $\sigma[i]<\sigma[l]<\sigma[j]$ which is in contradiction with $\sigma[j]=\sigma[i]+1$.
-	We use a similar argument if $\sigma[i]$ is a descent element
-	\qed
+The first statement is explained by the fact that ascent elements are increasing,
+as $\sigma[i]<\sigma[j]$ then
+$\sigma[i]$ is at the left of $\sigma[j]$ thus $i<j$. 
+Suppose that there exists $\ell$, $i<\ell<j$,
+such that $\ppattern[\ell]$ is ascent. Ascent elements are increasing  so $\sigma[i]<\sigma[\ell]<\sigma[j]$ which is in contradiction with $\sigma[j]=\sigma[i]+1$.
+We use a similar argument if $\sigma[i]$ is a descent element.
+\qed
 \end{proof}
 
 \begin{proposition}
 \label{Proposition:bivincular pattern}
-Let $\sigma$ be a $(213,231)$-avoiding bivincular of length $k$
-and $\pi \in S_n$.
+Let $\sigma$ be a bivincular wedge permutation pattern of length $k$
+and $\pi$ an $n$-sized permutation.
 One can decide in $O(kn^4)$ time
-and $O(kn^3)$ space if $\pi$ matches $\sigma$.
+and $O(kn^3)$ space if $\pi$ has an occurrence $\sigma$.
 \end{proposition}
 
 \begin{proof}
@@ -1222,10 +1337,10 @@ and $O(kn^3)$ space if $\pi$ matches $\sigma$.
 \begin{figure}[t] 
 	\centering	
 	\begin{tikzpicture}[scale=.3]
-	\fill[blue!40!white] (0,12) rectangle (1,11);
+	\draw[pattern=north east lines] (0,12) rectangle (1,11);
 	\draw[dotted,-] (0,10.5) -- (14,10.5) node[right] {$\ub$};
 
-	\fill[blue!40!white] (2,0) rectangle (3,1);
+	\draw[pattern=north east lines] (2,0) rectangle (3,1);
 	\draw[dotted,-] (0,1.5) -- (14,1.5) node[right] {$\lb$};
 	
 	\draw[fill=black] (3,1) circle (1mm) ;
@@ -1233,11 +1348,11 @@ and $O(kn^3)$ space if $\pi$ matches $\sigma$.
 	\draw[dotted,-] (3.5,12) -- (3.5,-1);
 	
 	% le reste du match
-	\fill[red!40!white] (5,8) rectangle (12,4);
+	\draw[pattern=grid] (5,8) rectangle (12,4);
 	\draw (5,4) -- (7.7,7);
 	
 	%point du bot
-	\draw[fill=black] (5,4) circle (1mm) node[above] {$\pi[l]$} ;
+	\draw[fill=black] (5,4) circle (1mm) node[above] {$\pi[\ell]$} ;
 	
 	\draw[thick,<->] (5,3.9) -- (5,1.5) ;	
 	\draw (5,2.7) node[right] {$\overline{(\sigma[i]-1)\sigma[i]}$};
@@ -1252,11 +1367,11 @@ and $O(kn^3)$ space if $\pi$ matches $\sigma$.
 
 	\end{tikzpicture}		
 	\begin{tikzpicture}[scale=.3]
-	\fill[blue!40!white] (0,12) rectangle (1,11);
+	\draw[pattern=north east lines] (0,12) rectangle (1,11);
 	\draw[dotted,-] (0,10.5) -- (14,10.5) node[right] {$\ub$};
 	
-	\fill[blue!40!white] (2,0) rectangle (5,4);
-	\draw[dotted,-] (0,4.5) -- (14,4.5) node[right] {$\lb=\pi[l]+1$};
+	\draw[pattern=north east lines] (2,0) rectangle (5,4);
+	\draw[dotted,-] (0,4.5) -- (14,4.5) node[right] {$\lb=\pi[\ell]+1$};
 	
 	%\draw[fill=black] (3,1) circle (1mm) node[left] {$\pi[j]$};
 	
@@ -1264,14 +1379,14 @@ and $O(kn^3)$ space if $\pi$ matches $\sigma$.
 	
 	% le reste du match
 	%\draw[dashed,red] (5,8) rectangle (12,4);
-	\fill[red!40!white] (7,6) rectangle (12,8);
+	\draw[pattern=grid] (7,6) rectangle (12,8);
 	\draw (7,6) -- (7.7,7);
 	
 	
 	\draw[fill=black] (5,4) circle (1mm) ;
 	
 	%point du bot
-	\draw[fill=black] (7,6) circle (1mm) node[above] {$\pi[l']$};
+	\draw[fill=black] (7,6) circle (1mm) node[above] {$\pi[\ell']$};
 	
 
 	\draw[thick,<->] (7,5.9) -- (7,4.5) ;	
@@ -1287,27 +1402,31 @@ and $O(kn^3)$ space if $\pi$ matches $\sigma$.
 
 	\end{tikzpicture}	
 	
-	\caption{When matching an ascent element, the value of $ub$ does not change,
-		and the lb is equal to the last match plus one. Note that there is only ascent element before $\sigma[i']$}	
-	\label{fig:ub dont change}
+\caption{When solving $\PM{\sigma}{\ptext}{\lb}{\ub}{i}{j}$, with $\sigma[i]$ an ascent element, 
+the recursive calls of $\PM{*}{*}{*}{*}{*}{*}$ will have the same $\ub$ value,
+and the $\lb$ will be equal to the matching of $\pi[i]$ plus one. %Note that there is only ascent element before $\sigma[i']$
+}	
+\label{fig:ub dont change}
 \end{figure}
 
-We consider the following set of boolean :
-Given $\ppattern$ a $(213,231)$-avoiding bivincular pattern, and a text $\ptext \in \Av{n}{231,213}$,
+Given a lower bound $\lb$, a upper bound $\ub$, a position i of $\sigma$
+and a position $j$ of $\pi$, we want to know if
+there exists an occurrence of $\sigma[i:]$ in $\ptext[j:]$
+with every element of the occurrence is in $[\lb,\ub]$
+and starting at $\pi[j]$,
+which we denote as:
+
 $$
 \PM{\sigma}{\ptext}{\lb}{\ub}{i}{j}=
 \begin{cases}
-	true 	& \text{If $\ptext[j:]$ matches $\sigma[i:]$ }\\
-			& \text{with every element of the matching is in $[\lb,\ub]$}\\
-			& \text{and starting $\pi[j]$}\\
+	true 	& \text{If $\ptext[j:]$ has an occurrance of $\sigma[i:]$ }\\
+			& \text{with every element of the occurrence is in $[\lb,\ub]$}\\
+			& \text{and starting at $\pi[j]$}\\
 	false 	& otherwise\\
 \end{cases}
 $$
 
-The argument $\lb$ (respectively $\ub$) stands for 
-the match of the last ascent (resp. decsent) element matched
-plus (resp. minus) one.
-We now show how to compute recursively those boolean (see fig. \ref{fig:ub dont change}).
+We now show how to compute recursively those values (see Figure \ref{fig:ub dont change}).
 
 \noindent\textbf{BASE:} \\
 $$
@@ -1315,39 +1434,39 @@ $$
 \begin{cases}
 	true 	& \text{if $\ptext[j] \in [\lb,\ub ]$}\\
 			& \text{and if ${\ppattern[k]}_\lrcorner$ then $j=n$}\\
-			& \text{and if ${\ppattern[k]}^\urcorner$ then $\ptext[j]=\ub=k$}\\
+			& \text{and if ${\ppattern[k]}^\urcorner$ then $\ptext[j]=\ub=n$}\\
 			& \text{and if  $^\ulcorner{\ppattern[k]}$ then $\ptext[j]=\lb=1$ } \\
 			& \text{and if  $\overline{(\ppattern[k]-1)\ppattern[k] }$ then $\ptext[j]=\lb$ }  \\
-			& \text{and if  $\overline{(\ppattern[k]\ppattern[k]-1)}$ then $\ptext[j]=\ub$}  \\
+			& \text{and if  $\overline{(\ppattern[k]\ppattern[k]+1)}$ then $\ptext[j]=\ub$}  \\
 
 	false	& \text{otherwise} \\
 \end{cases}
 $$
 
-The base case finds an matching for the rightmost element of the pattern. If the last element does not have any restriction on positions and on values, then $\PM{\sigma}{\ptext}{\lb}{\ub}{k}{j}$ is true if and only if $\ppattern[k]$ is matched $\ptext[j]$. Which is true if $\ptext[j] \in [\lb,\ub]$. If ${\ppattern[k]}_\lrcorner$ then $\ppattern[k]$ must be matched to the right most element of $\pi$ thus $j$ must be the $n$. If ${\ppattern[k]}^\urcorner$ then $\ppattern[k]$ must be matched to the largest element which is $k$. If $^\ulcorner{\ppattern[k]}$ then $\ppattern[k]$ must be matched to the smallest element which is $1$. 
-If  $\overline{(\ppattern[k]-1)\ppattern[k] }$ then the matched element of $\ppattern[k]$ and $\ppattern[k]-1$ must be consecutive in value, by recursion the value of the matched element of $\ppattern[k]-1$ will be recorded in $\lb$ and by adding $1$ to it thus $\ppattern[k]$ must be matched to $\lb$. 
-If  $\overline{(\ppattern[k]\ppattern[k]-1)}$ then the matched element of $\ppattern[k]$ and $\ppattern[k]-1$ must be consecutive in value, by recursion the value of the matched element of $\ppattern[k]-1$ will be recorded in $\ub$ and by removing $1$ to it thus $\ppattern[k]$ must be matched to $\ub$. 
+The base case finds an occurrence for the rightmost element of the pattern. If the rightmost element does not have any restriction on positions and on values, then $\PM{\sigma}{\ptext}{\lb}{\ub}{k}{j}$ is true if and only if $\ppattern[k]$ is matched to $\ptext[j]$. This is true if $\ptext[j] \in [\lb,\ub]$. If ${\ppattern[k]}_\lrcorner$ then $\ppattern[k]$ must be matched to the rightmost element of $\pi$ thus $j$ must be $n$. If ${\ppattern[k]}^\urcorner$ then $\ppattern[k]$ must be matched to the topmost element which is $n$. If $^\ulcorner{\ppattern[k]}$ then $\ppattern[k]$ must be matched to the bottommost element which is $1$. 
+If  $\overline{(\ppattern[k]-1)\ppattern[k] }$ then the matching element of $\ppattern[k]$ and $\ppattern[k]-1$ must be consecutive in value, by recursion the value of the element matching $\ppattern[k]-1$ will be recorded in $\lb$ and by adding $1$ to it thus $\ppattern[k]$ must be matched to $\lb$. 
+If  $\overline{(\ppattern[k]\ppattern[k]+1)}$ then the element matching $\ppattern[k]$ and $\ppattern[k]+1$ must be consecutive in value, by recursion the value of the  element matching $\ppattern[k]+1$ will be recorded in $\ub$ and by removing $1$ to it thus $\ppattern[k]$ must be matched to $\ub$. 
 
 \noindent\textbf{STEP:} 
 
 
 We need to consider 3 cases for the problem $\PM{\sigma}{\ptext}{\lb}{\ub}{i}{j}$ :
 \begin{itemize}
-	\item If $\ptext[j] \notin [\lb,\ub]$ then :
+	\item If $\ptext[j] \notin [\lb,\ub]$ then:
 	$$
 	\PM{\sigma}{\ptext}{\lb}{\ub}{i}{j} = false
 	$$
 
-	which is immediate from the definition. If $\ptext[j] \notin [\lb,\ub]$ then it can not be part of a matching of  $\ppattern[i:]$ in $\ptext[i:]$ with every matched element in $[\lb,\ub]$.
+	which is immediate from the definition. If $\ptext[j] \notin [\lb,\ub]$ then it cannot be part of an occurrence of  $\ppattern[i:]$ in $\ptext[j:]$ with every element of the occurrence in $[\lb,\ub]$.
 	
 	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is an ascent element then :
 	$$
 	\PM{\sigma}{\ptext}{\lb}{\ub}{i}{j}=
 	\begin{cases}
-		\bigcup_{j<l} \PM{\sigma}{\ptext}{\ptext[j]+1}{\ub}{i+1}{l}
+		\bigcup_{\ell>j} \PM{\sigma}{\ptext}{\ptext[j]+1}{\ub}{i+1}{\ell}
 			& \text{if $\ppattern[i]$ is not underlined } \\
 			& \text{ and $\ppattern[i]$ is not overlined} \\
-		\bigcup_{j<l} \PM{\sigma}{\ptext}{\ptext[j]+1}{\ub}{i+1}{l}
+		\bigcup_{\ell>j} \PM{\sigma}{\ptext}{\ptext[j]+1}{\ub}{i+1}{\ell}
 			& \text{if $\ppattern[i]$ is not underlined } \\
 			& \text{ and $\overline{(\ppattern[i]-1)\ppattern[i]}$ or $^\ulcorner{\ppattern[i]}$}\\
 			& \text{ and $\ptext[j]=\lb$} \\
@@ -1362,23 +1481,26 @@ We need to consider 3 cases for the problem $\PM{\sigma}{\ptext}{\lb}{\ub}{i}{j}
 
 	\end{cases}
 	$$	
-	Remark that $\ptext[j]$ can be matched to $\ppattern[i]$ because $\ptext[j] \in [\lb,\ub]$.
-	Thus if $\ptext[j+1:]$ matches $\ppattern[i+1:]$  with every element of the matching in $[\ppattern[i]+1,\ub]$ then 
- 	$\ptext[j:]$ matches $\ppattern[i:]$. The last condition correspond 
- 	to know if there exists $l$, $j<l$ such that
-	$\PM{\sigma}{\ptext}{\ptext[j]+1}{\ub}{i+1}{l}$ is true.
-	The first case correspond to a matching without restriction on position and on value. The second case asks for the match of $\ppattern[i]-1$ and $\ppattern[i]$ to be consecutive in value, but the match of $\ppattern[i]-1$
-	is $lb-1$ thus we want $\ptext[j]=\lb$. The fourth case asks for the match of $\ppattern[i]$ and $\ppattern[i+1]$ to be consecutive in index, thus the match of $\ppattern[i+1]$ must be $j+1$. The third case is an union of the second and fourth case. Note that if $\pi[j]$ is an ascent element we can not have the condition that the match of $\ppattern[i]$ and $\ppattern[i]+1$ have to consecutive in value.
+	Remark that $\ppattern[i]$  can be matched to $\pi[i]$ because $\ptext[j] \in [\lb,\ub]$.
+	Thus if $\ptext[j+1:]$ has an occurrence of $\ppattern[i+1:]$  with every element of the occurrence in $[\pi[i]+1,\ub]$ then 
+ 	$\ptext[j:]$ has an occurrence $\ppattern[i:]$. The last condition corresponds 
+ 	to know if there exists $\ell$, $j<\ell$ such that
+	$\PM{\sigma}{\ptext}{\ptext[j]+1}{\ub}{i+1}{\ell}$ is true.
+	The first case corresponds to an occurrence without restriction on position and on value. The second case asks for the matching of $\ppattern[i]-1$ and $\ppattern[i]$ to be consecutive in value, but the matching of $\ppattern[i]-1$
+	is $lb-1$ thus we want $\ptext[j]=\lb$. The fourth case asks for the matching of $\ppattern[i]$ and $\ppattern[i+1]$ to be consecutive in positions, thus the matching of $\ppattern[i+1]$ must be $\pi[j+1]$. The third case is a union of the second and fourth case. 
+	Note that we do not have to consider the case $\overline{\ppattern[i](\ppattern[i]+1)}$
+	as the element $(\ppattern[i]+1)$ is on the right of $\ppattern[i]$ and thus will
+	be taken care of later on.
 	
 	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is a descent element then :
 
 	$$
 	\PM{\sigma}{\ptext}{\lb}{\ub}{i}{j}=
 	\begin{cases}
-			\bigcup_{j<l} \PM{\sigma}{\ptext}{\lb}{\ptext[j]-1}{i+1}{l}
+			\bigcup_{\ell>j} \PM{\sigma}{\ptext}{\lb}{\ptext[j]-1}{i+1}{\ell}
 				& \text{if $\ppattern[i]$ is not underlined } \\
 				& \text{ and $\ppattern[i]$ is not overlined} \\
-			\bigcup_{j<l} \PM{\sigma}{\ptext}{\lb}{\ptext[j]-1}{i+1}{l}
+			\bigcup_{\ell>j} \PM{\sigma}{\ptext}{\lb}{\ptext[j]-1}{i+1}{\ell}
 				& \text{if $\ppattern[i]$ is not underlined } \\
 				& \text{ and $\overline{\ppattern[i](\ppattern[i]+1)}$ or ${\ppattern[i]}^\urcorner$}\\
 				& \text{ and $\ptext[j]=\ub$} \\
@@ -1396,48 +1518,48 @@ We need to consider 3 cases for the problem $\PM{\sigma}{\ptext}{\lb}{\ub}{i}{j}
 
 \end{itemize}
 
-Clearly if $\bigcup_{0<j} \PM{\sigma}{\ptext}{1}{n}{1}{j}$ is true then $\pi$ matches $\sigma$. We now discuss the position and value constraints.
+Clearly if $\bigcup_{0<j} \PM{\sigma}{\ptext}{1}{n}{1}{j}$ is true then $\pi$ has an occurrence $\sigma$. We now discuss the position and value constraints.
 \paragraph{Position Constraint.} There are 3 types of position constraints that can be added by underlined elements.
 \begin{itemize}
-	\item If $_\llcorner{\sigma[1]}$ then the leftmost element of $\sigma$  must be matched to the leftmost element of $\pi$ ($\ppattern[1]$ is matched to $\ptext[1]$ on a matching of $\ppattern$ in $\ptext$). This constraint is satisfied by requiring that the matching starts at the left most element of $\ptext$ : if  $\PM{\sigma}{\ptext}{1}{n}{1}{1}$ is true.
+	\item If $_\llcorner{\sigma[1]}$ then the leftmost element of $\sigma$  must be matched to the leftmost element of $\pi$ ($\ppattern[1]$ is matched to $\ptext[1]$ on a occurrence of $\ppattern$ in $\ptext$). This constraint is satisfied by requiring that the occurrence starts at the leftmost element of $\ptext$ : if  $\PM{\sigma}{\ptext}{1}{n}{1}{1}$ is true.
 	
-	\item If ${\ppattern[k]}_\lrcorner$ then the rightmost element $\sigma$ must be matched the rightmost element of $\pi$ ($\ppattern[k]$ is matched to $\ptext[n]$ on a matching of $\ppattern$ in $\ptext$). This constraint is checked in the base case.
+	\item If ${\ppattern[k]}_\lrcorner$ then the rightmost element $\sigma$ must be matched the rightmost element of $\pi$ ($\ppattern[k]$ is matched to $\ptext[n]$ on a occurrence of $\ppattern$ in $\ptext$). This constraint is checked in the base case.
 
-	\item If $\underline{\ppattern[i]\ppattern[i+1]}$ then the index of the matched elements of $\ppattern[i]$ and $\ppattern[i+1]$ must be consecutive. In other word, if $\ppattern[i]$ is matched to $\ptext[j]$ then $\ppattern[i+1]$ must be matched to $\ptext[j+1]$. We assure this restriction by recursion by requiring that the matching of $\ppattern[i+1:]$ to start at index $j+1$ (see figure $\ref{fig:ub dont change}$).
+	\item If $\underline{\ppattern[i]\ppattern[i+1]}$ then the positions of the element matching $\ppattern[i]$ and $\ppattern[i+1]$ must be consecutive. In other words, if $\ppattern[i]$ is matched to $\ptext[j]$ then $\ppattern[i+1]$ must be matched to $\ptext[j+1]$. We ensure this restriction by recursion by requiring that the matching of $\ppattern[i+1:]$ starts at position $j+1$ (see Figure $\ref{fig:ub dont change}$).
 \end{itemize}
 
 \paragraph{Value Constraint.} There are 3 types of position constraints that can be added by overlined elements.
 \begin{itemize}
-	\item If $^\ulcorner{\sigma[i]}$ (and thus $\sigma[i]=1$) then the minimal value of $\ppattern$ must be matched to the minimal value of $\ptext$.
+	\item If $^\ulcorner{\sigma[i]}$ (and thus $\sigma[i]=1$) then the bottommost element of $\ppattern$ must be matched to the bottommost element of $\ptext$.
 	\begin{itemize}
 
 		\item If $\sigma[i]$ is an ascent element, then remark that 
 		every problem 
-		$\PM{\sigma}{\ptext}{\lb}{*}{i}{*}$ is true if $\sigma[i]$ is matched to element with value $\lb$ (by recursion) thus it is enough to require that $\lb=1$.
-		Now remark that $\sigma[i]$ is the leftmost ascent element, indeed if not, then there exists an ascent element $\sigma[i']$, $i'<i$ and by definition $\sigma[i']<\sigma[i]$ which is not possible as $\sigma[i]$ must be the minimal element. 
+		$\PM{\sigma}{\ptext}{\lb}{*}{i}{*}$ is true if $\sigma[i]$ is matched to the element with value $\lb$ (by recursion) thus it is enough to require that $\lb=1$.
+		Now remark that $\sigma[i]$ is the leftmost ascent element, indeed if not, then there exists an ascent element $\sigma[i']$, $i'<i$ and by definition $\sigma[i']<\sigma[i]$ which is not possible as $\sigma[i]$ must be the bottommost element. 
 		As a consequence $\sigma[1]$, $\ldots$, $\sigma[i-1]$ are descent elements.
-		Moreover the recursive call from a descent element does not modified the lower bound
-		thus for every $\PM{\sigma}{\ptext}{\lb}{*}{i}{*}$, $\lb=1$ (see figure $\ref{fig:ub dont change}$). 			
+		Moreover the recursive calls from a descent element do not change the lower bound
+		thus for every $\PM{\sigma}{\ptext}{\lb}{*}{i}{*}$, $\lb=1$ (see Figure $\ref{fig:ub dont change}$). 			
 
-		\item If $\sigma[i]$ is a descent element then $i=k$ ($\sigma[i]$ is the right most element). Thus every $\PM{\sigma}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ is matched to $1$.
+		\item If $\sigma[i]$ is a descent element then $i=k$ ($\sigma[i]$ is the rightmost element). Thus every $\PM{\sigma}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ is matched to $1$.
 
 	\end{itemize}
 
 
 
 
-	\item If ${\ppattern[i]}^\urcorner$ (and thus $\sigma[i]=k$) then the maximal value of $\ppattern$ must be matched to the maximal value of $\ptext$.
+	\item If ${\ppattern[i]}^\urcorner$ (and thus $\sigma[i]=k$) then the topmost element of $\ppattern$ must be matched to the topmost element of $\ptext$.
 	\begin{itemize}
 
 		\item If $\sigma[i]$ is an descent element, then remark that 
 		every recursive call \\ $\PM{\sigma}{\ptext}{*}{\ub}{i}{*}$ is true if $\sigma[i]$ is matched to element with value $\ub$ (by recursion) thus it is enough to require that $\ub=n_{\ptext}$.
-		Now remark that $\sigma[i]$ is the leftmost descent element, indeed if not, then there exists an descent element $\sigma[i']$, $i'<i$ and by definition $\sigma[i']>\sigma[i]$ which is not possible as $\sigma[i]$ must be the maximal element.
+		Now remark that $\sigma[i]$ is the leftmost descent element, indeed if not, then there exists an descent element $\sigma[i']$, $i'<i$ and by definition $\sigma[i']>\sigma[i]$ which is not possible as $\sigma[i]$ must be the topmost element.
 		As a consequence $\sigma[1]$, $\ldots$, $\sigma[i-1]$ are ascent elements.
-		Moreover the recursive call from a ascent element does not modified the upper bound
-		thus for every $\PM{\sigma}{\ptext}{*}{\ub}{i}{*}$, $\ub=n$ (see figure $\ref{fig:ub dont change}$. 	
+		Moreover the recursive calls from a ascent element do not change the upper bound
+		thus for every $\PM{\sigma}{\ptext}{*}{\ub}{i}{*}$, $\ub=n$ (see Figure $\ref{fig:ub dont change})$. 	
 		
 		
-		\item If $\sigma[i]$ is an ascent element then $\sigma[i]$ then $i=k$ ($\sigma[i]$ is the right most element). Thus every $\PM{\sigma}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ is matched to $n_{\ptext}$.
+		\item If $\sigma[i]$ is an ascent element then $i=k$ ($\sigma[i]$ is the rightmost element). Thus every $\PM{\sigma}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ is matched to $n_{\ptext}$.
 
 	\end{itemize}
 
@@ -1447,17 +1569,17 @@ Clearly if $\bigcup_{0<j} \PM{\sigma}{\ptext}{1}{n}{1}{j}$ is true then $\pi$ ma
 
 		\begin{itemize}
 
-			\item The case $\ppattern[i]$ is a descent element, $\ppattern[i']$ is an ascent element and $i<i'$ (remark that this case is equivalent to the case $\ppattern[i]$ is an ascent element, $\ppattern[i']$ is a descent element and $i'<i$) is not possible. 
-			Indeed $\ppattern[i]$ is the maximal element of $\ppattern[i:]$ thus $\ppattern[i] > \ppattern[i']$ which is in contradiction with 
+			\item The case $\ppattern[i]$ is a descent element, $\ppattern[i']$ is an ascent element and $i<i'$ (remark that this case is equivalent to the case where  $\ppattern[i]$ is an ascent element, $\ppattern[i']$ is a descent element and $i'<i$) is not possible. 
+			Indeed $\ppattern[i]$ is the topmost element of $\ppattern[i:]$ thus $\ppattern[i] > \ppattern[i']$ which is in contradiction with 
 			$\ppattern[i']=\ppattern[i]+1$. 
 			
-			\item If $\ppattern[i]$ is an ascent element, $\ppattern[i']$ is a descent element and $i<i'$ (remark that this case is symmetric to the case $\ppattern[i]$ is a descent element, $\ppattern[i']$ is an ascent element and $i'<i$), then
+			\item If $\ppattern[i]$ is an ascent element, $\ppattern[i']$ is a descent element and $i<i'$ (remark that this case is symmetric to the case where $\ppattern[i]$ is a descent element, $\ppattern[i']$ is an ascent element and $i'<i$), then
 			remark that every recursive call
 			$\PM{\sigma}{\ptext}{\lb}{*}{i'}{*}$ is true if $\sigma[i']$ is matched to the element with $\lb$ (by recursion) thus it is enough to require that $\lb=\ptext[j]+1$.
 			Now remark that
-			$\ppattern[i]$ is the right most ascent element and $\ppattern[i']$ is the right most element (or $\ppattern[i'] \neq \ppattern[i]+1$). 
-			As a consequence $\sigma[i+1]$, $\sigma[i+2]$, $\ldots$, $\sigma[i'-1]$ are descent elements. Moreover the recursive call from a descent element does not modified the lower bound and $\PM{\sigma}{\ptext}{\lb}{*}{i}{*}$ will put the lower bound to $\ptext[j]+1$
-			thus for every $\PM{\sigma}{\ptext}{\lb}{*}{i'}{*}$, $\lb=\ptext[j]+1$ (see figure $\ref{fig:ub dont change}$. 	
+			$\ppattern[i]$ is the rightmost ascent element and $\ppattern[i']$ is the rightmost element (or $\ppattern[i'] \neq \ppattern[i]+1$). 
+			As a consequence $\sigma[i+1]$, $\sigma[i+2]$, $\ldots$, $\sigma[i'-1]$ are descent elements. Moreover the recursive calls from a descent element do not change the lower bound and $\PM{\sigma}{\ptext}{\lb}{*}{i}{*}$ will put the lower bound to $\ptext[j]+1$
+			thus for every $\PM{\sigma}{\ptext}{\lb}{*}{i'}{*}$, $\lb=\ptext[j]+1$ (see Figure $\ref{fig:ub dont change}$). 	
 			
 			\item If $\ppattern[i]$ is an ascent element and $\ppattern[i']$ is an ascent element then
 			first remark that every recursive call
@@ -1465,7 +1587,7 @@ Clearly if $\bigcup_{0<j} \PM{\sigma}{\ptext}{1}{n}{1}{j}$ is true then $\pi$ ma
 			Now remark that
 
 			$i<i'$ and there is no  ascent element between $\ppattern[i]$ and $\ppattern[i']$ (lemma \ref{lemma:ascentDescentAscent}), 
-			As a consequence $\sigma[i+1]$, $\sigma[i+2]$, $\ldots$, $\sigma[i'-1]$ are descent elements.  Moreover the recursive call from a descent element does not modified the lower bound and $\PM{\sigma}{\ptext}{\lb}{*}{i}{*}$ will put the lower bound to $\ptext[j]+1$ thus for every $\PM{\sigma}{\ptext}{\lb}{*}{i'}{*}$, $\lb=\ptext[j]+1$ (see figure $\ref{fig:ub dont change}$.
+			As a consequence $\sigma[i+1]$, $\sigma[i+2]$, $\ldots$, $\sigma[i'-1]$ are descent elements.  Moreover the recursive calls from a descent element do not change the lower bound and $\PM{\sigma}{\ptext}{\lb}{*}{i}{*}$ will put the lower bound to $\ptext[j]+1$ thus for every $\PM{\sigma}{\ptext}{\lb}{*}{i'}{*}$, $\lb=\ptext[j]+1$ (see Figure $\ref{fig:ub dont change}$).
 		\end{itemize}
 \end{itemize}
 
@@ -1478,45 +1600,78 @@ Each case take $O(1)$ space, thus we need $O(kn^3)$ space.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Computing the longest $(213,231)$-avoiding pattern}
+\section{Computing the longest wedge permutation pattern}
 \label{section:LCS}
 
-This section is focused on a problem related to the pattern matching problem, finding the longest $(213,231)$-avoiding subsequences in permutations:
-Given a set of permutations, find a longest $(213,231)$-avoiding that can be matched
-by each input permutation.
-This problem is know to be NP-Hard for an arbitrary number of permutations and we do not hope it to be solvable in polynomial time even with the constraint of the subsequence must avoid $(213,231)$. Thus we focus on the cases where only one or two permutations are given in input.
+This section is focused on a problem related to the pattern matching problem, finding the longest wedge permutation occurring in permutations:
+Given a set of permutations, find a longest wedge permutation that occurs in
+each input permutations.
+This problem is known to be NP-Hard for an arbitrary number of permutations and we do not hope it to be solvable in polynomial time even with the constraint that the subsequence must avoid $(213,231)$, as for a fixed number of permutations
+(in our case, we have two permutations) the number of permutation appear in the exponent of the complexity of the algorithm.
+Thus we focus on the cases where only one or two permutations are given in input.
+
+Conveniently, we say that a subsequence is
+a wedge subsequence if and only if the permutation represented by the subsequence
+is a wedge permutation. 
+
 We start with the easiest case where we are given just one input permutation.
 We need the set of descent elements and the set of ascent elements.
 $A(\pi) = \{i | \text{$\pi[i]$ is an ascent element} \} \cup \{n\}$ and
-$D(\pi) = \{i | \text{$\pi[i]$ is a descent element} \cup \{n\}$.\\
+$D(\pi) = \{i | \text{$\pi[i]$ is a descent element} \} \cup \{n\}$.\\
+
 
 \begin{proposition}
 \label{proposition:longestIncreasingSubsequence}
-If $s$ is a longest $(213,231)$-avoiding subsequence with last element at index 
-$f$ in $\pi$ then
-$A(\pi)$ is a longest increasing subsequence with last element at index $f$ and
-$D(\pi)$ is a longest decreasing subsequence with last element at index $f$.
+If $s_i$ is the longest increasing subsequence with last element at position $f$ in $\pi$
+and $s_d$ is the longest decreasing subsequence with last element at position $f$ in $\pi$
+then $s_i \cup s_d$ is a longest wedge subsequence with last element at position $f$ in $\pi$.
 \end{proposition}
 
-\begin{proof}[of Proposition~\ref{proposition:longestIncreasingSubsequence}]
-Let $s$ be a longest subsequence avoiding (213,231) with last element at index $f$ in $\pi$,
-suppose that $P(s)$ is not a longest increasing subsequence with last element at index $f$. Let $s_m$ be a longest increasing subsequence with last element $f$.
-Thus $|s_m|>|A(s)|$, clearly the sequence $s_m \cup D(s)$
-is $(213,231)$-avoiding and is longer than $s$, this is a contradiction.
-The same idea can be used to show that $D(\pi)$ is the longest decreasing subsequence.
-\qed
+\begin{proof}
+Let us first prove that we have a wedge subsequence.
+$s_i$ is an increasing subsequence with values below or equal $\pi[f]$ and
+$s_d$ is an decreasing subsequence with values above or equal $\pi[f]$,
+so $s_i \cup s_d$ is a wedge subsequence.
+Let us prove that this is a longest.
+Let $s$ be a wedge subsequence with its rightmost element at position $f$ in $\pi$ such
+that $|s|>|s_i \cup s_d|$,
+first note that $A(s)$ is also an increasing subsequence with its rightmost  at position $f$ in $\pi$
+and $D(s)$ is also an decreasing subsequence with its rightmost  at position $f$ in $\pi$,
+then as $|s|>|s_i \cup s_d|$ then either $|A(s)| > |s_i|$ or $|D(s)| > |s_d|$,
+which is in contradiction with the definition of $s_i$ and $s_d$. 
 \end{proof}
+
+%\begin{proposition}
+%\label{proposition:longestIncreasingSubsequence}
+%If $s$ is an occurrence of a  longest $(213,231)$-avoiding subsequence with last element at position 
+%$f$ in $\pi$ then
+%$A(s)$ is a longest increasing subsequence with last element at position $f$ and
+%$D(s)$ is a longest decreasing subsequence with last element at position $f$.
+%\end{proposition}
+%
+%\begin{proof}[of Proposition~\ref{proposition:longestIncreasingSubsequence}]
+%Let $s$ be a longest subsequence avoiding (213,231) with last element at position $f$ in $\pi$,
+%suppose that $A(s)$ is not a longest increasing subsequence with last element at position $f$. Let $s_m$ be a longest increasing subsequence with last element $f$.
+%Thus $|s_m|>|A(s)|$, clearly the sequence $s_m \cup D(s)$ is longer than $s$.
+%Moreover the sequence $s_m \cup D(s)$ avoid both $213$ and $231$ as  $s_m$ is an increasing
+%subsequence with value lower and equal than $\pi[f]$ and $D(s)$ is an decreasing subsequence
+%with value above or equal than $\pi[f]$.
+%In other words $s$ is not the longest subsequence avoiding (213,231) with last element at position $f$ in $\pi$. Which is a contradiction.
+%The same idea can be used to show that $D(\pi)$ is the longest decreasing subsequence.
+%\qed
+%\end{proof}
 
 \begin{proposition}
 \label{proposition:longest 2}
 Let $\pi$ be a permutation. One can compute
-the longest $(213,231)$-avoiding subsequence that can be matched in $\pi$
+the longest $(213,231)$-avoiding subsequence that can occur in $\pi$
 in $O(n\log(\log(n)))$ time and in $O(n)$ space.
 \end{proposition}
 
 \begin{proof}[of Proposition~\ref{proposition:longest 2}]
-The proposition \ref{proposition:longestIncreasingSubsequence} lead to an algorithm
-where one has to compute longest increasing and decreasing subsequence ending at every index. Then finding the maximal sum of longest increasing and decreasing subsequence ending at the same index.
+The Proposition \ref{proposition:longestIncreasingSubsequence} leads to an algorithm
+where one has to compute longest increasing and decreasing subsequence endings at every position possible. 
+Then finding the maximum sum of longest increasing and decreasing subsequence endings at the same position.
 Computing the longest increasing subsequence and the longest decreasing subsequence can be done in 
 $O(n\log(\log(n)))$ time and $O(n)$ space 
 (see \cite{Bespamyatnikh00enumeratinglongest}), 
@@ -1536,13 +1691,13 @@ in $O(|\pi_1|^3|\pi_2|^3)$ time and space.
 
 \begin{proof}
 Consider the following problem
-that computes the longest stripe common to $\pi_1$ and $\pi_2$:
+that computes the longest wedge subsequence common to $\pi_1$ and $\pi_2$:
 Given two permutations $\pi_1$ and $\pi_2$, we define
 $
 \LCS{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{i_1}{i_2}
 $
 \begin{center}
-= $\max$ \{$|s|$ $|$ $s$ can be matched $\pi_1[i_1:]$ with every element of the match in $[\lb_1,\ub_1]$ and $s$ can be matched $\pi_2[i_2:]$ with every element of the match in $[\lb_2,\ub_2]$ \}
+= $\max$ \{$|s|$ $|$ $s$ occurs $\pi_1[i_1:]$ with every element of the occurrence in $[\lb_1,\ub_1]$ and $s$ occurs $\pi_2[i_2:]$ with every element of the occurrence in $[\lb_2,\ub_2]$ \}
 \end{center}
 
 
@@ -1574,15 +1729,15 @@ $$
 
 with \\
 $
-\match{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{i_1}{i_2}=
+\match{\pi_1}{\lb_1}{\ub_1}{\pi_2}{\lb_2}{\ub_2}{i_1}{i_2}=\max
 \begin{cases}
-1+\LCS{\pi_1}{\pi_1[i_1]+1}{\ub_1}{\pi_2}{\pi_2[i_2]+1}{\ub_2}{i_1}{i_2+1}
+1+\LCS{\pi_1}{\pi_1[i_1]+1}{\ub_1}{\pi_2}{\pi_2[i_2]+1}{\ub_2}{i_1+1}{i_2+1}
 	& \text{$\pi_1[i_1]<\lb_1$ } \\
 	& \text{and $\pi_2[i_2]<\lb_2$} \\
 
 &\\
 
-1+\LCS{\pi_1}{\lb_1}{\pi_1[i_1]-1}{\pi_2}{\lb_2}{\pi_2[i_2]-1}{i_1+1}{i_2}
+1+\LCS{\pi_1}{\lb_1}{\pi_1[i_1]-1}{\pi_2}{\lb_2}{\pi_2[i_2]-1}{i_1+1}{i_2+1}
 	& \text{$\pi_1[i_1]>\ub_1$ } \\
 	&\text{and $\pi_2[i_2]>\ub_2$}\\
 
@@ -1592,12 +1747,23 @@ $
 \end{cases}
 $
 
+%For every pair $i,j$ we either ignore the element of $\pi_1$,
+%or we ignore the element of $\pi_2$,
+%or we match as the same step (if possible).
 
-For every pair $i,j$ we either ignore the element of $\pi_1$,
-or we ignore the element of $\pi_2$,
-or we match as the same step (if possible).
+The solution to the problem relies on the fact
+that the longest wedge subsequence is found
+either by considering the problem with $\pi_1[i_1:]$ and $\pi_2[i_2+1:]$
+or by considering the problem with $\pi_1[i_1+1:]$ and $\pi_2[i_2:]$
+or by matching  $\pi_1[i_1]$ and $\pi_2[i_2]$ and adding
+to the solution the LCS for $\pi_1[i_1+1:]$ and $\pi_2[i_2+1:]$ which is compatible,
+meaning that if the matching element is an ascent (resp. descent) element
+then we consider only the solution with elements above (below)
+$\pi_1[i_1]$ for the occurrence in $\pi_1[i_1+1:]$
+and $\pi_2[i_2]$ for the occurrence in $\pi_2[i_2+1:]$.
+
 These relations lead to a $O(|\pi_1|^3|\pi_2|^3)$ time and $O(|\pi_1|^3|\pi_2|^3)$ space algorithm.
-Indeed there is $|\pi_1|^3|\pi_2|^3$ cases possible for the problem
+Indeed there are $|\pi_1|^3|\pi_2|^3$ cases possible for the problem
 and each case is solved in constant time.
 $\qed$
 \end{proof}
