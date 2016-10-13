@@ -27,6 +27,9 @@
 \DeclareMathOperator{\RED}{red}
 \DeclareMathOperator{\AV}{Av}
 
+\newcommand{\RLMin}{\text{RLMin}}
+\newcommand{\RLMax}{\text{RLMax}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 231,213
@@ -413,12 +416,12 @@ For an occurrence $s$ of $\sigma$ in $\pi$,
 we say that $\pi[j]$ correspond $\sigma[i]$ in the occurrence or
 that $\sigma[i]$ is matched to $\pi[j]$  in the occurrence
 if and only if $\pi[j]=s[i]$.
-
 Geometrically, $\pi$ has an occurrence of $\sigma$ if there exists
-a set of points in $\pi$ that is isomorphic to the set of points of $\sigma$.
-In other words,
-if there exists a set of points in $\pi$ with the same disposition as the set of points of $\sigma$,
-regardless of the distance (see Figure \ref{example: pattern matching}).
+a set of points in $\pi$ whose relative positions are the same as those of $\sigma$
+(see Figure \ref{example: pattern matching}).
+%% In other words,
+%% if there exists a set of points in $\pi$ with the same disposition as the set of points of $\sigma$,
+%% regardless of the distance (see Figure \ref{example: pattern matching}).
 
 \begin{figure}
 	\centering
@@ -543,7 +546,7 @@ regardless of the distance (see Figure \ref{example: pattern matching}).
 %$\pi = 981234765$
 %is $\stripew{\pi} = \dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep$.
 
-A $\textit{right-to-left maximum}$ (abbreviated to RLMax) of $\pi$ is an element that does not have any element above it and to its right (see Figure $\ref{fig:left to right maxima}$). Formally, $\pi[i]$ is a RLMax if and only if $\pi[i]$ is topmost element of $\pi[i:]$. Similarly $\pi[i]$ is a $\textit{right-to-left minimum}$ (abbreviate RLMin) if and only if $\pi[i]$ is the bottommost element of $\pi[i:]$.
+A $\textit{right-to-left maximum}$ (\RLMax, for short) of $\pi$ is an element that does not have any element above it and to its right (see Figure $\ref{fig:left to right maxima}$). Formally, $\pi[i]$ is a \RLMax if and only if $\pi[i]$ is topmost element of $\pi[i:]$. Similarly $\pi[i]$ is a $\textit{right-to-left minimum}$ (\RLMin, for short) if and only if $\pi[i]$ is the bottommost element of $\pi[i:]$.
 
 \begin{figure}
 	\centering
@@ -565,7 +568,7 @@ A $\textit{right-to-left maximum}$ (abbreviated to RLMax) of $\pi$ is an element
 
 
 	\caption[Example pattern matching]{
-		The element is a RLMax if and only if the hashed area is empty.}
+		The element is a \RLMax if and only if the hashed area is empty.}
 	\label{fig:left to right maxima}
 \end{figure}
 
@@ -632,7 +635,7 @@ This area must be empty to have a valid occurrence of the bivincular pattern.
 If the area is empty then there is no element between them when reading the permutation
 from bottom to top,
 in other words the matching elements are consecutive in value.
-If two elements are underlined then we draw an vertical forbidden area.
+If two elements are underlined then we draw a vertical forbidden area.
 (See Figure \ref{example:bivincular pattern matching}).
 
 
@@ -744,30 +747,30 @@ $231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' resp..
 \begin{corollary}
 \label{corollary:minmaxelement}
 $\pi$ is a wedge permutation of size $n$ if and only if for $1 \leq i \leq n$,
-$\pi[i]$ is a RLMax or a RLMin.
+$\pi[i]$ is a \RLMax or a \RLMin.
 \end{corollary}
 
-\begin{proof} %[of Lemma~\ref{lemma:first element is 1 or n}]
-Given a position $i$, $\pi[i:]$ is a wedge permutation,
-so it either starts with the maximal or the minimal element.
-\qed
-\end{proof}
+%% \begin{proof} %[of Lemma~\ref{lemma:first element is 1 or n}]
+%% Given a position $i$, $\pi[i:]$ is a wedge permutation,
+%% so it either starts with the maximal or the minimal element.
+%% \qed
+%% \end{proof}
 
 As a consequence, every element of a wedge permutation can be partitioned
-into three sets: the set of RLMax elements, the set of RLMin elements and the
-rightmost element which can be both a RLMax element and a RLMin element.
+into three sets: the set of \RLMax elements, the set of \RLMin elements and the
+rightmost element which can be both a \RLMax element and a \RLMin element.
 
 \begin{remark}
-The set of RLMax elements is a decreasing subsequence,
-indeed each element is left above the next RLMax element by definition
-of a RLMax element. In the same fashion,
-the set of RLMin elements is an increasing subsequence.
+The set of \RLMax elements is a decreasing subsequence,
+indeed each element is left above the next \RLMax element by definition
+of a \RLMax element. In the same fashion,
+the set of \RLMin elements is an increasing subsequence.
 See Figure~\ref{fig:shape of the permutation plus factor}.
 \end{remark}
 
 \begin{remark}
-Every element of the set of RLMax elements is above the elements
-of the set of the RLMin elements.
+Every element of the set of \RLMax elements is above the elements
+of the set of the \RLMin elements.
 In other words, a wedge permutations
 can be cut in half horizontally on the rightmost element such that the upper half contains a decreasing
 subsequence and the lower half contains an increasing subsequence.
@@ -780,11 +783,11 @@ See Figure~\ref{fig:shape of the permutation plus factor}.
 The partition gives a bijection between the set of wedge permutations of size $n$ where the elements are $1,\ldots,n$
 and the set of binary word of size $n-1$.
 The word $w$ which corresponds to $\pi$ is the word where each letter at position $i$
-represents whether $\pi[i]$ is a RLMax element or a RLMin element.
+represents whether $\pi[i]$ is a \RLMax element or a \RLMin element.
 We call this bijection $\bijection$.
 \end{remark}
 
-To figure out whether or not an element is a RLMax element or a RLMin element,
+To figure out whether or not an element is a \RLMax element or a \RLMin element,
 one has to run the whole permutation from left to right starting
 from the position of the element, we give a corollary of lemma~\ref{lemma:first element is 1 or n}, to guest it in constant time.
 
@@ -792,8 +795,8 @@ from the position of the element, we give a corollary of lemma~\ref{lemma:first 
 \label{corollary:max is ascent}
 Let $\pi$ be a wedge permutation and $1 \leq i < n$. Then,
 \begin{enumerate}
-\item $\pi[i]$ is a RLMin element if and only if $\pi[i]<\pi[i+1]$
-\item $\pi[i]$ is a RLMax element if and only if $\pi[i]>\pi[i+1]$ is a RLMax
+\item $\pi[i]$ is a \RLMin element if and only if $\pi[i]<\pi[i+1]$
+\item $\pi[i]$ is a \RLMax element if and only if $\pi[i]>\pi[i+1]$ is a \RLMax
 \end{enumerate}
 
 \end{corollary}
@@ -854,9 +857,9 @@ The forward direction is obvious.
 We prove the backward direction by induction on the size of
 $\sigma$: if $\bijection(t)=\bijection(\sigma)$ then $t$ is an occurrence of $\sigma$.
 The base case is a pattern of size $2$.
-Suppose that $\sigma = 12$ and thus $\bijection(\sigma) = RLMin$.
+Suppose that $\sigma = 12$ and thus $\bijection(\sigma) = \RLMin$.
 Let $t = \pi_{i_1}\pi_{i_2}$, $i_1 < i_2$, be a subsequence of $\pi$
-such that $\bijection(t) = RLMin$, this reduces to saying that
+such that $\bijection(t) = \RLMin$, this reduces to saying that
 $\pi_{i_1} < \pi_{i_2}$,
 and hence that $t$ is an occurrence of $\sigma = 12$ in $\pi$.
 A similar argument shows that the lemma holds for $\sigma = 21$.
@@ -911,11 +914,11 @@ thus, giving an on-line algorithm.
 This section focuses on the permutation pattern matching problem
 in case only the pattern $\sigma$ is a wedge permutation.
 We need to consider a specific decomposition of $\sigma$ into \textit{factors}:
-we split the permutation into maximal sequences of consecutive RLMin and RLMax elements, respectively called a RLMin factor and a RLMax factor.
-This corresponds to splitting the permutation between every pair of RLMin-RLMax and RLMax-RLMin elements (see Figure \ref{fig:shape of the permutation plus factor}).
+we split the permutation into maximal sequences of consecutive \RLMin and \RLMax elements, respectively called a \RLMin factor and a \RLMax factor.
+This corresponds to splitting the permutation between every pair of \RLMin-\RLMax and \RLMax-\RLMin elements (see Figure \ref{fig:shape of the permutation plus factor}).
 For the special case of a wedge permutation, this also corresponds to split the permutation into maximal sequences of elements consecutive in value.
 We label the factors from right to left.
-Note that the rightmost element can be both a RLMin or a RLMax,
+Note that the rightmost element can be both a \RLMin or a \RLMax,
 we take the convention that it is as the same type as the element before it for the factorization,
 such that the first factor (the rightmost factor) always contains at least two
 elements.
@@ -955,7 +958,7 @@ See Figure \ref{fig:decomposition of an occurrence}.
 
 \begin{remark}
 A rectangle contains
-an occurrence of a RLMin (resp. RLMax) factor if and only if
+an occurrence of a \RLMin (resp. \RLMax) factor if and only if
 the rectangle contains an increasing (resp. decreasing) subsequence
 of same size or larger than the size of the factor.
 \end{remark}
@@ -1119,7 +1122,7 @@ Remark that by modifying the definition of $\PM^\pi_\sigma(i,i',((j,lb),(n,up)))
 we can reduce the computational time of the algorithm.
 Instead of asking for any occurrence in $((j,lb),(n,up)))$,
 we ask for the occurrences that start at $\pi[j]$.
-As any element in the pattern is a RLMax or a RLMin,
+As any element in the pattern is a \RLMax or a \RLMin,
 the value of $\pi[j]$ can be used has a top or a bottom edge
 of a rectangle.
 So we can remove one argument from the problem,
@@ -1136,7 +1139,7 @@ reducing the maximal number of different problems that we have to compute.
 We extend our research to reduce the number of pairs of rectangles
 that we have to test.
 Informally,
-given that the leftmost factor is a RLMin (resp. RLMax) factor and
+given that the leftmost factor is a \RLMin (resp. \RLMax) factor and
 given that the left top (resp. bottom left) corner of the second rectangle is fixed and
 that the second rectangle contains the occurrence of the
 rest of the permutation, it is in the interest of finding an occurrence in the whole rectangle
@@ -1337,7 +1340,7 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 \begin{lemma}
 \label{corollary:whereIsMax}
 Given a wedge permutation $\sigma$,
-if $\factor(i)$ is a RLMin (resp. RLMax) factor
+if $\factor(i)$ is a \RLMin (resp. \RLMax) factor
 the topmost (resp. bottommost) element of
 $\factor(i)\ldots \factor(1)$
 is the leftmost element of $\factor(i-1)$.
@@ -1345,9 +1348,9 @@ is the leftmost element of $\factor(i-1)$.
 
 \begin{proof} %[of Corollary~\ref{corollary:whereIsMax}]
 This corollary states that, given a wedge permutation
-if the permutation starts with a RLMin (resp. RLMax) element then the topmost (resp. bottommost) element of this permutation is the first RLMax (resp. RLMin) element (see Figure \ref{fig:where to find the max}). This is easy to see from the shape of a wedge permutation.
-Formally, the RLMin elements are below the RLMax element, thus the topmost element must be
-the first RLMax element, which is the leftmost element of $\factor(i-1)$.
+if the permutation starts with a \RLMin (resp. \RLMax) element then the topmost (resp. bottommost) element of this permutation is the first \RLMax (resp. \RLMin) element (see Figure \ref{fig:where to find the max}). This is easy to see from the shape of a wedge permutation.
+Formally, the \RLMin elements are below the \RLMax element, thus the topmost element must be
+the first \RLMax element, which is the leftmost element of $\factor(i-1)$.
 \qed
 \end{proof}
 
@@ -1414,7 +1417,7 @@ that are  occurrences of $\factor(i)\ldots \factor(1)$.
 \begin{lemma}
 \label{lemma:ts}
 Let $\ppattern$ be a wedge permutation and
-$\factor(i)$ be an RLMin (resp. RLMax) factor $\sigma$.
+$\factor(i)$ be an \RLMin (resp. \RLMax) factor $\sigma$.
 Let $\pi$ be a permutation and $s$ a subsequence of $\pi$ such that
 $s \in \SET{\ppattern}{\ptext}{i}{j}$ and
 $s$ minimizes (resp. maximizes) the matching of the leftmost element of $\factor(i-1)$.
@@ -1433,23 +1436,23 @@ Especially the second rectangle can be chosen as the one with
 the lowest top edge in all the rectangles sharing the right, bottom
 and left edges.
 More formally, given any occurrence of $\factor(i+1)$ $\factor(i)$ $\ldots$ $\factor(1)$,
-where $\factor(i)$ is a RLMin (resp. RLMax) factor,
+where $\factor(i)$ is a \RLMin (resp. \RLMax) factor,
 we can replace the part of the occurrence where $\factor(i)$ $\ldots$ $\factor(1)$ occurs, by any occurrence
 that minimises (resp. maximises) the leftmost element of $\factor(i-1)$. Indeed the leftmost element of $\factor(i-1)$ is the topmost (resp. bottommost) element of  $\factor(i)$ $\ldots$ $\factor(1)$ (see Figure \ref{fig:where to find the max}).
 
 \begin{proof} %[of Lemma~\ref{lemma:ts}]
-Let us consider the case where $\factor(i)$ is a RLMin factor.
+Let us consider the case where $\factor(i)$ is a \RLMin factor.
 By definition $s$ is an occurrence of $\ppattern[\LMEi(\factor(i)):]$.
 First of all, remark that $t'$ is an occurrence of $\factor(i+1)$.
 So to prove that $t's$ is an occurrence of $\factor(i+1)\ldots \factor(1)$ we need to prove that the elements of t' are above the elements of $s$.
-Since $t's'$ is an occurrence of $\factor(i+1)\ldots \factor(1)$ it follows that the elements of $t'$ are above the elements of $s'$. Moreover the topmost element of $s$ is below (or equal to) the topmost element of $s'$ thus the elements of $s$ are below the elements of $t'$. We use a symmetric argument if $\factor(i)$ is a RLMax factor.
+Since $t's'$ is an occurrence of $\factor(i+1)\ldots \factor(1)$ it follows that the elements of $t'$ are above the elements of $s'$. Moreover the topmost element of $s$ is below (or equal to) the topmost element of $s'$ thus the elements of $s$ are below the elements of $t'$. We use a symmetric argument if $\factor(i)$ is a \RLMax factor.
 \qed
 \end{proof}
 
 \begin{corollary}
 \label{corollary:we can chose a matching}
 Let $\ppattern$ be a permutation,
-$\factor(i)$ be a RLMin (resp. RLMax) factor
+$\factor(i)$ be a \RLMin (resp. \RLMax) factor
 and
 $s$ be a subsequence of $\pi$ such that $s \in \SET{\ppattern}{\ptext}{i}{j}$ and
 that minimizes (resp. maximizes) the matching of the leftmost element of $\factor(i-1)$.
@@ -1502,7 +1505,7 @@ and $O(n^3)$ space if $\pi$ contains an occurrence $\sigma$.
 \begin{proof}
 The algorithm follows the previous one,
 but instead of return true or false,
-assuming that $\factor(i)$ is a RLMin (resp. RLMax) factor
+assuming that $\factor(i)$ is a \RLMin (resp. \RLMax) factor
 the algorithm return the value of the
 top (resp. bottom) edge.
 So that once we compute the problem for $R_2$
@@ -1522,13 +1525,13 @@ allow us to decide
 the existence of an occurrence of any LRMin (resp. LRMax) factor
 in the rectangle $((j,\pi[j]),(j',bound))$ (resp. $((j,bound),(j',\pi[j])$).
 
-Given a RLMin (resp. RLMax) factor $\factor(i)$  of $\sigma$ and a position $j$ in $\pi$,
+Given a \RLMin (resp. \RLMax) factor $\factor(i)$  of $\sigma$ and a position $j$ in $\pi$,
 we want the value of the top (resp. bottom) edge
 of any rectangle with left bottom (resp. with left top) corner   $(j,\pi[j])$  containing an occurrence of  $\factor(i) \ldots \factor(1)$ starting at $\pi[j]$
 and which minimizes (resp. maximizes) its top (resp. bottom) edge
 or a value which indicate that no occurrence exists in this rectangle. More formally:
 \begin{itemize}
-\item If $\factor(i)$ is RLMin factor.
+\item If $\factor(i)$ is \RLMin factor.
 
 $$
 \PM^\pi_\sigma(i,j) =
@@ -1544,7 +1547,7 @@ $$
 \end{cases}
 $$
 
-\item If $\factor(i)$ is RLMax factor.
+\item If $\factor(i)$ is \RLMax factor.
 $$
 \PM^\pi_\sigma(i,j) =
 $$
@@ -1569,7 +1572,7 @@ with $\ell$ the number of factors in $\ppattern$.
 
 We show how to compute recursively those values.
 \begin{itemize}
-\item If the permutation is reduced to a RLMin (resp. RLMax) factor
+\item If the permutation is reduced to a \RLMin (resp. \RLMax) factor
 then one has to decide the top (resp. lower ) edge of
 a rectangle that
 contains an increasing or a decreasing factor
@@ -1578,7 +1581,7 @@ size of the unique factor starting at $\pi[j]$.
 This case happens when $i=1$:
 
 \begin{itemize}
-\item If $\factor(i)$ is RLMin factor.
+\item If $\factor(i)$ is \RLMin factor.
 $$
 \PM^\pi_\sigma(1,j) = \min \text{\{$\pi[j']$ $ |$ if $ |factor(1)| \leq LIS_{\ptext}(j,j',\pi[j'])$\}}_{j'\geq j} \cup \{\infty\}
 $$
@@ -1586,7 +1589,7 @@ $$
 
 
 
-\item If $\factor(i)$ is RLMax factor.
+\item If $\factor(i)$ is \RLMax factor.
 $$
 \PM^\pi_\sigma(1,j) = \min \text{\{$\pi[j']$ $ |$ if $ |factor(1)| \leq LDS_{\ptext}(j,j',\pi[j'])$\}}_{j'\geq j} \cup \{0\}
 $$
@@ -1594,7 +1597,7 @@ $$
 
 
 
-\item Otherwise, if $\factor(i)$ is a RLMin (resp. RLMax) factor,
+\item Otherwise, if $\factor(i)$ is a \RLMin (resp. \RLMax) factor,
  we split the rectangle into two rectangles $R_1$ and
 $R_2$ such that $R_1$ is left below $R_2$,
 $R_1$ contains an occurrence of $\factor(i)$ starting at
@@ -1621,7 +1624,7 @@ we need the value of the top (resp. bottom) edge of a rectangle minimizing the t
 containing the pair of rectangles. Note that the top (resp. bottom) edge has for value $\pi[j']$
 (the matching of  $\LMEi(\factor(i-1))$). Formally:
 
-\item If $\factor(i)$ is RLMin factor:\\
+\item If $\factor(i)$ is \RLMin factor:\\
 $$
 \PM^\pi_\sigma(i,j) =
 $$
@@ -1630,7 +1633,7 @@ $
  |factor(i)| \leq LIS_{\ptext}(j,j'-1,b-1) \}_{j' < j}
 $
 
-\item If $\factor(i)$ is RLMax factor:\\
+\item If $\factor(i)$ is \RLMax factor:\\
 $$
 \PM^\pi_\sigma(i,j) =
 $$
@@ -1785,8 +1788,8 @@ needed to solve the problem.
 \label{lemma:after}
 Let $\sigma$ be a wedge permutation.
 \begin{itemize}
-\item If $\sigma[i]$ is a RLMin element and is not the rightmost element, then $\sigma[i]+1$ is to the right of $\sigma[i]$.
-\item If $\sigma[i]$ is a RLMax element and is not the rightmost element, then $\sigma[i]-1$ is to the right of $\sigma[i]$.
+\item If $\sigma[i]$ is a \RLMin element and is not the rightmost element, then $\sigma[i]+1$ is to the right of $\sigma[i]$.
+\item If $\sigma[i]$ is a \RLMax element and is not the rightmost element, then $\sigma[i]-1$ is to the right of $\sigma[i]$.
 \end{itemize}
 \end{lemma}
 
@@ -1804,12 +1807,12 @@ an occurrence of $231$.
 \label{lemma:ascentDescentAscent}
 Let $\sigma$ be a wedge permutation.
 \begin{itemize}
-\item If $m$ and $m+1$ are both RLMin elements
+\item If $m$ and $m+1$ are both \RLMin elements
 then any element between $m$ and $m+1$ (if any)
-is a RLMax element.
+is a \RLMax element.
 \item If $m$ and $m-1$ are both RLmax elements
 then any element between $m$ and $m-1$ (if any)
-is a RLMin element.
+is a \RLMin element.
 \end{itemize}
 
 \end{lemma}
@@ -1819,8 +1822,8 @@ is a RLMin element.
 For the first point, by contradiction,
 let $\sigma[\alpha]=m$ and $\sigma[\beta]=m+1$
 and suppose that there exists $\alpha < \gamma < \beta$,
-such that $\sigma[\gamma]$ is a RLMin element.
-We know that RLMin are strictly increasing so
+such that $\sigma[\gamma]$ is a \RLMin element.
+We know that \RLMin are strictly increasing so
 $\sigma[\alpha] <  \sigma[\gamma] < \sigma[\beta]$,
 which contradict the fact that $\sigma[\beta]=\sigma[\alpha]+1$.
 \qed
@@ -1948,7 +1951,7 @@ if and only if $\PM{\widetilde{\sigma}}{\ptext}{1}{n}{1}{1}$.
 
 We show how to compute recursively those values.
 Informally, to find an occurrence of $\widetilde{\sigma}[i:]$ in $\pi[j:]$,
-given that $\sigma[i]$ is a RLMin element,
+given that $\sigma[i]$ is a \RLMin element,
 we need to find a rectangle $R$ in $\pi$
 such that $R$ contains an occurrence of $\widetilde{\sigma}[i+1:]$
 and $R$ is right above $\pi[j]$.
@@ -1967,7 +1970,7 @@ In other words $R$ has for bottom edge $\sigma[i]+1$.
 Note that the parameters $\lb$, $\ub$ and $j$ corresponding
 to the occurrence of $\widetilde{\sigma}[i+1:]$ are respectively,
 the bottom edge, the top edge and the left edge of the rectangle $R$.
-The case where $\sigma[i]$ is a RLMax element can be dealt with symmetry.
+The case where $\sigma[i]$ is a \RLMax element can be dealt with symmetry.
 More formally:
 
 \noindent\textbf{BASE:} \\
@@ -2005,7 +2008,7 @@ We consider 3 cases for the problem $\PM{ \widetilde{\sigma}}{\ptext}{\lb}{\ub}{
 
 	which is immediate from the definition.
 
-	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is a RLMin element then:
+	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is a \RLMin element then:
 	$$
 	\PM{\widetilde{\sigma}}{\ptext}{\lb}{\ub}{i}{j}=
 	\begin{cases}
@@ -2052,7 +2055,7 @@ We consider 3 cases for the problem $\PM{ \widetilde{\sigma}}{\ptext}{\lb}{\ub}{
 %	Identically  we do not have to consider the case
 %	where $\sigma[i-1]\sigma[i]$ appears in $\widetilde{\sigma}$
 
-	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is a RLMax element then:
+	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is a \RLMax element then:
 
 	$$
 	\PM{\widetilde{\sigma}}{\ptext}{\lb}{\ub}{i}{j}=
@@ -2082,7 +2085,7 @@ We consider 3 cases for the problem $\PM{ \widetilde{\sigma}}{\ptext}{\lb}{\ub}{
 
 Remark that there are constraints that we do not concern given in
 $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i}{*}$.
-Especially in the case where $\sigma[i]$ is a RLMin
+Especially in the case where $\sigma[i]$ is a \RLMin
 the case where $\underline{\sigma[i-1]\sigma[i]}$,
 $\overline{\ppattern[i](\ppattern[i]+1)}$
 and every combination of the constraints
@@ -2100,7 +2103,7 @@ be taken care
 during the calls of $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i'}{*}$
 for some $i<i'$.
 In the same fashion,
-when $\sigma[i]$ is a RLMax $\underline{\sigma[i-1]\sigma[i]}$
+when $\sigma[i]$ is a \RLMax $\underline{\sigma[i-1]\sigma[i]}$
 do not appear in the conditions for the exact same reason
 and $\overline{(\ppattern[i]-1)\ppattern[i]}$
 because $\sigma[i]-1$ is on the right of $\sigma[i]$.
@@ -2127,21 +2130,21 @@ of $\widetilde{\sigma}$.
 	\item If $^\ulcorner{\sigma[i]}$ appears in $\widetilde{\sigma}$ (and thus $\sigma[i]=1$) then the bottommost element of $\ppattern$ must be matched to the bottommost element of $\ptext$.
 	\begin{itemize}
 
-		\item If $\sigma[i]$ is a RLMin element, then remark that:
+		\item If $\sigma[i]$ is a \RLMin element, then remark that:
 		\begin{itemize}
 			\item Every problem
 			$\PM{\widetilde{\sigma}}{\ptext}{\lb}{*}{i}{*}$ is true only if $\sigma[i]$ is matched to the element with value $\lb$ (by recursion).
 			So it is enough to require that $\lb=1$.
 			\item The recursive calls for $\sigma[1]$, $\ldots$, $\sigma[i-1]$
 			do not change the lower bound as
-			$\sigma[i]$ is the leftmost RLMin element. Indeed if not, then there exists a RLMin element $\sigma[i']$, $i'<i$ and by the shape of a wedge permutation $\sigma[i']<\sigma[i]$ which is not possible as $\sigma[i]$ must be the bottommost element.
-			As a consequence $\sigma[1]$, $\ldots$, $\sigma[i-1]$ are RLMax elements. Finally the recursive calls for RLMax elements do not change the lower bound.
+			$\sigma[i]$ is the leftmost \RLMin element. Indeed if not, then there exists a \RLMin element $\sigma[i']$, $i'<i$ and by the shape of a wedge permutation $\sigma[i']<\sigma[i]$ which is not possible as $\sigma[i]$ must be the bottommost element.
+			As a consequence $\sigma[1]$, $\ldots$, $\sigma[i-1]$ are \RLMax elements. Finally the recursive calls for \RLMax elements do not change the lower bound.
 			\item The first call of the problem has for parameter $\lb=1$.
 		\end{itemize}
 		So $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i}{*}$ return true only if
 		$\sigma[i]$ is matched to $1$.
 
-		\item If $\sigma[i]$ is a RLMax element then $i=k$ ($\sigma[i]$ is the rightmost element). Thus every $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i}{*}$ is a base case and is true only if $\sigma[i]$ is matched to $1$.
+		\item If $\sigma[i]$ is a \RLMax element then $i=k$ ($\sigma[i]$ is the rightmost element). Thus every $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i}{*}$ is a base case and is true only if $\sigma[i]$ is matched to $1$.
 
 	\end{itemize}
 
@@ -2151,21 +2154,21 @@ of $\widetilde{\sigma}$.
 	\item If ${\ppattern[i]}^\urcorner$ appears in $\widetilde{\sigma}$ (and thus $\sigma[i]=k$) then the topmost element of $\ppattern$ must be matched to the topmost element of $\ptext$.
 	\begin{itemize}
 
-		\item If $\sigma[i]$ is a RLMax element, then remark that:
+		\item If $\sigma[i]$ is a \RLMax element, then remark that:
 		\begin{itemize}
 			\item Every problem
 			$\PM{\widetilde{\sigma}}{\ptext}{*}{\ub}{i}{*}$ is true only if $\sigma[i]$ is matched to the element with value $\ub$ (by recursion).
 			So it is enough to require that $\ub=n$.
 			\item The recursive calls for $\sigma[1]$, $\ldots$, $\sigma[i-1]$
 			do not change the upper bound as
-			$\sigma[i]$ is the leftmost RLMax element. Indeed if not, then there exists a RLMax element $\sigma[i']$, $i'<i$ and by the shape of a wedge permutation $\sigma[i']>\sigma[i]$ which is not possible as $\sigma[i]$ must be the topmost element.
-			As a consequence $\sigma[1]$, $\ldots$, $\sigma[i-1]$ are RLMin elements. Finally the recursive calls for RLMin elements do not change the upper bound.
+			$\sigma[i]$ is the leftmost \RLMax element. Indeed if not, then there exists a \RLMax element $\sigma[i']$, $i'<i$ and by the shape of a wedge permutation $\sigma[i']>\sigma[i]$ which is not possible as $\sigma[i]$ must be the topmost element.
+			As a consequence $\sigma[1]$, $\ldots$, $\sigma[i-1]$ are \RLMin elements. Finally the recursive calls for \RLMin elements do not change the upper bound.
 			\item The first call of the problem has for parameter $\ub=n$.
 		\end{itemize}
 		So $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i}{*}$ return true only if
 		$\sigma[i]$ is matched to $n$.
 
-		\item If $\sigma[i]$ is a RLMin element then $i=k$ ($\sigma[i]$ is the rightmost element). Thus every $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ is matched to $n$.
+		\item If $\sigma[i]$ is a \RLMin element then $i=k$ ($\sigma[i]$ is the rightmost element). Thus every $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i}{*}$ is a base case and is true if $\sigma[i]$ is matched to $n$.
 
 	\end{itemize}
 
@@ -2176,11 +2179,11 @@ of $\widetilde{\sigma}$.
 
 		\begin{itemize}
 
-			\item The cases $\ppattern[i]$ is a RLMax element, $\ppattern[i']$ is a RLMin element and $i<i'$ or  $\ppattern[i]$ is a RLMin element, $\ppattern[i']$ is a RLMax element and $i'<i$ are not possible.
+			\item The cases $\ppattern[i]$ is a \RLMax element, $\ppattern[i']$ is a \RLMin element and $i<i'$ or  $\ppattern[i]$ is a \RLMin element, $\ppattern[i']$ is a \RLMax element and $i'<i$ are not possible.
 			Indeed $\ppattern[i]$ is the topmost element of $\ppattern[i:]$ thus $\ppattern[i] > \ppattern[i']$ which is in contradiction with
 			$\ppattern[i']=\ppattern[i]+1$.
 
-			\item If $\ppattern[i]$ is a RLMin element, $\ppattern[i']$ is a RLMax element and $i<i'$ (remark that this case is symmetric to the case where $\ppattern[i]$ is a RLMax element, $\ppattern[i']$ is a RLMin element and $i'<i$), then
+			\item If $\ppattern[i]$ is a \RLMin element, $\ppattern[i']$ is a \RLMax element and $i<i'$ (remark that this case is symmetric to the case where $\ppattern[i]$ is a \RLMax element, $\ppattern[i']$ is a \RLMin element and $i'<i$), then
 			remark that
 			\begin{itemize}
 				\item $i'=k$, indeed if $i'$ is not the right most element, there would exist an element between
@@ -2188,16 +2191,16 @@ of $\widetilde{\sigma}$.
 				$\PM{\widetilde{\sigma}}{\ptext}{\lb}{*}{i'}{*}$
 				is solved as a base case. So $\PM{\widetilde{\sigma}}{\ptext}{\lb}{*}{i'}{*}$ is true only if $\sigma[i']$ is matched to the element with $\lb$.
 				\item The recursive calls for $\sigma[i+1]$, $\ldots$, $\sigma[i'-1]$ do not change the lower bound.
-				Indeed $\ppattern[i]$ is the rightmost RLMin.
-				So $\sigma[i+1]$, $\sigma[i+2]$, $\ldots$, $\sigma[i'-1]$ are RLMax elements. Moreover
-				recursive calls for a RLMax do not change the lower bound.
+				Indeed $\ppattern[i]$ is the rightmost \RLMin.
+				So $\sigma[i+1]$, $\sigma[i+2]$, $\ldots$, $\sigma[i'-1]$ are \RLMax elements. Moreover
+				recursive calls for a \RLMax do not change the lower bound.
 				\item $\PM{\widetilde{\sigma}}{\ptext}{\lb}{*}{i}{*}$ sets
 				the $\lb$ to $\ptext[j]+1$ and matches $\sigma[i]$ to $\ptext[j]$.
 			\end{itemize}
 			So $\sigma[i]$ is matched to $\ptext[j]$ and
 			$\sigma[i']$ is matched to $\ptext[j]+1$.
 
-			\item If $\ppattern[i]$ is a RLMin element and $\ppattern[i']$ is a RLMin element then
+			\item If $\ppattern[i]$ is a \RLMin element and $\ppattern[i']$ is a \RLMin element then
 			first remark:
 			\begin{itemize}
 
@@ -2207,7 +2210,7 @@ of $\widetilde{\sigma}$.
 				\item  Every recursive call $\PM{\widetilde{\sigma}}{\ptext}{\lb}{*}{i'}{*}$ is true only if $\sigma[i']$ is matched to the element with value $\lb$.
 
 				\item  The recursive calls for $\sigma[i+1]$, $\ldots$, $\sigma[i'-1]$ do not change the lower bound. Indeed
-				from lemma~\ref{lemma:ascentDescentAscent}, $\sigma[i+1]$,  $\ldots$, $\sigma[i'-1]$ are RLMax elements. Finally the recursive calls for RLMax elements do not change the lower bound.
+				from lemma~\ref{lemma:ascentDescentAscent}, $\sigma[i+1]$,  $\ldots$, $\sigma[i'-1]$ are \RLMax elements. Finally the recursive calls for \RLMax elements do not change the lower bound.
 
 				\item $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i}{*}$ sets $\lb$ to $\ptext[j]+1$ and matches $\sigma[i]$ to $\ptext[j]$.
 
@@ -2216,7 +2219,7 @@ of $\widetilde{\sigma}$.
 			$\sigma[i']$ is matched to $\ptext[j]+1$.
 
 
-			\item If $\ppattern[i]$ is a RLMax element and $\ppattern[i']$ is a RLMax element then
+			\item If $\ppattern[i]$ is a \RLMax element and $\ppattern[i']$ is a \RLMax element then
 			first remark:
 			\begin{itemize}
 				\item From lemma~\ref{lemma:ascentDescentAscent},
@@ -2225,7 +2228,7 @@ of $\widetilde{\sigma}$.
 				\item  Every recursive call $\PM{\widetilde{\sigma}}{\ptext}{*}{\ub}{i}{*}$ is true only if $\sigma[i]$ is matched to the element with value $\ub$.
 
 				\item  The recursive calls for $\sigma[i+1]$, $\ldots$, $\sigma[i'-1]$ do not change the upper bound. Indeed
-				from lemma~\ref{lemma:ascentDescentAscent}, $\sigma[i+1]$,  $\ldots$, $\sigma[i'-1]$ are RLMin elements. Finally the recursive calls for RLMin elements do not change the upper bound.
+				from lemma~\ref{lemma:ascentDescentAscent}, $\sigma[i+1]$,  $\ldots$, $\sigma[i'-1]$ are \RLMin elements. Finally the recursive calls for \RLMin elements do not change the upper bound.
 
 				\item $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i'}{*}$ sets $\ub$ to $\ptext[j]-1$ and matches $\sigma[i']$ to $\ptext[j]$.
 
@@ -2267,9 +2270,9 @@ a wedge subsequence if and only if the permutation represented by the subsequenc
 is a wedge permutation.
 
 We start with the easiest case where we are given just one input permutation.
-We need the set of RLMax elements and the set of RLMin elements.
-$A(\pi) = \{i | \text{$\pi[i]$ is a RLMin element} \} \cup \{n\}$ and
-$D(\pi) = \{i | \text{$\pi[i]$ is a RLMax element} \} \cup \{n\}$.\\
+We need the set of \RLMax elements and the set of \RLMin elements.
+$A(\pi) = \{i | \text{$\pi[i]$ is a \RLMin element} \} \cup \{n\}$ and
+$D(\pi) = \{i | \text{$\pi[i]$ is a \RLMax element} \} \cup \{n\}$.\\
 
 
 \begin{proposition}
@@ -2411,7 +2414,7 @@ or by considering the problem with $\pi_1[i_1+1:]$ and $\pi_2[i_2:]$
 or by matching  $\pi_1[i_1]$ and $\pi_2[i_2]$ and adding
 to the solution the LCS for $\pi_1[i_1+1:]$ and $\pi_2[i_2+1:]$ which is compatible,
 meaning that if we consider the current elements
-to correspond to a RLMin (resp. RLMax) element in the longest wedge subsequence
+to correspond to a \RLMin (resp. \RLMax) element in the longest wedge subsequence
 then we consider only the solution with elements above (below)
 $\pi_1[i_1]$ for the occurrence in $\pi_1[i_1+1:]$
 and $\pi_2[i_2]$ for the occurrence in $\pi_2[i_2+1:]$.
