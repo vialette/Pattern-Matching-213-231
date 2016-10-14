@@ -14,7 +14,7 @@
 
 \usepackage{tikz}
 \usetikzlibrary{patterns}
-\usepackage{subcaption} 
+\usepackage{subcaption}
 \captionsetup{compatibility=false}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,6 +26,9 @@
 \DeclareMathOperator{\RUN}{run}
 \DeclareMathOperator{\RED}{red}
 \DeclareMathOperator{\AV}{Av}
+
+\newcommand{\RLMin}{\text{RLMin}}
+\newcommand{\RLMax}{\text{RLMax}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -168,9 +171,9 @@ $\pi$ as an order-isomorphic subsequence.
 We give a linear-time algorithm in case both $\pi$ and $\sigma$ avoid
 the two size-$3$ permutations $213$ and $231$.
 For the special case where only $\sigma$ avoids $213$ and $231$, we present a
-$O(max(kn^2,n^2\log(\log(n)))$-time algorithm. 
+$O(max(kn^2,n^2\log \log n)$-time algorithm.
 We extend our research to bivincular patterns that avoid $213$ and $231$ and present a $O(kn^4)$-time algorithm.
-Finally we look at the related problem of the longest subsequence which avoids $213$ and $231$.  
+Finally we look at the related problem of the longest subsequence which avoids $213$ and $231$.
 \end{abstract}
 
 
@@ -181,13 +184,14 @@ Finally we look at the related problem of the longest subsequence which avoids $
 
 
 
-A permutation $\sigma$ is said to occur in another permutation $\pi$,
+A permutation $\sigma$ is said to \emph{occur} in another permutation $\pi$
+(or $\pi$ \emph{contains} $\sigma$),
 denoted $\sigma \preceq \pi$,
 if there exists a subsequence of elements of $\pi$ that has the same relative
 order as $\sigma$.
 Otherwise, $\pi$ is said to \emph{avoid} the permutation $\sigma$.
-For example the permutation $123$ (resp. $321$) occurs in a second permutation if
-the second permutation has an increasing (resp. a decreasing) subsequence of size $3$.
+For example a permutation contains the permutation $123$ (resp. $321$) if
+it has an increasing (resp. a decreasing) subsequence of size $3$.
 Similarly, $213$ occurs in $6152347$, but $231$ does not occurs in $6152347$.
 During the last decade, the study of patterns in permutations has
 become a very active area of research \cite{Kitaev:book:2011} and
@@ -212,15 +216,17 @@ This is an improvement upon the $O(k {n \choose k})$ runtime required by
 brute-force search without imposing restrictions on $\sigma$ and $\pi$,
 where one has to enumerate all the ${n \choose k}$ different subsequences of size $k$ in $\pi$
 and test if one of them has the same relative
-order as $\sigma$.  
-A recent major step was taken by Marx and Guillemot
-\cite{Guillemot:Marx:SODA:2014}.
-They showed that
-the permutation pattern matching is fixed-parameter tractable (FPT) for by the size of $\sigma$.
+order as $\sigma$.
+Guillemot and Marx \cite{Guillemot:Marx:SODA:2014} showed that the permutation pattern matching problem
+is solvable in $2^{O(k^2 \log k)}$, and hence is fixed-parameter tractable with respect to the length $k$
+of the pattern $\sigma$ (standard parameterization).
+However, Mach proved that the permutation containment problem under the
+standard parameterization does not have a polynomial size kernel (assuming $\NPclass \not\subseteq \coNPclass / \POLY$
+\cite{Mach:thesis:1992}.
 
 A few particular cases of the permutation pattern matching problem have been attacked successfully.
-The case of any increasing pattern is solvable in 
-$O(n \log \log k)$ time in the RAM model \cite{Crochemore:Porat:2010},
+The case of  increasing patterns is solvable in
+$O(n \log \log k)$-time \cite{Crochemore:Porat:2010},
 improving the previous 30-year bound of $O(n \log k)$.
 % (The algorithm also improves on the previous
 % $O(|\pi| \log \log |\pi|)$ bound.)
@@ -232,7 +238,8 @@ Algorithmic issues for $321$-avoiding patterns matching for permutations have be
 \cite{Guillemot:Vialette:ISAAC:2009} and more recently in \cite{2015arXiv151006051A}.
 The permutation pattern matching problem is also solvable in
 polynomial-time for separable patterns \cite{Ibarra:1997,Bose:Buss:Lubiw:1998}
-(see also \cite{Bouvel:Rossin:Vialette:CPM:2007} for the longest common subsequence problem and related ones on separable permutations).
+(see also \cite{Bouvel:Rossin:Vialette:CPM:2007} for the longest common subsequence problem and
+related ones on separable permutations).
 Separable permutations are permutations that do not have an occurrence of
 $2413$ nor $3142$, and they are enumerated by the Schr{\"o}der numbers.
 %	(sequence A006318 in OEIS).
@@ -245,6 +252,14 @@ $2413$ nor $3142$, and they are enumerated by the Schr{\"o}der numbers.
 %	pops all items at once.
 (Notice that the separable permutations include as a special case the
 stack-sortable permutations, which avoid the pattern $231$.)
+The major negative result is given in \cite{DBLP:journals/corr/JelinekK16}.
+They prove that
+the permutation pattern matching problem is \NPC
+when $\sigma$ has no decreasing subsequence of length $3$ and
+$\pi$ has no decreasing subsequence of length $4$.
+This provides the first known example of the permutation pattern matching problem
+being hard when one or both of $\pi$ and $\sigma$ are restricted to a proper hereditary
+class of permutations.
 
 There exist many generalisations of patterns that are worth considering
 in the context of algorithmic issues in pattern matching
@@ -265,9 +280,8 @@ for an up-to-date survey of the $W[1]$ class and related material, see
 than vincular
 patterns by adding a constraint on values.
 
-We focus in this paper on pattern matching issues for
-$(213,231)$-avoiding permutations that we call wedge permutations.
-(\emph{i.e.}, those permutations that avoid both $213$ and $231$).
+We focus in this paper on pattern matching issues for \emph{wedge permutations}
+(\emph{i.e.}, those permutations that avoid both $213$ and $231$). 
 %The number of $n$-wedge permutations is
 %$t_0 = 1$ for $n = 0$ and
 %$t_n =2^{n-1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985},
@@ -300,7 +314,7 @@ $(213,231)$-avoiding permutations that we call wedge permutations.
 This paper is organized as follows.
 In Section~\ref{section:Definitions} the needed definitions are presented.
 Section~\ref{section:both are (213,231)-avoiding} is devoted to presenting
-an online linear-time algorithm in case both 
+an online linear-time algorithm in case both
 permutations are wedge permutations,
 whereas Section~\ref{section:sigma only avoid 231 and 213} focuses on the case
 where only the pattern is a wedge permutation.
@@ -319,21 +333,21 @@ A \textit{permutation} of size $n$ is a linear ordering of an ordered set of siz
 When writing the permutation we omit the $<$ sign, thus
 writing the permutation as a word:
 $\pi = \pi_1\pi_2\,\ldots\,\pi_n$, whose elements are distinct
-and usually consist of the integers $1,2,\ldots,n$. 
+and usually consist of the integers $1,2,\ldots,n$.
 
 We need to consider both the natural order of the set
 and the linear order given by the permutation.
 When talking about an element,
 we refer to the relative position in
 the natural order of the set
-as its value 
-and 
+as its value
+and
 we refer to the relative position
-in the order given by the permutation 
+in the order given by the permutation
 as its position.
-We write 
-$\pi[i]$ to indicate the value of the element 
-at position $i$ (\emph{i.e.} $\pi_i$).  
+We write
+$\pi[i]$ to indicate the value of the element
+at position $i$ (\emph{i.e.} $\pi_i$).
 For example, in the permutation $\pi = 51342$,
 The element $1$ is at position $2$
 and the element at position $1$ has for value $5$.
@@ -344,7 +358,7 @@ $\pi[:j]$ stand for $\pi[1:j]$ and
 $\pi[i:]$ stand for $\pi[i:n]$.
 
 It is convenient to use a geometric representation of permutations
-to ease the understanding of algorithms. 
+to ease the understanding of algorithms.
 The geometric representation corresponds to the set of points with coordinate $(i,\pi[i])$
 (see Figure \ref{example: pattern matching}).
 
@@ -362,7 +376,7 @@ and the bottommost element is $1$.
 
 When an element $\pi[\alpha]$ is smaller (resp. larger)
 than an element $\pi[\beta]$  by position (in the order given by the permutation),
-we say that $\pi_\alpha$ is on the left of (resp. on the right of) $\pi[\beta]$.
+we say that $\pi[\alpha]$ is on the left of (resp. on the right of) $\pi[\beta]$.
 Besides, the element with the largest position is called the rightmost element
 and the element with the smallest position is called the leftmost element.
 For example, in the permutation $\pi = 51342$,
@@ -398,16 +412,16 @@ $\pi = 3\mathbf{9}\mathbf{1}867\textbf{4}\textbf{5}\mathbf{2}$
 Since the permutation $\pi = 391867452$  contains no increasing subsequence of
 size four, $\pi$ avoids $1234$.
 
-For an occurrence $s$ of $\sigma$ in $\pi$, 
-we say that $\pi[j]$ correspond $\sigma[i]$ in the occurrence or 
+For an occurrence $s$ of $\sigma$ in $\pi$,
+we say that $\pi[j]$ correspond $\sigma[i]$ in the occurrence or
 that $\sigma[i]$ is matched to $\pi[j]$  in the occurrence
 if and only if $\pi[j]=s[i]$.
-
 Geometrically, $\pi$ has an occurrence of $\sigma$ if there exists
-a set of points in $\pi$ that is isomorphic to the set of points of $\sigma$. 
-In other words,
-if there exists a set of points in $\pi$ with the same disposition as the set of points of $\sigma$, 
-regardless of the distance (see Figure \ref{example: pattern matching}).
+a set of points in $\pi$ whose relative positions are the same as those of $\sigma$
+(see Figure \ref{example: pattern matching}).
+%% In other words,
+%% if there exists a set of points in $\pi$ with the same disposition as the set of points of $\sigma$,
+%% regardless of the distance (see Figure \ref{example: pattern matching}).
 
 \begin{figure}
 	\centering
@@ -422,7 +436,7 @@ regardless of the distance (see Figure \ref{example: pattern matching}).
 		\draw[fill=black] (2.5,2.5) circle (2mm);
 		\draw[fill=black] (3.5,3.5) circle (2mm);
 		\draw[fill=black] (4.5,1.5) circle (2mm);
-		\end{tikzpicture} 
+		\end{tikzpicture}
 		\begin{tikzpicture}[scale=.25]
 		\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
 		\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
@@ -470,7 +484,7 @@ regardless of the distance (see Figure \ref{example: pattern matching}).
 		\draw[fill=black] (6.5,3.5) circle (2mm);
 		\draw[fill=black] (7.5,4.5) circle (2mm);
 		\draw[fill=black,double, double distance=1pt] (8.5,1.5) circle (2mm);
-		\end{tikzpicture}		
+		\end{tikzpicture}
 		\begin{tikzpicture}[scale=.25]
 		\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
 		\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
@@ -488,12 +502,12 @@ regardless of the distance (see Figure \ref{example: pattern matching}).
 		\draw[fill=black,double, double distance=1pt] (8.5,1.5) circle (2mm);
 		\end{tikzpicture}
 
-	
-	
-	
+
+
+
 	\caption[Example pattern matching]{
 		The pattern $\sigma=51342$
-		and four occurrences of $\sigma$ in $391867452$.} 
+		and four occurrences of $\sigma$ in $391867452$.}
 	\label{example: pattern matching}
 \end{figure}
 
@@ -532,7 +546,7 @@ regardless of the distance (see Figure \ref{example: pattern matching}).
 %$\pi = 981234765$
 %is $\stripew{\pi} = \dstep\dstep\ustep\ustep\ustep\ustep\dstep\dstep$.
 
-A $\textit{right-to-left maximum}$ (abbreviated to RLMax) of $\pi$ is an element that does not have any element above it and to its right (see Figure $\ref{fig:left to right maxima}$). Formally, $\pi[i]$ is a RLMax if and only if $\pi[i]$ is topmost element of $\pi[i:]$. Similarly $\pi[i]$ is a $\textit{right-to-left minimum}$ (abbreviate RLMin) if and only if $\pi[i]$ is the bottommost element of $\pi[i:]$.
+A $\textit{right-to-left maximum}$ (\RLMax, for short) of $\pi$ is an element that does not have any element above it and to its right (see Figure $\ref{fig:left to right maxima}$). Formally, $\pi[i]$ is a \RLMax if and only if $\pi[i]$ is topmost element of $\pi[i:]$. Similarly $\pi[i]$ is a $\textit{right-to-left minimum}$ (\RLMin, for short) if and only if $\pi[i]$ is the bottommost element of $\pi[i:]$.
 
 \begin{figure}
 	\centering
@@ -544,17 +558,17 @@ A $\textit{right-to-left maximum}$ (abbreviated to RLMax) of $\pi$ is an element
 	\draw[fill=black] (2.5,2.5) circle (2mm);
 	%\draw (2.5,2.5) -- (2.5,6.5);
 	%\draw (2.5,2.5) -- (6,2.5);
-	
-	\draw [pattern=north east lines] (2.5,2.5) rectangle (6,6);
-	
-	\end{tikzpicture} 
 
-	
-	
-	
-	
+	\draw [pattern=north east lines] (2.5,2.5) rectangle (6,6);
+
+	\end{tikzpicture}
+
+
+
+
+
 	\caption[Example pattern matching]{
-		The element is a RLMax if and only if the hashed area is empty.} 
+		The element is a \RLMax if and only if the hashed area is empty.}
 	\label{fig:left to right maxima}
 \end{figure}
 
@@ -606,7 +620,7 @@ without any element underlined.
 For example,
 let
 $\widetilde{\sigma} = \BV{1\overline{23}4\urcorner}{\llcorner 21\underline{43}}$,
-in $3217845$, $\textbf{32}17\textbf{84}5$ is an occurrence  of $\widetilde{\sigma}$ but $3\textbf{21}\textbf{7}8\textbf{4}5$ is not 
+in $3217845$, $\textbf{32}17\textbf{84}5$ is an occurrence  of $\widetilde{\sigma}$ but $3\textbf{21}\textbf{7}8\textbf{4}5$ is not
 and $\sigma = 2143$.
 The best general reference for bivincular pattern is \cite{Kitaev:book:2011}.
 
@@ -617,25 +631,25 @@ The best general reference for bivincular pattern is \cite{Kitaev:book:2011}.
 Geometrically, we represent underlined and overlined elements by \textit{forbidden areas}.
 If two elements are overlined then we draw a horizontal forbidden area between those two points.
 In an occurrence, we also draw the forbidden area between the matching of two overlined elements.
-This area must be empty to have a valid occurrence of the bivincular pattern. 
+This area must be empty to have a valid occurrence of the bivincular pattern.
 If the area is empty then there is no element between them when reading the permutation
-from bottom to top, 
+from bottom to top,
 in other words the matching elements are consecutive in value.
-If two elements are underlined then we draw an vertical forbidden area.
+If two elements are underlined then we draw a vertical forbidden area.
 (See Figure \ref{example:bivincular pattern matching}).
 
 
-\begin{figure}[t] 
+\begin{figure}[t]
 	\centering
 
     	\begin{tikzpicture}[scale=.5]
     	\draw [pattern=north east lines] (0,1.5) rectangle (4,2.5);
     	\draw [pattern=north east lines] (0,3.5) rectangle (4,4);
-    	
+
     	\draw [pattern=north west lines] (0,0) rectangle (0.5,4);
     	\draw [pattern=north west lines] (2.5,0) rectangle (3.5,4);
-    	
-    	
+
+
     	\draw (0,0) -- (4,0) -- (4,4) -- (0,4) -- cycle;
     	\foreach \i in {1, 2, 3, 4}{
     		\draw[dotted] (0,\i) -- (4, \i);
@@ -650,58 +664,58 @@ If two elements are underlined then we draw an vertical forbidden area.
     	\begin{tikzpicture}[scale=.5]
     	\draw [pattern=north east lines] (0,6.5) rectangle (7,7);
     	\draw [pattern=north east lines] (0,2.5) rectangle (7,3.5);
-    	
+
     	\draw [pattern=north west lines] (0,0) rectangle (0.5,7);
     	\draw [pattern=north west lines] (4.5,0) rectangle (5.5,7);
-    	
-    	%$3217845$ 
-    	
+
+    	%$3217845$
+
     	\draw (0,0) -- (7,0) -- (7,7) -- (0,7) -- cycle;
     	\foreach \i in {1, 2, 3, 4, 5, 6, 7}{
     		\draw[dotted] (0,\i) -- (7, \i);
     		\draw[dotted] (\i,0) -- (\i, 7);
     	}
-    	
+
 		\draw[fill=black,double, double distance=1pt] (0.5,2.5) circle (2mm);
 		\draw[fill=black,double, double distance=1pt] (1.5,1.5) circle (2mm);
 		\draw[fill=black] (2.5,0.5) circle (2mm);
 		\draw[fill=black] (3.5,5.5) circle (2mm);
 		\draw[fill=black,double, double distance=1pt] (4.5,6.5) circle (2mm);
 		\draw[fill=black,double, double distance=1pt] (5.5,3.5) circle (2mm);
-		\draw[fill=black] (6.5,4.5) circle (2mm);	
-    	
-    	\end{tikzpicture}  
+		\draw[fill=black] (6.5,4.5) circle (2mm);
+
+    	\end{tikzpicture}
     	\quad
     	\begin{tikzpicture}[scale=.5]
     	\draw [pattern=north east lines] (0,5.5) rectangle (7,7);
     	\draw [pattern=north east lines] (0,2.5) rectangle (7,3.5);
-    	
+
     	\draw [pattern=north west lines] (0,0) rectangle (1.5,7);
     	\draw [pattern=north west lines] (3.5,0) rectangle (5.5,7);
-    	
-    	%$3217845$ 
-    	
+
+    	%$3217845$
+
     	\draw (0,0) -- (7,0) -- (7,7) -- (0,7) -- cycle;
     	\foreach \i in {1, 2, 3, 4, 5, 6, 7}{
     		\draw[dotted] (0,\i) -- (7, \i);
     		\draw[dotted] (\i,0) -- (\i, 7);
     	}
-    	
+
     	\draw[fill=black] (0.5,2.5) circle (2mm);
     	\draw[fill=black,double, double distance=1pt] (1.5,1.5) circle (2mm);
     	\draw[fill=black,double, double distance=1pt] (2.5,0.5) circle (2mm);
     	\draw[fill=black,double, double distance=1pt] (3.5,5.5) circle (2mm);
     	\draw[fill=black] (4.5,6.5) circle (2mm);
     	\draw[fill=black,double, double distance=1pt] (5.5,3.5) circle (2mm);
-    	\draw[fill=black] (6.5,4.5) circle (2mm);	
-    	
-    	\end{tikzpicture}  
-    	 
-    	 
-    	    	
+    	\draw[fill=black] (6.5,4.5) circle (2mm);
+
+    	\end{tikzpicture}
+
+
+
     	\caption[Example pattern matching]{
     		From left to right,
-    		the bivincular pattern $\widetilde{\sigma} = \BV{1\overline{23}4\urcorner}{\llcorner 21\underline{43}  }$, an occurrence of $\widetilde{\sigma}$ in $3216745$, an occurrence of $\sigma$ in $3216745$ but not an occurrence of $\widetilde{\sigma}$ because the points $(1,3)$ and $(5,7)$ are in the forbidden areas.} 
+    		the bivincular pattern $\widetilde{\sigma} = \BV{1\overline{23}4\urcorner}{\llcorner 21\underline{43}  }$, an occurrence of $\widetilde{\sigma}$ in $3216745$, an occurrence of $\sigma$ in $3216745$ but not an occurrence of $\widetilde{\sigma}$ because the points $(1,3)$ and $(5,7)$ are in the forbidden areas.}
     	\label{example:bivincular pattern matching}
 \end{figure}
 
@@ -733,14 +747,15 @@ $231$ or $213$ with $1$ and $n$ as the `$1$' and `$3$' resp..
 \begin{corollary}
 \label{corollary:minmaxelement}
 $\pi$ is a wedge permutation of size $n$ if and only if for $1 \leq i \leq n$,
-$\pi[i]$ is a RLMax or a RLMin.
+$\pi[i]$ is a \RLMax or a \RLMin.
 \end{corollary}
 
-\begin{proof} %[of Lemma~\ref{lemma:first element is 1 or n}]
-Given a position $i$, $\pi[i:]$ is a wedge permutation,
-so it either starts with the maximal or the minimal element.
-\qed
-\end{proof}
+%% \begin{proof} %[of Lemma~\ref{lemma:first element is 1 or n}]
+%% Given a position $i$, $\pi[i:]$ is a wedge permutation,
+%% so it either starts with the maximal or the minimal element.
+%% \qed
+%% \end{proof}
+
 
 As a consequence, a wedge permutation can be partitioned 
 into three sets: the set of RLMax elements, the set of RLMin elements and the 
@@ -752,11 +767,16 @@ represents whether $\pi[i]$ is a RLMax element or a RLMin element.
 We call this bijection $\bijection$.
 
 
+As a consequence, every element of a wedge permutation can be partitioned
+into three sets: the set of \RLMax elements, the set of \RLMin elements and the
+rightmost element which can be both a \RLMax element and a \RLMin element.
+
+
 \begin{remark}
-The set of RLMax elements is a decreasing subsequence,
-indeed each element is left above the next RLMax element by definition
-of a RLMax element. In the same fashion, 
-the set of RLMin elements is an increasing subsequence.
+The set of \RLMax elements is a decreasing subsequence,
+indeed each element is left above the next \RLMax element by definition
+of a \RLMax element. In the same fashion,
+the set of \RLMin elements is an increasing subsequence.
 See Figure~\ref{fig:shape of the permutation plus factor}.
 \end{remark}
 
@@ -775,6 +795,7 @@ For any permutation, to figure out whether or not an element is a RLMax element 
 one has to run the whole permutation from left to right starting 
 from the position of the element, we give a corollary of lemma~\ref{lemma:first element is 1 or n}, to guest it in constant time for a wedge permutation. 
 
+
 \begin{corollary}
 \label{corollary:max is ascent}
 Let $\pi$ be a wedge permutation and $1 \leq i < n$. Then,
@@ -786,14 +807,14 @@ Let $\pi$ be a wedge permutation and $1 \leq i < n$. Then,
 \end{corollary}
 
 %\begin{remark}
-%Corollary~\ref{corollary:max is ascent} allows to compute 
+%Corollary~\ref{corollary:max is ascent} allows to compute
 %\end{remark}
 
 %For convenience when drawing a random wedge permutation
 %we will sometime represent a sequence of ascent/descent element by lines (see Figure \ref{fig:shape of the permutation} and \ref{fig:shape of the permutation plus factor}).
 
 
-%\begin{figure}[t] 
+%\begin{figure}[t]
 %	\centering
 %	\begin{tikzpicture}[scale=.3]
 %	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
@@ -810,19 +831,19 @@ Let $\pi$ be a wedge permutation and $1 \leq i < n$. Then,
 %	\draw[fill=black] (6.5,6.5) circle (2mm);
 %	\draw[fill=black] (7.5,5.5) circle (2mm);
 %	\draw[fill=black] (8.5,4.5) circle (2mm);
-%	
+%
 %	\draw (0,0) -- (3,3);
 %	\draw (3,9) -- (5,7);
 %	\draw (5,3) -- (6,4);
 %	\draw (6,7) -- (9,4);
-%	
-%	
-%	\end{tikzpicture}	
-%	
-%	
+%
+%
+%	\end{tikzpicture}
+%
+%
 %	\caption{The wedge permutation $123984765$, every point which is on a north-west to south-east line represents a descent element and every point which is on a south-west to north-east line represents an ascent element.}
 %	\label{fig:shape of the permutation}
-%\end{figure}	
+%\end{figure}
 
 Now that we had highlight some structural point of a wedge permutation,
 we can use this structure to solve the permutation pattern matching.
@@ -832,7 +853,7 @@ thank to the following lemma.
 \begin{lemma}
 \label{lemma:MatchStripeToPermutation}
 Let $\pi$ and $\sigma$ be two wedge permutations.
-Then, $\pi$ has an occurrence of $\sigma$ if and only if 
+Then, $\pi$ has an occurrence of $\sigma$ if and only if
 there exists a subsequence $t$ of $\pi$ such $\bijection(t)=\bijection(\sigma)$.
 \end{lemma}
 
@@ -841,10 +862,10 @@ The forward direction is obvious.
 We prove the backward direction by induction on the size of
 $\sigma$: if $\bijection(t)=\bijection(\sigma)$ then $t$ is an occurrence of $\sigma$.
 The base case is a pattern of size $2$.
-Suppose that $\sigma = 12$ and thus $\bijection(\sigma) = RLMin$.
+Suppose that $\sigma = 12$ and thus $\bijection(\sigma) = \RLMin$.
 Let $t = \pi_{i_1}\pi_{i_2}$, $i_1 < i_2$, be a subsequence of $\pi$
-such that $\bijection(t) = RLMin$, this reduces to saying that
-$\pi_{i_1} < \pi_{i_2}$, 
+such that $\bijection(t) = \RLMin$, this reduces to saying that
+$\pi_{i_1} < \pi_{i_2}$,
 and hence that $t$ is an occurrence of $\sigma = 12$ in $\pi$.
 A similar argument shows that the lemma holds for $\sigma = 21$.
 Now, assume that the lemma is true for all patterns up to size $k \geq 2$.
@@ -855,7 +876,7 @@ $\bijection(t) = \bijection(\sigma)$.
 As $\bijection(t)[2:] = \bijection(\sigma)[2:]$
 by the induction hypothesis, it follows that
 $t[2:]$ is an occurrence of $\sigma[2:]$.
-Moreover $\bijection(t)[1] = \bijection(\sigma)[1]$ 
+Moreover $\bijection(t)[1] = \bijection(\sigma)[1]$
 thus $t[1]$ and $\sigma[1]$ are both either the bottommost or the topmost
 element of their respective sequences.
 Therefore, $t$ is an occurrence of $\sigma$ in $\pi$.
@@ -874,9 +895,9 @@ One can decide whether $\pi$ has an occurrence of $\sigma$ in linear time.
 \begin{proof}
 According to Lemma~\ref{Proposition:both permutations are avoiding} the problem reduces
 to deciding whether $\bijection(\sigma)$ occurs as a subsequence in $\bijection(\pi)$.
-This can be solved in linear time with a straightforward greedy approach as follows. 
-We read both $\bijection(\sigma)$ and $\bijection(\pi)$ from left to right; 
-when two letters are equal, we match them, and move to the next in both 
+This can be solved in linear time with a straightforward greedy approach as follows.
+We read both $\bijection(\sigma)$ and $\bijection(\pi)$ from left to right;
+when two letters are equal, we match them, and move to the next in both
 $\bijection(\sigma)$ and $\bijection(\pi)$ (if such letters exist);
 otherwise we stay at the same letter of $\bijection(\sigma)$
 but move to the next one in $\bijection(\pi)$ (if it exists);
@@ -885,7 +906,7 @@ we accept exactly when all letters of B(sigma) have been matched.
 \end{proof}
 
 Thanks to Corollary~\ref{corollary:max is ascent},
-we do not need to compute the words $\bijection(\sigma)$ and $\bijection(\pi)$ before running the greedy algorithm. 
+we do not need to compute the words $\bijection(\sigma)$ and $\bijection(\pi)$ before running the greedy algorithm.
 This computation can be done at the same time as running the algorithm,
 thus, giving an on-line algorithm.
 
@@ -898,11 +919,11 @@ thus, giving an on-line algorithm.
 This section focuses on the permutation pattern matching problem
 in case only the pattern $\sigma$ is a wedge permutation.
 We need to consider a specific decomposition of $\sigma$ into \textit{factors}:
-we split the permutation into maximal sequences of consecutive RLMin and RLMax elements, respectively called a RLMin factor and a RLMax factor.
-This corresponds to splitting the permutation between every pair of RLMin-RLMax and RLMax-RLMin elements (see Figure \ref{fig:shape of the permutation plus factor}).
+we split the permutation into maximal sequences of consecutive \RLMin and \RLMax elements, respectively called a \RLMin factor and a \RLMax factor.
+This corresponds to splitting the permutation between every pair of \RLMin-\RLMax and \RLMax-\RLMin elements (see Figure \ref{fig:shape of the permutation plus factor}).
 For the special case of a wedge permutation, this also corresponds to split the permutation into maximal sequences of elements consecutive in value.
 We label the factors from right to left.
-Note that the rightmost element can be both a RLMin or a RLMax,
+Note that the rightmost element can be both a \RLMin or a \RLMax,
 we take the convention that it is as the same type as the element before it for the factorization,
 such that the first factor (the rightmost factor) always contains at least two
 elements.
@@ -911,19 +932,19 @@ $\sigma = 123984765$ is split as
 $123-98-4-765$.
 Hence
 $\sigma =$ $\factor(4)$ $\factor(3)$ $\factor(2)$ $\factor(1)$ with
-$\factor(4) =123$, $\factor(3) = 98$, $\factor(2) = 4$ and $\factor(1) = 765$. 
+$\factor(4) =123$, $\factor(3) = 98$, $\factor(2) = 4$ and $\factor(1) = 765$.
 
 \begin{remark}
-A factor is either an increasing or a decreasing sequence of elements. 
+A factor is either an increasing or a decreasing sequence of elements.
 \end{remark}
 
-To lighten a figure of an occurrence 
-and to help the comprehension, 
+To lighten a figure of an occurrence
+and to help the comprehension,
 we represent
-an occurrence in $\pi$ (or a part of it) by any rectangle $((A_x,A_y),(B_x,B_y))$ that 
+an occurrence in $\pi$ (or a part of it) by any rectangle $((A_x,A_y),(B_x,B_y))$ that
 contains
 at least all the points of the elements of the occurrence,
-where $A$ is the bottom left corner and 
+where $A$ is the bottom left corner and
 $B$ is the top right corner.
 Formally the rectangle $((A_x,A_y),(B_x,B_y))$
 is the set of points in $\pi[A_x:B_x]$
@@ -942,21 +963,21 @@ See Figure \ref{fig:decomposition of an occurrence}.
 
 \begin{remark}
 A rectangle contains
-an occurrence of a RLMin (resp. RLMax) factor if and only if 
+an occurrence of a \RLMin (resp. \RLMax) factor if and only if
 the rectangle contains an increasing (resp. decreasing) subsequence
-of same size or larger than the size of the factor. 
+of same size or larger than the size of the factor.
 \end{remark}
 
 We give a property of a wedge permutation that
-allows us to decide whether a rectangle 
+allows us to decide whether a rectangle
 contains an occurrence of the wedge permutation:
-given a rectangle we show that we can spilt the 
+given a rectangle we show that we can spilt the
 rectangle in two smaller rectangles.
 The splitting transforms the problem
 in deciding whether or not each of the two rectangles
 contains part of the wedge permutation.
 Intuitively, the problems on the two rectangles
-are easier than the problem on the original rectangle.  
+are easier than the problem on the original rectangle.
 
 \begin{lemma}
 There exists an occurrence of a wedge permutation
@@ -979,7 +1000,7 @@ in respect to the time and space complexity,
 but it helps to understand the best version.
 
 \begin{lemma}
-Let $\sigma$ be a wedge permutation of size $k$ 
+Let $\sigma$ be a wedge permutation of size $k$
 and $\pi$ a permutation of size $n$.
 One can decide in polynomial time and space whether
 $\pi$ contains an occurrence $\sigma$.
@@ -987,26 +1008,26 @@ $\pi$ contains an occurrence $\sigma$.
 
 \begin{proof}
 We introduce a set of values needed in computing the permutation patten matching.
-Let $LIS_{\ptext}(((j,lb),(j',up)))$ (resp. $LDS_{\ptext}(((j,lb),(j',up)))$) be the size of the longest increasing 
+Let $LIS_{\ptext}(((j,lb),(j',up)))$ (resp. $LDS_{\ptext}(((j,lb),(j',up)))$) be the size of the longest increasing
 (resp. decreasing) subsequence in $((j,lb),(j',up))$.
 For all the rectangles
-$LIS_{\ptext}(((j,lb),(j',up)))$ and $LDS_{\ptext}(((j,lb),(j',up)))$ are computed in 
+$LIS_{\ptext}(((j,lb),(j',up)))$ and $LDS_{\ptext}(((j,lb),(j',up)))$ are computed in
 $O(n^2\log(\log(n)))$ time (see \cite{Bespamyatnikh00enumeratinglongest}).
-$LIS_{\ptext}(((j,lb),(j',up)))$ 
-(resp. $LDS_{\ptext}$ $(((j,lb),(j',up)))$) 
-allow us to decide 
+$LIS_{\ptext}(((j,lb),(j',up)))$
+(resp. $LDS_{\ptext}$ $(((j,lb),(j',up)))$)
+allow us to decide
 the existence of an occurrence of any LRMin (resp. LRMax) factor
 in the rectangle $((j,lb),(j',ub))$ in constant time
 if we precomputed it for all the rectangles.
 
 
-We solve the problem of deciding whether 
+We solve the problem of deciding whether
 a rectangle $((j,lb),(n,ub))$ contains
 an occurrence of $\factor(i)\ldots\factor(i')$,
 More formally:
 
 $$
-\PM^\pi_\sigma(i,i',((j,lb),(n,ub))) = 
+\PM^\pi_\sigma(i,i',((j,lb),(n,ub))) =
 \begin{cases}
 True & \text{if and only if $((j,lb),(n,ub))$ contains } \\
  & \text{an occurrence of $\factor(i)\ldots\factor(i')$}\\
@@ -1023,13 +1044,13 @@ We show how to compute $\PM^\pi_\sigma(i,i',((j,lb),(n,up)))$ recursively.
 \item If the permutation is reduced to a factor
 then one has to decide if the rectangle
 contains an increasing or a decreasing factor
-with the same size or larger than the 
-size of the unique factor. 
+with the same size or larger than the
+size of the unique factor.
 This case happens when $i=i'$:
 \begin{itemize}
 \item if $factor(i)$ is a LRMin factor:
 $$
-\PM^\pi_\sigma(i,i,((j,lb),(n,up))) = 
+\PM^\pi_\sigma(i,i,((j,lb),(n,up))) =
 $$
 $$
 \begin{cases}
@@ -1039,7 +1060,7 @@ False & \text{Otherwise}
 $$
 \item if $factor(i)$ is a LRMin factor:
 $$
-\PM^\pi_\sigma(i,i,((j,lb),(n,up))) = 
+\PM^\pi_\sigma(i,i,((j,lb),(n,up))) =
 $$
 $$
 \begin{cases}
@@ -1051,26 +1072,26 @@ $$
 
 
 \item Otherwise, assuming that $\factor(i)$ is a LRMin (resp. LRMax) factor,
-we need to decide if there exists a spitting of $((j,lb),(n,up))$  into two rectangle $R_1$ and $R_2$ such that 
+we need to decide if there exists a spitting of $((j,lb),(n,up))$  into two rectangle $R_1$ and $R_2$ such that
 $R_1$ is left below (resp above) $R_2$,
  $R_1$ contains an occurrence of $\factor(i)$
-and  $R_2$ contains an occurrence of 
+and  $R_2$ contains an occurrence of
 $\factor(i-1)\ldots \factor(i')$.
 A direct strategy is to try every pair of rectangles where one rectangle is left below (resp. above) the other
 and to decide whether the first one contains a occurrence of $\factor(i)$
-and the second one contains an occurrence of 
+and the second one contains an occurrence of
 $\factor(i-1)\ldots \factor(i')$.
 Note that to reduce the number of pair of rectangles to test,
 it is better to consider the biggest rectangles possible
 as long as the positions of the two rectangles are respected.
 Indeed if $R'$ is contained in $R$ and $R'$ contains an occurrence then
-$R$ also contains this occurrence, 
+$R$ also contains this occurrence,
 so we do not
-need to find an occurrence in both $R$ and $R'$ 
-but only in $R$.  
-Especially we can always consider that $R_1$ has for 
+need to find an occurrence in both $R$ and $R'$
+but only in $R$.
+Especially we can always consider that $R_1$ has for
 left bottom corner $(j,lb)$ (resp. right top corner  $(j,up)$)
-and that $R_2$ has for right top corner $(n,up)$ 
+and that $R_2$ has for right top corner $(n,up)$
 (resp. right bottom corner $(n,lb)$)
 and $R_1$ is next to $R_2$.
 More formally:
@@ -1083,7 +1104,7 @@ $$
 \bigvee_{
 \substack{
 j\leq j'<n\\ up' < up
-}	} \PM^\pi_\sigma(i,i,((j,lb),(j',up'))) \wedge 
+}	} \PM^\pi_\sigma(i,i,((j,lb),(j',up'))) \wedge
 \PM^\pi_\sigma(i-1,i',((j'+1,up'+1),(n,up)))
 $$
 
@@ -1096,7 +1117,7 @@ $$
 $$
 \bigvee_{\substack{
 j\leq j'<n \\ lb'>lb
-	}	} \PM^\pi_\sigma(i,i,((j,lb'),(j',up))) \wedge 
+	}	} \PM^\pi_\sigma(i,i,((j,lb'),(j',up))) \wedge
 \PM^\pi_\sigma(i-1,i',((j'+1,lb),(n,lb'-1)))
 $$
 \end{itemize}
@@ -1106,8 +1127,8 @@ Remark that by modifying the definition of $\PM^\pi_\sigma(i,i',((j,lb),(n,up)))
 we can reduce the computational time of the algorithm.
 Instead of asking for any occurrence in $((j,lb),(n,up)))$,
 we ask for the occurrences that start at $\pi[j]$.
-As any element in the pattern is a RLMax or a RLMin,
-the value of $\pi[j]$ can be used has a top or a bottom edge 
+As any element in the pattern is a \RLMax or a \RLMin,
+the value of $\pi[j]$ can be used has a top or a bottom edge
 of a rectangle.
 So we can remove one argument from the problem,
 reducing the maximal number of different problems that we have to compute.
@@ -1120,15 +1141,15 @@ reducing the maximal number of different problems that we have to compute.
 \end{proof}
 
 
-We extend our research to reduce the number of pairs of rectangles 
+We extend our research to reduce the number of pairs of rectangles
 that we have to test.
-Informally, 
-given that the leftmost factor is a RLMin (resp. RLMax) factor and
-given that the left top (resp. bottom left) corner of the second rectangle is fixed and 
-that the second rectangle contains the occurrence of the 
+Informally,
+given that the leftmost factor is a \RLMin (resp. \RLMax) factor and
+given that the left top (resp. bottom left) corner of the second rectangle is fixed and
+that the second rectangle contains the occurrence of the
 rest of the permutation, it is in the interest of finding an occurrence in the whole rectangle
 that the bottom (resp. top) edge of the second rectangle is the highest (resp. lowest) possible.
-Indeed, the first rectangle will have 
+Indeed, the first rectangle will have
 a highest top (resp. a lowest bottom) edge so it will contains more elements
 which is better to find an occurrence.
 The next lemma indicates which element is the topmost and the bottommost,
@@ -1163,7 +1184,7 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 %
 %
 %If $R_\alpha$ and $R_\beta$ are two different rectangles
-%of this occurrence 
+%of this occurrence
 %such that the factor of $R_\alpha$ is on the left
 %of the factor of $R_\beta$
 %then:
@@ -1175,7 +1196,7 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 %
 %\begin{proof}
 %We prove that two rectangles can
-%always be compared to each other 
+%always be compared to each other
 %horizontally.
 %Suppose that we cannot compare them,
 %in other words $R_alpha$ has for right edge
@@ -1183,7 +1204,7 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 %and $b<a$
 %\end{proof}
 
-\begin{figure}[t] 
+\begin{figure}[t]
 	\centering
 	\begin{tikzpicture}[scale=.3]
 	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
@@ -1200,30 +1221,30 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 	\draw[fill=black,double, double distance=1pt] (6.5,6.5) circle (2mm);
 	\draw[fill=black] (7.5,5.5) circle (2mm);
 	\draw[fill=black] (8.5,4.5) circle (2mm);
-	
+
 	\draw (0,0) -- (3,3);
 	\draw (3,9) -- (5,7);
 	\draw (5,3) -- (6,4);
 	\draw (6,7) -- (9,4);
-	
-	\end{tikzpicture}		
+
+	\end{tikzpicture}
 	\caption{The  wedge permutation $123984765$. Every line represents a factor, every circled point represents the leftmost element of each factor. }
 	\label{fig:shape of the permutation plus factor}
 \end{figure}
- 
+
 
 %\begin{remark}
-%In a representation of an occurrence, 
+%In a representation of an occurrence,
 %we merge the two rightmost rectangles and replace them by the smallest rectangle that contains both of them and repeat this operation.
 %Such that the right most rectangle represents the elements of the occurrence of a suffix of factor $\sigma$. See Figure \ref{fig:decomposition of an occurrence}.
 %\end{remark}
 
 
 
-\begin{figure}[t] 
-	\centering	
+\begin{figure}[t]
+	\centering
 	\begin{tikzpicture}[scale=.3]
-	
+
 	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
 	\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
 		\draw[dotted] (0,\i) -- (9, \i);
@@ -1238,11 +1259,11 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 	\draw[fill=black,double, double distance=1pt] (6.5,6.5) circle (2mm);
 	\draw[fill=black, double distance=1pt] (7.5,3.5) circle (2mm);
 	\draw[fill=black, double distance=1pt] (8.5,5.5) circle (2mm);
-	\end{tikzpicture}				
+	\end{tikzpicture}
 	\begin{tikzpicture}[scale=.3]
-	
 
-		
+
+
 	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
 	\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
 		\draw[dotted] (0,\i) -- (9, \i);
@@ -1259,13 +1280,13 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 %	\draw[fill=black, double distance=1pt] (8.5,5.5) circle (2mm);
 	\draw [pattern=north east lines] (1.5,1.5) rectangle (2.5,0.5);
 	\draw [pattern=north east lines] (4.5,8.5) rectangle (6.5,6.5);
-	\draw [pattern=north east lines] (7.5,3.5) rectangle (8.5,5.5);	
-	
+	\draw [pattern=north east lines] (7.5,3.5) rectangle (8.5,5.5);
+
 	\end{tikzpicture}
 	\begin{tikzpicture}[scale=.3]
-	
 
-		
+
+
 	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
 	\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
 		\draw[dotted] (0,\i) -- (9, \i);
@@ -1283,13 +1304,13 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 
 	\draw [pattern=north east lines] (1.5,1.5) rectangle (2.5,0.5);
 	\draw [pattern=north east lines] (4.5,8.5) rectangle (8.5,3.5);
-	%\fill[black] (7.5,3.5) rectangle (8.5,5.5);	
-	
+	%\fill[black] (7.5,3.5) rectangle (8.5,5.5);
+
 	\end{tikzpicture}
 	\begin{tikzpicture}[scale=.3]
-	
 
-		
+
+
 	\draw (0,0) -- (9,0) -- (9,9) -- (0,9) -- cycle;
 	\foreach \i in {1, 2, 3, 4, 5, 6, 7, 8, 9}{
 		\draw[dotted] (0,\i) -- (9, \i);
@@ -1307,13 +1328,13 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 
 	\draw [pattern=north east lines] (1.5,1.5) rectangle (8.5,8.5);
 	%\draw [pattern=north east lines] (4.5,8.5) rectangle (8.5,3.5);
-	%\fill[black] (7.5,3.5) rectangle (8.5,5.5);	
-	
+	%\fill[black] (7.5,3.5) rectangle (8.5,5.5);
+
 	\end{tikzpicture}
-		
+
 	\caption{From left ro right, an occurrence of a permutation
 		the same occurrence where each occurrence of a factor is represented by the minimal rectangle,
-		the same occurrence where the occurrence of the first two factor are represented by the minimal rectangle 
+		the same occurrence where the occurrence of the first two factor are represented by the minimal rectangle
 		and the same occurrence represented by its minimal rectangle.}
 	\label{fig:decomposition of an occurrence}
 \end{figure}
@@ -1323,33 +1344,33 @@ $\LMEi(\factor(4)) = 1$, $\LMEi(\factor(3)) = 4$, $\LMEi(\factor(2)) = 6$ and $\
 
 \begin{lemma}
 \label{corollary:whereIsMax}
-Given a wedge permutation $\sigma$, 
-if $\factor(i)$ is a RLMin (resp. RLMax) factor 
-the topmost (resp. bottommost) element of 
+Given a wedge permutation $\sigma$,
+if $\factor(i)$ is a \RLMin (resp. \RLMax) factor
+the topmost (resp. bottommost) element of
 $\factor(i)\ldots \factor(1)$
-is the leftmost element of $\factor(i-1)$.  
+is the leftmost element of $\factor(i-1)$.
 \end{lemma}
 
 \begin{proof} %[of Corollary~\ref{corollary:whereIsMax}]
-This corollary states that, given a wedge permutation 
-if the permutation starts with a RLMin (resp. RLMax) element then the topmost (resp. bottommost) element of this permutation is the first RLMax (resp. RLMin) element (see Figure \ref{fig:where to find the max}). This is easy to see from the shape of a wedge permutation.
-Formally, the RLMin elements are below the RLMax element, thus the topmost element must be 
-the first RLMax element, which is the leftmost element of $\factor(i-1)$.
+This corollary states that, given a wedge permutation
+if the permutation starts with a \RLMin (resp. \RLMax) element then the topmost (resp. bottommost) element of this permutation is the first \RLMax (resp. \RLMin) element (see Figure \ref{fig:where to find the max}). This is easy to see from the shape of a wedge permutation.
+Formally, the \RLMin elements are below the \RLMax element, thus the topmost element must be
+the first \RLMax element, which is the leftmost element of $\factor(i-1)$.
 \qed
 \end{proof}
 
-\begin{figure}[t] 
-	\centering	
+\begin{figure}[t]
+	\centering
 	\begin{tikzpicture}[scale=.3]
-	
-	
+
+
 %	\draw (0,0) -- (1,1);
 %	\draw (2,10) -- (3,9);
-	
+
 	\draw[fill=black] (3.5,5) circle (1mm);
 	\draw[fill=black] (4,5) circle (1mm);
 	\draw[fill=black] (4.5,5) circle (1mm);
-	
+
 	\draw (4,10) -- (5,9);
 	\draw (6,2) -- (7,3);
 	\draw (7,7) -- (8,6);
@@ -1360,40 +1381,40 @@ the first RLMax element, which is the leftmost element of $\factor(i-1)$.
 	\draw[fill=gray] (7,7) circle (2mm) node[above] {$\factor(i-1)$};
 	\draw[fill=black] (6,2) circle (0mm) node[below] {$\factor(i)$};
 		\draw[fill=black] (4,10) circle (0mm) node[above] {$\factor(i+1)$};
-	
+
 	\draw[dotted,-] (0,7) -- (13,7) node[right] {topmost element};
 	\draw[dotted,-] (0,2) -- (13,2) node[right] {bottommost element};
-	
+
 	\draw[|->] (6,0) -- (13,0) node[below] {Suffix starting at $\factor(i)$};
-	
-	
-	
+
+
+
 %	\draw (6.2,2.2) -- (6.5,10);
 %	\path (6.2,10) node[above] {$x$};
-	
-	\end{tikzpicture}		
-		
-	
+
+	\end{tikzpicture}
+
+
 	\caption{
-		The topmost element of the suffix starting at  $\factor(i)$ 
+		The topmost element of the suffix starting at  $\factor(i)$
 		is the leftmost element of $\factor(i-1)$ (represented by the grey dot).
 		$\LM{\ppattern}{\ptext}{i}{j}$ is the smallest value of the matching of the topmost element (the grey dot) in all the occurrences of the suffix starting at $\LMEi(\factor(i))$ in $\pi[j:]$.
-	}	
+	}
 	\label{fig:where to find the max}
 \end{figure}
 
 %We define the set
-$\SET{\ppattern}{\ptext}{i}{j}$ 
+$\SET{\ppattern}{\ptext}{i}{j}$
 as the set of all subsequences $s$ of $\ptext[j:]$ that start at $\ptext[j]$ and
 that are  occurrences of $\factor(i)\ldots \factor(1)$.
 %This set control the rectangles (not minimal) of the occurrences:
 %each rectangle
-%assume that $\factor(i)$ is a RLMax (resp. RLMin) factor, 
-%then $\pi[j]$ is the top left (resp. bottom left) 
-%of the rectangle of the occurrence. 
+%assume that $\factor(i)$ is a RLMax (resp. RLMin) factor,
+%then $\pi[j]$ is the top left (resp. bottom left)
+%of the rectangle of the occurrence.
 %Also, note that we can always assume that the right edge
 %of the rectangle is on the rightmost element of $\pi$,
-%as we can always expend a rectangle of a occurrence, 
+%as we can always expend a rectangle of a occurrence,
 %without loosing elements of the occurrence.
 %We are left with the choose of the top edge,
 %this is what the next lemma is for.
@@ -1401,7 +1422,7 @@ that are  occurrences of $\factor(i)\ldots \factor(1)$.
 \begin{lemma}
 \label{lemma:ts}
 Let $\ppattern$ be a wedge permutation and
-$\factor(i)$ be an RLMin (resp. RLMax) factor $\sigma$.
+$\factor(i)$ be an \RLMin (resp. \RLMax) factor $\sigma$.
 Let $\pi$ be a permutation and $s$ a subsequence of $\pi$ such that
 $s \in \SET{\ppattern}{\ptext}{i}{j}$ and
 $s$ minimizes (resp. maximizes) the matching of the leftmost element of $\factor(i-1)$.
@@ -1415,29 +1436,29 @@ Informally, this lemma states that we can replace
 the rectangle of an occurrence in $\SET{\ppattern}{\ptext}{i}{j}$
 by another rectangle of an occurrence in $\SET{\ppattern}{\ptext}{i}{j}$
 such that the second rectangle shares the same edges as the first one,
-except for the top edge which is lower. 
+except for the top edge which is lower.
 Especially the second rectangle can be chosen as the one with
-the lowest top edge in all the rectangles sharing the right, bottom 
+the lowest top edge in all the rectangles sharing the right, bottom
 and left edges.
 More formally, given any occurrence of $\factor(i+1)$ $\factor(i)$ $\ldots$ $\factor(1)$,
-where $\factor(i)$ is a RLMin (resp. RLMax) factor,
+where $\factor(i)$ is a \RLMin (resp. \RLMax) factor,
 we can replace the part of the occurrence where $\factor(i)$ $\ldots$ $\factor(1)$ occurs, by any occurrence
-that minimises (resp. maximises) the leftmost element of $\factor(i-1)$. Indeed the leftmost element of $\factor(i-1)$ is the topmost (resp. bottommost) element of  $\factor(i)$ $\ldots$ $\factor(1)$ (see Figure \ref{fig:where to find the max}). 
+that minimises (resp. maximises) the leftmost element of $\factor(i-1)$. Indeed the leftmost element of $\factor(i-1)$ is the topmost (resp. bottommost) element of  $\factor(i)$ $\ldots$ $\factor(1)$ (see Figure \ref{fig:where to find the max}).
 
 \begin{proof} %[of Lemma~\ref{lemma:ts}]
-Let us consider the case where $\factor(i)$ is a RLMin factor.
+Let us consider the case where $\factor(i)$ is a \RLMin factor.
 By definition $s$ is an occurrence of $\ppattern[\LMEi(\factor(i)):]$.
 First of all, remark that $t'$ is an occurrence of $\factor(i+1)$.
-So to prove that $t's$ is an occurrence of $\factor(i+1)\ldots \factor(1)$ we need to prove that the elements of t' are above the elements of $s$. 
-Since $t's'$ is an occurrence of $\factor(i+1)\ldots \factor(1)$ it follows that the elements of $t'$ are above the elements of $s'$. Moreover the topmost element of $s$ is below (or equal to) the topmost element of $s'$ thus the elements of $s$ are below the elements of $t'$. We use a symmetric argument if $\factor(i)$ is a RLMax factor.
+So to prove that $t's$ is an occurrence of $\factor(i+1)\ldots \factor(1)$ we need to prove that the elements of t' are above the elements of $s$.
+Since $t's'$ is an occurrence of $\factor(i+1)\ldots \factor(1)$ it follows that the elements of $t'$ are above the elements of $s'$. Moreover the topmost element of $s$ is below (or equal to) the topmost element of $s'$ thus the elements of $s$ are below the elements of $t'$. We use a symmetric argument if $\factor(i)$ is a \RLMax factor.
 \qed
 \end{proof}
 
 \begin{corollary}
-\label{corollary:we can chose a matching}	
-Let $\ppattern$ be a permutation, 
-$\factor(i)$ be a RLMin (resp. RLMax) factor
-and 
+\label{corollary:we can chose a matching}
+Let $\ppattern$ be a permutation,
+$\factor(i)$ be a \RLMin (resp. \RLMax) factor
+and
 $s$ be a subsequence of $\pi$ such that $s \in \SET{\ppattern}{\ptext}{i}{j}$ and
 that minimizes (resp. maximizes) the matching of the leftmost element of $\factor(i-1)$.
 The following statements are equivalent:
@@ -1451,16 +1472,16 @@ The following statements are equivalent:
 \begin{proof} %[of Corollary~\ref{corollary:we can chose a matching}]
 This corollary takes a step further from the previous one, as it states that if there is no occurrence of $\ppattern$ in $\ptext$ where the leftmost element of $\factor(i)$ is matched to $\ptext[j]$ and such that
 the leftmost element of $\factor(i-1)$ is minimized (resp. maximized)
-then there does not exist any occurrence at all. The backward direction is trivial and the forward direction follows the Lemma~\ref{lemma:ts}. 
+then there does not exist any occurrence at all. The backward direction is trivial and the forward direction follows the Lemma~\ref{lemma:ts}.
 \qed
 \end{proof}
 
 %This corollary is central to the algorithm because it allows to test only the occurrence that  minimizes (resp. maximizes) the leftmost element of $\factor(i-1)$.
 
-%\begin{figure}[t] 
-%	\centering	
+%\begin{figure}[t]
+%	\centering
 %	\begin{tikzpicture}[scale=.3]
-%	
+%
 %	\draw (0,9) rectangle (3,7);
 %	\draw (4,0) rectangle (6,3);
 %	\draw (6,3) rectangle (12,7);
@@ -1468,7 +1489,7 @@ then there does not exist any occurrence at all. The backward direction is trivi
 %
 %	\end{tikzpicture}
 %
-%	
+%
 %	\caption{In an occurrence, we can replace the rightmost rectangle by the dashed rectangle.}
 %	\label{fig:minimise the max}
 %\end{figure}
@@ -1479,7 +1500,7 @@ then there does not exist any occurrence at all. The backward direction is trivi
 
 \begin{proposition}
 \label{Proposition:sigma avoids 213 and 231}
-Let $\sigma$ be a wedge permutation of size $k$ 
+Let $\sigma$ be a wedge permutation of size $k$
 and $\pi$ a permutation of size $n$.
 One can decide in $O(max(kn^2,n^2\log(\log(n)))$ time
 and $O(n^3)$ space if $\pi$ contains an occurrence $\sigma$.
@@ -1489,33 +1510,33 @@ and $O(n^3)$ space if $\pi$ contains an occurrence $\sigma$.
 \begin{proof}
 The algorithm follows the previous one,
 but instead of return true or false,
-assuming that $\factor(i)$ is a RLMin (resp. RLMax) factor
-the algorithm return the value of the 
+assuming that $\factor(i)$ is a \RLMin (resp. \RLMax) factor
+the algorithm return the value of the
 top (resp. bottom) edge.
 So that once we compute the problem for $R_2$
 we can use this value has the top (resp. bottom) edge
 for the rectangle $R_1$.
 
 We first introduce a set of values needed in the problems.
-Let $LIS_{\ptext}(j,j',bound)$ (resp. $LDS_{\ptext}(j,j',bound)$) be the longest increasing 
+Let $LIS_{\ptext}(j,j',bound)$ (resp. $LDS_{\ptext}(j,j',bound)$) be the longest increasing
 (resp. decreasing) subsequence in $\ptext[j:j']$ starting at $\pi[j]$,
 with every element of this subsequence being
 smaller (resp. larger) than $bound$.
-$LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in 
+$LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in
 $O(n^2\log(\log(n)))$ time (see \cite{Bespamyatnikh00enumeratinglongest}).
-$LIS_{\ptext}(j,j',bound)$ 
-(resp. $LDS_{\ptext}(j,j',bound)$) 
-allow us to decide 
+$LIS_{\ptext}(j,j',bound)$
+(resp. $LDS_{\ptext}(j,j',bound)$)
+allow us to decide
 the existence of an occurrence of any LRMin (resp. LRMax) factor
 in the rectangle $((j,\pi[j]),(j',bound))$ (resp. $((j,bound),(j',\pi[j])$).
 
-Given a RLMin (resp. RLMax) factor $\factor(i)$  of $\sigma$ and a position $j$ in $\pi$,
+Given a \RLMin (resp. \RLMax) factor $\factor(i)$  of $\sigma$ and a position $j$ in $\pi$,
 we want the value of the top (resp. bottom) edge
 of any rectangle with left bottom (resp. with left top) corner   $(j,\pi[j])$  containing an occurrence of  $\factor(i) \ldots \factor(1)$ starting at $\pi[j]$
 and which minimizes (resp. maximizes) its top (resp. bottom) edge
 or a value which indicate that no occurrence exists in this rectangle. More formally:
 \begin{itemize}
-\item If $\factor(i)$ is RLMin factor.
+\item If $\factor(i)$ is \RLMin factor.
 
 
 $$
@@ -1525,14 +1546,14 @@ $$
 \begin{cases}
 
 	\text{The top edge of any rectangle with left bottom corner   $(j,\pi[j])$} \\
-	\text{ with right edge  $n$ containing an occurrence of  } \\	
+	\text{ with right edge  $n$ containing an occurrence of  } \\
 	\text{ $\factor(i) \ldots \factor(1)$ starting at $\pi[j]$ which minimize the top edge}  \\
 	\text{ } \\
-	\text{Or $\infty$ if no occurrence exists} \text{} \\ 
-\end{cases}		
+	\text{Or $\infty$ if no occurrence exists} \text{} \\
+\end{cases}
 $$
 
-\item If $\factor(i)$ is RLMax factor.
+\item If $\factor(i)$ is \RLMax factor.
 $$
 \PM^\pi_\sigma(i,j) =
 $$
@@ -1540,33 +1561,33 @@ $$
 \begin{cases}
 
 	\text{The bottom edge of any rectangle with left top corner   $(j,\pi[j])$} \\
-	\text{ with right edge  $n$ containing an occurrence of  } \\	
-	\text{ $\factor(i) \ldots \factor(1)$ starting at $\pi[j]$ which 
+	\text{ with right edge  $n$ containing an occurrence of  } \\
+	\text{ $\factor(i) \ldots \factor(1)$ starting at $\pi[j]$ which
 	maximize its bottom edge}  \\
 	\text{ } \\
-	\text{Or $0$ if no occurrence exists} \text{} \\ 
-\end{cases}		
+	\text{Or $0$ if no occurrence exists} \text{} \\
+\end{cases}
 $$
 
 \end{itemize}
 
 By definition, there exists an occurrence of $\ppattern$ in $\ptext$ if and only if
-there exists a $1 \leq j \leq n$ such that 
+there exists a $1 \leq j \leq n$ such that
 $\PM^\pi_\sigma(\ell,j)$ $\neq$ $0$ and $\PM^\pi_\sigma(1,\ell,j) \neq \infty$
 with $\ell$ the number of factors in $\ppattern$.
 
 We show how to compute recursively those values.
 \begin{itemize}
-\item If the permutation is reduced to a RLMin (resp. RLMax) factor
+\item If the permutation is reduced to a \RLMin (resp. \RLMax) factor
 then one has to decide the top (resp. lower ) edge of
 a rectangle that
 contains an increasing or a decreasing factor
-with the same size of larger than the 
+with the same size of larger than the
 size of the unique factor starting at $\pi[j]$.
 This case happens when $i=1$:
 
 \begin{itemize}
-\item If $\factor(i)$ is RLMin factor.
+\item If $\factor(i)$ is \RLMin factor.
 $$
 \PM^\pi_\sigma(1,j) = \min \text{\{$\pi[j']$ $ |$ if $ |factor(1)| \leq LIS_{\ptext}(j,j',\pi[j'])$\}}_{j'\geq j} \cup \{\infty\}
 $$
@@ -1574,7 +1595,7 @@ $$
 
 
 
-\item If $\factor(i)$ is RLMax factor.
+\item If $\factor(i)$ is \RLMax factor.
 $$
 \PM^\pi_\sigma(1,j) = \min \text{\{$\pi[j']$ $ |$ if $ |factor(1)| \leq LDS_{\ptext}(j,j',\pi[j'])$\}}_{j'\geq j} \cup \{0\}
 $$
@@ -1582,17 +1603,17 @@ $$
 
 
 
-\item Otherwise, if $\factor(i)$ is a RLMin (resp. RLMax) factor,
+\item Otherwise, if $\factor(i)$ is a \RLMin (resp. \RLMax) factor,
  we split the rectangle into two rectangles $R_1$ and
 $R_2$ such that $R_1$ is left below $R_2$,
 $R_1$ contains an occurrence of $\factor(i)$ starting at
 $j$
 and $R_2$ contains an occurrence of $\factor(i-1) \ldots factor(1)$
-starting at $j'>j$. 
+starting at $j'>j$.
 As said before, we only need to test the pair of rectangles
 where the rectangle $R_2$ has for left edge $j'$
 and has the highest bottom (resp. lowest top) edge.
-So for $R_2$ we want 
+So for $R_2$ we want
 a rectangle starting at $j'$
 which contains an occurrence of $\factor(i-1) \ldots factor(i')$
 starting at $j'$
@@ -1602,28 +1623,28 @@ that $R_1$ is below $R_2$,
 in other words we want $\PM^\pi_\sigma(i-1,j')$.
 As before $R_1$ has to be biggest possible and
 to ensure that $R_1$ is left below (resp. above) $R_2$,
-$R_1$ must have for top right corner $(j'-1, \PM^\pi_\sigma(i-1,j')-1 )$ 
-(resp. bottom right corner $(j'-1, \PM^\pi_\sigma(i-1,j')+1 )$). 
+$R_1$ must have for top right corner $(j'-1, \PM^\pi_\sigma(i-1,j')-1 )$
+(resp. bottom right corner $(j'-1, \PM^\pi_\sigma(i-1,j')+1 )$).
 Finally in all the "correct" pairs of rectangles,
 we need the value of the top (resp. bottom) edge of a rectangle minimizing the top edge (resp. maximizing the bottom edge)
 containing the pair of rectangles. Note that the top (resp. bottom) edge has for value $\pi[j']$
 (the matching of  $\LMEi(\factor(i-1))$). Formally:
 
-\item If $\factor(i)$ is RLMin factor:\\
+\item If $\factor(i)$ is \RLMin factor:\\
 $$
-\PM^\pi_\sigma(i,j) = 
+\PM^\pi_\sigma(i,j) =
 $$
 $
-\min \{\infty\} \cup \{ \pi[j'] \mid b=\PM^\pi_\sigma(i-1,j') \text{ is not $\infty$ and }  
+\min \{\infty\} \cup \{ \pi[j'] \mid b=\PM^\pi_\sigma(i-1,j') \text{ is not $\infty$ and }
  |factor(i)| \leq LIS_{\ptext}(j,j'-1,b-1) \}_{j' < j}
 $
 
-\item If $\factor(i)$ is RLMax factor:\\
+\item If $\factor(i)$ is \RLMax factor:\\
 $$
-\PM^\pi_\sigma(i,j) = 
+\PM^\pi_\sigma(i,j) =
 $$
 $
-\min \{\infty\} \cup \{ \pi[j'] \mid b=\PM^\pi_\sigma(i-1,j') \text{ is not $\infty$ and }  
+\min \{\infty\} \cup \{ \pi[j'] \mid b=\PM^\pi_\sigma(i-1,j') \text{ is not $\infty$ and }
 |factor(i)| \leq LDS_{\ptext}(j,j'-1,b+1) \}_{j' < j}
 $
 
@@ -1632,12 +1653,12 @@ $
 
 \end{itemize}
 
-%Informally, when deciding whether an occurrence of 
+%Informally, when deciding whether an occurrence of
 %$\factor[i]\ldots \factor[1]$ starting at $j$ exists,
 %assuming that $\factor(i)$ is a LRMin factor:
 %We can decide whether or not the rectangle $R_1$ which has for bottom left corner
-%$(j,\pi[j])$ and for top right corner $(j',bound)$ 
-%contains an occurrence 
+%$(j,\pi[j])$ and for top right corner $(j',bound)$
+%contains an occurrence
 %of $\factor[i]$, thanks to $LIS_{\ptext}(j,j',bound+1)$.
 %Next we need to find an occurrence of $\factor[i-1]\ldots \factor[1]$ which is contained in a rectangle $R_2$ such that $R_2$ is right above $R_1$.
 %A naive solution is to try every pair of rectangles
@@ -1646,11 +1667,11 @@ $
 %We show how to choose $R_1$ and $R_2$ in a smart way.
 %\begin{itemize}
 %\item The only condition requires is that $R_2$ is right above $R_1$.
-%To ensure that $R_2$ is on the right of $R_1$, we fix the left edge of 
+%To ensure that $R_2$ is on the right of $R_1$, we fix the left edge of
 %$R_2$ to $j'+1$. As said before, the right edge is the rightmost possible. Corollary~\ref{corollary:we can chose a matching} ensures that
 %we only need to consider the rectangle $R_2$ with the topmost bottom edge to decide whether an occurrence exist. Moreover the value of the topmost bottom edge possible is $\LM{\ppattern}{\ptext}{i-1}{j'}$.
-%So $R_2$ has for bottom edge $\LM{\ppattern}{\ptext}{i-1}{j'}$. 
-%\item For the top right corner of $R_1$ ($(j',bound)$), 
+%So $R_2$ has for bottom edge $\LM{\ppattern}{\ptext}{i-1}{j'}$.
+%\item For the top right corner of $R_1$ ($(j',bound)$),
 %there is no smart way to choose $j'$, we need to iterate over
 %every $j<j'$ possible. To ensure that $R_1$ is below $R_2$,
 %we fix the top edge of $R_1$ to $\LM{\ppattern}{\ptext}{i-1}{j'}-1$.
@@ -1668,15 +1689,15 @@ $
 %
 %\noindent\textbf{BASE:}
 %\begin{align*}
-%\LM{\ppattern}{\ptext}{1}{j} 
+%\LM{\ppattern}{\ptext}{1}{j}
 %&=
 %\begin{cases}
-%		\min_{j<j'}\{\infty\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } 
+%		\min_{j<j'}\{\infty\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent }
 %			& \text{if $\factor(1)$ is}  \\
 %		\text{ $|\factor(1)| \leq LIS(j,j',\ptext[j']+1)  $}\}
 %			&\text{ a RLMin factor} \\
 %		&\\
-%		\max_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent } 
+%		\max_{j<j'}\{0\} \cup \{\ptext[j'] |\text{ $j'$ such that \indent }
 %			& \text{if $\factor(1)$ is}  \\
 %		\text{ $|\factor(1)| \leq LDS(j,j',\ptext[j']-1) $}\}
 %			&\text{ a RLMax factor}\\
@@ -1688,7 +1709,7 @@ $
 %}
 %\\
 %\intertext{\textbf{STEP:}}
-%\LM{\ppattern}{\ptext}{i}{j} 
+%\LM{\ppattern}{\ptext}{i}{j}
 %&=
 %\begin{cases}
 %	\min \{\infty\} \cup  \AF{\ppattern}{\ptext}{i}{j} &
@@ -1697,8 +1718,8 @@ $
 %	\text{if $\factor(i)$ is a RLMax factor}\\
 %\end{cases}
 %\end{align*}
-%where $\AF{\ppattern}{\ptext}{i}{j}$ and $\DF{\ppattern}{\ptext}{i}{j}$ are 
-%the sets 
+%where $\AF{\ppattern}{\ptext}{i}{j}$ and $\DF{\ppattern}{\ptext}{i}{j}$ are
+%the sets
 %of elements matching the leftmost element of $\factor(i-1)$ in an occurrence of $\sigma[\LMEi(\factor(i)):]$ starting at $\ptext[j:]$.
 %$\AF{\ppattern}{\ptext}{i}{j}$ (resp. $\DF{\ppattern}{\ptext}{i}{j}$)
 %can be understand as the set of all top edges (resp. bottom edges)
@@ -1710,10 +1731,10 @@ $
 %\begin{align*}
 %\AF{\ppattern}{\ptext}{i}{j}
 %&=
-%\text{$\{\ptext[j'+1] \;|\; j<j'<n$ and $\LM{\ppattern}{\ptext}{i-1}{j'+1} \neq 0$ and} 
+%\text{$\{\ptext[j'+1] \;|\; j<j'<n$ and $\LM{\ppattern}{\ptext}{i-1}{j'+1} \neq 0$ and}
 %\\
-%&\qquad 
-%\text{$|\factor(i)| \leq LIS_{\ptext}(j,j',\LM{\ppattern}{\ptext}{i-1}{j'+1})\}$} 
+%&\qquad
+%\text{$|\factor(i)| \leq LIS_{\ptext}(j,j',\LM{\ppattern}{\ptext}{i-1}{j'+1})\}$}
 %\\
 %\DF{\ppattern}{\ptext}{i}{j}
 %&=
@@ -1728,9 +1749,9 @@ Every instance of $LIS_{\ptext}$ and $LDS_{\ptext}$ can be computed in $O(n^2\lo
 and takes $O(n^3)$ space.
 There are $n$ base cases that can be computed in $O(n)$ time, thus computing every base case
 takes $O(n^2)$ time.
-There are $kn$ different instances of $\AFa$ and each one of them takes $O(n)$ time to compute, 
+There are $kn$ different instances of $\AFa$ and each one of them takes $O(n)$ time to compute,
 thus computing every instance of $\AFa$ takes $O(kn^2)$ time.
-There are $kn$ different instances of $\LMa$ and each one of them takes $O(n)$, 
+There are $kn$ different instances of $\LMa$ and each one of them takes $O(n)$,
 thus computing every $\LMa$ takes $O(kn^2)$ time.
 Thus computing all the values takes $O(max(kn^2,n^2\log(\log(n)))$ time.
 Every value takes $O(1)$ space, thus the problem takes $O(kn^2)$ space
@@ -1753,9 +1774,9 @@ to be consecutive in value or/and in position.
 %the same permutation pattern.
 Intuitively we cannot use the previous algorithm, as the restrictions on position and value are not managed.
 
-Given a bivincular permutation pattern $\widetilde{\sigma}$, 
+Given a bivincular permutation pattern $\widetilde{\sigma}$,
 we let $\widetilde{\sigma}[i:]$ refers to
-the bivincular permutation pattern 
+the bivincular permutation pattern
 which has for bottom line the bottom line of $\widetilde{\sigma}$
 where we remove the elements before $i$
 and has for top line the elements of $\sigma[i:]$
@@ -1763,27 +1784,27 @@ where $m$ and $m+1$ are overlined if and only if
 $m$ and $m+1$ are in $\sigma[i:]$,
 and $m$ and $m+1$ are overlined in $\widetilde{\sigma}$.
 For example given $\widetilde{\sigma} = \BV{12\overline{34}\urcorner}{\llcorner 21\underline{43}}$,
-$\sigma = 2143$ and 
-$\widetilde{\sigma}[2:] = \BV{2\overline{34}\urcorner}{1\underline{43}}$. 
+$\sigma = 2143$ and
+$\widetilde{\sigma}[2:] = \BV{2\overline{34}\urcorner}{1\underline{43}}$.
 
 We describe other structures properties of wedge permutations
 needed to solve the problem.
 
 \begin{lemma}
 \label{lemma:after}
-Let $\sigma$ be a wedge permutation. 
+Let $\sigma$ be a wedge permutation.
 \begin{itemize}
-\item If $\sigma[i]$ is a RLMin element and is not the rightmost element, then $\sigma[i]+1$ is to the right of $\sigma[i]$. 
-\item If $\sigma[i]$ is a RLMax element and is not the rightmost element, then $\sigma[i]-1$ is to the right of $\sigma[i]$. 
+\item If $\sigma[i]$ is a \RLMin element and is not the rightmost element, then $\sigma[i]+1$ is to the right of $\sigma[i]$.
+\item If $\sigma[i]$ is a \RLMax element and is not the rightmost element, then $\sigma[i]-1$ is to the right of $\sigma[i]$.
 \end{itemize}
 \end{lemma}
 
 \begin{proof}
 For the first point,
-by contradiction, $\sigma[i]+1$ would serve as a `$2$', $\sigma[i]$ would serve as a `$1$' and $\sigma[i+1]$ would serve as a `$3$' in 
+by contradiction, $\sigma[i]+1$ would serve as a `$2$', $\sigma[i]$ would serve as a `$1$' and $\sigma[i+1]$ would serve as a `$3$' in
 an occurrence of $213$.
 For the second point,
-by contradiction, $\sigma[i]-1$ would serve as a `$2$', $\sigma[i]$ would serve as a `$3$' and $\sigma[i+1]$ would serve as a `$1$' in 
+by contradiction, $\sigma[i]-1$ would serve as a `$2$', $\sigma[i]$ would serve as a `$3$' and $\sigma[i+1]$ would serve as a `$1$' in
 an occurrence of $231$.
 \qed
 \end{proof}
@@ -1792,12 +1813,12 @@ an occurrence of $231$.
 \label{lemma:ascentDescentAscent}
 Let $\sigma$ be a wedge permutation.
 \begin{itemize}
-\item If $m$ and $m+1$ are both RLMin elements
+\item If $m$ and $m+1$ are both \RLMin elements
 then any element between $m$ and $m+1$ (if any)
-is a RLMax element.
+is a \RLMax element.
 \item If $m$ and $m-1$ are both RLmax elements
 then any element between $m$ and $m-1$ (if any)
-is a RLMin element.
+is a \RLMin element.
 \end{itemize}
 
 \end{lemma}
@@ -1807,8 +1828,8 @@ is a RLMin element.
 For the first point, by contradiction,
 let $\sigma[\alpha]=m$ and $\sigma[\beta]=m+1$
 and suppose that there exists $\alpha < \gamma < \beta$,
-such that $\sigma[\gamma]$ is a RLMin element.
-We know that RLMin are strictly increasing so
+such that $\sigma[\gamma]$ is a \RLMin element.
+We know that \RLMin are strictly increasing so
 $\sigma[\alpha] <  \sigma[\gamma] < \sigma[\beta]$,
 which contradict the fact that $\sigma[\beta]=\sigma[\alpha]+1$.
 \qed
@@ -1824,78 +1845,78 @@ and $O(kn^3)$ space if $\pi$ contains an occurrence $\widetilde{\sigma}$.
 
 \begin{proof}
 
-%\begin{figure}[t] 
-%	\centering	
+%\begin{figure}[t]
+%	\centering
 %	\begin{tikzpicture}[scale=.3]
 %	\draw[pattern=north east lines] (0,12) rectangle (1,11);
 %	\draw[dotted,-] (0,10.5) -- (14,10.5) node[right] {$\ub$};
 %
 %	\draw[pattern=north east lines] (2,0) rectangle (3,1);
 %	\draw[dotted,-] (0,1.5) -- (14,1.5) node[right] {$\lb$};
-%	
+%
 %	\draw[fill=black] (3,1) circle (1mm) ;
-%	
+%
 %	\draw[dotted,-] (3.5,12) -- (3.5,-1);
-%	
+%
 %	% le reste du match
 %	\draw[pattern=grid] (5,8) rectangle (12,4);
 %	\draw (5,4) -- (7.7,7);
-%	
+%
 %	%point du bot
 %	\draw[fill=black] (5,4) circle (1mm) node[above] {$\pi[\ell]$} ;
-%	
-%	\draw[thick,<->] (5,3.9) -- (5,1.5) ;	
+%
+%	\draw[thick,<->] (5,3.9) -- (5,1.5) ;
 %	\draw (5,2.7) node[right] {$\overline{(\sigma[i]-1)\sigma[i]}$};
-%	
-%	\draw[thick,<->] (4.9,4) -- (3.5,4)  node[left] {$\underline{\sigma[i-1]\sigma[i]}$};	
-%	
+%
+%	\draw[thick,<->] (4.9,4) -- (3.5,4)  node[left] {$\underline{\sigma[i-1]\sigma[i]}$};
+%
 %	% point du top
 %	\draw[fill=black] (8,8) circle (1mm) ;
-%	\draw[thick,<->] (8,8.1) -- (8,10.5) ;	
+%	\draw[thick,<->] (8,8.1) -- (8,10.5) ;
 %	\draw (8,9) node[right] {$\overline{\sigma[i'](\sigma[i']+1)}$};
-%		
 %
-%	\end{tikzpicture}		
+%
+%	\end{tikzpicture}
 %	\begin{tikzpicture}[scale=.3]
 %	\draw[pattern=north east lines] (0,12) rectangle (1,11);
 %	\draw[dotted,-] (0,10.5) -- (14,10.5) node[right] {$\ub$};
-%	
+%
 %	\draw[pattern=north east lines] (2,0) rectangle (5,4);
 %	\draw[dotted,-] (0,4.5) -- (14,4.5) node[right] {$\lb=\pi[\ell]+1$};
-%	
+%
 %	%\draw[fill=black] (3,1) circle (1mm) node[left] {$\pi[j]$};
-%	
+%
 %	\draw[dotted,-] (5.5,12) -- (5.5,-1);
-%	
+%
 %	% le reste du match
 %	%\draw[dashed,red] (5,8) rectangle (12,4);
 %	\draw[pattern=grid] (7,6) rectangle (12,8);
 %	\draw (7,6) -- (7.7,7);
-%	
-%	
+%
+%
 %	\draw[fill=black] (5,4) circle (1mm) ;
-%	
+%
 %	%point du bot
 %	\draw[fill=black] (7,6) circle (1mm) node[above] {$\pi[\ell']$};
-%	
 %
-%	\draw[thick,<->] (7,5.9) -- (7,4.5) ;	
+%
+%	\draw[thick,<->] (7,5.9) -- (7,4.5) ;
 %	\draw (7,5.3) node[right] {$\overline{\sigma[i]\sigma[i+1]}$};
-%	
-%	\draw[thick,<->] (5.5,6)   node[left] {$\underline{\sigma[i]\sigma[i+1]}$} -- (6.9,6) ;	
-%	
+%
+%	\draw[thick,<->] (5.5,6)   node[left] {$\underline{\sigma[i]\sigma[i+1]}$} -- (6.9,6) ;
+%
 %	% point du top
 %	\draw[fill=black] (8,8) circle (1mm) ;
-%	\draw[thick,<->] (8,8.1) -- (8,10.5) ;	
+%	\draw[thick,<->] (8,8.1) -- (8,10.5) ;
 %	\draw (8,9) node[right] {$\overline{\sigma[i'](\sigma[i']+1)}$};
-%	
 %
-%	\end{tikzpicture}	
-%	
-%\caption{When solving $\PM{\sigma}{\ptext}{\lb}{\ub}{i}{j}$, with $\sigma[i]$ a RLMin element, 
+%
+%	\end{tikzpicture}
+%
+%\caption{When solving $\PM{\sigma}{\ptext}{\lb}{\ub}{i}{j}$, with $\sigma[i]$ a RLMin element,
 %the recursive calls of $\PM{*}{*}{*}{*}{*}{*}$ will have the same $\ub$ value,
 %and the $\lb$ will be equal to the matching of $\pi[i]$ plus one. %Note that there is only ascent element before $\sigma[i']$
-%}	
+%}
 %\label{fig:ub dont change}
 %\end{figure}
 
@@ -1922,7 +1943,7 @@ $$
 			& \text{and if $\overline{\sigma[j](\sigma[j]+1)}$
 			 or $\sigma[j]^\urcorner$ appear in $\widetilde{\sigma}$ then $\pi[j]=\ub$} \\
 			& \text{and if $\overline{(\sigma[j]-1)\sigma[j]}$
-			 or $^\ulcorner{\pi[j]}$ appear in $\widetilde{\sigma}$ then $\sigma[j]=\lb$} \\			 
+			 or $^\ulcorner{\pi[j]}$ appear in $\widetilde{\sigma}$ then $\sigma[j]=\lb$} \\
 	false 	& \text{otherwise}\\
 \end{cases}
 $$
@@ -1936,8 +1957,8 @@ if and only if $\PM^{\widetilde{\sigma}}_{\ptext}(1,n,1,1)$.
 
 We show how to compute recursively those values.
 Informally, to find an occurrence of $\widetilde{\sigma}[i:]$ in $\pi[j:]$,
-given that $\sigma[i]$ is a RLMin element,
-we need to find a rectangle $R$ in $\pi$ 
+given that $\sigma[i]$ is a \RLMin element,
+we need to find a rectangle $R$ in $\pi$
 such that $R$ contains an occurrence of $\widetilde{\sigma}[i+1:]$
 and $R$ is right above $\pi[j]$.
 Moreover
@@ -1955,7 +1976,7 @@ In other words $R$ has for bottom edge $\sigma[i]+1$.
 Note that the parameters $\lb$, $\ub$ and $j$ corresponding
 to the occurrence of $\widetilde{\sigma}[i+1:]$ are respectively,
 the bottom edge, the top edge and the left edge of the rectangle $R$.
-The case where $\sigma[i]$ is a RLMax element can be dealt with symmetry.
+The case where $\sigma[i]$ is a \RLMax element can be dealt with symmetry.
 More formally:
 
 \noindent\textbf{BASE:} \\
@@ -1964,11 +1985,11 @@ $$
 \begin{cases}
 	true 	& \text{if $\ptext[j] \in [\lb,\ub ]$}\\
 			& \text{and if ${\ppattern[k]}_\lrcorner$ appears in $\widetilde{\sigma}$ then $j=n$}\\
-			& \text{and if $_\llcorner{\sigma[k]}$ appears in $\widetilde{\sigma}$ then $j=1$}\\			
+			& \text{and if $_\llcorner{\sigma[k]}$ appears in $\widetilde{\sigma}$ then $j=1$}\\
 			& \text{and if ${\ppattern[k]}^\urcorner$ appears in $\widetilde{\sigma}$ then $\ptext[j]=\ub=n$}\\
-			& \text{and if  $^\ulcorner{\ppattern[k]}$ appears in $\widetilde{\sigma}$ then $\ptext[j]=\lb=1$ } \\			
+			& \text{and if  $^\ulcorner{\ppattern[k]}$ appears in $\widetilde{\sigma}$ then $\ptext[j]=\lb=1$ } \\
 			& \text{and if  $\overline{(\ppattern[k]-1)\ppattern[k]}$ appears in $\widetilde{\sigma}$ then $\ptext[j]=\lb$ }  \\
-			& \text{and if  $\overline{(\ppattern[k]\ppattern[k]+1)}$ 
+			& \text{and if  $\overline{(\ppattern[k]\ppattern[k]+1)}$
 			appears in $\widetilde{\sigma}$
 			then $\ptext[j]=\ub$}  \\
 
@@ -1980,7 +2001,8 @@ The base case finds an occurrence for the rightmost element of the pattern. If t
 If  $\overline{(\ppattern[k]-1)\ppattern[k] }$ appears in $\widetilde{\sigma}$ then the matching element of $\ppattern[k]$ and $\ppattern[k]-1$ must be consecutive in value, by recursion the value of the element matching $\ppattern[k]-1$ will be recorded in $\lb$ and by adding $1$ to it thus $\ppattern[k]$ must be matched to $\lb$. 
 If  $\overline{(\ppattern[k]\ppattern[k]+1)}$ appears in $\widetilde{\sigma}$ then the element matching $\ppattern[k]$ and $\ppattern[k]+1$ must be consecutive in value, by recursion the value of the  element matching $\ppattern[k]+1$ will be recorded in $\ub$ and by removing $1$ to it thus $\ppattern[k]$ must be matched to $\ub$. 
 
-\noindent\textbf{STEP:} 
+
+\noindent\textbf{STEP:}
 
 In the following, we use the notation $\bigcup$ to
 represent the disjunction.
@@ -1992,8 +2014,8 @@ We consider 3 cases for the problem $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ub,i
 	$$
 
 	which is immediate from the definition.
-	
-	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is a RLMin element then:
+
+	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is a \RLMin element then:
 	$$
 	\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ub,i,j)=
 	\begin{cases}
@@ -2017,19 +2039,19 @@ We consider 3 cases for the problem $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ub,i
 		false & \text{otherwise}
 
 	\end{cases}
-	$$	
+	$$
 	Remark that $\ppattern[i]$  can be matched to $\pi[j]$ because $\ptext[j] \in [\lb,\ub]$.
-	Thus if $\ptext[j+1:]$ has an occurrence of $\widetilde{\sigma}[i+1:]$  with every element of the occurrence in $[\pi[j]+1,\ub]$ then 
- 	$\ptext[j:]$ has an occurrence $\widetilde{\sigma}[i:]$. 
+	Thus if $\ptext[j+1:]$ has an occurrence of $\widetilde{\sigma}[i+1:]$  with every element of the occurrence in $[\pi[j]+1,\ub]$ then
+ 	$\ptext[j:]$ has an occurrence $\widetilde{\sigma}[i:]$.
  	To decide the latter condition,
- 	it is enough to know 
+ 	it is enough to know
  	 if there exists $\ell$, $j<\ell$ such that
 	$\PM^{\widetilde{\sigma}}_{\ptext}(\ptext[j]+1,\ub,i+1,\ell)$ is true.
 	The first case corresponds to an occurrence without restriction on position and on value. 
 	The second case asks for the matching of $\ppattern[i]-1$ and $\ppattern[i]$ to be consecutive in value, but the matching of $\ppattern[i]-1$
-	is $lb-1$ thus we want $\ptext[j]=\lb$. 
-	The third case asks for the matching of $\ppattern[i]$ and $\ppattern[i+1]$ to be consecutive in positions, thus the matching of $\ppattern[i+1]$ must be $\pi[j+1]$. 
-	The fourth case is a union of the second and third case. 
+	is $lb-1$ thus we want $\ptext[j]=\lb$.
+	The third case asks for the matching of $\ppattern[i]$ and $\ppattern[i+1]$ to be consecutive in positions, thus the matching of $\ppattern[i+1]$ must be $\pi[j+1]$.
+	The fourth case is a union of the second and third case.
 %	Note that we do not have to consider the case where $\overline{\ppattern[i](\ppattern[i]+1)}$ appears in $\widetilde{\sigma}$
 %	as the element $(\ppattern[i]+1)$ is on the right of $\ppattern[i]$
 %	(see Lemma~\ref{lemma:after})
@@ -2037,10 +2059,10 @@ We consider 3 cases for the problem $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ub,i
 %	be taken care
 %	during the calls of $\PM{\widetilde{\sigma}}{\ptext}{*}{*}{i'}{*}$
 %	for some $i<i'$.
-%	Identically  we do not have to consider the case 
+%	Identically  we do not have to consider the case
 %	where $\sigma[i-1]\sigma[i]$ appears in $\widetilde{\sigma}$
-	
-	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is a RLMax element then:
+
+	\item If $\ptext[j] \in [\lb,\ub]$ and $\ppattern[i]$ is a \RLMax element then:
 
 	$$
 	\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ub,i,j)=
@@ -2058,53 +2080,54 @@ We consider 3 cases for the problem $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ub,i
 				& \text{ appears in $\widetilde{\sigma}$}\\
 				& \text{ and $\ppattern[i]$ is not overlined} \\				
 			\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ptext[j]-1,i+1,j+1)
+
 				& \text{if $\underline{\ppattern[i]\ppattern[i+1]}$ } \\
 				& \text{ and $\overline{\ppattern[i](\ppattern[i]+1)}$ or ${\ppattern[i]}^\urcorner$}\\
 				& \text{ appear in $\widetilde{\sigma}$}\\
 				& \text{ and $\ptext[j]=\ub$} \\
 			false & \text{otherwise}
 	\end{cases}
-	$$	
+	$$
 	The same remark as the last case holds.
 \end{itemize}
 
 Remark that there are constraints that we do not concern given in
 $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i,*)$.
-Especially in the case where $\sigma[i]$ is a RLMin
+Especially in the case where $\sigma[i]$ is a \RLMin
 the case where $\underline{\sigma[i-1]\sigma[i]}$,
 $\overline{\ppattern[i](\ppattern[i]+1)}$
 and every combination of the constraints
 appear in $\widetilde{\sigma}$
 are not in the conditions.
-$\underline{\sigma[i-1]\sigma[i]}$ is not 
+$\underline{\sigma[i-1]\sigma[i]}$ is not
 in the conditions because it is
 up to $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i-1,*)$
 to ensure that the elements corresponding to elements at position $i-1$ and $i$ in an occurrence are next to each other in position.
 $\overline{\ppattern[i](\ppattern[i]+1)}$ is not
-in the conditions because $\sigma[i]+1$ is on the right 
+in the conditions because $\sigma[i]+1$ is on the right
 of $\sigma[i]$ (see Lemma~\ref{lemma:after})
 and thus will
 be taken care
 during the calls of $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i',*)$
 for some $i<i'$.
 In the same fashion,
-when $\sigma[i]$ is a RLMax $\underline{\sigma[i-1]\sigma[i]}$ 
+when $\sigma[i]$ is a \RLMax $\underline{\sigma[i-1]\sigma[i]}$
 do not appear in the conditions for the exact same reason
 and $\overline{(\ppattern[i]-1)\ppattern[i]}$
-because $\sigma[i]-1$ is on the right of $\sigma[i]$. 
+because $\sigma[i]-1$ is on the right of $\sigma[i]$.
 
-Clearly the problem return true if $\pi$ contains an 
+Clearly the problem return true if $\pi$ contains an
 occurrence of $\widetilde{\sigma}$ if there is no constraint on position
 and on value.
-We now discus how the position and value constraints 
+We now discus how the position and value constraints
 are taken into account so that the algorithm
-returns true if and only if $\pi$ has an occurrence 
+returns true if and only if $\pi$ has an occurrence
 of $\widetilde{\sigma}$.
 
 \paragraph{Position Constraint.} There are 3 types of position constraints that can be added by underlined elements.
+
 \begin{itemize} 
-	\item If $_\llcorner{\sigma[1]}$ appears in $\widetilde{\sigma}$ then the leftmost element of $\sigma$  must be matched to the leftmost element of $\pi$ ($\ppattern[1]$ is matched to $\ptext[1]$ in a occurrence of $\ppattern$ in $\ptext$). This constraint is satisfied by requiring that the occurrence starts at the leftmost element of $\ptext$: if  $\PM^{\widetilde{\sigma}}_{\ptext}(1,n,1,1)$ is true.
-	
+	\item If $_\llcorner{\sigma[1]}$ appears in $\widetilde{\sigma}$ then the leftmost element of $\sigma$  must be matched to the leftmost element of $\pi$ ($\ppattern[1]$ is matched to $\ptext[1]$ in a occurrence of $\ppattern$ in $\ptext$). This constraint is satisfied by requiring that the occurrence starts at the leftmost element of $\ptext$: if  $\PM^{\widetilde{\sigma}}_{\ptext}(1,n,1,1)$ is true.	
 	\item If ${\ppattern[k]}_\lrcorner$ appears in $\widetilde{\sigma}$ then the rightmost element $\sigma$ must be matched the rightmost element of $\pi$ ($\ppattern[k]$ is matched to $\ptext[n]$ on a occurrence of $\ppattern$ in $\ptext$). This constraint is checked in the base case.
 
 	\item If $\underline{\ppattern[i]\ppattern[i+1]}$ appears in $\widetilde{\sigma}$ then the positions of the element matching $\ppattern[i]$ and $\ppattern[i+1]$ must be consecutive. In other words, if $\ppattern[i]$ is matched to $\ptext[j]$ then $\ppattern[i+1]$ must be matched to $\ptext[j+1]$. We ensure this restriction by recursion by requiring that the matching of $\ppattern[i+1:]$ starts at position $j+1$.
@@ -2115,7 +2138,7 @@ of $\widetilde{\sigma}$.
 	\item If $^\ulcorner{\sigma[i]}$ appears in $\widetilde{\sigma}$ (and thus $\sigma[i]=1$) then the bottommost element of $\ppattern$ must be matched to the bottommost element of $\ptext$.
 	\begin{itemize}
 
-		\item If $\sigma[i]$ is a RLMin element, then remark that:
+		\item If $\sigma[i]$ is a \RLMin element, then remark that:
 		\begin{itemize}
 			\item Every problem 
 			$\PM^{\widetilde{\sigma}}_{\ptext}(\lb,*,i,*)$ is true only if $\sigma[i]$ is matched to the element with value $\lb$ (by recursion).
@@ -2139,7 +2162,7 @@ of $\widetilde{\sigma}$.
 	\item If ${\ppattern[i]}^\urcorner$ appears in $\widetilde{\sigma}$ (and thus $\sigma[i]=k$) then the topmost element of $\ppattern$ must be matched to the topmost element of $\ptext$.
 	\begin{itemize}
 
-		\item If $\sigma[i]$ is a RLMax element, then remark that:
+		\item If $\sigma[i]$ is a \RLMax element, then remark that:
 		\begin{itemize}
 			\item Every problem 
 			$\PM^{\widetilde{\sigma}}_{\ptext}(*,\ub,i,*)$ is true only if $\sigma[i]$ is matched to the element with value $\ub$ (by recursion).
@@ -2164,11 +2187,11 @@ of $\widetilde{\sigma}$.
 
 		\begin{itemize}
 
-			\item The cases $\ppattern[i]$ is a RLMax element, $\ppattern[i']$ is a RLMin element and $i<i'$ or  $\ppattern[i]$ is a RLMin element, $\ppattern[i']$ is a RLMax element and $i'<i$ are not possible. 
-			Indeed $\ppattern[i]$ is the topmost element of $\ppattern[i:]$ thus $\ppattern[i] > \ppattern[i']$ which is in contradiction with 
-			$\ppattern[i']=\ppattern[i]+1$. 
-			
-			\item If $\ppattern[i]$ is a RLMin element, $\ppattern[i']$ is a RLMax element and $i<i'$ (remark that this case is symmetric to the case where $\ppattern[i]$ is a RLMax element, $\ppattern[i']$ is a RLMin element and $i'<i$), then
+			\item The cases $\ppattern[i]$ is a \RLMax element, $\ppattern[i']$ is a \RLMin element and $i<i'$ or  $\ppattern[i]$ is a \RLMin element, $\ppattern[i']$ is a \RLMax element and $i'<i$ are not possible.
+			Indeed $\ppattern[i]$ is the topmost element of $\ppattern[i:]$ thus $\ppattern[i] > \ppattern[i']$ which is in contradiction with
+			$\ppattern[i']=\ppattern[i]+1$.
+
+			\item If $\ppattern[i]$ is a \RLMin element, $\ppattern[i']$ is a \RLMax element and $i<i'$ (remark that this case is symmetric to the case where $\ppattern[i]$ is a \RLMax element, $\ppattern[i']$ is a \RLMin element and $i'<i$), then
 			remark that
 			\begin{itemize}
 				\item $i'=k$, indeed if $i'$ is not the right most element, there would exist an element between
@@ -2184,9 +2207,9 @@ of $\widetilde{\sigma}$.
 			\end{itemize}
 			So $\sigma[i]$ is matched to $\ptext[j]$ and
 			$\sigma[i']$ is matched to $\ptext[j]+1$.
-			
-			\item If $\ppattern[i]$ is a RLMin element and $\ppattern[i']$ is a RLMin element then
-			first remark: 
+
+			\item If $\ppattern[i]$ is a \RLMin element and $\ppattern[i']$ is a \RLMin element then
+			first remark:
 			\begin{itemize}
 				
 				\item From lemma~\ref{lemma:ascentDescentAscent}, 
@@ -2204,8 +2227,8 @@ of $\widetilde{\sigma}$.
 			$\sigma[i']$ is matched to $\ptext[j]+1$.
 
 
-			\item If $\ppattern[i]$ is a RLMax element and $\ppattern[i']$ is a RLMax element then
-			first remark: 
+			\item If $\ppattern[i]$ is a \RLMax element and $\ppattern[i']$ is a \RLMax element then
+			first remark:
 			\begin{itemize}
 				\item From lemma~\ref{lemma:ascentDescentAscent}, 
 				we have that $i'<i$.				
@@ -2221,7 +2244,7 @@ of $\widetilde{\sigma}$.
 			So $\sigma[i']$ is matched to $\ptext[j]$ and
 			$\sigma[i]$ is matched to $\ptext[j]-1$.
 
-				
+
 		\end{itemize}
 \end{itemize}
 
@@ -2242,22 +2265,22 @@ Given a set of permutations, one must compute the longest permutation
 which occurs in each permutation in the set.
 This problem is known to be NP-Hard for an arbitrary size of the set even
 when all the permutations of this set are separable permutations (See~\cite{2007math......2109B}).
-We show how to compute the longest wedge permutation 
+We show how to compute the longest wedge permutation
 occurring in a set.
-We do not hope that this problem is solvable in polynomial time 
-if the size of the set is not fixed. 
-Indeed the size of the set appears in the exponent 
+We do not hope that this problem is solvable in polynomial time
+if the size of the set is not fixed.
+Indeed the size of the set appears in the exponent
 in the complexity of the algorithm.
 Thus we focus on the cases where only one or two permutations are given in set.
 
 Conveniently, we say that a subsequence is
 a wedge subsequence if and only if the permutation represented by the subsequence
-is a wedge permutation. 
+is a wedge permutation.
 
 We start with the easiest case where we are given just one input permutation.
-We need the set of RLMax elements and the set of RLMin elements.
-$A(\pi) = \{i | \text{$\pi[i]$ is a RLMin element} \} \cup \{n\}$ and
-$D(\pi) = \{i | \text{$\pi[i]$ is a RLMax element} \} \cup \{n\}$.\\
+We need the set of \RLMax elements and the set of \RLMin elements.
+$A(\pi) = \{i | \text{$\pi[i]$ is a \RLMin element} \} \cup \{n\}$ and
+$D(\pi) = \{i | \text{$\pi[i]$ is a \RLMax element} \} \cup \{n\}$.\\
 
 
 \begin{proposition}
@@ -2278,12 +2301,12 @@ that $|s|>|s_i \cup s_d|$,
 first note that $A(s)$ is also an increasing subsequence with its rightmost  at position $f$ in $\pi$
 and $D(s)$ is also an decreasing subsequence with its rightmost  at position $f$ in $\pi$,
 then as $|s|>|s_i \cup s_d|$ then either $|A(s)| > |s_i|$ or $|D(s)| > |s_d|$,
-which is in contradiction with the definition of $s_i$ and $s_d$. 
+which is in contradiction with the definition of $s_i$ and $s_d$.
 \end{proof}
 
 %\begin{proposition}
 %\label{proposition:longestIncreasingSubsequence}
-%If $s$ is an occurrence of a  longest $(213,231)$-avoiding subsequence with last element at position 
+%If $s$ is an occurrence of a  longest $(213,231)$-avoiding subsequence with last element at position
 %$f$ in $\pi$ then
 %$A(s)$ is a longest increasing subsequence with last element at position $f$ and
 %$D(s)$ is a longest decreasing subsequence with last element at position $f$.
@@ -2310,11 +2333,11 @@ in $O(n\log(\log(n)))$ time and in $O(n)$ space.
 
 \begin{proof}[of Proposition~\ref{proposition:longest 2}]
 Proposition \ref{proposition:longestIncreasingSubsequence} leads to an algorithm
-where one computes the longest increasing and decreasing subsequence ending at every  possible position 
+where one computes the longest increasing and decreasing subsequence ending at every  possible position
 and then finds the maximum sum of longest increasing and decreasing subsequence ending at the same position.
-Computing the longest increasing subsequences and the longest decreasing subsequences can be done in 
-$O(n\log(\log(n)))$ time and $O(n)$ space 
-(see \cite{Bespamyatnikh00enumeratinglongest}), 
+Computing the longest increasing subsequences and the longest decreasing subsequences can be done in
+$O(n\log(\log(n)))$ time and $O(n)$ space
+(see \cite{Bespamyatnikh00enumeratinglongest}),
 then finding the maximum can be done in linear time.
 \qed
 \end{proof}
@@ -2324,7 +2347,7 @@ We  now consider the case where the input is composed of two permutations.
 
 \begin{proposition}
 Given two permutations $\pi_1$ of size $n_1$ and $\pi_2$ of size $n_2$,
-one can compute 
+one can compute
 the longest common wedge subsequence
 in $O(n_1^3n_2^3)$ time and space.
 \end{proposition}
@@ -2399,7 +2422,7 @@ or by considering the problem with $\pi_1[i_1+1:]$ and $\pi_2[i_2:]$
 or by matching  $\pi_1[i_1]$ and $\pi_2[i_2]$ and adding
 to the solution the LCS for $\pi_1[i_1+1:]$ and $\pi_2[i_2+1:]$ which is compatible,
 meaning that if we consider the current elements
-to correspond to a RLMin (resp. RLMax) element in the longest wedge subsequence
+to correspond to a \RLMin (resp. \RLMax) element in the longest wedge subsequence
 then we consider only the solution with elements above (below)
 $\pi_1[i_1]$ for the occurrence in $\pi_1[i_1+1:]$
 and $\pi_2[i_2]$ for the occurrence in $\pi_2[i_2+1:]$.
