@@ -27,8 +27,8 @@
 \DeclareMathOperator{\RED}{red}
 \DeclareMathOperator{\AV}{Av}
 
-\newcommand{\RLMin}{\text{RLMin}}
-\newcommand{\RLMax}{\text{RLMax}}
+\newcommand{\RLMin}{\text{RLMin}\xspace}
+\newcommand{\RLMax}{\text{RLMax}\xspace}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -281,7 +281,7 @@ than vincular
 patterns by adding a constraint on values.
 
 We focus in this paper on pattern matching issues for \emph{wedge permutations}
-(\emph{i.e.}, those permutations that avoid both $213$ and $231$). 
+(\emph{i.e.}, those permutations that avoid both $213$ and $231$).
 %The number of $n$-wedge permutations is
 %$t_0 = 1$ for $n = 0$ and
 %$t_n =2^{n-1}$ for $n\geq 1$ \cite{Simion:Schmidt:EJC:1985},
@@ -607,7 +607,7 @@ of $\sigma$, as seen in \cite{Kitaev:book:2011} in Definition 1.4.1:
 	elements.
 	Moreover, if the top row of $\widetilde{\sigma}$ begins with
 	$^\ulcorner{1}$ then
-	any occurrence of $\widetilde{\sigma}$ in a permutation $\pi$ must contain 
+	any occurrence of $\widetilde{\sigma}$ in a permutation $\pi$ must contain
 	the bottommost element of $\pi$, and
 	if top row of $\sigma$ ends with $k^\urcorner$ then
 	any occurrence of $\widetilde{\sigma}$ in a permutation $\pi$ must contain
@@ -757,12 +757,12 @@ $\pi[i]$ is a \RLMax or a \RLMin.
 %% \end{proof}
 
 
-As a consequence, a wedge permutation can be partitioned 
-into three sets: the set of RLMax elements, the set of RLMin elements and the 
-rightmost element which can be both a RLMax element and a RLMin element. 
+As a consequence, a wedge permutation can be partitioned
+into three sets: the set of RLMax elements, the set of RLMin elements and the
+rightmost element which can be both a RLMax element and a RLMin element.
 The partition gives a bijection between the set of wedge permutations of size $n$ with elements $1,\ldots,n$
 and the set of binary words of size $n-1$.
-The word $w$ which corresponds to $\pi$ is the word where each letter at position $i$ 
+The word $w$ which corresponds to $\pi$ is the word where each letter at position $i$
 represents whether $\pi[i]$ is a RLMax element or a RLMin element.
 We call this bijection $\bijection$.
 
@@ -781,10 +781,10 @@ See Figure~\ref{fig:shape of the permutation plus factor}.
 \end{remark}
 
 \begin{remark}
-We can draw a horizontally line (passing thought the rightmost element) on a wedge permutations  such that the upper half contains only a  decreasing  
+We can draw a horizontally line (passing thought the rightmost element) on a wedge permutations  such that the upper half contains only a  decreasing
 subsequence and the lower half contains only an increasing subsequence.
-This shape the permutation as a $>$, 
-hence the name of wedge permutations. 
+This shape the permutation as a $>$,
+hence the name of wedge permutations.
 See Figure~\ref{fig:shape of the permutation plus factor}.
 \end{remark}
 
@@ -792,8 +792,8 @@ See Figure~\ref{fig:shape of the permutation plus factor}.
 
 
 For any permutation, to figure out whether or not an element is a RLMax element or a RLMin element,
-one has to run the whole permutation from left to right starting 
-from the position of the element, we give a corollary of lemma~\ref{lemma:first element is 1 or n}, to guest it in constant time for a wedge permutation. 
+one has to run the whole permutation from left to right starting
+from the position of the element, we give a corollary of lemma~\ref{lemma:first element is 1 or n}, to guest it in constant time for a wedge permutation.
 
 
 \begin{corollary}
@@ -1948,11 +1948,11 @@ $$
 \end{cases}
 $$
 Clearly if $_\llcorner{\sigma[1]}$ does not appear in $\widetilde{\sigma}$
-then $\pi$ contains an occurrence of $\widetilde{\sigma}$ 
+then $\pi$ contains an occurrence of $\widetilde{\sigma}$
 if and only if $\bigcup_{0<j} \PM^{\widetilde{\sigma}}_{\ptext}(1,n,1,j)$ is true.
-If $_\llcorner{\sigma[1]}$ appear in $\sigma$ then 
-$\pi$ contains an occurrence of 
-the bivincular wedge permutation pattern $\sigma$ 
+If $_\llcorner{\sigma[1]}$ appear in $\sigma$ then
+$\pi$ contains an occurrence of
+the bivincular wedge permutation pattern $\sigma$
 if and only if $\PM^{\widetilde{\sigma}}_{\ptext}(1,n,1,1)$.
 
 We show how to compute recursively those values.
@@ -1997,9 +1997,9 @@ $$
 \end{cases}
 $$
 
-The base case finds an occurrence for the rightmost element of the pattern. If the rightmost element does not have any restriction on positions and on values, then $\PM^{\sigma}_{\ptext}{\lb}(\ub,k,j)$ is true if and only if $\ppattern[k]$ is matched to $\ptext[j]$. This is true if $\ptext[j] \in [\lb,\ub]$. If ${\ppattern[k]}_\lrcorner$ appears in $\widetilde{\sigma}$ then $\ppattern[k]$ must be matched to the rightmost element of $\pi$ thus $j$ must be $n$. If ${\ppattern[k]}^\urcorner$ appears in $\widetilde{\sigma}$ then $\ppattern[k]$ must be matched to the topmost element which is $n$. If $^\ulcorner{\ppattern[k]}$ appears in $\widetilde{\sigma}$ then $\ppattern[k]$ must be matched to the bottommost element which is $1$. 
-If  $\overline{(\ppattern[k]-1)\ppattern[k] }$ appears in $\widetilde{\sigma}$ then the matching element of $\ppattern[k]$ and $\ppattern[k]-1$ must be consecutive in value, by recursion the value of the element matching $\ppattern[k]-1$ will be recorded in $\lb$ and by adding $1$ to it thus $\ppattern[k]$ must be matched to $\lb$. 
-If  $\overline{(\ppattern[k]\ppattern[k]+1)}$ appears in $\widetilde{\sigma}$ then the element matching $\ppattern[k]$ and $\ppattern[k]+1$ must be consecutive in value, by recursion the value of the  element matching $\ppattern[k]+1$ will be recorded in $\ub$ and by removing $1$ to it thus $\ppattern[k]$ must be matched to $\ub$. 
+The base case finds an occurrence for the rightmost element of the pattern. If the rightmost element does not have any restriction on positions and on values, then $\PM^{\sigma}_{\ptext}{\lb}(\ub,k,j)$ is true if and only if $\ppattern[k]$ is matched to $\ptext[j]$. This is true if $\ptext[j] \in [\lb,\ub]$. If ${\ppattern[k]}_\lrcorner$ appears in $\widetilde{\sigma}$ then $\ppattern[k]$ must be matched to the rightmost element of $\pi$ thus $j$ must be $n$. If ${\ppattern[k]}^\urcorner$ appears in $\widetilde{\sigma}$ then $\ppattern[k]$ must be matched to the topmost element which is $n$. If $^\ulcorner{\ppattern[k]}$ appears in $\widetilde{\sigma}$ then $\ppattern[k]$ must be matched to the bottommost element which is $1$.
+If  $\overline{(\ppattern[k]-1)\ppattern[k] }$ appears in $\widetilde{\sigma}$ then the matching element of $\ppattern[k]$ and $\ppattern[k]-1$ must be consecutive in value, by recursion the value of the element matching $\ppattern[k]-1$ will be recorded in $\lb$ and by adding $1$ to it thus $\ppattern[k]$ must be matched to $\lb$.
+If  $\overline{(\ppattern[k]\ppattern[k]+1)}$ appears in $\widetilde{\sigma}$ then the element matching $\ppattern[k]$ and $\ppattern[k]+1$ must be consecutive in value, by recursion the value of the  element matching $\ppattern[k]+1$ will be recorded in $\ub$ and by removing $1$ to it thus $\ppattern[k]$ must be matched to $\ub$.
 
 
 \noindent\textbf{STEP:}
@@ -2030,7 +2030,7 @@ We consider 3 cases for the problem $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ub,i
 		\PM^{\widetilde{\sigma}}_{\ptext}(\ptext[j]+1,\ub,i+1,j+1)
 			& \text{if $\underline{\ppattern[i]\ppattern[i+1]}$ } \\
 			& \text{ appears in $\widetilde{\sigma}$}\\
-			& \text{ and $\ppattern[i]$ is not overlined} \\			
+			& \text{ and $\ppattern[i]$ is not overlined} \\
 		\PM^{\widetilde{\sigma}}_{\ptext}(\ptext[j]+1,\ub,i+1,j+1)
 			& \text{if $\underline{\ppattern[i]\ppattern[i+1]}$ } \\
 			& \text{ and $\overline{(\ppattern[i]-1)\ppattern[i]}$ or $^\ulcorner{\ppattern[i]}$}\\
@@ -2047,7 +2047,7 @@ We consider 3 cases for the problem $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ub,i
  	it is enough to know
  	 if there exists $\ell$, $j<\ell$ such that
 	$\PM^{\widetilde{\sigma}}_{\ptext}(\ptext[j]+1,\ub,i+1,\ell)$ is true.
-	The first case corresponds to an occurrence without restriction on position and on value. 
+	The first case corresponds to an occurrence without restriction on position and on value.
 	The second case asks for the matching of $\ppattern[i]-1$ and $\ppattern[i]$ to be consecutive in value, but the matching of $\ppattern[i]-1$
 	is $lb-1$ thus we want $\ptext[j]=\lb$.
 	The third case asks for the matching of $\ppattern[i]$ and $\ppattern[i+1]$ to be consecutive in positions, thus the matching of $\ppattern[i+1]$ must be $\pi[j+1]$.
@@ -2078,7 +2078,7 @@ We consider 3 cases for the problem $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ub,i
 			\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ptext[j]-1,i+1,j+1)
 				& \text{if $\underline{\ppattern[i]\ppattern[i+1]}$ } \\
 				& \text{ appears in $\widetilde{\sigma}$}\\
-				& \text{ and $\ppattern[i]$ is not overlined} \\				
+				& \text{ and $\ppattern[i]$ is not overlined} \\
 			\PM^{\widetilde{\sigma}}_{\ptext}(\lb,\ptext[j]-1,i+1,j+1)
 
 				& \text{if $\underline{\ppattern[i]\ppattern[i+1]}$ } \\
@@ -2126,8 +2126,8 @@ of $\widetilde{\sigma}$.
 
 \paragraph{Position Constraint.} There are 3 types of position constraints that can be added by underlined elements.
 
-\begin{itemize} 
-	\item If $_\llcorner{\sigma[1]}$ appears in $\widetilde{\sigma}$ then the leftmost element of $\sigma$  must be matched to the leftmost element of $\pi$ ($\ppattern[1]$ is matched to $\ptext[1]$ in a occurrence of $\ppattern$ in $\ptext$). This constraint is satisfied by requiring that the occurrence starts at the leftmost element of $\ptext$: if  $\PM^{\widetilde{\sigma}}_{\ptext}(1,n,1,1)$ is true.	
+\begin{itemize}
+	\item If $_\llcorner{\sigma[1]}$ appears in $\widetilde{\sigma}$ then the leftmost element of $\sigma$  must be matched to the leftmost element of $\pi$ ($\ppattern[1]$ is matched to $\ptext[1]$ in a occurrence of $\ppattern$ in $\ptext$). This constraint is satisfied by requiring that the occurrence starts at the leftmost element of $\ptext$: if  $\PM^{\widetilde{\sigma}}_{\ptext}(1,n,1,1)$ is true.
 	\item If ${\ppattern[k]}_\lrcorner$ appears in $\widetilde{\sigma}$ then the rightmost element $\sigma$ must be matched the rightmost element of $\pi$ ($\ppattern[k]$ is matched to $\ptext[n]$ on a occurrence of $\ppattern$ in $\ptext$). This constraint is checked in the base case.
 
 	\item If $\underline{\ppattern[i]\ppattern[i+1]}$ appears in $\widetilde{\sigma}$ then the positions of the element matching $\ppattern[i]$ and $\ppattern[i+1]$ must be consecutive. In other words, if $\ppattern[i]$ is matched to $\ptext[j]$ then $\ppattern[i+1]$ must be matched to $\ptext[j+1]$. We ensure this restriction by recursion by requiring that the matching of $\ppattern[i+1:]$ starts at position $j+1$.
@@ -2140,18 +2140,18 @@ of $\widetilde{\sigma}$.
 
 		\item If $\sigma[i]$ is a \RLMin element, then remark that:
 		\begin{itemize}
-			\item Every problem 
+			\item Every problem
 			$\PM^{\widetilde{\sigma}}_{\ptext}(\lb,*,i,*)$ is true only if $\sigma[i]$ is matched to the element with value $\lb$ (by recursion).
 			So it is enough to require that $\lb=1$.
 			\item The recursive calls for $\sigma[1]$, $\ldots$, $\sigma[i-1]$
 			do not change the lower bound as
-			$\sigma[i]$ is the leftmost RLMin element. Indeed if not, then there exists a RLMin element $\sigma[i']$, $i'<i$ and by the shape of a wedge permutation $\sigma[i']<\sigma[i]$ which is not possible as $\sigma[i]$ must be the bottommost element. 
+			$\sigma[i]$ is the leftmost RLMin element. Indeed if not, then there exists a RLMin element $\sigma[i']$, $i'<i$ and by the shape of a wedge permutation $\sigma[i']<\sigma[i]$ which is not possible as $\sigma[i]$ must be the bottommost element.
 			As a consequence $\sigma[1]$, $\ldots$, $\sigma[i-1]$ are RLMax elements. Finally the recursive calls for RLMax elements do not change the lower bound.
-			\item The first call of the problem has for parameter $\lb=1$. 
-		\end{itemize} 
-		So $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i,*)$ return true only if 
+			\item The first call of the problem has for parameter $\lb=1$.
+		\end{itemize}
+		So $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i,*)$ return true only if
 		$\sigma[i]$ is matched to $1$.
-		 		
+
 		\item If $\sigma[i]$ is a RLMax element then $i=k$ ($\sigma[i]$ is the rightmost element). Thus every $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i,*)$ is a base case and is true only if $\sigma[i]$ is matched to $1$.
 
 	\end{itemize}
@@ -2164,18 +2164,18 @@ of $\widetilde{\sigma}$.
 
 		\item If $\sigma[i]$ is a \RLMax element, then remark that:
 		\begin{itemize}
-			\item Every problem 
+			\item Every problem
 			$\PM^{\widetilde{\sigma}}_{\ptext}(*,\ub,i,*)$ is true only if $\sigma[i]$ is matched to the element with value $\ub$ (by recursion).
 			So it is enough to require that $\ub=n$.
 			\item The recursive calls for $\sigma[1]$, $\ldots$, $\sigma[i-1]$
 			do not change the upper bound as
-			$\sigma[i]$ is the leftmost RLMax element. Indeed if not, then there exists a RLMax element $\sigma[i']$, $i'<i$ and by the shape of a wedge permutation $\sigma[i']>\sigma[i]$ which is not possible as $\sigma[i]$ must be the topmost element. 
+			$\sigma[i]$ is the leftmost RLMax element. Indeed if not, then there exists a RLMax element $\sigma[i']$, $i'<i$ and by the shape of a wedge permutation $\sigma[i']>\sigma[i]$ which is not possible as $\sigma[i]$ must be the topmost element.
 			As a consequence $\sigma[1]$, $\ldots$, $\sigma[i-1]$ are RLMin elements. Finally the recursive calls for RLMin elements do not change the upper bound.
-			\item The first call of the problem has for parameter $\ub=n$. 
-		\end{itemize} 
-		So $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i,*)$ return true only if 
+			\item The first call of the problem has for parameter $\ub=n$.
+		\end{itemize}
+		So $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i,*)$ return true only if
 		$\sigma[i]$ is matched to $n$.
-			
+
 		\item If $\sigma[i]$ is a RLMin element then $i=k$ ($\sigma[i]$ is the rightmost element). Thus every $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i,*)$ is a base case and is true if $\sigma[i]$ is matched to $n$.
 
 	\end{itemize}
@@ -2198,7 +2198,7 @@ of $\widetilde{\sigma}$.
 				$\sigma[i]$ and $\sigma[i']$. So every recursive call
 				$\PM^{\widetilde{\sigma}}_{\ptext}(\lb,*,i',*)$
 				is solved as a base case. So $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,*,i',*)$ is true only if $\sigma[i']$ is matched to the element with $\lb$.
-				\item The recursive calls for $\sigma[i+1]$, $\ldots$, $\sigma[i'-1]$ do not change the lower bound. 
+				\item The recursive calls for $\sigma[i+1]$, $\ldots$, $\sigma[i'-1]$ do not change the lower bound.
 				Indeed $\ppattern[i]$ is the rightmost RLMin.
 				So $\sigma[i+1]$, $\sigma[i+2]$, $\ldots$, $\sigma[i'-1]$ are RLMax elements. Moreover
 				recursive calls for a RLMax do not change the lower bound.
@@ -2211,17 +2211,17 @@ of $\widetilde{\sigma}$.
 			\item If $\ppattern[i]$ is a \RLMin element and $\ppattern[i']$ is a \RLMin element then
 			first remark:
 			\begin{itemize}
-				
-				\item From lemma~\ref{lemma:ascentDescentAscent}, 
-				we have that $i<i'$.				
-				
-				\item  Every recursive call $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,*,i',*)$ is true only if $\sigma[i']$ is matched to the element with value $\lb$. 
-				
+
+				\item From lemma~\ref{lemma:ascentDescentAscent},
+				we have that $i<i'$.
+
+				\item  Every recursive call $\PM^{\widetilde{\sigma}}_{\ptext}(\lb,*,i',*)$ is true only if $\sigma[i']$ is matched to the element with value $\lb$.
+
 				\item  The recursive calls for $\sigma[i+1]$, $\ldots$, $\sigma[i'-1]$ do not change the lower bound. Indeed
 				from lemma~\ref{lemma:ascentDescentAscent}, $\sigma[i+1]$,  $\ldots$, $\sigma[i'-1]$ are RLMax elements. Finally the recursive calls for RLMax elements do not change the lower bound.
-				
+
 				\item $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i,*)$ sets $\lb$ to $\ptext[j]+1$ and matches $\sigma[i]$ to $\ptext[j]$.
-				
+
 			\end{itemize}
 			So $\sigma[i]$ is matched to $\ptext[j]$ and
 			$\sigma[i']$ is matched to $\ptext[j]+1$.
@@ -2230,16 +2230,16 @@ of $\widetilde{\sigma}$.
 			\item If $\ppattern[i]$ is a \RLMax element and $\ppattern[i']$ is a \RLMax element then
 			first remark:
 			\begin{itemize}
-				\item From lemma~\ref{lemma:ascentDescentAscent}, 
-				we have that $i'<i$.				
-				
-				\item  Every recursive call $\PM^{\widetilde{\sigma}}_{\ptext}(*,\ub,i,*)$ is true only if $\sigma[i]$ is matched to the element with value $\ub$. 
-				
+				\item From lemma~\ref{lemma:ascentDescentAscent},
+				we have that $i'<i$.
+
+				\item  Every recursive call $\PM^{\widetilde{\sigma}}_{\ptext}(*,\ub,i,*)$ is true only if $\sigma[i]$ is matched to the element with value $\ub$.
+
 				\item  The recursive calls for $\sigma[i+1]$, $\ldots$, $\sigma[i'-1]$ do not change the upper bound. Indeed
 				from lemma~\ref{lemma:ascentDescentAscent}, $\sigma[i+1]$,  $\ldots$, $\sigma[i'-1]$ are RLMin elements. Finally the recursive calls for RLMin elements do not change the upper bound.
-				
+
 				\item $\PM^{\widetilde{\sigma}}_{\ptext}(*,*,i',*)$ sets $\ub$ to $\ptext[j]-1$ and matches $\sigma[i']$ to $\ptext[j]$.
-				
+
 			\end{itemize}
 			So $\sigma[i']$ is matched to $\ptext[j]$ and
 			$\sigma[i]$ is matched to $\ptext[j]-1$.
