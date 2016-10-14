@@ -1,0 +1,10 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: article.aux
+The style file: plain.bst
+Database file #1: bibli.bib
+Repeated entry---line 310 of file bibli.bib
+ : @article{DBLP:journals/corr/abs-1204-5224
+ :                                          ,
+I'm skipping whatever remains of this entry
+Warning--empty journal in DBLP:journals/corr/abs-1204-5224
+Warning--empty year in DBLP:journals/corr/abs-1204-5224
+(There was 1 error message)
